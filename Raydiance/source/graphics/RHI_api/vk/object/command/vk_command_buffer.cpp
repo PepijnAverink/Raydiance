@@ -11,7 +11,7 @@
 //#include "./graphics/RHI_api/vk/resource/texture/vk_texture2D.h"
 //#include "./graphics/RHI_api/vk/pipeline/renderpass/vk_render_pass.h"
 //
-//#include "./core/logger.h"
+//#include "./core/error/logger.h"
 #include "core/stdafx.h"
 
 namespace Graphics
@@ -34,7 +34,7 @@ namespace Graphics
 	VKCommandBuffer::~VKCommandBuffer()
 	{ 
 		// Destroy commandBuffer obj
-		vkFreeCommandBuffers(((VKRenderDevice*)RenderDevice::GetInstance())->GetDevice(), ((VKCommandPool*)m_CommandPool)->GetVKCommandPool(), 1, &m_CommandBufferObj);
+		vkFreeCommandBuffers(((VKRenderDevice*)RenderDevice::Get().get())->GetDevice(), ((VKCommandPool*)m_CommandPool)->GetVKCommandPool(), 1, &m_CommandBufferObj);
 	}
 
 	void VKCommandBuffer::Reset()

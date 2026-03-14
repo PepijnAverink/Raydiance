@@ -41,16 +41,16 @@ namespace Graphics
 
 	VKBuffer::~VKBuffer()
 	{
-		vkDestroyBuffer(((VKRenderDevice*)RenderDevice::GetInstance())->GetDevice(), m_BufferObj, nullptr);
-		vkFreeMemory(((VKRenderDevice*)RenderDevice::GetInstance())->GetDevice(), m_BufferMemory, nullptr);
+		vkDestroyBuffer(((VKRenderDevice*)RenderDevice::Get().get())->GetDevice(), m_BufferObj, nullptr);
+		vkFreeMemory(((VKRenderDevice*)RenderDevice::Get().get())->GetDevice(), m_BufferMemory, nullptr);
 	}
 
 	void VKBuffer::SetData(void* _data, const uint32_t _size)
 	{
 		void* data;
-		vkMapMemory(((VKRenderDevice*)RenderDevice::GetInstance())->GetDevice(), m_BufferMemory, 0, m_Size, 0, &data);
+		vkMapMemory(((VKRenderDevice*)RenderDevice::Get().get())->GetDevice(), m_BufferMemory, 0, m_Size, 0, &data);
 		memcpy(data, _data, (size_t)_size);
-		vkUnmapMemory(((VKRenderDevice*)RenderDevice::GetInstance())->GetDevice(), m_BufferMemory);
+		vkUnmapMemory(((VKRenderDevice*)RenderDevice::Get().get())->GetDevice(), m_BufferMemory);
 	}
 
 	uint32_t VKBuffer::FindMemoryType(VKRenderDevice* _renderDevice, uint32_t typeFilter, VkMemoryPropertyFlags properties) {

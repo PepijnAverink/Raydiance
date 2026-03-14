@@ -61,13 +61,13 @@ namespace Graphics
 	{
 		// RenderDevice
 		// --------------------------------------------------------------------
-		RenderDeviceDescriptor renderDeviceDesc;
-		renderDeviceDesc.Window    = _window;
-		renderDeviceDesc.API	   = RHI_GraphicsAPI::RHI_GRAPHICS_API_VULKAN;
-		renderDeviceDesc.DebugMode = RHI_DebugMode::RHI_DEBUG_MODE_DEBUG_ONLY;
+		Raydiance::Graphics::RHI_RenderDeviceDescriptor renderDeviceDesc;
+		renderDeviceDesc.NativeWindowHandle    = _window->GetWindowHandlePtr();
+		//renderDeviceDesc.API	   = RHI_GraphicsAPI::RHI_GRAPHICS_API_VULKAN;
+		renderDeviceDesc.DebugMode = Raydiance::Graphics::RHI_DebugMode::RHI_DEBUG_MODE_DEBUG_ONLY;
 
-		m_RenderDevice = RenderDevice::Create(&renderDeviceDesc);
-
+		m_RenderDevice = RenderDevice::Create(RHI_GraphicsAPI::RHI_GRAPHICS_API_VULKAN);
+		m_RenderDevice->Initialize(renderDeviceDesc);
 		// CommandQueue
 		// --------------------------------------------------------------------
 		Graphics::CommandQueueDescriptor commandQueueDesc;
@@ -95,6 +95,6 @@ namespace Graphics
 	{
 		delete m_Swapchain;
 		delete m_CommandQueue;
-		delete m_RenderDevice;
+		///delete m_RenderDevice;
 	}
 }

@@ -6,7 +6,7 @@ void DefaultRenderer::OnInitialize(Graphics::RendererBackend* _backend)
 	// Initalizing base of Render3D...
     // --------------------------------------------------------------------
 	Graphics::Renderer3D::OnInitialize(_backend);
-    Graphics::RenderDevice* lDevice = m_RendererBackend->GetRenderDevice();
+    Graphics::RenderDevice* lDevice = m_RendererBackend->GetRenderDevice().get();
 
     // CommandPool
     // --------------------------------------------------------------------

@@ -80,14 +80,14 @@ namespace Graphics
 
 	VKTexture2D::~VKTexture2D()
 	{
-		vkDestroyImage(((VKRenderDevice*)RenderDevice::GetInstance())->GetDevice(), m_ImageObj, nullptr);
-		vkFreeMemory(((VKRenderDevice*)RenderDevice::GetInstance())->GetDevice(), m_BufferMemory, nullptr);
+		vkDestroyImage(((VKRenderDevice*)RenderDevice::Get().get())->GetDevice(), m_ImageObj, nullptr);
+		vkFreeMemory(((VKRenderDevice*)RenderDevice::Get().get())->GetDevice(), m_BufferMemory, nullptr);
 		FreeImageView();
 	}
 
 	void VKTexture2D::FreeImageView()
 	{
-		vkDestroyImageView(((VKRenderDevice*)RenderDevice::GetInstance())->GetDevice(), m_ImageViewObj, nullptr);
+		vkDestroyImageView(((VKRenderDevice*)RenderDevice::Get().get())->GetDevice(), m_ImageViewObj, nullptr);
 	}
 
 	uint32_t VKTexture2D::FindMemoryType(VKRenderDevice* _renderDevice, uint32_t typeFilter, VkMemoryPropertyFlags properties) {

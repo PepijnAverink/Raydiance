@@ -74,6 +74,6 @@ namespace Graphics
 
 	VKRenderPass::~VKRenderPass()
 	{
-		vkDestroyRenderPass(((VKRenderDevice*)RenderDevice::GetInstance())->GetDevice(), m_RenderPassObj, nullptr);
+		vkDestroyRenderPass(((VKRenderDevice*)RenderDevice::Get().get())->GetDevice(), m_RenderPassObj, nullptr);
 	}
 }

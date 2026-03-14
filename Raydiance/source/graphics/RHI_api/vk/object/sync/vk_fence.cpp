@@ -16,16 +16,16 @@ namespace Graphics
 
 	VKFence::~VKFence()
 	{
-		vkDestroyFence(((VKRenderDevice*)RenderDevice::GetInstance())->GetDevice(), m_FenceObj, nullptr);
+		vkDestroyFence(((VKRenderDevice*)RenderDevice::Get().get())->GetDevice(), m_FenceObj, nullptr);
 	}
 
 	void VKFence::Reset()
 	{
-		vkResetFences(((VKRenderDevice*)RenderDevice::GetInstance())->GetDevice(), 1, &m_FenceObj);
+		vkResetFences(((VKRenderDevice*)RenderDevice::Get().get())->GetDevice(), 1, &m_FenceObj);
 	}
 
 	void VKFence::WaitForFence()
 	{
-		vkWaitForFences(((VKRenderDevice*)RenderDevice::GetInstance())->GetDevice(), 1, &m_FenceObj, VK_TRUE, UINT64_MAX);
+		vkWaitForFences(((VKRenderDevice*)RenderDevice::Get().get())->GetDevice(), 1, &m_FenceObj, VK_TRUE, UINT64_MAX);
 	}
 }

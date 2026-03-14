@@ -65,8 +65,8 @@ namespace Graphics
 
 	VKInputLayout::~VKInputLayout()
 	{
-		vkDestroyPipelineLayout(((VKRenderDevice*)RenderDevice::GetInstance())->GetDevice(), m_PipelineLayoutObj, nullptr);
+		vkDestroyPipelineLayout(((VKRenderDevice*)RenderDevice::Get().get())->GetDevice(), m_PipelineLayoutObj, nullptr);
 		for (int i = 0; i < m_DescriptorSetLayouts.size(); i++)
-			vkDestroyDescriptorSetLayout(((VKRenderDevice*)RenderDevice::GetInstance())->GetDevice(), m_DescriptorSetLayouts[i], nullptr);
+			vkDestroyDescriptorSetLayout(((VKRenderDevice*)RenderDevice::Get().get())->GetDevice(), m_DescriptorSetLayouts[i], nullptr);
 	}
 }

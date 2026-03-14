@@ -20,7 +20,7 @@
 //#include "./graphics/RHI_api/vk/resource/shader/vk_shader.h"
 //
 //#include "./core/window/window.h"
-//#include "./core/logger.h"
+//#include "./core/error/logger.h"
 //
 //#include <iostream>
 //#include <optional>
@@ -69,10 +69,27 @@ namespace Graphics
     };
     QueueFamilyIndices FindQueueFamilies(VkPhysicalDevice device, VkSurfaceKHR _surface);
 
-	VKRenderDevice::VKRenderDevice(const RenderDeviceDescriptor* _renderDeviceDescriptor)
-        : RenderDevice(_renderDeviceDescriptor)
+	VKRenderDevice::VKRenderDevice()
+        : RenderDevice()
 	{
-		// Corrct debug mode
+        // Assign the API
+        m_API = RHI_GraphicsAPI::RHI_GRAPHICS_API_VULKAN;
+	}
+
+	VKRenderDevice::~VKRenderDevice()
+	{
+        vkDestroyDevice(m_Device, nullptr);
+
+        if (m_DebugEnabled == true) 
+            DestroyDebugUtilsMessengerEXT(m_Instance, m_DebugMessenger, nullptr);
+
+        vkDestroySurfaceKHR(m_Instance, m_Surface, nullptr);
+        vkDestroyInstance(m_Instance, nullptr);
+	}
+
+    Raydiance::Result VKRenderDevice::Initialize(const Raydiance::Graphics::RHI_RenderDeviceDescriptor& _renderDeviceDescriptor)
+    {
+        // Corrct debug mode
         if (m_DebugEnabled == true)
             m_DebugEnabled = CheckValidationLayerSupport();
 
@@ -88,30 +105,30 @@ namespace Graphics
 
         // Application information
         VkApplicationInfo appInfo{};
-        appInfo.sType              = VK_STRUCTURE_TYPE_APPLICATION_INFO;
-        appInfo.pApplicationName   = _renderDeviceDescriptor->Window->GetTitle().c_str();
+        appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
+        appInfo.pApplicationName = "Raydiance_Application";
         appInfo.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
-        appInfo.pEngineName        = "No Engine";
-        appInfo.engineVersion      = VK_MAKE_VERSION(1, 0, 0);
-        appInfo.apiVersion         = VK_API_VERSION_1_0;
+        appInfo.pEngineName = "No Engine";
+        appInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
+        appInfo.apiVersion = VK_API_VERSION_1_0;
 
         VkInstanceCreateInfo createInfo{};
-        createInfo.sType                   = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
-        createInfo.pApplicationInfo        = &appInfo;
-        createInfo.enabledExtensionCount   = static_cast<uint32_t>(extensions.size());
+        createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
+        createInfo.pApplicationInfo = &appInfo;
+        createInfo.enabledExtensionCount = static_cast<uint32_t>(extensions.size());
         createInfo.ppEnabledExtensionNames = extensions.data();
-        createInfo.enabledLayerCount       = 0;
-        createInfo.pNext                   = nullptr;
+        createInfo.enabledLayerCount = 0;
+        createInfo.pNext = nullptr;
 
         // Enable debug layer
         VkDebugUtilsMessengerCreateInfoEXT debugCreateInfo = {};
         if (m_DebugEnabled == true) {
-            debugCreateInfo.sType           = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
+            debugCreateInfo.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
             debugCreateInfo.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;
-            debugCreateInfo.messageType     = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
+            debugCreateInfo.messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
             debugCreateInfo.pfnUserCallback = debugCallback;
 
-            createInfo.enabledLayerCount   = static_cast<uint32_t>(validationLayers.size());
+            createInfo.enabledLayerCount = static_cast<uint32_t>(validationLayers.size());
             createInfo.ppEnabledLayerNames = validationLayers.data();
             createInfo.pNext = (VkDebugUtilsMessengerCreateInfoEXT*)&debugCreateInfo;
         }
@@ -127,11 +144,11 @@ namespace Graphics
 
         // Surface which is associated with the window
         VkWin32SurfaceCreateInfoKHR surfaceCreateInfo;
-        surfaceCreateInfo.sType     = VK_STRUCTURE_TYPE_WIN32_SURFACE_CREATE_INFO_KHR;
-        surfaceCreateInfo.pNext     = NULL;
-        surfaceCreateInfo.flags     = 0;
+        surfaceCreateInfo.sType = VK_STRUCTURE_TYPE_WIN32_SURFACE_CREATE_INFO_KHR;
+        surfaceCreateInfo.pNext = NULL;
+        surfaceCreateInfo.flags = 0;
         surfaceCreateInfo.hinstance = GetModuleHandle(NULL);
-        surfaceCreateInfo.hwnd      = _renderDeviceDescriptor->Window->GetWindowHandle();
+        surfaceCreateInfo.hwnd = (HWND)_renderDeviceDescriptor.NativeWindowHandle;
 
         // Craete and error check the surface
         if (vkCreateWin32SurfaceKHR(m_Instance, &surfaceCreateInfo, NULL, &m_Surface) != VK_SUCCESS)
@@ -161,11 +178,11 @@ namespace Graphics
             deviceFeatures.samplerAnisotropy = VK_TRUE;
 
             VkDeviceCreateInfo createInfo{};
-            createInfo.sType                   = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
-            createInfo.queueCreateInfoCount    = static_cast<uint32_t>(queueCreateInfos.size());
-            createInfo.pQueueCreateInfos       = queueCreateInfos.data();
-            createInfo.pEnabledFeatures        = &deviceFeatures;
-            createInfo.enabledExtensionCount   = static_cast<uint32_t>(deviceExtensions.size());
+            createInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
+            createInfo.queueCreateInfoCount = static_cast<uint32_t>(queueCreateInfos.size());
+            createInfo.pQueueCreateInfos = queueCreateInfos.data();
+            createInfo.pEnabledFeatures = &deviceFeatures;
+            createInfo.enabledExtensionCount = static_cast<uint32_t>(deviceExtensions.size());
             createInfo.ppEnabledExtensionNames = deviceExtensions.data();
             createInfo.enabledLayerCount = 0;
 
@@ -181,18 +198,9 @@ namespace Graphics
             m_GraphicsQueueID = indices.graphicsFamily.value();
             m_PresentQueueID = indices.presentFamily.value();
         }
-	}
 
-	VKRenderDevice::~VKRenderDevice()
-	{
-        vkDestroyDevice(m_Device, nullptr);
-
-        if (m_DebugEnabled == true) 
-            DestroyDebugUtilsMessengerEXT(m_Instance, m_DebugMessenger, nullptr);
-
-        vkDestroySurfaceKHR(m_Instance, m_Surface, nullptr);
-        vkDestroyInstance(m_Instance, nullptr);
-	}
+        return Raydiance::Result::RESULT_GOOD;
+    }
 
     uint32_t VKRenderDevice::GetQueueFamilyID(const CommandQueueType _type) const
     {

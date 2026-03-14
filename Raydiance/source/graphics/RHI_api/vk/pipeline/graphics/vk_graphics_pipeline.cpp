@@ -157,6 +157,6 @@ namespace Graphics
 
 	VKGraphicsPipeline::~VKGraphicsPipeline()
 	{
-        vkDestroyPipeline(((VKRenderDevice*)RenderDevice::GetInstance())->GetDevice(), m_GraphicsPipelineObj, nullptr);
+        vkDestroyPipeline(((VKRenderDevice*)RenderDevice::Get().get())->GetDevice(), m_GraphicsPipelineObj, nullptr);
 	}
 }

@@ -1,6 +1,6 @@
 //#include "./graphics/RHI_api/vk/resource/shader/vk_shader.h"
 //#include "./core/system/file_system.h"
-//#include "./core/logger.h"
+//#include "./core/error/logger.h"
 #include "core/stdafx.h"
 
 namespace Graphics
@@ -25,6 +25,6 @@ namespace Graphics
 
 	VKShader::~VKShader()
 	{
-		 vkDestroyShaderModule(((VKRenderDevice*)RenderDevice::GetInstance())->GetDevice(), m_ShaderModule, nullptr);
+		 vkDestroyShaderModule(((VKRenderDevice*)RenderDevice::Get().get())->GetDevice(), m_ShaderModule, nullptr);
 	}
 }

@@ -159,6 +159,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="source\core\container\types.h" />
+    <ClInclude Include="source\core\error\assert.h" />
+    <ClInclude Include="source\core\error\result.h" />
     <ClInclude Include="source\core\event\event.h" />
     <ClInclude Include="source\core\event\event_category.h" />
     <ClInclude Include="source\core\event\event_dispatcher.h" />
@@ -171,7 +174,7 @@
     <ClInclude Include="source\core\event\input\mouse_right_down_event.h" />
     <ClInclude Include="source\core\event\input\mouse_right_up_event.h" />
     <ClInclude Include="source\core\event\window\window_resize_event.h" />
-    <ClInclude Include="source\core\logger.h" />
+    <ClInclude Include="source\core\error\logger.h" />
     <ClInclude Include="source\core\performance\timer.h" />
     <ClInclude Include="source\core\stdafx.h" />
     <ClInclude Include="source\core\system\file_system.h" />
@@ -288,7 +291,7 @@
     <ClInclude Include="source\utility\version.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\core\logger.cpp" />
+    <ClCompile Include="source\core\error\logger.cpp" />
     <ClCompile Include="source\core\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

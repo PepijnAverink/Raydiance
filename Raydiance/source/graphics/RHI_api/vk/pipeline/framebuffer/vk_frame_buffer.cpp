@@ -28,6 +28,6 @@ namespace Graphics
 
 	VKFrameBuffer::~VKFrameBuffer()
 	{
-        vkDestroyFramebuffer(((VKRenderDevice*)RenderDevice::GetInstance())->GetDevice(), m_FrameBufferObj, nullptr);
+        vkDestroyFramebuffer(((VKRenderDevice*)RenderDevice::Get().get())->GetDevice(), m_FrameBufferObj, nullptr);
 	}
 }

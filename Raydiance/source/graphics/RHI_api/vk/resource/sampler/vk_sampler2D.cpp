@@ -29,6 +29,6 @@ namespace Graphics
 	}
 	VKSampler2D::~VKSampler2D()
 	{
-		vkDestroySampler(((VKRenderDevice*)RenderDevice::GetInstance())->GetDevice(), m_SamplerObj, nullptr);
+		vkDestroySampler(((VKRenderDevice*)RenderDevice::Get().get())->GetDevice(), m_SamplerObj, nullptr);
 	}
 }

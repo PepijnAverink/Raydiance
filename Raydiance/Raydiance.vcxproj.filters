@@ -60,7 +60,7 @@
     <ClInclude Include="source\core\window\window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\core\logger.h">
+    <ClInclude Include="source\core\error\logger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\core\stdafx.h">
@@ -396,6 +396,15 @@
     <ClInclude Include="source\utility\version.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\core\error\result.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\core\container\types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\core\error\assert.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\core\system\file_system.cpp">
@@ -404,7 +413,7 @@
     <ClCompile Include="source\core\window\window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\core\logger.cpp">
+    <ClCompile Include="source\core\error\logger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\core\stdafx.cpp">

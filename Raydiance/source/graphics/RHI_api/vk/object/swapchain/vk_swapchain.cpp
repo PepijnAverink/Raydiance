@@ -24,27 +24,27 @@ namespace Graphics
 	{
 		for (uint32_t i = 0; i < m_BufferCount; i++)
 			((VKTexture2D*)m_Textures[i])->FreeImageView();
-		vkDestroySwapchainKHR(((VKRenderDevice*)RenderDevice::GetInstance())->GetDevice(), m_SwapChainObj, nullptr);
+		vkDestroySwapchainKHR(((VKRenderDevice*)RenderDevice::Get().get())->GetDevice(), m_SwapChainObj, nullptr);
 	}
 	void VKSwapchain::Resize(CommandQueue* _commandQueue, const uint32_t _width, const uint32_t _height)
 	{
 		// Cleanup
 		for (uint32_t i = 0; i < m_BufferCount; i++)
 			((VKTexture2D*)m_Textures[i])->FreeImageView();
-		vkDestroySwapchainKHR(((VKRenderDevice*)RenderDevice::GetInstance())->GetDevice(), m_SwapChainObj, nullptr);
+		vkDestroySwapchainKHR(((VKRenderDevice*)RenderDevice::Get().get())->GetDevice(), m_SwapChainObj, nullptr);
 		m_Textures.clear();
 
 		m_Width  = _width;
 		m_Height = _height;
 
 		// Create new
-		VKRenderDevice* device = (VKRenderDevice*)RenderDevice::GetInstance();
+		VKRenderDevice* device = (VKRenderDevice*)RenderDevice::Get().get();
 		CreateSwapchain(device, _commandQueue);
 	}
 
 	uint32_t VKSwapchain::AquireNewImage(CommandQueue* _commandQueue, Fence* _fence)
 	{
-		VkResult result = vkAcquireNextImageKHR(((VKRenderDevice*)RenderDevice::GetInstance())->GetDevice(), m_SwapChainObj, UINT64_MAX, VK_NULL_HANDLE, ((VKFence*)_fence)->GetVKFence(), &m_CurrentBufferIndex);
+		VkResult result = vkAcquireNextImageKHR(((VKRenderDevice*)RenderDevice::Get().get())->GetDevice(), m_SwapChainObj, UINT64_MAX, VK_NULL_HANDLE, ((VKFence*)_fence)->GetVKFence(), &m_CurrentBufferIndex);
 		return m_CurrentBufferIndex;
 	}
 

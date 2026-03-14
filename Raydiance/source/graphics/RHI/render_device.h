@@ -1,11 +1,17 @@
 #pragma once
+// Core includes
+#include "./core/error/result.h"
+
+// Graphics includes
+#include "./graphics/RHI_api/RHI_graphics_api.h"
 #include "./graphics/RHI/render_device_descriptor.h"
+
 //#include "graphics/api/graphics_api.h"
 //#include "graphics/RHI/debug_mode.h"
+
 class Window;
 namespace Graphics
 {
-	class RenderDeviceDescriptor;
 	class CommandPool;
 	class CommandPoolDescriptor;
 	class CommandBuffer;
@@ -42,11 +48,13 @@ namespace Graphics
 	class RenderDevice
 	{
 	public:
-		static RenderDevice* Create(const RenderDeviceDescriptor* _renderDeviceDescriptor);
+		[[nodiscard]]
+		static std::shared_ptr<RenderDevice> Create(RHI_GraphicsAPI _api);
+		static std::shared_ptr<RenderDevice> Get();
+
 		virtual ~RenderDevice();
 
-		// Get singleton instance
-		static RenderDevice* GetInstance();
+		virtual Raydiance::Result Initialize(const Raydiance::Graphics::RHI_RenderDeviceDescriptor& _renderDeviceDescriptor);
 
 		virtual CommandPool* CreateCommandPool(const CommandPoolDescriptor* _commandPoolDescriptor) = 0;
 		virtual CommandBuffer* CreateCommandBuffer(const CommandBufferDescriptor* _commandBufferDescriptor) = 0;
@@ -68,7 +76,7 @@ namespace Graphics
 		virtual Sampler2D* CreateSampler2D(const Sampler2DDescriptor* _sampler2DDescripotr) = 0;
 
 	protected:
-		RenderDevice(const RenderDeviceDescriptor* _renderDeviceDescriptor);
+		RenderDevice();
 
 		// API
 		RHI_GraphicsAPI m_API = RHI_GraphicsAPI::RHI_GRAPHICS_API_INVALID;
@@ -76,7 +84,7 @@ namespace Graphics
 		// DebugMode
 		// Set's the DebugEnabled according to the DebugMode
 		bool m_DebugEnabled   = false;
-		RHI_DebugMode m_DebugMode = RHI_DebugMode::RHI_DEBUG_MODE_INVALID;
+		Raydiance::Graphics::RHI_DebugMode m_DebugMode = Raydiance::Graphics::RHI_DebugMode::RHI_DEBUG_MODE_INVALID;
 		void CorrectDebugMode();
 
 	};

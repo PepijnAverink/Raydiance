@@ -1,5 +1,5 @@
 #pragma once
-#include "./core/logger.h"
+#include "./core/error/logger.h"
 
 namespace Graphics
 {
@@ -10,7 +10,7 @@ namespace Graphics
 	};
 
 	[[nodiscard]] // TODO:: Implement string_view.
-	inline constexpr std::string RHI_GraphicsApiToString(RHI_GraphicsAPI _api) noexcept
+	inline constexpr std::string_view RHI_GraphicsApiToString(RHI_GraphicsAPI _api) noexcept
 	{
 		switch (_api)
 		{

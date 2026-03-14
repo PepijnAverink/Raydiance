@@ -20,14 +20,14 @@ namespace Graphics
 		static uint32_t GetCurrntBackbufferIndex();
 
 		// Probably delete these
-		inline RenderDevice* GetRenderDevice() const { return m_RenderDevice; }
+		inline std::shared_ptr<RenderDevice> GetRenderDevice() const { return m_RenderDevice; }
 		inline Swapchain* GetSwapchain() const { return m_Swapchain; }
 		
 	private:
 		RendererBackend(Window* _window);
 		~RendererBackend();
 
-		RenderDevice* m_RenderDevice = nullptr;
+		std::shared_ptr<RenderDevice> m_RenderDevice = nullptr;
 		CommandQueue* m_CommandQueue = nullptr;
 
 		Swapchain* m_Swapchain = nullptr;

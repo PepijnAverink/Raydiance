@@ -10,7 +10,9 @@
 #include <optional>
 #include <set>
 
-#include "core/logger.h"
+#include <format>
+
+#include "./core/error/logger.h"
 #include "core/performance/timer.h"
 #include "core/event/event.h"
 #include "core/event/event_category.h"

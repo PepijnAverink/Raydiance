@@ -12,8 +12,10 @@ namespace Graphics
 	class VKRenderDevice final : public RenderDevice
 	{
 	public:
-		VKRenderDevice(const RenderDeviceDescriptor* _renderDeviceDescriptor);
+		VKRenderDevice();
 		~VKRenderDevice();
+
+		virtual Raydiance::Result Initialize(const Raydiance::Graphics::RHI_RenderDeviceDescriptor& _renderDeviceDescriptor) override;
 
 		inline VkInstance GetVKInstance() const { return m_Instance; }
 		inline VkSurfaceKHR GetVKSurface() const { return m_Surface; }

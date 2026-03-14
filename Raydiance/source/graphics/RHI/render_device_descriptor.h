@@ -3,18 +3,25 @@
 #include "./graphics/RHI/RHI_debug_mode.h"
 
 class Window;
-namespace Graphics
+
+namespace Raydiance
 {
-	class RenderDeviceDescriptor
+	namespace Graphics
 	{
-	public:
-		RenderDeviceDescriptor() = default;
+		class RHI_RenderDeviceDescriptor final
+		{
+		public:
+			// Default constructor and descructor
+			// ======================================
+			 RHI_RenderDeviceDescriptor(void) = default;
+			~RHI_RenderDeviceDescriptor(void) = default;
 
-		// Host window
-		Window* Window = nullptr;
 
-		// Graphics structures
-		RHI_GraphicsAPI API       = RHI_GraphicsAPI::RHI_GRAPHICS_API_INVALID;
-		RHI_DebugMode   DebugMode = RHI_DebugMode::RHI_DEBUG_MODE_INVALID;
-	};
+			// Raw data used for object creation
+			// ======================================
+			RHI_DebugMode DebugMode = RHI_DebugMode::RHI_DEBUG_MODE_INVALID;
+
+			void* NativeWindowHandle = nullptr;
+		};
+	}
 }

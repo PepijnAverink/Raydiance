@@ -1,5 +1,5 @@
 //#include "./graphics/RHI_api/vk/object/command/vk_command_pool.h"
-//#include "./core/logger.h"
+//#include "./core/error/logger.h"
 #include "core/stdafx.h"
 
 namespace Graphics
@@ -20,11 +20,11 @@ namespace Graphics
 
 	VKCommandPool::~VKCommandPool()
 	{
-		vkDestroyCommandPool(((VKRenderDevice*)RenderDevice::GetInstance())->GetDevice(), m_CommandPoolObj, nullptr);
+		vkDestroyCommandPool(((VKRenderDevice*)RenderDevice::Get().get())->GetDevice(), m_CommandPoolObj, nullptr);
 	}
 
 	void VKCommandPool::Reset()
 	{
-		vkResetCommandPool(((VKRenderDevice*)RenderDevice::GetInstance())->GetDevice(), m_CommandPoolObj, VK_COMMAND_POOL_RESET_RELEASE_RESOURCES_BIT);
+		vkResetCommandPool(((VKRenderDevice*)RenderDevice::Get().get())->GetDevice(), m_CommandPoolObj, VK_COMMAND_POOL_RESET_RELEASE_RESOURCES_BIT);
 	}
 }

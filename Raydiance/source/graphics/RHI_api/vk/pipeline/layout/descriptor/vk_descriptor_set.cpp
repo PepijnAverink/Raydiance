@@ -18,7 +18,7 @@ namespace Graphics
 		allocInfo.descriptorSetCount = 1;
 		allocInfo.pSetLayouts        = &layout;
 
-		if (vkAllocateDescriptorSets(((VKRenderDevice*)RenderDevice::GetInstance())->GetDevice(), &allocInfo, &m_DescriptorSetObj) != VK_SUCCESS)
+		if (vkAllocateDescriptorSets(((VKRenderDevice*)RenderDevice::Get().get())->GetDevice(), &allocInfo, &m_DescriptorSetObj) != VK_SUCCESS)
 			Logger::Log("VK_ERROR - Failed to allocate 'DescriptorSet' object.", LogType::LOG_TYPE_ERROR);
 	}
 
@@ -45,7 +45,7 @@ namespace Graphics
 		descriptorWrite.pImageInfo       = nullptr; // Optional
 		descriptorWrite.pTexelBufferView = nullptr; // Optional
 
-		vkUpdateDescriptorSets(((VKRenderDevice*)RenderDevice::GetInstance())->GetDevice(), 1, &descriptorWrite, 0, nullptr);
+		vkUpdateDescriptorSets(((VKRenderDevice*)RenderDevice::Get().get())->GetDevice(), 1, &descriptorWrite, 0, nullptr);
 	}
 
 	void VKDescriptorSet::AllocateDescriptor(Texture2D* _texture, Sampler2D* _sampler, const uint32_t _bindingIndex, const uint32_t _arrayIndex)
@@ -66,6 +66,6 @@ namespace Graphics
 		descriptorWrite.pImageInfo	     = &imageInfo; // Optional
 		descriptorWrite.pTexelBufferView = nullptr; // Optional
 
-		vkUpdateDescriptorSets(((VKRenderDevice*)RenderDevice::GetInstance())->GetDevice(), 1, &descriptorWrite, 0, nullptr);
+		vkUpdateDescriptorSets(((VKRenderDevice*)RenderDevice::Get().get())->GetDevice(), 1, &descriptorWrite, 0, nullptr);
 	}
 }

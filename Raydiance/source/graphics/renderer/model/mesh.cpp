@@ -18,7 +18,7 @@ namespace Graphics
         bufferDesc.Data         = _data;
         bufferDesc.BufferLayout = _layout;
         
-        Buffer* stagingBuffer = RenderDevice::GetInstance()->CreateBuffer(&bufferDesc);
+        Buffer* stagingBuffer = RenderDevice::Get()->CreateBuffer(&bufferDesc);
         
         bufferDesc = {};
         bufferDesc.Name         = "Generated-VertexBuffer";
@@ -28,7 +28,7 @@ namespace Graphics
         bufferDesc.Data         = nullptr;
         bufferDesc.BufferLayout = _layout;
         
-        m_VertexBuffer = RenderDevice::GetInstance()->CreateBuffer(&bufferDesc);
+        m_VertexBuffer = RenderDevice::Get()->CreateBuffer(&bufferDesc);
 
         _commandBuffer->BeginRecording();
         _commandBuffer->CopyBuffer(stagingBuffer, m_VertexBuffer, _size);
@@ -51,7 +51,7 @@ namespace Graphics
         bufferDesc.Data         = _data;
         bufferDesc.BufferLayout = _layout;
      
-        Buffer* stagingBuffer = RenderDevice::GetInstance()->CreateBuffer(&bufferDesc);
+        Buffer* stagingBuffer = RenderDevice::Get()->CreateBuffer(&bufferDesc);
      
         bufferDesc = {};
         bufferDesc.Name         = "Generated-IndexBuffer";
@@ -61,7 +61,7 @@ namespace Graphics
         bufferDesc.Data         = nullptr;
         bufferDesc.BufferLayout = _layout;
      
-        m_IndexBuffer = RenderDevice::GetInstance()->CreateBuffer(&bufferDesc);
+        m_IndexBuffer = RenderDevice::Get()->CreateBuffer(&bufferDesc);
 
         _commandBuffer->BeginRecording();
         _commandBuffer->CopyBuffer(stagingBuffer, m_IndexBuffer, _size);

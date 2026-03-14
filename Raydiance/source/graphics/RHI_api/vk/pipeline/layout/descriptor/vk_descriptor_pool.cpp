@@ -31,7 +31,7 @@ namespace Graphics
 
 	VKDescriptorPool::~VKDescriptorPool()
 	{
-		vkDestroyDescriptorPool(((VKRenderDevice*)RenderDevice::GetInstance())->GetDevice(), m_DescriptorPoolObj, nullptr);
+		vkDestroyDescriptorPool(((VKRenderDevice*)RenderDevice::Get().get())->GetDevice(), m_DescriptorPoolObj, nullptr);
 	}
 
 	DescriptorSet* VKDescriptorPool::AllocateDescriptorSet(const DescriptorSetDescriptor* _descriptorSetDescriptor)
