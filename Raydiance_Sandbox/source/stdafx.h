@@ -1,0 +1,195 @@
+#pragma once
+
+#include <fstream>
+#include <streambuf>
+
+#include <windows.h>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+#include <iostream>
+#include <optional>
+#include <set>
+
+
+#include "core/logger.h"
+#include "core/performance/timer.h"
+#include "core/event/event.h"
+#include "core/event/event_category.h"
+#include "core/event/event_dispatcher.h"
+#include "core/event/event_type.h"
+#include "core/event/window/window_resize_event.h"
+#include "core/event/input/key_down_event.h"
+#include "core/event/input/key_up_event.h"
+#include "core/event/input/mouse_left_down_event.h"
+#include "core/event/input/mouse_left_up_event.h"
+#include "core/event/input/mouse_move_event.h"
+#include "core/event/input/mouse_right_down_event.h"
+#include "core/event/input/mouse_right_up_event.h"
+#include "core/window/window.h"
+
+
+#include "core/system/file_system.h"
+
+#include "graphics/RHI_api/RHI_graphics_api.h"
+#include "graphics/RHI/RHI_debug_mode.h"
+#include "graphics/RHI/render_device.h"
+#include "graphics/RHI/render_device_descriptor.h"
+
+#include "graphics/RHI/object/command/command_queue_type.h"
+#include "graphics/RHI/object/command/command_pool_descriptor.h"
+#include "graphics/RHI/object/command/command_pool.h"
+#include "graphics/RHI/object/command/command_buffer_type.h"
+#include "graphics/RHI/object/command/command_buffer_descriptor.h"
+#include "graphics/RHI/object/command/command_buffer.h"
+#include "graphics/RHI/object/command/command_queue_support_bit.h"
+#include "graphics/RHI/object/command/command_queue_descriptor.h"
+#include "graphics/RHI/object/command/command_queue.h"
+
+#include "graphics/RHI/resource/sampler/address_mode.h"
+#include "graphics/RHI/resource/sampler/filter_mode.h"
+#include "graphics/RHI/resource/sampler/sampler2D_descriptor.h"
+#include "graphics/RHI/resource/resource_format.h"
+
+
+#include "graphics/RHI/object/swapchain/swapchain_descriptor.h"
+#include "graphics/RHI/object/swapchain/swapchain.h"
+
+#include "graphics/RHI/object/sync/fence_descriptor.h"
+#include "graphics/RHI/object/sync/fence.h"
+
+
+#include "graphics/RHI/pipeline/framebuffer/frame_buffer.h"
+#include "graphics/RHI/pipeline/framebuffer/frame_buffer_attachment.h"
+#include "graphics/RHI/pipeline/framebuffer/frame_buffer_attachment_type.h"
+#include "graphics/RHI/pipeline/framebuffer/frame_buffer_descriptor.h"
+
+#include "graphics/RHI/pipeline/graphics/graphics_pipeline.h"
+#include "graphics/RHI/pipeline/graphics/graphics_pipeline_descriptor.h"
+#include "graphics/RHI/pipeline/graphics/rasterizer/cull_mode.h"
+#include "graphics/RHI/pipeline/graphics/rasterizer/fill_mode.h"
+#include "graphics/RHI/pipeline/graphics/rasterizer/winding_order.h"
+#include "graphics/RHI/pipeline/graphics/topology/topology.h"
+#include "graphics/RHI/pipeline/graphics/viewport/scissor_rect.h"
+#include "graphics/RHI/pipeline/graphics/viewport/view_port.h"
+
+#include "graphics/RHI/pipeline/layout/descriptor/descriptor_pool.h"
+#include "graphics/RHI/pipeline/layout/descriptor/descriptor_pool_descriptor.h"
+#include "graphics/RHI/pipeline/layout/descriptor/descriptor_pool_size.h"
+#include "graphics/RHI/pipeline/layout/descriptor/descriptor_set.h"
+#include "graphics/RHI/pipeline/layout/descriptor/descriptor_set_descriptor.h"
+
+#
+#include "graphics/RHI/pipeline/layout/input_set.h"
+#include "graphics/RHI/resource/shader/shader_type_flags.h"
+#include "graphics/RHI/pipeline/layout/input_type.h"
+#include "graphics/RHI/pipeline/layout/input_layout_descriptor.h"
+#include "graphics/RHI/pipeline/layout/input_element.h"
+#include "graphics/RHI/pipeline/layout/input_layout.h"
+
+//#include "graphics/RHI/pipeline/layout/vertex_element.h"
+//#include "graphics/RHI/pipeline/layout/vertex_layout.h"
+
+#include "graphics/RHI/pipeline/renderpass/render_pass.h"
+#include "graphics/RHI/pipeline/renderpass/render_pass_attachment.h"
+#include "graphics/RHI/pipeline/renderpass/render_pass_attachment_type.h"
+#include "graphics/RHI/pipeline/renderpass/render_pass_descriptor.h"
+#include "graphics/RHI/pipeline/renderpass/render_pass_load_op.h"
+#include "graphics/RHI/pipeline/renderpass/render_pass_store_op.h"
+
+#include "graphics/RHI/resource/resource_memory_type.h"
+#include "graphics/RHI/resource/buffer/buffer.h"
+#include "graphics/RHI/resource/buffer/buffer_descriptor.h"
+#include "graphics/RHI/resource/buffer/buffer_usage.h"
+
+
+#include "graphics/RHI/resource/resource_state.h"
+#include "graphics/RHI/resource/resource_type.h"
+
+#include "graphics/RHI/resource/shader/shader_type.h"
+
+#include "graphics/RHI/resource/shader/shader_descriptor.h"
+#include "graphics/RHI/resource/shader/shader.h"
+
+
+
+#include "graphics/RHI/resource/texture/texture2D_descriptor.h"
+#include "graphics/RHI/resource/texture/texture2D.h"
+
+
+
+#include "graphics/RHI/render_device_descriptor.h"
+#include "graphics/RHI/render_device.h"
+
+#include "graphics/RHI_api/vk/vk_render_device.h"
+#include "graphics/RHI_api/vk/resource/buffer/vk_buffer_usage.h"
+#include "graphics/RHI_api/vk/resource/buffer/vk_buffer.h"
+#include "graphics/RHI_api/vk/resource/texture/vk_texture2D.h"
+
+#include "graphics/RHI_api/vk/object/command/vk_command_buffer.h"
+#include "graphics/RHI_api/vk/object/command/vk_command_pool.h"
+#include "graphics/RHI_api/vk/object/command/vk_command_queue.h"
+
+#include "graphics/RHI_api/vk/resource/vk_resource_format.h"
+#include "graphics/RHI_api/vk/resource/vk_resource_state.h"
+#include "graphics/RHI_api/vk/resource/vk_resource_memory_type.h"
+#include "graphics/RHI_api/vk/object/swapchain/vk_swapchain.h"
+
+#include "graphics/RHI_api/vk/object/sync/vk_fence.h"
+
+#include "graphics/RHI_api/vk/pipeline/framebuffer/vk_frame_buffer.h"
+
+#include "graphics/RHI_api/vk/pipeline/graphics/rasterizer/vk_cull_mode.h"
+#include "graphics/RHI_api/vk/pipeline/graphics/rasterizer/vk_fill_mode.h"
+#include "graphics/RHI_api/vk/pipeline/graphics/rasterizer/vk_winding_order.h"
+
+#include "graphics/RHI_api/vk/pipeline/graphics/topology/vk_topology.h"
+#include "graphics/RHI_api/vk/resource/shader/vk_shader_type_flags.h"
+#include "graphics/RHI_api/vk/resource/shader/vk_shader.h"
+#include "graphics/RHI_api/vk/pipeline/graphics/vk_graphics_pipeline.h"
+
+#include "graphics/RHI_api/vk/resource/sampler/vk_filter_mode.h"
+#include "graphics/RHI_api/vk/resource/sampler/vk_address_mode.h"
+#include "graphics/RHI_api/vk/resource/sampler/vk_sampler2D.h"
+
+#include "graphics/RHI_api/vk/pipeline/layout/descriptor/vk_descriptor_set.h"
+#include "graphics/RHI_api/vk/pipeline/layout/descriptor/vk_descriptor_pool.h"
+
+#include "graphics/RHI_api/vk/pipeline/layout/vk_input_layout.h"
+#include "graphics/RHI_api/vk/pipeline/layout/vk_input_type.h"
+
+#include "graphics/RHI_api/vk/pipeline/renderpass/vk_render_pass.h"
+#include "graphics/RHI_api/vk/pipeline/renderpass/vk_render_pass_load_op.h"
+#include "graphics/RHI_api/vk/pipeline/renderpass/vk_render_pass_store_op.h"
+
+
+
+#include "graphics/renderer/material/material.h"
+#include "graphics/renderer/material/material_instance.h"
+
+#include "graphics/renderer/model/sub_mesh.h"
+#include "graphics/renderer/model/vertex.h"
+#include "graphics/renderer/model/mesh.h"
+#include "graphics/renderer/model/primitives/cube.h"
+#include "graphics/renderer/model/primitives/quad.h"
+
+
+#include "default_renderer.h"
+#include "graphics/renderer/renderer3D.h"
+#include "graphics/renderer/renderer_backend.h"
+
+#include "utility/hash_utility.h"
+#include "utility/string_utility.h"
+#include "utility/version.h"
+
+#include "graphics/renderer/camera/camera.h"
+#include "graphics/renderer/camera/perspective.h"
+#include "graphics/renderer/camera/orthographic.h"
+
+
+#include "./application.h"
+#include "./core/event/event_dispatcher.h"
+
+#include <./glm/glm.hpp>
+#include <./glm/gtc/matrix_transform.hpp>

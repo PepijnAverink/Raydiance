@@ -1,0 +1,10 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="Raydiance/Raydiance.vcxproj" Id="56841995-fb16-4174-b52a-1585a99f7188" />
+  <Project Path="Raydiance_Sandbox/Raydiance_Sandbox.vcxproj" Id="e86b3e5f-95a8-4e7b-a95a-4568934dcce7">
+    <BuildDependency Project="Raydiance/Raydiance.vcxproj" />
+  </Project>
+</Solution>
