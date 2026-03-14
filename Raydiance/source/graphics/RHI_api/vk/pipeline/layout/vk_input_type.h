@@ -4,19 +4,22 @@
 
 #include <vulkan/vulkan.h>
 
-namespace Graphics
+namespace Raydiance
 {
-	inline VkDescriptorType ResolveVKInputType(InputType _type)
+	namespace Graphics
 	{
-		switch (_type)
+		inline VkDescriptorType ResolveVKInputType(InputType _type)
 		{
-			case InputType::INPUT_TYPE_UNIFORM_BUFFER :
+			switch (_type)
+			{
+			case InputType::INPUT_TYPE_UNIFORM_BUFFER:
 				return VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-			case InputType::INPUT_TYPE_SAMPLER2D :
+			case InputType::INPUT_TYPE_SAMPLER2D:
 				return VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-		}
+			}
 
-		Logger::Log("VK_ERROR - Failed to resolve VKInputType.", LogType::LOG_TYPE_ERROR);
-		return VK_DESCRIPTOR_TYPE_MAX_ENUM;
+			Logger::Log("VK_ERROR - Failed to resolve VKInputType.", LogType::LOG_TYPE_ERROR);
+			return VK_DESCRIPTOR_TYPE_MAX_ENUM;
+		}
 	}
 }

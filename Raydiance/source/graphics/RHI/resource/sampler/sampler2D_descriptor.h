@@ -4,17 +4,20 @@
 
 #include <string>
 
-namespace Graphics
+namespace Raydiance
 {
-	class Sampler2DDescriptor
+	namespace Graphics
 	{
-	public:
-		Sampler2DDescriptor() = default;
+		class Sampler2DDescriptor
+		{
+		public:
+			Sampler2DDescriptor() = default;
 
-		std::string Name;
-		FilterMode  Filter;
-		AddressMode AddressU;
-		AddressMode AddressV;
-		AddressMode AddressW;
-	};
+			std::string Name;
+			FilterMode  Filter;
+			AddressMode AddressU;
+			AddressMode AddressV;
+			AddressMode AddressW;
+		};
+	}
 }

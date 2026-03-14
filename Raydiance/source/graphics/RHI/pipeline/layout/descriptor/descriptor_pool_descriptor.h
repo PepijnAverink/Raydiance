@@ -4,15 +4,18 @@
 #include <string>
 #include <vector>
 
-namespace Graphics
+namespace Raydiance
 {
-	class DescriptorPoolDescriptor
+	namespace Graphics
 	{
-	public:
-		DescriptorPoolDescriptor() = default;
+		class DescriptorPoolDescriptor
+		{
+		public:
+			DescriptorPoolDescriptor() = default;
 
-		std::string						Name;
-		uint32_t						MaxDescriptorSet = 0;
-		std::vector<DescriptorPoolSize> Sizes;
-	};
+			std::string						Name;
+			uint32_t						MaxDescriptorSet = 0;
+			std::vector<DescriptorPoolSize> Sizes;
+		};
+	}
 }

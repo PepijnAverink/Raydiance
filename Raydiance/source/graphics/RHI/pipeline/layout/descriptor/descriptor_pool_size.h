@@ -3,21 +3,24 @@
 
 #include <stdint.h>
 
-namespace Graphics
+namespace Raydiance
 {
-	class DescriptorPoolSize
+	namespace Graphics
 	{
-	public:
-     DescriptorPoolSize() = default;
-
-		// Allow construction from type and count so brace-init lists can
-		// create DescriptorPoolSize objects (e.g. { {INPUT_TYPE_SAMPLER2D, 1} }).
-		DescriptorPoolSize(InputType type, uint32_t count)
-			: Type(type), Count(count)
+		class DescriptorPoolSize
 		{
-		}
+		public:
+			DescriptorPoolSize() = default;
 
-		InputType Type;
-		uint32_t  Count = 0;
-	};
+			// Allow construction from type and count so brace-init lists can
+			// create DescriptorPoolSize objects (e.g. { {INPUT_TYPE_SAMPLER2D, 1} }).
+			DescriptorPoolSize(InputType type, uint32_t count)
+				: Type(type), Count(count)
+			{
+			}
+
+			InputType Type;
+			uint32_t  Count = 0;
+		};
+	}
 }

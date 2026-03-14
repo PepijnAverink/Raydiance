@@ -2,17 +2,19 @@
 #include "./graphics/RHI/pipeline/layout/input_layout.h"
 
 #include <string>
-
-namespace Graphics
+namespace Raydiance
 {
-	class DescriptorSetDescriptor
+	namespace Graphics
 	{
-	public:
-		DescriptorSetDescriptor() = default;
+		class DescriptorSetDescriptor
+		{
+		public:
+			DescriptorSetDescriptor() = default;
 
-		std::string		Name;
+			std::string		Name;
 
-		InputLayout*	InputLayout;
-		uint32_t        SetIndex;
-	};
+			InputLayout* InputLayout;
+			uint32_t        SetIndex;
+		};
+	}
 }

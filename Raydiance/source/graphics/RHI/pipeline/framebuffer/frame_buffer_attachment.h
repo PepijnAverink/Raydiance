@@ -2,21 +2,24 @@
 #include "./graphics/RHI/pipeline/framebuffer/frame_buffer_attachment_type.h"
 #include "./graphics/RHI/resource/texture/texture2D.h"
 
-namespace Graphics
+namespace Raydiance
 {
-	class FrameBufferAttachment
+	namespace Graphics
 	{
-	public:
-		FrameBufferAttachment() = default;
-
-		// Allow construction from a texture pointer and attachment type so
-		// brace-init lists can create FrameBufferAttachment objects.
-		FrameBufferAttachment(Texture2D* texture, FrameBufferAttachmentType type)
-			: Texture(texture), Type(type)
+		class FrameBufferAttachment
 		{
-		}
+		public:
+			FrameBufferAttachment() = default;
 
-		Texture2D*				  Texture = nullptr;
-		FrameBufferAttachmentType Type = FrameBufferAttachmentType::FRAME_BUFFER_ATTACHMENT_TYPE_NONE;
-	};
+			// Allow construction from a texture pointer and attachment type so
+			// brace-init lists can create FrameBufferAttachment objects.
+			FrameBufferAttachment(Texture2D* texture, FrameBufferAttachmentType type)
+				: Texture(texture), Type(type)
+			{
+			}
+
+			Texture2D* Texture = nullptr;
+			FrameBufferAttachmentType Type = FrameBufferAttachmentType::FRAME_BUFFER_ATTACHMENT_TYPE_NONE;
+		};
+	}
 }

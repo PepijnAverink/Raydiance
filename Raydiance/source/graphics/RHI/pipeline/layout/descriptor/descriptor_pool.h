@@ -2,14 +2,17 @@
 //#include "./graphics/RHI/pipeline/layout/descriptor/descriptor_pool_descriptor.h"
 //#include "./graphics/RHI/pipeline/layout/descriptor/descriptor_set.h"
 
-namespace Graphics
+namespace Raydiance
 {
-	class DescriptorPool
+	namespace Graphics
 	{
-	public:
-		DescriptorPool(const DescriptorPoolDescriptor* _descriptorPoolDescriptor);
-		virtual ~DescriptorPool();
+		class DescriptorPool
+		{
+		public:
+			DescriptorPool(const DescriptorPoolDescriptor* _descriptorPoolDescriptor);
+			virtual ~DescriptorPool();
 
-		virtual DescriptorSet* AllocateDescriptorSet(const DescriptorSetDescriptor* _descriptorSetDescriptor) = 0;
-	};
+			virtual DescriptorSet* AllocateDescriptorSet(const DescriptorSetDescriptor* _descriptorSetDescriptor) = 0;
+		};
+	}
 }

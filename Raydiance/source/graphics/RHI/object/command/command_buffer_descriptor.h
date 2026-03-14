@@ -4,15 +4,18 @@
 
 #include <string>
 
-namespace Graphics
+namespace Raydiance
 {
-	class CommandBufferDescriptor
+	namespace Graphics
 	{
-	public:
-		CommandBufferDescriptor() = default;
+		class CommandBufferDescriptor
+		{
+		public:
+			CommandBufferDescriptor() = default;
 
-		std::string       Name;
-		CommandBufferType Type;
-		CommandPool*      CommandPool = nullptr;
-	};
+			std::string       Name;
+			CommandBufferType Type;
+			CommandPool* CommandPool = nullptr;
+		};
+	}
 }

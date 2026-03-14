@@ -5,29 +5,32 @@
 #include "./graphics/RHI/resource/resource_format.h"
 #include "./graphics/RHI/resource/resource_state.h"
 
-namespace Graphics
+namespace Raydiance
 {
-  class RenderPassAttachment
+	namespace Graphics
 	{
-	public:
-		RenderPassAttachment() = default;
-
-		// Constructor to allow brace-initialization when creating attachments
-		RenderPassAttachment(RenderPassAttachmentType type,
-						 ResourceFormat format,
-						 RenderPassLoadOp loadOp,
-						 RenderPassStoreOp storeOp,
-						 ResourceState initialState,
-						 ResourceState finalState)
-			: Type(type), Format(format), LoadOp(loadOp), StoreOp(storeOp), InitialState(initialState), FinalStatte(finalState)
+		class RenderPassAttachment
 		{
-		}
+		public:
+			RenderPassAttachment() = default;
 
-		RenderPassAttachmentType Type    = RenderPassAttachmentType::RENDER_PASS_ATTACHMENT_TYPE_NONE;
-		ResourceFormat           Format  = ResourceFormat::RESOURCE_FORMAT_NONE;
-		RenderPassLoadOp         LoadOp  = RenderPassLoadOp::RENDER_PASS_LOAD_OP_NONE;
-		RenderPassStoreOp		 StoreOp = RenderPassStoreOp::RENDER_PASS_STORE_OP_NONE;
-		ResourceState			 InitialState = ResourceState::RESOURCE_STATE_NONE;
-		ResourceState			 FinalStatte  = ResourceState::RESOURCE_STATE_NONE;
-	};
+			// Constructor to allow brace-initialization when creating attachments
+			RenderPassAttachment(RenderPassAttachmentType type,
+				ResourceFormat format,
+				RenderPassLoadOp loadOp,
+				RenderPassStoreOp storeOp,
+				ResourceState initialState,
+				ResourceState finalState)
+				: Type(type), Format(format), LoadOp(loadOp), StoreOp(storeOp), InitialState(initialState), FinalStatte(finalState)
+			{
+			}
+
+			RenderPassAttachmentType Type = RenderPassAttachmentType::RENDER_PASS_ATTACHMENT_TYPE_NONE;
+			ResourceFormat           Format = ResourceFormat::RESOURCE_FORMAT_NONE;
+			RenderPassLoadOp         LoadOp = RenderPassLoadOp::RENDER_PASS_LOAD_OP_NONE;
+			RenderPassStoreOp		 StoreOp = RenderPassStoreOp::RENDER_PASS_STORE_OP_NONE;
+			ResourceState			 InitialState = ResourceState::RESOURCE_STATE_NONE;
+			ResourceState			 FinalStatte = ResourceState::RESOURCE_STATE_NONE;
+		};
+	}
 }

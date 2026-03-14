@@ -1,12 +1,12 @@
 #include "default_renderer.h"
 #include "stdafx.h"
 
-void DefaultRenderer::OnInitialize(Graphics::RendererBackend* _backend)
+void DefaultRenderer::OnInitialize(Raydiance::Graphics::RendererBackend* _backend)
 {
 	// Initalizing base of Render3D...
     // --------------------------------------------------------------------
-	Graphics::Renderer3D::OnInitialize(_backend);
-    Graphics::RenderDevice* lDevice = m_RendererBackend->GetRenderDevice().get();
+	Raydiance::Graphics::Renderer3D::OnInitialize(_backend);
+    Raydiance::Graphics::RHI_RenderDevice* lDevice = m_RendererBackend->GetRenderDevice().get();
 
     // CommandPool
     // --------------------------------------------------------------------
@@ -28,7 +28,7 @@ void DefaultRenderer::OnInitialize(Graphics::RendererBackend* _backend)
 
     // Fences
     // --------------------------------------------------------------------
-    FenceDescriptor fenceDesc;
+    RHI_FenceDescriptor fenceDesc;
     fenceDesc.Name    = "ExecuteFence";
     fenceDesc.TimeOut = UINT64_MAX;
 
@@ -70,7 +70,7 @@ void DefaultRenderer::OnInitialize(Graphics::RendererBackend* _backend)
     shaderDesc.Name       = "VertexShader";
     shaderDesc.Filepath   = "./assets/vert.spv";
     shaderDesc.EntryPoint = "main";
-    shaderDesc.Type = Graphics::ShaderType::SHADER_TYPE_VERTEX;
+    shaderDesc.Type = Raydiance::Graphics::ShaderType::SHADER_TYPE_VERTEX;
 
     Shader* vertexShader = lDevice->CreateShader(&shaderDesc);
 
@@ -79,7 +79,7 @@ void DefaultRenderer::OnInitialize(Graphics::RendererBackend* _backend)
     shaderDesc.Name       = "PixelShader";
     shaderDesc.Filepath   = "./assets/frag.spv";
     shaderDesc.EntryPoint = "main";
-    shaderDesc.Type = Graphics::ShaderType::SHADER_TYPE_PIXEL;
+    shaderDesc.Type = Raydiance::Graphics::ShaderType::SHADER_TYPE_PIXEL;
 
     Shader* pixelShader = lDevice->CreateShader(&shaderDesc);
 
@@ -149,7 +149,7 @@ void DefaultRenderer::OnInitialize(Graphics::RendererBackend* _backend)
     bufferDesc.MemoryType = ResourceMemoryType::RESOURCE_MEMORY_TYPE_HOST_MEMORY;
     bufferDesc.Usage = BufferUsage::BUFFER_USAGE_STAGING_BUFFER;
     bufferDesc.Data = data.data();
-    bufferDesc.BufferLayout = BufferLayout({ { "TBUFFER",  Graphics::ResourceFormat::RESOURCE_FORMAT_B8G8R8A8_SRGB }, });
+    bufferDesc.BufferLayout = BufferLayout({ { "TBUFFER",  Raydiance::Graphics::ResourceFormat::RESOURCE_FORMAT_B8G8R8A8_SRGB }, });
 
     Buffer* buffer = lDevice->CreateBuffer(&bufferDesc);
 
@@ -229,7 +229,7 @@ void DefaultRenderer::OnResize(const uint32_t _width, const uint32_t _height)
     }
 }
 
-void DefaultRenderer::BeginScene(Graphics::Camera* _camera)
+void DefaultRenderer::BeginScene(Raydiance::Graphics::Camera* _camera)
 {
     // ViewPort
     ViewPort viewPort;
@@ -283,7 +283,7 @@ void DefaultRenderer::EndScene()
     m_Fence->WaitForFence();
 }
 
-void DefaultRenderer::DrawMesh(Graphics::Mesh* _mesh, const glm::mat4& transform)
+void DefaultRenderer::DrawMesh(Raydiance::Graphics::Mesh* _mesh, const glm::mat4& transform)
 {
     glm::mat4 mat = transform;
     m_CommandBuffer->SetConstants(&mat, sizeof(glm::mat4) * 2, sizeof(glm::mat4), 0);
@@ -296,7 +296,7 @@ void DefaultRenderer::DrawMesh(Graphics::Mesh* _mesh, const glm::mat4& transform
         m_CommandBuffer->DrawIndexed(meshes[i].VertexOffset, meshes[i].IndexOffset, meshes[i].IndexCount);
 }
 
-void DefaultRenderer::DrawSubMesh(Graphics::Mesh* _mesh, const uint32_t _subMeshID, const glm::mat4& transform)
+void DefaultRenderer::DrawSubMesh(Raydiance::Graphics::Mesh* _mesh, const uint32_t _subMeshID, const glm::mat4& transform)
 {
     if (_mesh->GetSubmeshCount() < _subMeshID)
     {
@@ -310,6 +310,6 @@ void DefaultRenderer::DrawSubMesh(Graphics::Mesh* _mesh, const uint32_t _subMesh
     m_CommandBuffer->SetVertexBuffer(_mesh->GetVertexBuffer(), 0);
     m_CommandBuffer->SetIndexBuffer(_mesh->GetIndexBuffer());
 
-    Graphics::SubMesh sm = _mesh->GetSubMeshes()[_subMeshID];
+    Raydiance::Graphics::SubMesh sm = _mesh->GetSubMeshes()[_subMeshID];
     m_CommandBuffer->DrawIndexed(sm.VertexOffset, sm.IndexOffset, sm.IndexCount);
 }

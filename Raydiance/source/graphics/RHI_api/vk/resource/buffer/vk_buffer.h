@@ -2,25 +2,28 @@
 //#include "./graphics/RHI/resource/buffer/buffer.h"
 //#include "./graphics/RHI_api/vk/vk_render_device.h"
 
-namespace Graphics
+namespace Raydiance
 {
-	class VKBuffer final : public Buffer
+	namespace Graphics
 	{
-	public:
-		VKBuffer(VKRenderDevice* _renderDevice, const BufferDescriptor* _bufferDescriptor);
-		virtual ~VKBuffer();
+		class VKBuffer final : public Buffer
+		{
+		public:
+			VKBuffer(VKRenderDevice* _renderDevice, const BufferDescriptor* _bufferDescriptor);
+			virtual ~VKBuffer();
 
-		virtual void SetData(void* _data, const uint32_t _size) override;
+			virtual void SetData(void* _data, const uint32_t _size) override;
 
-		inline VkBuffer GetVKBuffer() const { return m_BufferObj; }
-		inline VkIndexType GetIndexFormat() const { return m_IndexFormat; }
+			inline VkBuffer GetVKBuffer() const { return m_BufferObj; }
+			inline VkIndexType GetIndexFormat() const { return m_IndexFormat; }
 
-	private:
-		uint32_t FindMemoryType(VKRenderDevice* _renderDevice, uint32_t typeFilter, VkMemoryPropertyFlags properties);
+		private:
+			uint32_t FindMemoryType(VKRenderDevice* _renderDevice, uint32_t typeFilter, VkMemoryPropertyFlags properties);
 
-		VkBuffer       m_BufferObj;
-		VkDeviceMemory m_BufferMemory;
+			VkBuffer       m_BufferObj;
+			VkDeviceMemory m_BufferMemory;
 
-		VkIndexType m_IndexFormat;
-	};
+			VkIndexType m_IndexFormat;
+		};
+	}
 }

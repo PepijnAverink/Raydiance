@@ -1,68 +1,70 @@
 #pragma once
-//#include "./graphics/RHI/render_device.h"
+#include "./graphics/RHI/RHI_render_device.h"
 //#include "./graphics/RHI/object/command/command_queue_type.h"
 
 // If running on windows define windows specific VK implementation
 
 #include <vulkan/vulkan.h>
 
-
-namespace Graphics
+namespace Raydiance
 {
-	class VKRenderDevice final : public RenderDevice
+	namespace Graphics
 	{
-	public:
-		VKRenderDevice();
-		~VKRenderDevice();
+		class VKRenderDevice final : public RHI_RenderDevice
+		{
+		public:
+			VKRenderDevice();
+			~VKRenderDevice();
 
-		virtual Raydiance::Result Initialize(const Raydiance::Graphics::RHI_RenderDeviceDescriptor& _renderDeviceDescriptor) override;
+			virtual Raydiance::Result Initialize(const Raydiance::Graphics::RHI_RenderDeviceDescriptor& _renderDeviceDescriptor) override;
 
-		inline VkInstance GetVKInstance() const { return m_Instance; }
-		inline VkSurfaceKHR GetVKSurface() const { return m_Surface; }
+			inline VkInstance GetVKInstance() const { return m_Instance; }
+			inline VkSurfaceKHR GetVKSurface() const { return m_Surface; }
 
-		inline VkPhysicalDevice GetPhysicalDevice() const{ return m_PhysicalDevice; }
-		inline VkDevice GetDevice() const { return m_Device; }
+			inline VkPhysicalDevice GetPhysicalDevice() const { return m_PhysicalDevice; }
+			inline VkDevice GetDevice() const { return m_Device; }
 
-		inline uint32_t GetPresentQueueID() const { return m_PresentQueueID; }
-		inline uint32_t GetGraphicsQueueID() const { return m_GraphicsQueueID; }
+			inline uint32_t GetPresentQueueID() const { return m_PresentQueueID; }
+			inline uint32_t GetGraphicsQueueID() const { return m_GraphicsQueueID; }
 
-		uint32_t GetQueueFamilyID(const CommandQueueType _type) const;
+			uint32_t GetQueueFamilyID(const CommandQueueType _type) const;
 
-		virtual CommandPool* CreateCommandPool(const CommandPoolDescriptor* _commandPoolDescriptor) override;
-		virtual CommandBuffer* CreateCommandBuffer(const CommandBufferDescriptor* _commandBufferDescriptor) override;
-		virtual CommandQueue* CreateCommandQueue(const CommandQueueDescriptor* _commandQueueDescriptor) override;
-		virtual Swapchain* CreateSwapchain(CommandQueue* _commandQueue, const SwapchainDescriptor* _swapchainDescriptor) override;
-		virtual Fence* CreateFence(const FenceDescriptor* _fenceDescriptor) override;
+			virtual CommandPool* CreateCommandPool(const CommandPoolDescriptor* _commandPoolDescriptor) override;
+			virtual CommandBuffer* CreateCommandBuffer(const CommandBufferDescriptor* _commandBufferDescriptor) override;
+			virtual CommandQueue* CreateCommandQueue(const CommandQueueDescriptor* _commandQueueDescriptor) override;
+			virtual RHI_Swapchain* CreateSwapchain(CommandQueue* _commandQueue, const RHI_SwapchainDescriptor* _swapchainDescriptor) override;
+			virtual RHI_Fence* CreateFence(const RHI_FenceDescriptor* _fenceDescriptor) override;
 
-		virtual GraphicsPipeline* CreateGraphicsPipeline(const GraphicsPipelineDescriptor* _graphicsPipelineDescriptor) override;
-		virtual InputLayout* CreateInputLayout(const InputLayoutDescriptor* _inputLayoutDescriptor) override;
-		virtual RenderPass* CreateRenderPass(const RenderPassDescriptor* _renderPassDescriptor) override;
-		virtual FrameBuffer* CreateFrameBuffer(const FrameBufferDescriptor* _frameBufferDescriptor) override;
+			virtual GraphicsPipeline* CreateGraphicsPipeline(const GraphicsPipelineDescriptor* _graphicsPipelineDescriptor) override;
+			virtual InputLayout* CreateInputLayout(const InputLayoutDescriptor* _inputLayoutDescriptor) override;
+			virtual RenderPass* CreateRenderPass(const RenderPassDescriptor* _renderPassDescriptor) override;
+			virtual FrameBuffer* CreateFrameBuffer(const FrameBufferDescriptor* _frameBufferDescriptor) override;
 
-		virtual DescriptorPool* CreateDescriptorPool(const DescriptorPoolDescriptor* _descriptorPoolDescriptor) override;
+			virtual DescriptorPool* CreateDescriptorPool(const DescriptorPoolDescriptor* _descriptorPoolDescriptor) override;
 
-		virtual Buffer* CreateBuffer(const BufferDescriptor* _bufferDescriptor) override;
-		virtual Shader* CreateShader(const ShaderDescriptor* _shaderDescriptor) override;
+			virtual Buffer* CreateBuffer(const BufferDescriptor* _bufferDescriptor) override;
+			virtual Shader* CreateShader(const ShaderDescriptor* _shaderDescriptor) override;
 
-		virtual Texture2D* CreateTexture2D(const Texture2DDescriptor* _texture2DDescriptor) override;
-		virtual Sampler2D* CreateSampler2D(const Sampler2DDescriptor* _sampler2DDescripotr) override;
+			virtual Texture2D* CreateTexture2D(const Texture2DDescriptor* _texture2DDescriptor) override;
+			virtual Sampler2D* CreateSampler2D(const Sampler2DDescriptor* _sampler2DDescripotr) override;
 
-	private:
-		bool CheckValidationLayerSupport();
-		void GetVKPhysicalDevice();
+		private:
+			bool CheckValidationLayerSupport();
+			void GetVKPhysicalDevice();
 
-		// Per application state is stored in the VK_Instance object
-		// Used to initialize vulkan, should be deleted after everything else is freed
-		VkInstance m_Instance;
+			// Per application state is stored in the VK_Instance object
+			// Used to initialize vulkan, should be deleted after everything else is freed
+			VkInstance m_Instance;
 
-		VkDebugUtilsMessengerEXT m_DebugMessenger;
+			VkDebugUtilsMessengerEXT m_DebugMessenger;
 
-		VkSurfaceKHR m_Surface;
+			VkSurfaceKHR m_Surface;
 
-		VkDevice m_Device;
-		VkPhysicalDevice m_PhysicalDevice = VK_NULL_HANDLE;
+			VkDevice m_Device;
+			VkPhysicalDevice m_PhysicalDevice = VK_NULL_HANDLE;
 
-		uint32_t m_PresentQueueID = 0;
-		uint32_t m_GraphicsQueueID = 0;
-	};
+			uint32_t m_PresentQueueID = 0;
+			uint32_t m_GraphicsQueueID = 0;
+		};
+	}
 }

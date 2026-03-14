@@ -34,8 +34,8 @@
 
 #include "graphics/RHI_api/RHI_graphics_api.h"
 #include "graphics/RHI/RHI_debug_mode.h"
-#include "graphics/RHI/render_device.h"
-#include "graphics/RHI/render_device_descriptor.h"
+#include "graphics/RHI/RHI_render_device.h"
+#include "graphics/RHI/RHI_render_device_descriptor.h"
 
 #include "graphics/RHI/object/command/command_queue_type.h"
 #include "graphics/RHI/object/command/command_pool_descriptor.h"
@@ -53,11 +53,11 @@
 #include "graphics/RHI/resource/resource_format.h"
 
 
-#include "graphics/RHI/object/swapchain/swapchain_descriptor.h"
-#include "graphics/RHI/object/swapchain/swapchain.h"
+#include "graphics/RHI/object/swapchain/RHI_swapchain_descriptor.h"
+#include "graphics/RHI/object/swapchain/RHI_swapchain.h"
 
-#include "graphics/RHI/object/sync/fence_descriptor.h"
-#include "graphics/RHI/object/sync/fence.h"
+#include "graphics/RHI/object/sync/RHI_fence_descriptor.h"
+#include "graphics/RHI/object/sync/RHI_fence.h"
 
 
 #include "graphics/RHI/pipeline/framebuffer/frame_buffer.h"
@@ -119,8 +119,8 @@
 
 
 
-#include "graphics/RHI/render_device_descriptor.h"
-#include "graphics/RHI/render_device.h"
+#include "graphics/RHI/RHI_render_device_descriptor.h"
+#include "graphics/RHI/RHI_render_device.h"
 
 #include "graphics/RHI_api/vk/vk_render_device.h"
 #include "graphics/RHI_api/vk/resource/buffer/vk_buffer_usage.h"

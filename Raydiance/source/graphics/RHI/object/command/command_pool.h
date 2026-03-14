@@ -1,18 +1,21 @@
 #pragma once
 #include "./graphics/RHI/object/command/command_pool_descriptor.h"
 
-namespace Graphics
+namespace Raydiance
 {
-    
-	class CommandPool
+	namespace Graphics
 	{
-	public:
-		CommandPool(const CommandPoolDescriptor* _commandPoolDescriptor);
-		virtual ~CommandPool();
 
-		virtual void Reset() = 0;
+		class CommandPool
+		{
+		public:
+			CommandPool(const CommandPoolDescriptor* _commandPoolDescriptor);
+			virtual ~CommandPool();
 
-	protected:
-		CommandQueueType m_Type = CommandQueueType::COMMAND_QUEUE_TYPE_NONE;
-	};
+			virtual void Reset() = 0;
+
+		protected:
+			CommandQueueType m_Type = CommandQueueType::COMMAND_QUEUE_TYPE_NONE;
+		};
+	}
 }

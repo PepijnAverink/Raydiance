@@ -4,14 +4,17 @@
 #include <string>
 #include <vector>
 
-namespace Graphics
+namespace Raydiance
 {
-	class RenderPassDescriptor
+	namespace Graphics
 	{
-	public:
-		RenderPassDescriptor() = default;
+		class RenderPassDescriptor
+		{
+		public:
+			RenderPassDescriptor() = default;
 
-		std::string Name;
-		std::vector<RenderPassAttachment> Attachments;
-	};
+			std::string Name;
+			std::vector<RenderPassAttachment> Attachments;
+		};
+	}
 }

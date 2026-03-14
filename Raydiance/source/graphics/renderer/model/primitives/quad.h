@@ -1,11 +1,14 @@
 #pragma once
 #include "./graphics/renderer/model/mesh.h"
 
-namespace Graphics
+namespace Raydiance
 {
-	class Quad : public Mesh
+	namespace Graphics
 	{
-	public:
-        Quad(CommandBuffer* _commandBuffer, Fence* _fence);
-	};
+		class Quad : public Mesh
+		{
+		public:
+			Quad(CommandBuffer* _commandBuffer, RHI_Fence* _fence);
+		};
+	}
 }

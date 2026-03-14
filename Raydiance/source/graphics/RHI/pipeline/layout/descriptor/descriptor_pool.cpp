@@ -1,15 +1,18 @@
 //#include "./graphics/RHI/pipeline/layout/descriptor/descriptor_pool.h"
 #include "core/stdafx.h"
 
-namespace Graphics
+namespace Raydiance
 {
-	DescriptorPool::DescriptorPool(const DescriptorPoolDescriptor* _descriptorPoolDescriptor)
+	namespace Graphics
 	{
+		DescriptorPool::DescriptorPool(const DescriptorPoolDescriptor* _descriptorPoolDescriptor)
+		{
 
-	}
+		}
 
-	DescriptorPool::~DescriptorPool()
-	{
+		DescriptorPool::~DescriptorPool()
+		{
 
+		}
 	}
 }

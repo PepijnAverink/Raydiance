@@ -1,15 +1,18 @@
 //#include "./graphics/RHI/object/command/command_queue.h"
 #include "core/stdafx.h"
 
-namespace Graphics
+namespace Raydiance
 {
-	CommandQueue::CommandQueue(const CommandQueueDescriptor* _commandQueueDescriptor)
+	namespace Graphics
 	{
+		CommandQueue::CommandQueue(const CommandQueueDescriptor* _commandQueueDescriptor)
+		{
 
-	}
+		}
 
-	CommandQueue::~CommandQueue()
-	{
+		CommandQueue::~CommandQueue()
+		{
 
+		}
 	}
 }

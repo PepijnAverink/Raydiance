@@ -1,15 +1,18 @@
 #pragma once
 #include "./graphics/RHI/resource/sampler/sampler2D_descriptor.h"
 
-namespace Graphics
+namespace Raydiance
 {
-	class Sampler2D
+	namespace Graphics
 	{
-	public:
-		Sampler2D(const Sampler2DDescriptor* _sampler2DDescriptor);
-		virtual ~Sampler2D();
+		class Sampler2D
+		{
+		public:
+			Sampler2D(const Sampler2DDescriptor* _sampler2DDescriptor);
+			virtual ~Sampler2D();
 
-	protected:
-		FilterMode m_FilterMode;
-	};
+		protected:
+			FilterMode m_FilterMode;
+		};
+	}
 }

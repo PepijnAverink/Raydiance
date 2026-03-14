@@ -37,7 +37,7 @@ void Application::OnInitialize()
 
     // Fences
     {
-        FenceDescriptor fenceDesc;
+        RHI_FenceDescriptor fenceDesc;
         fenceDesc.Name    = "ExecuteFence";
         fenceDesc.TimeOut = UINT64_MAX;
 

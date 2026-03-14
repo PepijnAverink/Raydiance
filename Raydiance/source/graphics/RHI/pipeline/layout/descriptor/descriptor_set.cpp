@@ -1,15 +1,18 @@
 //#include "./graphics/RHI/pipeline/layout/descriptor/descriptor_set.h"
 #include "core/stdafx.h"
 
-namespace Graphics
+namespace Raydiance
 {
-	DescriptorSet::DescriptorSet(const DescriptorSetDescriptor* _descriptorSetDescriptor)
+	namespace Graphics
 	{
+		DescriptorSet::DescriptorSet(const DescriptorSetDescriptor* _descriptorSetDescriptor)
+		{
 
-	}
+		}
 
-	DescriptorSet::~DescriptorSet()
-	{
+		DescriptorSet::~DescriptorSet()
+		{
 
+		}
 	}
 }

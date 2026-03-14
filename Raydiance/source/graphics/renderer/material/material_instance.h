@@ -1,14 +1,17 @@
 #pragma once
-//#include "./graphics/renderer/material/material.h"
+#include "./graphics/renderer/material/material.h"
 
-namespace Graphics
+namespace Raydiance
 {
-	class MaterialInstance
+	namespace Graphics
 	{
-	public:
+		class MaterialInstance
+		{
+		public:
 
 
-	protected:
-		Material* m_Material = nullptr;
-	};
+		protected:
+			Material* m_Material = nullptr;
+		};
+	}
 }

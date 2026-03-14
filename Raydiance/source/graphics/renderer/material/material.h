@@ -1,13 +1,16 @@
 #pragma once
-//#include "./graphics/RHI/pipeline/graphics/graphics_pipeline.h"
+#include "./graphics/RHI/pipeline/graphics/graphics_pipeline.h"
 
-namespace Graphics
+namespace Raydiance
 {
-	class Material
+	namespace Graphics
 	{
-	public:
+		class Material
+		{
+		public:
 
-	protected:
-		GraphicsPipeline* m_GraphicsPipeline = nullptr;
-	};
+		protected:
+			GraphicsPipeline* m_GraphicsPipeline = nullptr;
+		};
+	}
 }

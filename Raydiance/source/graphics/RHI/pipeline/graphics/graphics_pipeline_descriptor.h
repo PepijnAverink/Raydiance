@@ -13,37 +13,40 @@
 
 #include <string>
 
-namespace Graphics
+namespace Raydiance
 {
-	class GraphicsPipelineDescriptor
+	namespace Graphics
 	{
-	public:
-		GraphicsPipelineDescriptor() = default;
+		class GraphicsPipelineDescriptor
+		{
+		public:
+			GraphicsPipelineDescriptor() = default;
 
-		std::string Name;
+			std::string Name;
 
-		// Topology
-		Topology Topology = Topology::TOPOLOGY_NONE;
+			// Topology
+			Topology Topology = Topology::TOPOLOGY_NONE;
 
-		InputLayout* InputLayout = nullptr;
-		VertexLayout VertexLayout;
+			InputLayout* InputLayout = nullptr;
+			VertexLayout VertexLayout;
 
-		// Rasterizer
-		CullMode CullMode		  = CullMode::CULL_MODE_NONE;
-		FillMode FillMode		  = FillMode::FILL_MODE_NONE;
-		WindingOrder WindingOrder = WindingOrder::WINDING_ORDER_NONE;
+			// Rasterizer
+			CullMode CullMode = CullMode::CULL_MODE_NONE;
+			FillMode FillMode = FillMode::FILL_MODE_NONE;
+			WindingOrder WindingOrder = WindingOrder::WINDING_ORDER_NONE;
 
-		// Viewport
-		uint32_t	Width;
-		uint32_t	Height;
-		ViewPort    ViewPort;
-		ScissorRect ScissorRect;
+			// Viewport
+			uint32_t	Width;
+			uint32_t	Height;
+			ViewPort    ViewPort;
+			ScissorRect ScissorRect;
 
-		// Shaders
-		Shader* VertexShader = nullptr;
-		Shader* PixelShader  = nullptr;
+			// Shaders
+			Shader* VertexShader = nullptr;
+			Shader* PixelShader = nullptr;
 
-		// RenderPass
-		RenderPass* RenderPass = nullptr;
-	};
+			// RenderPass
+			RenderPass* RenderPass = nullptr;
+		};
+	}
 }

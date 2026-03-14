@@ -4,20 +4,23 @@
 
 #include <vulkan/vulkan.h>
 
-namespace Graphics
+namespace Raydiance
 {
-	inline VkMemoryPropertyFlags  ResoleVKResourceMemoryType(ResourceMemoryType _type)
+	namespace Graphics
 	{
-		switch (_type)
+		inline VkMemoryPropertyFlags  ResoleVKResourceMemoryType(ResourceMemoryType _type)
 		{
-			case ResourceMemoryType::RESOURCE_MEMORY_TYPE_HOST_MEMORY :
+			switch (_type)
+			{
+			case ResourceMemoryType::RESOURCE_MEMORY_TYPE_HOST_MEMORY:
 				return (VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
-			case ResourceMemoryType::RESOURCE_MEMORY_TYPE_DEVICE_MEMORY :
+			case ResourceMemoryType::RESOURCE_MEMORY_TYPE_DEVICE_MEMORY:
 				return VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
 
-		}
+			}
 
-		Logger::Log("VK_ERROR - Failed to resolve ResourceMemroyType: " + _type, LogType::LOG_TYPE_ERROR);
-		return VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
+			Logger::Log("VK_ERROR - Failed to resolve ResourceMemroyType: " + _type, LogType::LOG_TYPE_ERROR);
+			return VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
+		}
 	}
 }

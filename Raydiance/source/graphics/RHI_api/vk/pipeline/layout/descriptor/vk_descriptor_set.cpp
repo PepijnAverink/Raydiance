@@ -4,68 +4,71 @@
 //#include "./graphics/RHI_api/vk/resource/buffer/vk_buffer.h"
 #include "core/stdafx.h"
 
-namespace Graphics
+namespace Raydiance
 {
-	VKDescriptorSet::VKDescriptorSet(VKDescriptorPool* _descriptorPool, const DescriptorSetDescriptor* _descriptorSetDescriptor)
-		: DescriptorSet(_descriptorSetDescriptor)
+	namespace Graphics
 	{
+		VKDescriptorSet::VKDescriptorSet(VKDescriptorPool* _descriptorPool, const DescriptorSetDescriptor* _descriptorSetDescriptor)
+			: DescriptorSet(_descriptorSetDescriptor)
+		{
 
-		VkDescriptorSetLayout layout = ((VKInputLayout*)_descriptorSetDescriptor->InputLayout)->GetVKDescriptorSetLayout(_descriptorSetDescriptor->SetIndex);
+			VkDescriptorSetLayout layout = ((VKInputLayout*)_descriptorSetDescriptor->InputLayout)->GetVKDescriptorSetLayout(_descriptorSetDescriptor->SetIndex);
 
-		VkDescriptorSetAllocateInfo allocInfo{};
-		allocInfo.sType				 = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
-		allocInfo.descriptorPool	 = _descriptorPool->GetVKDescriptorPool();
-		allocInfo.descriptorSetCount = 1;
-		allocInfo.pSetLayouts        = &layout;
+			VkDescriptorSetAllocateInfo allocInfo{};
+			allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
+			allocInfo.descriptorPool = _descriptorPool->GetVKDescriptorPool();
+			allocInfo.descriptorSetCount = 1;
+			allocInfo.pSetLayouts = &layout;
 
-		if (vkAllocateDescriptorSets(((VKRenderDevice*)RenderDevice::Get().get())->GetDevice(), &allocInfo, &m_DescriptorSetObj) != VK_SUCCESS)
-			Logger::Log("VK_ERROR - Failed to allocate 'DescriptorSet' object.", LogType::LOG_TYPE_ERROR);
-	}
+			if (vkAllocateDescriptorSets(((VKRenderDevice*)RHI_RenderDevice::Get().get())->GetDevice(), &allocInfo, &m_DescriptorSetObj) != VK_SUCCESS)
+				Logger::Log("VK_ERROR - Failed to allocate 'DescriptorSet' object.", LogType::LOG_TYPE_ERROR);
+		}
 
-	VKDescriptorSet::~VKDescriptorSet()
-	{
-		// Will be implicitely freed when descriptor pool is de-allocated
-	}
+		VKDescriptorSet::~VKDescriptorSet()
+		{
+			// Will be implicitely freed when descriptor pool is de-allocated
+		}
 
-	void VKDescriptorSet::AllocateDescriptor(Buffer* _buffer, const uint32_t _bindingIndex, const uint32_t _arrayIndex)
-	{
-		VkDescriptorBufferInfo bufferInfo{};
-		bufferInfo.buffer = ((VKBuffer*)_buffer)->GetVKBuffer();
-		bufferInfo.offset = 0;
-		bufferInfo.range  = _buffer->GetSize();
+		void VKDescriptorSet::AllocateDescriptor(Buffer* _buffer, const uint32_t _bindingIndex, const uint32_t _arrayIndex)
+		{
+			VkDescriptorBufferInfo bufferInfo{};
+			bufferInfo.buffer = ((VKBuffer*)_buffer)->GetVKBuffer();
+			bufferInfo.offset = 0;
+			bufferInfo.range = _buffer->GetSize();
 
-		VkWriteDescriptorSet descriptorWrite{};
-		descriptorWrite.sType            = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-		descriptorWrite.dstSet           = m_DescriptorSetObj;
-		descriptorWrite.dstBinding       = _bindingIndex;
-		descriptorWrite.dstArrayElement  = _arrayIndex;
-		descriptorWrite.descriptorType   = ResolveVKDescriptorType(_buffer->GetUsage());
-		descriptorWrite.descriptorCount  = 1;
-		descriptorWrite.pBufferInfo      = &bufferInfo;
-		descriptorWrite.pImageInfo       = nullptr; // Optional
-		descriptorWrite.pTexelBufferView = nullptr; // Optional
+			VkWriteDescriptorSet descriptorWrite{};
+			descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+			descriptorWrite.dstSet = m_DescriptorSetObj;
+			descriptorWrite.dstBinding = _bindingIndex;
+			descriptorWrite.dstArrayElement = _arrayIndex;
+			descriptorWrite.descriptorType = ResolveVKDescriptorType(_buffer->GetUsage());
+			descriptorWrite.descriptorCount = 1;
+			descriptorWrite.pBufferInfo = &bufferInfo;
+			descriptorWrite.pImageInfo = nullptr; // Optional
+			descriptorWrite.pTexelBufferView = nullptr; // Optional
 
-		vkUpdateDescriptorSets(((VKRenderDevice*)RenderDevice::Get().get())->GetDevice(), 1, &descriptorWrite, 0, nullptr);
-	}
+			vkUpdateDescriptorSets(((VKRenderDevice*)RHI_RenderDevice::Get().get())->GetDevice(), 1, &descriptorWrite, 0, nullptr);
+		}
 
-	void VKDescriptorSet::AllocateDescriptor(Texture2D* _texture, Sampler2D* _sampler, const uint32_t _bindingIndex, const uint32_t _arrayIndex)
-	{
-		VkDescriptorImageInfo imageInfo{};
-		imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-		imageInfo.imageView   = ((VKTexture2D*)_texture)->GetVKTextureView();
-		imageInfo.sampler     = ((VKSampler2D*)_sampler)->GetVKSampler();
+		void VKDescriptorSet::AllocateDescriptor(Texture2D* _texture, Sampler2D* _sampler, const uint32_t _bindingIndex, const uint32_t _arrayIndex)
+		{
+			VkDescriptorImageInfo imageInfo{};
+			imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+			imageInfo.imageView = ((VKTexture2D*)_texture)->GetVKTextureView();
+			imageInfo.sampler = ((VKSampler2D*)_sampler)->GetVKSampler();
 
-		VkWriteDescriptorSet descriptorWrite{};
-		descriptorWrite.sType			 = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-		descriptorWrite.dstSet			 = m_DescriptorSetObj;
-		descriptorWrite.dstBinding		 = _bindingIndex;
-		descriptorWrite.dstArrayElement  = _arrayIndex;
-		descriptorWrite.descriptorType   = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-		descriptorWrite.descriptorCount  = 1;
-		descriptorWrite.pBufferInfo		 = nullptr;
-		descriptorWrite.pImageInfo	     = &imageInfo; // Optional
-		descriptorWrite.pTexelBufferView = nullptr; // Optional
+			VkWriteDescriptorSet descriptorWrite{};
+			descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+			descriptorWrite.dstSet = m_DescriptorSetObj;
+			descriptorWrite.dstBinding = _bindingIndex;
+			descriptorWrite.dstArrayElement = _arrayIndex;
+			descriptorWrite.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+			descriptorWrite.descriptorCount = 1;
+			descriptorWrite.pBufferInfo = nullptr;
+			descriptorWrite.pImageInfo = &imageInfo; // Optional
+			descriptorWrite.pTexelBufferView = nullptr; // Optional
 
-		vkUpdateDescriptorSets(((VKRenderDevice*)RenderDevice::Get().get())->GetDevice(), 1, &descriptorWrite, 0, nullptr);
+			vkUpdateDescriptorSets(((VKRenderDevice*)RHI_RenderDevice::Get().get())->GetDevice(), 1, &descriptorWrite, 0, nullptr);
+		}
 	}
 }

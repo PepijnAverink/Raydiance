@@ -1,17 +1,20 @@
 #pragma once
 
-namespace Graphics
+namespace Raydiance
 {
-	class ViewPort
+	namespace Graphics
 	{
-	public:
-		ViewPort() = default;
+		class ViewPort
+		{
+		public:
+			ViewPort() = default;
 
-		float X;
-		float Y;
-		float Width;
-		float Height;
-		float MinDepth;
-		float MaxDepth;
-	};
+			float X;
+			float Y;
+			float Width;
+			float Height;
+			float MinDepth;
+			float MaxDepth;
+		};
+	}
 }

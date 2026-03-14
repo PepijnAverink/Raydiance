@@ -1,7 +1,7 @@
 #pragma once
 
 
-using namespace Graphics;
+using namespace Raydiance::Graphics;
 class Application
 {
 
@@ -38,15 +38,15 @@ private:
 
 	Window* m_Window = nullptr;
 
-	Fence* m_AquireFence = nullptr;
+	RHI_Fence* m_AquireFence = nullptr;
 
 	Mesh* m_Mesh         = nullptr;
 
 	RendererBackend* m_RenderBackend = nullptr;
 	Renderer3D* m_Renderer = nullptr;
 
-	Graphics::CommandPool* m_CommandPool = nullptr;
-	Graphics::CommandBuffer* m_CommandBuffer = nullptr;
+	CommandPool* m_CommandPool = nullptr;
+	CommandBuffer* m_CommandBuffer = nullptr;
 
 	int m_MouseX, m_MouseY;
 	bool m_FirstMouse = true;

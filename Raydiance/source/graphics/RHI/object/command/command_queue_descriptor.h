@@ -2,14 +2,17 @@
 #include "./graphics/RHI/object/command/command_queue_type.h"
 
 #include <string>
-namespace Graphics
+namespace Raydiance
 {
-	class CommandQueueDescriptor
+	namespace Graphics
 	{
-	public:
-		CommandQueueDescriptor() = default;
+		class CommandQueueDescriptor
+		{
+		public:
+			CommandQueueDescriptor() = default;
 
-		std::string      Name;
-		CommandQueueType Type = CommandQueueType::COMMAND_QUEUE_TYPE_NONE;
-	};
+			std::string      Name;
+			CommandQueueType Type = CommandQueueType::COMMAND_QUEUE_TYPE_NONE;
+		};
+	}
 }

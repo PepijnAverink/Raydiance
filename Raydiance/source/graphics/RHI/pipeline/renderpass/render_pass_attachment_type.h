@@ -1,12 +1,15 @@
 #pragma once
 
-namespace Graphics
+namespace Raydiance
 {
-	enum RenderPassAttachmentType
+	namespace Graphics
 	{
-		RENDER_PASS_ATTACHMENT_TYPE_NONE		  = 0x00,
-		RENDER_PASS_ATTACHMENT_TYPE_ERROR		  = 0x01,
-		RENDER_PASS_ATTACHMENT_TYPE_COLOR		  = 0x02,
-		RENDER_PASS_ATTACHMENT_TYPE_DEPTH_STENCIL = 0x03,
-	};
+		enum RenderPassAttachmentType
+		{
+			RENDER_PASS_ATTACHMENT_TYPE_NONE = 0x00,
+			RENDER_PASS_ATTACHMENT_TYPE_ERROR = 0x01,
+			RENDER_PASS_ATTACHMENT_TYPE_COLOR = 0x02,
+			RENDER_PASS_ATTACHMENT_TYPE_DEPTH_STENCIL = 0x03,
+		};
+	}
 }

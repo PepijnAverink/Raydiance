@@ -4,14 +4,17 @@
 #include <string>
 #include <vector>
 
-namespace Graphics
+namespace Raydiance
 {
-	class InputLayoutDescriptor
+	namespace Graphics
 	{
-	public:
-		InputLayoutDescriptor() = default;
+		class InputLayoutDescriptor
+		{
+		public:
+			InputLayoutDescriptor() = default;
 
-		std::string				  Name;
-		std::vector<InputSet>     Layouts;
-	};
+			std::string				  Name;
+			std::vector<InputSet>     Layouts;
+		};
+	}
 }

@@ -4,20 +4,23 @@
 
 #include <vector>
 
-namespace Graphics
+namespace Raydiance
 {
-	class FrameBufferDescriptor
+	namespace Graphics
 	{
-	public:
-		FrameBufferDescriptor() = default;
+		class FrameBufferDescriptor
+		{
+		public:
+			FrameBufferDescriptor() = default;
 
-		std::string Name;
-		uint32_t    Width;
-		uint32_t    Height;
+			std::string Name;
+			uint32_t    Width;
+			uint32_t    Height;
 
-		bool	    Contigious = false;
-		std::vector<FrameBufferAttachment> Attachments;
+			bool	    Contigious = false;
+			std::vector<FrameBufferAttachment> Attachments;
 
-		RenderPass* RenderPass = nullptr;
-	};
+			RenderPass* RenderPass = nullptr;
+		};
+	}
 }

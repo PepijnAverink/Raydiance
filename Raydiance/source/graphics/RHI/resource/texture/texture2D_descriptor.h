@@ -4,18 +4,21 @@
 
 #include <string>
 
-namespace Graphics
+namespace Raydiance
 {
-	class Texture2DDescriptor
+	namespace Graphics
 	{
-	public:
-		Texture2DDescriptor() = default;
+		class Texture2DDescriptor
+		{
+		public:
+			Texture2DDescriptor() = default;
 
-		std::string Name;
-		uint32_t Width;
-		uint32_t Height;
+			std::string Name;
+			uint32_t Width;
+			uint32_t Height;
 
-		ResourceFormat Format = ResourceFormat::RESOURCE_FORMAT_NONE;
-		ResourceState State   = ResourceState::RESOURCE_STATE_NONE;
-	};
+			ResourceFormat Format = ResourceFormat::RESOURCE_FORMAT_NONE;
+			ResourceState State = ResourceState::RESOURCE_STATE_NONE;
+		};
+	}
 }

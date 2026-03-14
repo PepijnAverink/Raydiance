@@ -3,15 +3,19 @@
 
 #include <vector>
 
-namespace Graphics
+namespace Raydiance
 {
-	class InputSet
+	namespace Graphics
 	{
-	public:
-		InputSet(std::vector<InputElement> _elements)
-			: Elements(_elements)
-		{ }
+		class InputSet
+		{
+		public:
+			InputSet(std::vector<InputElement> _elements)
+				: Elements(_elements)
+			{
+			}
 
-		std::vector<InputElement> Elements;
-	};
+			std::vector<InputElement> Elements;
+		};
+	}
 }

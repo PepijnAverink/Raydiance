@@ -2,24 +2,27 @@
 #include "./graphics/RHI/resource/buffer/buffer_descriptor.h"
 //#include "graphics/RHI/resource/buffer/buffer_usage.h"
 
-namespace Graphics
+namespace Raydiance
 {
-	class Buffer
+	namespace Graphics
 	{
-	public:
-		Buffer(const BufferDescriptor* _bufferDescriptor);
-		virtual ~Buffer();
+		class Buffer
+		{
+		public:
+			Buffer(const BufferDescriptor* _bufferDescriptor);
+			virtual ~Buffer();
 
-		virtual void SetData(void* _data, const uint32_t _size) = 0;
+			virtual void SetData(void* _data, const uint32_t _size) = 0;
 
-		inline uint32_t GetSize() const { return m_Size; }
-		inline BufferUsage GetUsage() const { return m_Usage; }
-		inline const BufferLayout& GetBufferLayout() const { return m_Layout; }
+			inline uint32_t GetSize() const { return m_Size; }
+			inline BufferUsage GetUsage() const { return m_Usage; }
+			inline const BufferLayout& GetBufferLayout() const { return m_Layout; }
 
-	protected:
-		uint32_t m_Size;
+		protected:
+			uint32_t m_Size;
 
-		BufferUsage m_Usage;
-		BufferLayout m_Layout;
-	};
+			BufferUsage m_Usage;
+			BufferLayout m_Layout;
+		};
+	}
 }

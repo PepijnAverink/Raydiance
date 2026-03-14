@@ -1,12 +1,15 @@
 #pragma once
 
-namespace Graphics
+namespace Raydiance
 {
-	enum WindingOrder
+	namespace Graphics
 	{
-		WINDING_ORDER_NONE  = 0x00,
-		WINDING_ORDER_ERROR = 0x01,
-		WINDING_ORDER_CW    = 0x02,
-		WINDING_ORDER_CCW   = 0x03,
-	};
+		enum WindingOrder
+		{
+			WINDING_ORDER_NONE = 0x00,
+			WINDING_ORDER_ERROR = 0x01,
+			WINDING_ORDER_CW = 0x02,
+			WINDING_ORDER_CCW = 0x03,
+		};
+	}
 }

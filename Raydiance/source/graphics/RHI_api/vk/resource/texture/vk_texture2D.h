@@ -1,26 +1,30 @@
 #pragma once
-//#include "./graphics/RHI/resource/texture/texture2D.h"
-//#include "./graphics/RHI_api/vk/vk_render_device.h"
-namespace Graphics
+#include "./graphics/RHI/resource/texture/texture2D.h"
+#include "./graphics/RHI_api/vk/vk_render_device.h"
+
+namespace Raydiance
 {
-	class VKTexture2D final : public Texture2D
+	namespace Graphics
 	{
-	public:
-		VKTexture2D(VKRenderDevice* _renderDevice, const Texture2DDescriptor* _texture2DDescriptor);
-		VKTexture2D(VKRenderDevice* _renderDevice, VkImage _resource, const Texture2DDescriptor* _texture2DDescriptor);
-		virtual ~VKTexture2D();
+		class VKTexture2D final : public Texture2D
+		{
+		public:
+			VKTexture2D(VKRenderDevice* _renderDevice, const Texture2DDescriptor* _texture2DDescriptor);
+			VKTexture2D(VKRenderDevice* _renderDevice, VkImage _resource, const Texture2DDescriptor* _texture2DDescriptor);
+			virtual ~VKTexture2D();
 
-		inline VkImage GetVKTexture() const { return m_ImageObj; }
-		inline VkImageView GetVKTextureView() const { return m_ImageViewObj; }
+			inline VkImage GetVKTexture() const { return m_ImageObj; }
+			inline VkImageView GetVKTextureView() const { return m_ImageViewObj; }
 
-	private:
-		friend class VKSwapchain;
-		void FreeImageView();
+		private:
+			friend class VKSwapchain;
+			void FreeImageView();
 
-		uint32_t FindMemoryType(VKRenderDevice* _renderDevice, uint32_t typeFilter, VkMemoryPropertyFlags properties);
+			uint32_t FindMemoryType(VKRenderDevice* _renderDevice, uint32_t typeFilter, VkMemoryPropertyFlags properties);
 
-		VkImage m_ImageObj;
-		VkImageView m_ImageViewObj;
-		VkDeviceMemory m_BufferMemory;
-	};
+			VkImage m_ImageObj;
+			VkImageView m_ImageViewObj;
+			VkDeviceMemory m_BufferMemory;
+		};
+	}
 }

@@ -1,14 +1,18 @@
 //#include "./graphics/renderer/renderer3D.h"
 #include "core/stdafx.h"
-namespace Graphics
+
+namespace Raydiance
 {
-	void Renderer3D::OnInitialize(RendererBackend* _backend)
+	namespace Graphics
 	{
-		m_RendererBackend = _backend;
-	}
+		void Renderer3D::OnInitialize(RendererBackend* _backend)
+		{
+			m_RendererBackend = _backend;
+		}
 
-	void Renderer3D::OnTerminate()
-	{
+		void Renderer3D::OnTerminate()
+		{
 
+		}
 	}
 }

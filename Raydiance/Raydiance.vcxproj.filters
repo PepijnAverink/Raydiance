@@ -93,16 +93,16 @@
     <ClInclude Include="source\graphics\RHI\object\command\command_queue_type.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\object\swapchain\swapchain.h">
+    <ClInclude Include="source\graphics\RHI\object\swapchain\RHI_swapchain.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\object\swapchain\swapchain_descriptor.h">
+    <ClInclude Include="source\graphics\RHI\object\swapchain\RHI_swapchain_descriptor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\object\sync\fence.h">
+    <ClInclude Include="source\graphics\RHI\object\sync\RHI_fence.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\object\sync\fence_descriptor.h">
+    <ClInclude Include="source\graphics\RHI\object\sync\RHI_fence_descriptor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\graphics\RHI\pipeline\framebuffer\frame_buffer.h">
@@ -249,10 +249,10 @@
     <ClInclude Include="source\graphics\RHI\RHI_debug_mode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\render_device.h">
+    <ClInclude Include="source\graphics\RHI\RHI_render_device.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\render_device_descriptor.h">
+    <ClInclude Include="source\graphics\RHI\RHI_render_device_descriptor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\graphics\RHI_api\vk\object\command\vk_command_buffer.h">
@@ -428,10 +428,10 @@
     <ClCompile Include="source\graphics\RHI\object\command\command_queue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\graphics\RHI\object\swapchain\swapchain.cpp">
+    <ClCompile Include="source\graphics\RHI\object\swapchain\RHI_swapchain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\graphics\RHI\object\sync\fence.cpp">
+    <ClCompile Include="source\graphics\RHI\object\sync\RHI_fence.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\graphics\RHI\pipeline\framebuffer\frame_buffer.cpp">
@@ -464,7 +464,7 @@
     <ClCompile Include="source\graphics\RHI\resource\texture\texture2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\graphics\RHI\render_device.cpp">
+    <ClCompile Include="source\graphics\RHI\RHI_render_device.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\graphics\RHI_api\vk\object\command\vk_command_buffer.cpp">

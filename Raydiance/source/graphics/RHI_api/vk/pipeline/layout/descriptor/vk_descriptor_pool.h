@@ -2,19 +2,22 @@
 //#include "./graphics/RHI/pipeline/layout/descriptor/descriptor_pool.h"
 //#include "./graphics/RHI_api/vk/vk_render_device.h"
 
-namespace Graphics
+namespace Raydiance
 {
-	class VKDescriptorPool final : public DescriptorPool
+	namespace Graphics
 	{
-	public:
-		VKDescriptorPool(VKRenderDevice* _renderDevice, const DescriptorPoolDescriptor* _descriptorPoolDescriptor);
-		virtual ~VKDescriptorPool();
+		class VKDescriptorPool final : public DescriptorPool
+		{
+		public:
+			VKDescriptorPool(VKRenderDevice* _renderDevice, const DescriptorPoolDescriptor* _descriptorPoolDescriptor);
+			virtual ~VKDescriptorPool();
 
-		virtual DescriptorSet* AllocateDescriptorSet(const DescriptorSetDescriptor* _descriptorSetDescriptor) override;
+			virtual DescriptorSet* AllocateDescriptorSet(const DescriptorSetDescriptor* _descriptorSetDescriptor) override;
 
-		inline VkDescriptorPool GetVKDescriptorPool() const { return m_DescriptorPoolObj; }
+			inline VkDescriptorPool GetVKDescriptorPool() const { return m_DescriptorPoolObj; }
 
-	private:
-		VkDescriptorPool m_DescriptorPoolObj;
-	};
+		private:
+			VkDescriptorPool m_DescriptorPoolObj;
+		};
+	}
 }

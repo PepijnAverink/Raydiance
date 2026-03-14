@@ -3,18 +3,21 @@
 
 #include <string>
 
-namespace Graphics
+namespace Raydiance
 {
-	/*enum ShaderType : int;*/
-	class ShaderDescriptor
+	namespace Graphics
 	{
-	public:
-		ShaderDescriptor() = default;
+		/*enum ShaderType : int;*/
+		class ShaderDescriptor
+		{
+		public:
+			ShaderDescriptor() = default;
 
-		std::string  Name;
-		ShaderType   Type;
+			std::string  Name;
+			ShaderType   Type;
 
-		std::string Filepath;
-		std::string EntryPoint;
-	};
+			std::string Filepath;
+			std::string EntryPoint;
+		};
+	}
 }

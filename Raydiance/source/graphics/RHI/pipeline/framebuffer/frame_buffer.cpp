@@ -1,11 +1,16 @@
 //#include "./graphics/RHI/pipeline/framebuffer/frame_buffer.h"
 #include "core/stdafx.h"
 
-namespace Graphics
+namespace Raydiance
 {
-	FrameBuffer::FrameBuffer(const FrameBufferDescriptor* _frameBufferDescriptor)
-	{ }
+	namespace Graphics
+	{
+		FrameBuffer::FrameBuffer(const FrameBufferDescriptor* _frameBufferDescriptor)
+		{
+		}
 
-	FrameBuffer::~FrameBuffer()
-	{ }
+		FrameBuffer::~FrameBuffer()
+		{
+		}
+	}
 }

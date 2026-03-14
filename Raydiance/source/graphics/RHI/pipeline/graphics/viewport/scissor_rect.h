@@ -1,16 +1,19 @@
 #pragma once
 #include <stdint.h>
 
-namespace Graphics
+namespace Raydiance
 {
-	class ScissorRect
+	namespace Graphics
 	{
-	public:
-		ScissorRect() = default;
+		class ScissorRect
+		{
+		public:
+			ScissorRect() = default;
 
-		int32_t X;
-		int32_t Y;
-		uint32_t Width;
-		uint32_t Height;
-	};
+			int32_t X;
+			int32_t Y;
+			uint32_t Width;
+			uint32_t Height;
+		};
+	}
 }

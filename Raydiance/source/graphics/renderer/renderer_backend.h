@@ -1,38 +1,46 @@
 #pragma once
+// Grpahics includes
+#include "./graphics/RHI/RHI_render_device.h"
+#include "./graphics/RHI/object/swapchain/RHI_swapchain.h"
 
-namespace Graphics
+#include <memory>
+
+namespace Raydiance
 {
-	class RendererBackend
+	namespace Graphics
 	{
-	public: 
-		static RendererBackend* Create(Window* _window);
-		static void Destroy();
-		
-		static void SubmitCommandBuffer(CommandBuffer* _commandBuffer, Fence* _fence);
+		class RendererBackend
+		{
+		public:
+			static RendererBackend* Create(Window* _window);
+			static void Destroy();
 
-		static uint32_t AquireNewFrame(Fence* _fence);
-		static void Present();
+			static void SubmitCommandBuffer(CommandBuffer* _commandBuffer, RHI_Fence* _fence);
 
-		static void OnResize(const uint32_t _width, const uint32_t _height);
-		static uint32_t GetClientWidth();
-		static uint32_t GetClientHeight();
-		static uint32_t GetBackbufferCount();
-		static uint32_t GetCurrntBackbufferIndex();
+			static uint32_t AquireNewFrame(RHI_Fence* _fence);
+			static void Present();
 
-		// Probably delete these
-		inline std::shared_ptr<RenderDevice> GetRenderDevice() const { return m_RenderDevice; }
-		inline Swapchain* GetSwapchain() const { return m_Swapchain; }
-		
-	private:
-		RendererBackend(Window* _window);
-		~RendererBackend();
+			static void OnResize(const uint32_t _width, const uint32_t _height);
+			static uint32_t GetClientWidth();
+			static uint32_t GetClientHeight();
+			static uint32_t GetBackbufferCount();
+			static uint32_t GetCurrntBackbufferIndex();
 
-		std::shared_ptr<RenderDevice> m_RenderDevice = nullptr;
-		CommandQueue* m_CommandQueue = nullptr;
+			// Probably delete these
+			inline std::shared_ptr<RHI_RenderDevice> GetRenderDevice() const { return m_RenderDevice; }
+			inline RHI_Swapchain* GetSwapchain() const { return m_Swapchain; }
 
-		Swapchain* m_Swapchain = nullptr;
-		uint32_t   m_ClientWidth  = 0;
-		uint32_t   m_ClientHeight = 0;
-		uint32_t   m_BackbufferCount = 0;
-	};
+		private:
+			RendererBackend(Window* _window);
+			~RendererBackend();
+
+			std::shared_ptr<RHI_RenderDevice> m_RenderDevice = nullptr;
+			CommandQueue* m_CommandQueue = nullptr;
+
+			RHI_Swapchain* m_Swapchain = nullptr;
+			uint32_t   m_ClientWidth = 0;
+			uint32_t   m_ClientHeight = 0;
+			uint32_t   m_BackbufferCount = 0;
+		};
+	}
 }

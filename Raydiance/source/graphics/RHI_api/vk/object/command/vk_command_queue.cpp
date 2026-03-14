@@ -2,39 +2,44 @@
 //#include "./graphics/RHI_api/vk/object/command/vk_command_buffer.h"
 //#include "./graphics/RHI_api/vk/object/sync/vk_fence.h"
 #include "core/stdafx.h"
-namespace Graphics
+
+namespace Raydiance
 {
-	VKCommandQueue::VKCommandQueue(VKRenderDevice* _renderDevice, const CommandQueueDescriptor* _commandQueueDescriptor)
-		: CommandQueue(_commandQueueDescriptor)
+	namespace Graphics
 	{
-		if (_commandQueueDescriptor->Type == CommandQueueType::COMMAND_QUEUE_TYPE_GRAPHICS)
+		VKCommandQueue::VKCommandQueue(VKRenderDevice* _renderDevice, const CommandQueueDescriptor* _commandQueueDescriptor)
+			: CommandQueue(_commandQueueDescriptor)
 		{
-			vkGetDeviceQueue(_renderDevice->GetDevice(), _renderDevice->GetGraphicsQueueID(), 0, &m_QueueObj);
-			if (_renderDevice->GetGraphicsQueueID() == _renderDevice->GetPresentQueueID())
+			if (_commandQueueDescriptor->Type == CommandQueueType::COMMAND_QUEUE_TYPE_GRAPHICS)
 			{
-				AddSupportFlag(COMMAND_QUEUE_SUPPORT_BIT_GRAPHICS);
-				AddSupportFlag(COMMAND_QUEUE_SUPPORT_BIT_PRESENT);
+				vkGetDeviceQueue(_renderDevice->GetDevice(), _renderDevice->GetGraphicsQueueID(), 0, &m_QueueObj);
+				if (_renderDevice->GetGraphicsQueueID() == _renderDevice->GetPresentQueueID())
+				{
+					AddSupportFlag(COMMAND_QUEUE_SUPPORT_BIT_GRAPHICS);
+					AddSupportFlag(COMMAND_QUEUE_SUPPORT_BIT_PRESENT);
+				}
 			}
 		}
-	}
 
-	VKCommandQueue::~VKCommandQueue()
-	{ }
+		VKCommandQueue::~VKCommandQueue()
+		{
+		}
 
-	void VKCommandQueue::SubmitCommandBuffer(CommandBuffer* _commandBuffer, Fence* _fence)
-	{
-		VkCommandBuffer cmbuffer = ((VKCommandBuffer*)_commandBuffer)->GetVKCommandBuffer();
-		VkPipelineStageFlags waitStages[] = { VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT }; // TODO:: abstract this
+		void VKCommandQueue::SubmitCommandBuffer(CommandBuffer* _commandBuffer, RHI_Fence* _fence)
+		{
+			VkCommandBuffer cmbuffer = ((VKCommandBuffer*)_commandBuffer)->GetVKCommandBuffer();
+			VkPipelineStageFlags waitStages[] = { VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT }; // TODO:: abstract this
 
-		VkSubmitInfo submitInfo{};
-		submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
-		submitInfo.waitSemaphoreCount	= 0;
-		submitInfo.pWaitDstStageMask	= waitStages;
-		submitInfo.commandBufferCount	= 1;
-		submitInfo.pCommandBuffers		= &cmbuffer;
-		submitInfo.signalSemaphoreCount = 0;
+			VkSubmitInfo submitInfo{};
+			submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+			submitInfo.waitSemaphoreCount = 0;
+			submitInfo.pWaitDstStageMask = waitStages;
+			submitInfo.commandBufferCount = 1;
+			submitInfo.pCommandBuffers = &cmbuffer;
+			submitInfo.signalSemaphoreCount = 0;
 
-		if (vkQueueSubmit(m_QueueObj, 1, &submitInfo, ((VKFence*)_fence)->GetVKFence()) != VK_SUCCESS)
-			Logger::Log("VK_ERROR - Failed to submit CommandBuffer.", LogType::LOG_TYPE_ERROR);
+			if (vkQueueSubmit(m_QueueObj, 1, &submitInfo, ((VKFence*)_fence)->GetVKFence()) != VK_SUCCESS)
+				Logger::Log("VK_ERROR - Failed to submit CommandBuffer.", LogType::LOG_TYPE_ERROR);
+		}
 	}
 }

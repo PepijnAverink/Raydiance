@@ -3,7 +3,6 @@
 #include "./graphics/RHI/RHI_debug_mode.h"
 
 class Window;
-
 namespace Raydiance
 {
 	namespace Graphics

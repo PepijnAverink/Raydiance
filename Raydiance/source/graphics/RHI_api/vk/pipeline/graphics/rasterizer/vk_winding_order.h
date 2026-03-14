@@ -4,19 +4,22 @@
 
 #include <vulkan/vulkan.h>
 
-namespace Graphics
+namespace Raydiance
 {
-	inline VkFrontFace ResolveVKWindingOrder(WindingOrder _windingOrder)
+	namespace Graphics
 	{
-		switch (_windingOrder)
+		inline VkFrontFace ResolveVKWindingOrder(WindingOrder _windingOrder)
 		{
-			case WindingOrder::WINDING_ORDER_CW :
+			switch (_windingOrder)
+			{
+			case WindingOrder::WINDING_ORDER_CW:
 				return VK_FRONT_FACE_CLOCKWISE;
 			case WindingOrder::WINDING_ORDER_CCW:
 				return VK_FRONT_FACE_COUNTER_CLOCKWISE;
-		}
+			}
 
-		Logger::Log("VK_ERROR - Failed to resolve WindingOrder: " + _windingOrder, LogType::LOG_TYPE_ERROR);
-		return VK_FRONT_FACE_CLOCKWISE;
+			Logger::Log("VK_ERROR - Failed to resolve WindingOrder: " + _windingOrder, LogType::LOG_TYPE_ERROR);
+			return VK_FRONT_FACE_CLOCKWISE;
+		}
 	}
 }

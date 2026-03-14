@@ -1,18 +1,21 @@
 #pragma once
-//#include "./graphics/RHI/pipeline/graphics/graphics_pipeline.h"
-//#include "./graphics/RHI_api/vk/vk_render_device.h"
+#include "./graphics/RHI/pipeline/graphics/graphics_pipeline.h"
+#include "./graphics/RHI_api/vk/vk_render_device.h"
 
-namespace Graphics
+namespace Raydiance
 {
-	class VKGraphicsPipeline final : public GraphicsPipeline
+	namespace Graphics
 	{
-	public:
-		VKGraphicsPipeline(VKRenderDevice* _renderDevice, const GraphicsPipelineDescriptor* _graphicsPipelineDescriptor);
-		virtual ~VKGraphicsPipeline();
+		class VKGraphicsPipeline final : public GraphicsPipeline
+		{
+		public:
+			VKGraphicsPipeline(VKRenderDevice* _renderDevice, const GraphicsPipelineDescriptor* _graphicsPipelineDescriptor);
+			virtual ~VKGraphicsPipeline();
 
-		inline VkPipeline GetVKGraphicsPipeline() const { return m_GraphicsPipelineObj; }
+			inline VkPipeline GetVKGraphicsPipeline() const { return m_GraphicsPipelineObj; }
 
-	private:
-		VkPipeline m_GraphicsPipelineObj;
-	};
+		private:
+			VkPipeline m_GraphicsPipelineObj;
+		};
+	}
 }

@@ -1,11 +1,15 @@
 //#include "./graphics/RHI/pipeline/renderpass/render_pass.h"
 #include "core/stdafx.h"
-namespace Graphics
+
+namespace Raydiance
 {
-	RenderPass::RenderPass(const RenderPassDescriptor* _renderPassDescriptor)
+	namespace Graphics
 	{
-	}
-	RenderPass::~RenderPass()
-	{
+		RenderPass::RenderPass(const RenderPassDescriptor* _renderPassDescriptor)
+		{
+		}
+		RenderPass::~RenderPass()
+		{
+		}
 	}
 }
