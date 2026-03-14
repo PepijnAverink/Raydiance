@@ -18,6 +18,10 @@ namespace Raydiance
 
 			virtual Raydiance::Result Initialize(const Raydiance::Graphics::RHI_RenderDeviceDescriptor& _renderDeviceDescriptor) override;
 
+			// Adapter functions
+			// ----------------------------------------------------------------------
+			virtual Result GetAdapterCount(uint32& _count) const override;
+
 			inline VkInstance GetVKInstance() const { return m_Instance; }
 			inline VkSurfaceKHR GetVKSurface() const { return m_Surface; }
 

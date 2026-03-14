@@ -224,6 +224,13 @@ namespace Raydiance
             return Raydiance::Result::RESULT_GOOD;
         }
 
+        Result VKRenderDevice::GetAdapterCount(uint32& _count) const
+        {
+            // Get the number of devices
+            vkEnumeratePhysicalDevices(m_Instance, &_count, nullptr);
+            return Result::RESULT_GOOD;
+        }
+
         uint32_t VKRenderDevice::GetQueueFamilyID(const CommandQueueType _type) const
         {
             // TODO:: add support for other types of queues

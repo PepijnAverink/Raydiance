@@ -53,19 +53,32 @@ namespace Raydiance
 		class RHI_RenderDevice
 		{
 		public:
+			// RHI_RenderDevice creation, retrieval and destruction
+			// ====================================================
 			[[nodiscard]]
 			static std::shared_ptr<RHI_RenderDevice> Create(RHI_GraphicsAPI _api);
+			[[nodiscard]]
 			static std::shared_ptr<RHI_RenderDevice> Get();
 
 			virtual ~RHI_RenderDevice();
 
+			[[nodiscard]]
 			virtual Raydiance::Result Initialize(const Raydiance::Graphics::RHI_RenderDeviceDescriptor& _renderDeviceDescriptor);
 
-			virtual CommandPool* CreateCommandPool(const CommandPoolDescriptor* _commandPoolDescriptor) = 0;
+			// Adapter functions
+			// ----------------------------------------------------------------------
+			[[nodiscard]]
+			virtual Result GetAdapterCount(uint32& _count) const = 0;
+			//virtual Result GetAdapter(uint32 _index, RHI_Adapter** _adapter) const = 0;
+
+			//virtual Result LinkAdapter(RHI_Adapter* _adapter) = 0;
+
+
+			virtual CommandPool*   CreateCommandPool(const CommandPoolDescriptor* _commandPoolDescriptor) = 0;
 			virtual CommandBuffer* CreateCommandBuffer(const CommandBufferDescriptor* _commandBufferDescriptor) = 0;
-			virtual CommandQueue* CreateCommandQueue(const CommandQueueDescriptor* _commandQueueDescriptor) = 0;
+			virtual CommandQueue*  CreateCommandQueue(const CommandQueueDescriptor* _commandQueueDescriptor) = 0;
 			virtual RHI_Swapchain* CreateSwapchain(CommandQueue* _commandQueue, const RHI_SwapchainDescriptor* _swapchainDescriptor) = 0;
-			virtual RHI_Fence* CreateFence(const RHI_FenceDescriptor* _fenceDescriptor) = 0;
+			virtual RHI_Fence*     CreateFence(const RHI_FenceDescriptor* _fenceDescriptor) = 0;
 
 			virtual GraphicsPipeline* CreateGraphicsPipeline(const GraphicsPipelineDescriptor* _graphicsPipelineDescriptor) = 0;
 			virtual InputLayout* CreateInputLayout(const InputLayoutDescriptor* _inputLayoutDescriptor) = 0;

@@ -65,12 +65,17 @@ namespace Raydiance
 			// RenderDevice
 			// --------------------------------------------------------------------
 			Raydiance::Graphics::RHI_RenderDeviceDescriptor renderDeviceDesc;
+			renderDeviceDesc.DebugMode			= Raydiance::Graphics::RHI_DebugMode::RHI_DEBUG_MODE_DEBUG_ONLY;
 			renderDeviceDesc.NativeWindowHandle = _window->GetWindowHandlePtr();
-			//renderDeviceDesc.API	   = RHI_GraphicsAPI::RHI_GRAPHICS_API_VULKAN;
-			renderDeviceDesc.DebugMode = Raydiance::Graphics::RHI_DebugMode::RHI_DEBUG_MODE_DEBUG_ONLY;
 
-			m_RenderDevice = RHI_RenderDevice::Create(RHI_GraphicsAPI::RHI_GRAPHICS_API_VULKAN);
+
+			RHI_GraphicsAPI api = RHI_GraphicsAPI::RHI_GRAPHICS_API_VULKAN;
+			m_RenderDevice = RHI_RenderDevice::Create(api);
 			m_RenderDevice->Initialize(renderDeviceDesc);
+
+			uint32 i = 0;
+			m_RenderDevice->GetAdapterCount(i);
+
 			// CommandQueue
 			// --------------------------------------------------------------------
 			Graphics::CommandQueueDescriptor commandQueueDesc;
@@ -82,16 +87,16 @@ namespace Raydiance
 			// Swapchain
 			// --------------------------------------------------------------------
 			RHI_SwapchainDescriptor swapchainDesc;
-			swapchainDesc.Name = "Swapchain";
+			swapchainDesc.Name   = "Swapchain";
 			swapchainDesc.Window = _window;
-			swapchainDesc.Width = _window->GetWidth();
+			swapchainDesc.Width  = _window->GetWidth();
 			swapchainDesc.Height = _window->GetHeight();
 
 			// Create swapchain and query dimensions
-			m_Swapchain = m_RenderDevice->CreateSwapchain(m_CommandQueue, &swapchainDesc);
-			m_ClientWidth = m_Swapchain->GetWidth();
-			m_ClientHeight = m_Swapchain->GetHeight();
-			m_BackbufferCount = m_Swapchain->GetBufferCount();
+			m_Swapchain			 = m_RenderDevice->CreateSwapchain(m_CommandQueue, &swapchainDesc);
+			m_ClientWidth		 = m_Swapchain->GetWidth();
+			m_ClientHeight		 = m_Swapchain->GetHeight();
+			m_BackbufferCount	 = m_Swapchain->GetBufferCount();
 		}
 
 		RendererBackend::~RendererBackend()
