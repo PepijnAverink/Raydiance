@@ -83,8 +83,13 @@ namespace Raydiance
 			}
 			RHI_RenderDevice::Get().Initialize(renderDeviceDesc);
 
-			uint32 i = 0;
-			RHI_RenderDevice::Get().GetAdapterCount(i);
+			uint32 adapterCount = 0;
+			RHI_RenderDevice::Get().GetAdapterCount(adapterCount);
+
+			for (int i = 0; i < adapterCount; i++)
+			{
+				RHI_RenderDevice::Get().GetAdapter(i);
+			}
 
 			// CommandQueue
 			// --------------------------------------------------------------------

@@ -21,6 +21,9 @@
 #include "./graphics/RHI_api/vk/resource/sampler/vk_sampler2D.h"
 #include "./graphics/RHI_api/vk/resource/texture/vk_texture2D.h"
 
+#include "./graphics/RHI_api/vk/RHI_VK_adapter.h"
+
+// Core includes
 #include "./core/window/window.h"
 
 const std::vector<const char*> validationLayers = {
@@ -241,6 +244,27 @@ namespace Raydiance
                 return Result::RESULT_ERROR;
             }
 
+            // Query the number of adapters present in this device
+            uint32 count = 0;
+            GetAdapterCount(count);
+
+            // Error checking on the number of presen adapters
+            if (count <= _adapterID)
+            {
+                Logger::Log("The user queried a non-existing adapter, could not retrieve any information for the 'RHI_AdapterInfo' class.", LogType::LOG_TYPE_ERROR);
+                return Result::RESULT_ERROR;
+            }
+
+            // The number of devices to be queried
+            // Always +1 to convert from index to count
+            count = _adapterID + 1;
+
+            // allocate vector of logical devices
+            std::vector<VkPhysicalDevice> devices(count);
+            vkEnumeratePhysicalDevices(m_Instance, &count, devices.data());
+
+            // Gather info about the specific adapter requested
+            RHI_VK_Adapter adapter = RHI_VK_Adapter(devices[_adapterID]);
             return Result::RESULT_GOOD;
         }
 
