@@ -1,6 +1,6 @@
 #pragma once
-//#include "./graphics/RHI/pipeline/renderpass/render_pass.h"
-//#include "./graphics/RHI_api/vk/vk_render_device.h"
+#include "./graphics/RHI/pipeline/renderpass/render_pass.h"
+#include "./graphics/RHI_api/vk/vk_render_device.h"
 
 namespace Raydiance
 {

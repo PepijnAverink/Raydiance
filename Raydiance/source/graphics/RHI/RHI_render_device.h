@@ -69,7 +69,8 @@ namespace Raydiance
 			// Adapter functions
 			// ----------------------------------------------------------------------
 			[[nodiscard]] virtual Result GetAdapterCount(uint32& _count) const = 0;
-			[[nodiscard]] virtual Result GetAdapter(uint32 _adapterID) const = 0;
+			[[nodiscard]] virtual Result GetAdapter(const uint32 _adapterID) const = 0;
+
 			//virtual Result GetAdapter(uint32 _index, RHI_Adapter** _adapter) const = 0;
 
 			//virtual Result LinkAdapter(RHI_Adapter* _adapter) = 0;

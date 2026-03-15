@@ -1,8 +1,10 @@
-//#include "./graphics/RHI_api/vk/resource/buffer/vk_buffer.h"
-//#include "./graphics/RHI_api/vk/resource/buffer/vk_buffer_usage.h"
-//#include "./graphics/RHI_api/vk/resource/vk_resource_memory_type.h"
-//#include "./graphics/RHI_api/vk/resource/vk_resource_format.h"
-#include "core/stdafx.h"
+#include "./pch.h"
+#include "./graphics/RHI_api/vk/resource/buffer/vk_buffer.h"
+
+// Graphics includes
+#include "./graphics/RHI_api/vk/resource/vk_resource_format.h"
+#include "./graphics/RHI_api/vk/resource/buffer/vk_buffer_usage.h"
+#include "./graphics/RHI_api/vk/resource/vk_resource_memory_type.h"
 
 namespace Raydiance
 {

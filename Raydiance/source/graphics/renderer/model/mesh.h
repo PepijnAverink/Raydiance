@@ -1,5 +1,6 @@
 #pragma once
 #include "./graphics/renderer/model/sub_mesh.h"
+#include "./graphics/RHI/resource/buffer/buffer.h"
 
 #include <vector>
 
@@ -7,7 +8,6 @@ namespace Raydiance
 {
 	namespace Graphics
 	{
-		class Buffer;
 		class CommandBuffer;
 		class RHI_Fence;
 		class Mesh

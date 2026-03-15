@@ -1,18 +1,18 @@
-//#include "./graphics/RHI_api/vk/object/command/vk_command_buffer.h"
-//#include "./graphics/RHI_api/vk/object/command/vk_command_pool.h"
-//
-//#include "./graphics/RHI_api/vk/pipeline/layout/descriptor/vk_descriptor_set.h"
-//#include "./graphics/RHI_api/vk/resource/buffer/vk_buffer.h"
-//#include "./graphics/RHI_api/vk/pipeline/layout/vk_input_layout.h"
-//#include "./graphics/RHI_api/vk/pipeline/graphics/vk_graphics_pipeline.h"
-//
-//
-//#include "./graphics/RHI_api/vk/pipeline/framebuffer/vk_frame_buffer.h"
-//#include "./graphics/RHI_api/vk/resource/texture/vk_texture2D.h"
-//#include "./graphics/RHI_api/vk/pipeline/renderpass/vk_render_pass.h"
-//
-//#include "./core/error/logger.h"
-#include "core/stdafx.h"
+#include "./pch.h"
+#include "./graphics/RHI_api/vk/object/command/vk_command_buffer.h"
+
+// Graphics includes
+#include "./graphics/RHI_api/vk/object/command/vk_command_pool.h"
+
+#include "./graphics/RHI_api/vk/resource/buffer/vk_buffer.h"
+#include "./graphics/RHI_api/vk/resource/vk_resource_state.h"
+#include "./graphics/RHI_api/vk/resource/texture/vk_texture2D.h"
+
+#include "./graphics/RHI_api/vk/pipeline/layout/vk_input_layout.h"
+#include "./graphics/RHI_api/vk/pipeline/renderpass/vk_render_pass.h"
+#include "./graphics/RHI_api/vk/pipeline/framebuffer/vk_frame_buffer.h"
+#include "./graphics/RHI_api/vk/pipeline/graphics/vk_graphics_pipeline.h"
+#include "./graphics/RHI_api/vk/pipeline/layout/descriptor/vk_descriptor_set.h"
 
 namespace Raydiance
 {

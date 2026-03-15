@@ -1,7 +1,9 @@
-//#include "./graphics/RHI_api/vk/object/command/vk_command_queue.h"
-//#include "./graphics/RHI_api/vk/object/command/vk_command_buffer.h"
-//#include "./graphics/RHI_api/vk/object/sync/vk_fence.h"
-#include "core/stdafx.h"
+#include "./pch.h"
+#include "./graphics/RHI_api/vk/object/command/vk_command_queue.h"
+
+// Graphics includes
+#include "./graphics/RHI_api/vk/object/command/vk_command_buffer.h"
+#include "./graphics/RHI_api/vk/object/sync/vk_fence.h"
 
 namespace Raydiance
 {

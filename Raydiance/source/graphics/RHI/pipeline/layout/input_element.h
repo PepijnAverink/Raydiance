@@ -1,5 +1,5 @@
 #pragma once
-//#include "./graphics/RHI/pipeline/layout/input_type.h"
+#include "./graphics/RHI/pipeline/layout/input_type.h"
 #include "./graphics/RHI/resource/shader/shader_type_flags.h"
 
 #include <string>

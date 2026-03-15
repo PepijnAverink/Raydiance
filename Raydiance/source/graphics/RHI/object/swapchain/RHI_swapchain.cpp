@@ -1,6 +1,8 @@
-//#include "./graphics/RHI/object/swapchain/swapchain.h"
-//#include "./core/window/window.h"
-#include "core/stdafx.h"
+#include "./pch.h"
+#include "./graphics/RHI/object/swapchain/RHI_swapchain.h"
+
+#include "./core/window/window.h"
+
 namespace Raydiance
 {
 	namespace Graphics

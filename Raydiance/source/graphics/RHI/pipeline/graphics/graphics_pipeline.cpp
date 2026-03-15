@@ -1,5 +1,5 @@
-//#include "./graphics/RHI/pipeline/graphics/graphics_pipeline.h"
-#include "core/stdafx.h"
+#include "./pch.h"
+#include "./graphics/RHI/pipeline/graphics/graphics_pipeline.h"
 
 namespace Raydiance
 {

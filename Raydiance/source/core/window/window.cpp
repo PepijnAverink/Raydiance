@@ -1,6 +1,19 @@
 //#include "./core/window/window.h"
 //#include "./core/event/window/window_resize_event.h"
-#include "core/stdafx.h"
+#include "./pch.h"
+#include "./core/window/window.h"
+
+// Events includes
+#include "./core/event/window/window_resize_event.h"
+
+#include "./core/event/input/key_down_event.h"
+#include "./core/event/input/key_up_event.h"
+#include "./core/event/input/mouse_move_event.h"
+#include "./core/event/input/mouse_left_down_event.h"
+#include "./core/event/input/mouse_left_up_event.h"
+#include "./core/event/input/mouse_right_down_event.h"
+#include "./core/event/input/mouse_right_up_event.h"
+
 // Static forward declare
 static Window* s_Window = nullptr;
 static LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);

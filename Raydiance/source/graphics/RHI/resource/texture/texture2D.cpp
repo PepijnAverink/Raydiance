@@ -1,5 +1,5 @@
-//#include "./graphics/RHI/resource/texture/texture2D.h"
-#include "core/stdafx.h"
+#include "./pch.h"
+#include "./graphics/RHI/resource/texture/texture2D.h"
 
 namespace Raydiance
 {

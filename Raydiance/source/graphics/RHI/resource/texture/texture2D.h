@@ -1,6 +1,6 @@
 #pragma once
-//#include "./graphics/RHI/resource/texture/texture2D_descriptor.h"
-//#include "./graphics/RHI/resource/resource_format.h"
+#include "./graphics/RHI/resource/texture/texture2D_descriptor.h"
+
 namespace Raydiance
 {
 	namespace Graphics

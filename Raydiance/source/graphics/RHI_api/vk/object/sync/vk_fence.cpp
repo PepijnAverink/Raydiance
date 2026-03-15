@@ -1,5 +1,5 @@
-//#include "./graphics/RHI_api/vk/object/sync/vk_fence.h"
-#include "core/stdafx.h"
+#include "./pch.h"
+#include "./graphics/RHI_api/vk/object/sync/vk_fence.h"
 
 namespace Raydiance
 {

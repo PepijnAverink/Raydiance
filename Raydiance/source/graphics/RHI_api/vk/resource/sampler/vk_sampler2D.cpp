@@ -1,4 +1,9 @@
-#include "core/stdafx.h"
+#include "./pch.h"
+#include "./graphics/RHI_api/vk/resource/sampler/vk_sampler2D.h"
+
+// Graphics includes
+#include "./graphics/RHI_api/vk/resource/sampler/vk_filter_mode.h"
+#include "./graphics/RHI_api/vk/resource/sampler/vk_address_mode.h"
 
 namespace Raydiance
 {

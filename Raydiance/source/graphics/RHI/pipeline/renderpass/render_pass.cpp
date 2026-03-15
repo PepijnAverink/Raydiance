@@ -1,5 +1,5 @@
-//#include "./graphics/RHI/pipeline/renderpass/render_pass.h"
-#include "core/stdafx.h"
+#include "./pch.h"
+#include "./graphics/RHI/pipeline/renderpass/render_pass.h"
 
 namespace Raydiance
 {

@@ -1,17 +1,19 @@
-//#include "./graphics/RHI_api/vk/pipeline/graphics/vk_graphics_pipeline.h"
-//#include "./graphics/RHI_api/vk/pipeline/layout/vk_input_layout.h"
-//#include "./graphics/RHI_api/vk/pipeline/graphics/topology/vk_topology.h"
-//#include "./graphics/RHI_api/vk/pipeline/graphics/rasterizer/vk_cull_mode.h"
-//#include "./graphics/RHI_api/vk/pipeline/graphics/rasterizer/vk_fill_mode.h"
-//#include "./graphics/RHI_api/vk/pipeline/graphics/rasterizer/vk_winding_order.h"
-//#include "./graphics/RHI_api/vk/pipeline/renderpass/vk_render_pass.h"
-//#include "./graphics/RHI_api/vk/resource/shader/vk_shader.h"
-//#include "./graphics/RHI_api/vk/resource/vk_resource_format.h"
-//
-//#include "./utility/string_utility.h"
-//
-//#include <vector>
-#include "core/stdafx.h"
+#include "./pch.h"
+#include "./graphics/RHI_api/vk/pipeline/graphics/vk_graphics_pipeline.h"
+
+// Graphics includes
+#include "./graphics/RHI_api/vk/pipeline/layout/vk_input_layout.h"
+#include "./graphics/RHI_api/vk/pipeline/renderpass/vk_render_pass.h"
+#include "./graphics/RHI_api/vk/pipeline/graphics/topology/vk_topology.h"
+#include "./graphics/RHI_api/vk/pipeline/graphics/rasterizer/vk_cull_mode.h"
+#include "./graphics/RHI_api/vk/pipeline/graphics/rasterizer/vk_fill_mode.h"
+#include "./graphics/RHI_api/vk/pipeline/graphics/rasterizer/vk_winding_order.h"
+
+#include "./graphics/RHI_api/vk/resource/shader/vk_shader.h"
+#include "./graphics/RHI_api/vk/resource/vk_resource_format.h"
+
+// Utility includes
+#include "./utility/string_utility.h"
 
 namespace Raydiance
 {

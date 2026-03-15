@@ -63,9 +63,6 @@
     <ClInclude Include="source\core\error\logger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\core\stdafx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="source\graphics\RHI\object\command\command_buffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -405,6 +402,15 @@
     <ClInclude Include="source\core\error\assert.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\graphics\RHI\RHI_adapter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\graphics\RHI_api\vk\RHI_vk_adapter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\pch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\core\system\file_system.cpp">
@@ -414,9 +420,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\core\error\logger.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\core\stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\graphics\RHI\object\command\command_buffer.cpp">
@@ -540,6 +543,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\graphics\renderer\renderer3D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\graphics\RHI\RHI_adapter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\graphics\RHI_api\vk\RHI_vk_adapter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

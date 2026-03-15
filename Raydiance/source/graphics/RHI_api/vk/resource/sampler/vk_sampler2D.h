@@ -1,5 +1,6 @@
 #pragma once
 #include "./graphics/RHI/resource/sampler/sampler2D.h"
+#include "./graphics/RHI_api/vk/vk_render_device.h"
 
 namespace Raydiance
 {

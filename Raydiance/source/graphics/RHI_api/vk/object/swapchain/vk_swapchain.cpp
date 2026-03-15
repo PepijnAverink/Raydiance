@@ -1,16 +1,15 @@
-//#include "./graphics/RHI_api/vk/object/swapchain/vk_swapchain.h"
-//#include "./graphics/RHI_api/vk/object/command/vk_command_queue.h"
-//#include "./core/window/window.h"
-//
-//#include "./graphics/RHI_api/vk/resource/texture/vk_texture2D.h"
-//#include "./graphics/RHI_api/vk/resource/view/vk_texture_view.h"
-//#include "./graphics/RHI_api/vk/resource/vk_resource_format.h"
-//
-//#include "./graphics/RHI_api/vk/object/sync/vk_fence.h"
-//
-//#include <vector>
-//#include <algorithm>
-#include "core/stdafx.h"
+#include "./pch.h"
+#include "./graphics/RHI_api/vk/object/swapchain/vk_swapchain.h"
+
+// Graphics includes
+#include "./graphics/RHI_api/vk/object/sync/vk_fence.h"
+#include "./graphics/RHI_api/vk/object/command/vk_command_queue.h"
+
+#include "./graphics/RHI_api/vk/resource/vk_resource_format.h"
+#include "./graphics/RHI_api/vk/resource/texture/vk_texture2D.h"
+
+// Core includes
+#include "./core/window/window.h"
 
 namespace Raydiance
 {

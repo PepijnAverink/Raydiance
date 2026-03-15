@@ -10,6 +10,7 @@ namespace Raydiance
 {
 	namespace Graphics
 	{
+		enum class CommandQueueType;
 		class VKRenderDevice final : public RHI_RenderDevice
 		{
 		public:
@@ -21,7 +22,7 @@ namespace Raydiance
 			// Adapter functions
 			// ----------------------------------------------------------------------
 			[[nodiscard]] virtual Result GetAdapterCount(uint32& _count) const override;
-			[[nodiscard]] virtual Result GetAdapter(uint32 _adapterID) const override;
+			[[nodiscard]] virtual Result GetAdapter(const uint32 _adapterID) const override;
 
 			inline VkInstance GetVKInstance() const { return m_Instance; }
 			inline VkSurfaceKHR GetVKSurface() const { return m_Surface; }

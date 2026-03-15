@@ -1,7 +1,9 @@
-//#include "./graphics/RHI_api/vk/pipeline/layout/vk_input_layout.h"
-//#include "./graphics/RHI_api/vk/pipeline/layout/vk_input_type.h"
-//#include "./graphics/RHI_api/vk/resource/shader/vk_shader_type_flags.h"
-#include "core/stdafx.h"
+#include "./pch.h"
+#include "./graphics/RHI_api/vk/pipeline/layout/vk_input_layout.h"
+
+// Graphics includes
+#include "./graphics/RHI_api/vk/pipeline/layout/vk_input_type.h"
+#include "./graphics/RHI_api/vk/resource/shader/vk_shader_type_flags.h"
 
 namespace Raydiance
 {

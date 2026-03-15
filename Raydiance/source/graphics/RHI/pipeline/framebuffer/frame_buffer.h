@@ -1,5 +1,5 @@
 #pragma once
-//#include "./graphics/RHI/pipeline/framebuffer/frame_buffer_descriptor.h"
+#include "./graphics/RHI/pipeline/framebuffer/frame_buffer_descriptor.h"
 
 namespace Raydiance
 {

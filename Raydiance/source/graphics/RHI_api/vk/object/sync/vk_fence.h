@@ -1,6 +1,6 @@
 #pragma once
-//#include "./graphics/RHI/object/sync/fence.h"
-//#include "./graphics/RHI_api/vk/vk_render_device.h"
+#include "./graphics/RHI/object/sync/RHI_fence.h"
+#include "./graphics/RHI_api/vk/vk_render_device.h"
 
 namespace Raydiance
 {

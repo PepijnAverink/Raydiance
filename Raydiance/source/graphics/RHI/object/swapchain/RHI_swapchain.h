@@ -9,7 +9,7 @@ namespace Raydiance
 	namespace Graphics
 	{
 		class CommandQueue;
-		class Fence;
+		class RHI_Fence;
 
 		class Texture2D;
 		class TextureView;

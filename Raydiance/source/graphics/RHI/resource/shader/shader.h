@@ -1,5 +1,5 @@
 #pragma once
-#include "./graphics/RHI/resource/shader/shader_type.h"
+#include "./graphics/RHI/resource/shader/shader_descriptor.h"
 
 namespace Raydiance
 {

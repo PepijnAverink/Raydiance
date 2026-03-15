@@ -1,5 +1,5 @@
 #pragma once
-//#include "./graphics/RHI/pipeline/layout/input_layout_descriptor.h"
+#include "./graphics/RHI/pipeline/layout/input_layout_descriptor.h"
 
 #include <vector>
 

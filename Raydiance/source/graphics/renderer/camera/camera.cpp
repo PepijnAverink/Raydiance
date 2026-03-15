@@ -1,4 +1,6 @@
-#include "core/stdafx.h"
+#include "./pch.h"
+#include "./graphics/renderer/camera/camera.h"
+
 namespace Raydiance
 {
 	namespace Graphics

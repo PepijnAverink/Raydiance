@@ -1,7 +1,8 @@
-//#include "./graphics/RHI_api/vk/resource/shader/vk_shader.h"
-//#include "./core/system/file_system.h"
-//#include "./core/error/logger.h"
-#include "core/stdafx.h"
+#include "./pch.h"
+#include "./graphics/RHI_api/vk/resource/shader/vk_shader.h"
+
+// Core includes
+#include "./core/system/file_system.h"
 
 namespace Raydiance
 {

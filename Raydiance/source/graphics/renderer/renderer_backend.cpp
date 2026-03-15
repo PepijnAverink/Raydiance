@@ -1,4 +1,8 @@
-#include "core/stdafx.h"
+#include "./pch.h"
+#include "./graphics/renderer/renderer_backend.h"
+
+// Core includes
+#include "./core/window/window.h"
 
 namespace Raydiance
 {

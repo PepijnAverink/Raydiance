@@ -1,5 +1,5 @@
-//#include "./graphics/renderer/renderer3D.h"
-#include "core/stdafx.h"
+#include "./pch.h"
+#include "./graphics/renderer/renderer3D.h"
 
 namespace Raydiance
 {

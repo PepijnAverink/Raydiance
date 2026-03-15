@@ -1,4 +1,5 @@
-#include "core/stdafx.h"
+#include "./pch.h"
+#include "./graphics/renderer/model/primitives/cube.h"
 
 namespace Raydiance
 {

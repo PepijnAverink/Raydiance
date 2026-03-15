@@ -1,5 +1,5 @@
-//#include "./graphics/RHI/resource/shader/shader.h"
-#include "core/stdafx.h"
+#include "./pch.h"
+#include "./graphics/RHI/resource/shader/shader.h"
 
 namespace Raydiance
 {

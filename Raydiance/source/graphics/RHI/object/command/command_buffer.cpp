@@ -1,5 +1,6 @@
-//#include "./graphics/RHI/object/command/command_buffer.h"
-#include "core/stdafx.h"
+#include "./pch.h"
+#include "./graphics/RHI/object/command/command_buffer.h"
+
 namespace Raydiance
 {
 	namespace Graphics

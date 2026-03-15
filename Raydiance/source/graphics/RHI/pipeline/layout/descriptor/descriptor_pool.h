@@ -1,6 +1,7 @@
 #pragma once
-//#include "./graphics/RHI/pipeline/layout/descriptor/descriptor_pool_descriptor.h"
-//#include "./graphics/RHI/pipeline/layout/descriptor/descriptor_set.h"
+// Graphics includes
+#include "./graphics/RHI/pipeline/layout/descriptor/descriptor_pool_descriptor.h"
+#include "./graphics/RHI/pipeline/layout/descriptor/descriptor_set.h"
 
 namespace Raydiance
 {

@@ -1,31 +1,27 @@
-#include "core/stdafx.h"
-//#include "./graphics/RHI_api/vk/vk_render_device.h"
-//
-//#include "./graphics/RHI_api/vk/object/command/vk_command_pool.h"
-//#include "./graphics/RHI_api/vk/object/command/vk_command_buffer.h"
-//#include "./graphics/RHI_api/vk/object/command/vk_command_queue.h"
-//#include "./graphics/RHI_api/vk/object/swapchain/vk_swapchain.h"
-//#include "./graphics/RHI_api/vk/object/sync/vk_fence.h"
-//
-//#include "./graphics/RHI_api/vk/pipeline/graphics/vk_graphics_pipeline.h"
-//#include "./graphics/RHI_api/vk/pipeline/layout/vk_input_layout.h"
-//#include "./graphics/RHI_api/vk/pipeline/renderpass/vk_render_pass.h"
-//#include "./graphics/RHI_api/vk/pipeline/framebuffer/vk_frame_buffer.h"
-//
-//#include "./graphics/RHI_api/vk/pipeline/layout/descriptor/vk_descriptor_pool.h"
-//#include "./graphics/RHI_api/vk/pipeline/layout/descriptor/vk_descriptor_set.h"
-//
-//#include "./graphics/RHI_api/vk/resource/buffer/vk_buffer.h"
-//#include "./graphics/RHI_api/vk/resource/shader/vk_shader.h"
-//
-//#include "./core/window/window.h"
-//#include "./core/error/logger.h"
-//
-//#include <iostream>
-//#include <optional>
-//#include <vector>
-//#include <set>
+#include "./pch.h"
+#include "./graphics/RHI_api/vk/vk_render_device.h"
 
+// Graphics includes
+#include "./graphics/RHI_api/vk/object/command/vk_command_pool.h"
+#include "./graphics/RHI_api/vk/object/command/vk_command_buffer.h"
+#include "./graphics/RHI_api/vk/object/command/vk_command_queue.h"
+#include "./graphics/RHI_api/vk/object/swapchain/vk_swapchain.h"
+#include "./graphics/RHI_api/vk/object/sync/vk_fence.h"
+
+#include "./graphics/RHI_api/vk/pipeline/graphics/vk_graphics_pipeline.h"
+#include "./graphics/RHI_api/vk/pipeline/layout/vk_input_layout.h"
+#include "./graphics/RHI_api/vk/pipeline/renderpass/vk_render_pass.h"
+#include "./graphics/RHI_api/vk/pipeline/framebuffer/vk_frame_buffer.h"
+
+#include "./graphics/RHI_api/vk/pipeline/layout/descriptor/vk_descriptor_pool.h"
+#include "./graphics/RHI_api/vk/pipeline/layout/descriptor/vk_descriptor_set.h"
+
+#include "./graphics/RHI_api/vk/resource/buffer/vk_buffer.h"
+#include "./graphics/RHI_api/vk/resource/shader/vk_shader.h"
+#include "./graphics/RHI_api/vk/resource/sampler/vk_sampler2D.h"
+#include "./graphics/RHI_api/vk/resource/texture/vk_texture2D.h"
+
+#include "./core/window/window.h"
 
 const std::vector<const char*> validationLayers = {
     "VK_LAYER_KHRONOS_validation"
@@ -236,8 +232,15 @@ namespace Raydiance
             return Result::RESULT_GOOD;
         }
 
-        Result VKRenderDevice::GetAdapter(uint32 _adapterID) const
+        Result VKRenderDevice::GetAdapter(const uint32 _adapterID) const
         {
+            // Get the number of devices
+            if (m_Instance == VK_NULL_HANDLE)
+            {
+                Logger::Log("vkInstance == VK_NULL_HANDLE, RHI_VK_RenderDevice probably isn't initialized correctly.", LogType::LOG_TYPE_ERROR);
+                return Result::RESULT_ERROR;
+            }
+
             return Result::RESULT_GOOD;
         }
 

@@ -1,6 +1,9 @@
 #pragma once
 // Grpahics includes
 #include "./graphics/RHI/RHI_render_device.h"
+#include "./graphics/RHI/object/sync/RHI_fence.h"
+#include "./graphics/RHI/object/command/command_queue.h"
+#include "./graphics/RHI/object/command/command_buffer.h"
 #include "./graphics/RHI/object/swapchain/RHI_swapchain.h"
 
 #include <memory>

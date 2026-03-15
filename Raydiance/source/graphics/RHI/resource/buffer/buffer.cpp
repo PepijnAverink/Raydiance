@@ -1,5 +1,5 @@
-//#include "./graphics/RHI/resource/buffer/buffer.h"
-#include "core/stdafx.h"
+#include "./pch.h"
+#include "./graphics/RHI/resource/buffer/buffer.h"
 
 namespace Raydiance
 {

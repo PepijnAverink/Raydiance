@@ -1,5 +1,5 @@
 #pragma once
-//#include "./graphics/RHI/pipeline/renderpass/render_pass_descriptor.h"
+#include "./graphics/RHI/pipeline/renderpass/render_pass_descriptor.h"
 
 namespace Raydiance
 {

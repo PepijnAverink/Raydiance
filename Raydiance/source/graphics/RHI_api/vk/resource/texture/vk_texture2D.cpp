@@ -1,6 +1,9 @@
-//#include "./graphics/RHI_api/vk/resource/texture/vk_texture2D.h"
-//#include "./graphics/RHI_api/vk/resource/vk_resource_format.h"
-#include "core/stdafx.h"
+#include "./pch.h"
+#include "./graphics/RHI_api/vk/resource/texture/vk_texture2D.h"
+
+// Grpahics includes
+#include "./graphics/RHI_api/vk/resource/vk_resource_format.h"
+
 namespace Raydiance
 {
 	namespace Graphics

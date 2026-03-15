@@ -1,7 +1,9 @@
-//#include "./graphics/RHI_api/vk/pipeline/framebuffer/vk_frame_buffer.h"
-//#include "./graphics/RHI_api/vk/pipeline/renderpass/vk_render_pass.h"
-//#include "./graphics/RHI_api/vk/resource/view/vk_texture_view.h"
-#include "core/stdafx.h"
+#include "./pch.h"
+#include "./graphics/RHI_api/vk/pipeline/framebuffer/vk_frame_buffer.h"
+
+// Graphics includes
+#include "./graphics/RHI_api/vk/resource/texture/vk_texture2D.h"
+#include "./graphics/RHI_api/vk/pipeline/renderpass/vk_render_pass.h"
 
 namespace Raydiance
 {

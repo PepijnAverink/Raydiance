@@ -1,4 +1,4 @@
-#include "core/stdafx.h"
+#include "./pch.h"
 #include "sampler2D.h"
 
 namespace Raydiance

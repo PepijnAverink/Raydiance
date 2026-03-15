@@ -1,8 +1,10 @@
-//#include "./graphics/RHI_api/vk/pipeline/layout/descriptor/vk_descriptor_pool.h"
-//#include "./graphics/RHI_api/vk/pipeline/layout/descriptor/vk_descriptor_set.h"
-//#include "./graphics/RHI_api/vk/pipeline/layout/vk_input_type.h"
-//#include "./graphics/RHI_api/vk/pipeline/layout/vk_input_type.h"
-#include "core/stdafx.h"
+#include "./pch.h"
+#include "./graphics/RHI_api/vk/pipeline/layout/descriptor/vk_descriptor_pool.h"
+
+// Graphics includes
+#include "./graphics/RHI_api/vk/pipeline/layout/vk_input_type.h"
+#include "./graphics/RHI_api/vk/pipeline/layout/descriptor/vk_descriptor_set.h"
+
 
 namespace Raydiance
 {
