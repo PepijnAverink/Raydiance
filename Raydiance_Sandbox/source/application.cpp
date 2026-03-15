@@ -22,7 +22,7 @@ void Application::OnInitialize()
         commandPoolDesc.Name = "CommandPool";
         commandPoolDesc.Type = CommandQueueType::COMMAND_QUEUE_TYPE_GRAPHICS;
 
-        m_CommandPool = m_RenderBackend->GetRenderDevice()->CreateCommandPool(&commandPoolDesc);
+        m_CommandPool = m_RenderBackend->GetRenderDevice().CreateCommandPool(&commandPoolDesc);
     }
 
     // CommandBuffer
@@ -32,7 +32,7 @@ void Application::OnInitialize()
         commandBufferDesc.Type = CommandBufferType::COMMAND_BUFFER_TYPE_DIRECT;
         commandBufferDesc.CommandPool = m_CommandPool;
 
-        m_CommandBuffer = m_RenderBackend->GetRenderDevice()->CreateCommandBuffer(&commandBufferDesc);
+        m_CommandBuffer = m_RenderBackend->GetRenderDevice().CreateCommandBuffer(&commandBufferDesc);
     }
 
     // Fences
@@ -41,7 +41,7 @@ void Application::OnInitialize()
         fenceDesc.Name    = "ExecuteFence";
         fenceDesc.TimeOut = UINT64_MAX;
 
-        m_AquireFence = m_RenderBackend->GetRenderDevice()->CreateFence(&fenceDesc);
+        m_AquireFence = m_RenderBackend->GetRenderDevice().CreateFence(&fenceDesc);
     }
 
     m_Renderer = new DefaultRenderer();

@@ -20,7 +20,8 @@ namespace Raydiance
 
 			// Adapter functions
 			// ----------------------------------------------------------------------
-			virtual Result GetAdapterCount(uint32& _count) const override;
+			[[nodiscard]] virtual Result GetAdapterCount(uint32& _count) const override;
+			[[nodiscard]] virtual Result GetAdapter(uint32 _adapterID) const override;
 
 			inline VkInstance GetVKInstance() const { return m_Instance; }
 			inline VkSurfaceKHR GetVKSurface() const { return m_Surface; }
@@ -58,7 +59,7 @@ namespace Raydiance
 
 			// Per application state is stored in the VK_Instance object
 			// Used to initialize vulkan, should be deleted after everything else is freed
-			VkInstance m_Instance;
+			VkInstance m_Instance = VK_NULL_HANDLE;
 
 			VkDebugUtilsMessengerEXT m_DebugMessenger;
 

@@ -22,12 +22,12 @@ namespace Raydiance
 
 		VKCommandPool::~VKCommandPool()
 		{
-			vkDestroyCommandPool(((VKRenderDevice*)RHI_RenderDevice::Get().get())->GetDevice(), m_CommandPoolObj, nullptr);
+			vkDestroyCommandPool(static_cast<VKRenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_CommandPoolObj, nullptr);
 		}
 
 		void VKCommandPool::Reset()
 		{
-			vkResetCommandPool(((VKRenderDevice*)RHI_RenderDevice::Get().get())->GetDevice(), m_CommandPoolObj, VK_COMMAND_POOL_RESET_RELEASE_RESOURCES_BIT);
+			vkResetCommandPool(static_cast<VKRenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_CommandPoolObj, VK_COMMAND_POOL_RESET_RELEASE_RESOURCES_BIT);
 		}
 	}
 }

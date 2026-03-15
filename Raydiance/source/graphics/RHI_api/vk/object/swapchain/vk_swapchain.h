@@ -12,7 +12,7 @@ namespace Raydiance
 		class VKSwapchain final : public RHI_Swapchain
 		{
 		public:
-			VKSwapchain(VKRenderDevice* _renderDevice, CommandQueue* _commandQueue, const RHI_SwapchainDescriptor* _swapchainDescriptor);
+			VKSwapchain(VKRenderDevice& _renderDevice, CommandQueue* _commandQueue, const RHI_SwapchainDescriptor* _swapchainDescriptor);
 			virtual ~VKSwapchain();
 
 			virtual void Resize(CommandQueue* _commandQueue, const uint32_t _width, const uint32_t _height) override;
@@ -23,7 +23,7 @@ namespace Raydiance
 			inline VkSwapchainKHR GetVKSwapchain() const { return m_SwapChainObj; }
 
 		private:
-			void CreateSwapchain(VKRenderDevice* _renderDevice, CommandQueue* _commandQueue);
+			void CreateSwapchain(VKRenderDevice& _renderDevice, CommandQueue* _commandQueue);
 
 			VkSwapchainKHR m_SwapChainObj;
 		};

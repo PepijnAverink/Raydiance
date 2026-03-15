@@ -31,7 +31,7 @@ namespace Raydiance
 
         VKFrameBuffer::~VKFrameBuffer()
         {
-            vkDestroyFramebuffer(((VKRenderDevice*)RHI_RenderDevice::Get().get())->GetDevice(), m_FrameBufferObj, nullptr);
+            vkDestroyFramebuffer(static_cast<VKRenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_FrameBufferObj, nullptr);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Raydiance
             bufferDesc.Data = _data;
             bufferDesc.BufferLayout = _layout;
 
-            Buffer* stagingBuffer = RHI_RenderDevice::Get()->CreateBuffer(&bufferDesc);
+            Buffer* stagingBuffer = RHI_RenderDevice::Get().CreateBuffer(&bufferDesc);
 
             bufferDesc = {};
             bufferDesc.Name = "Generated-VertexBuffer";
@@ -30,7 +30,7 @@ namespace Raydiance
             bufferDesc.Data = nullptr;
             bufferDesc.BufferLayout = _layout;
 
-            m_VertexBuffer = RHI_RenderDevice::Get()->CreateBuffer(&bufferDesc);
+            m_VertexBuffer = RHI_RenderDevice::Get().CreateBuffer(&bufferDesc);
 
             _commandBuffer->BeginRecording();
             _commandBuffer->CopyBuffer(stagingBuffer, m_VertexBuffer, _size);
@@ -53,7 +53,7 @@ namespace Raydiance
             bufferDesc.Data = _data;
             bufferDesc.BufferLayout = _layout;
 
-            Buffer* stagingBuffer = RHI_RenderDevice::Get()->CreateBuffer(&bufferDesc);
+            Buffer* stagingBuffer = RHI_RenderDevice::Get().CreateBuffer(&bufferDesc);
 
             bufferDesc = {};
             bufferDesc.Name = "Generated-IndexBuffer";
@@ -63,7 +63,7 @@ namespace Raydiance
             bufferDesc.Data = nullptr;
             bufferDesc.BufferLayout = _layout;
 
-            m_IndexBuffer = RHI_RenderDevice::Get()->CreateBuffer(&bufferDesc);
+            m_IndexBuffer = RHI_RenderDevice::Get().CreateBuffer(&bufferDesc);
 
             _commandBuffer->BeginRecording();
             _commandBuffer->CopyBuffer(stagingBuffer, m_IndexBuffer, _size);

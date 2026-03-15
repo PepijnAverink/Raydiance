@@ -159,7 +159,7 @@ namespace Raydiance
 
         VKGraphicsPipeline::~VKGraphicsPipeline()
         {
-            vkDestroyPipeline(((VKRenderDevice*)RHI_RenderDevice::Get().get())->GetDevice(), m_GraphicsPipelineObj, nullptr);
+            vkDestroyPipeline(static_cast<VKRenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_GraphicsPipelineObj, nullptr);
         }
     }
 }

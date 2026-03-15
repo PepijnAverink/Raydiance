@@ -53,22 +53,23 @@ namespace Raydiance
 		class RHI_RenderDevice
 		{
 		public:
-			// RHI_RenderDevice creation, retrieval and destruction
-			// ====================================================
-			[[nodiscard]]
-			static std::shared_ptr<RHI_RenderDevice> Create(RHI_GraphicsAPI _api);
-			[[nodiscard]]
-			static std::shared_ptr<RHI_RenderDevice> Get();
-
+			// Public destructor
 			virtual ~RHI_RenderDevice();
 
-			[[nodiscard]]
-			virtual Raydiance::Result Initialize(const Raydiance::Graphics::RHI_RenderDeviceDescriptor& _renderDeviceDescriptor);
+			// RHI_RenderDevice creation, retrieval and destruction
+			// ====================================================
+			[[nodiscard]] static Result Create(RHI_GraphicsAPI _api);
+			[[nodiscard]] static Result Destroy();
+
+			[[nodiscard]] virtual Result Initialize(const RHI_RenderDeviceDescriptor& _renderDeviceDescriptor);
+
+			// Singleton getter
+			[[nodiscard]] static RHI_RenderDevice& Get();
 
 			// Adapter functions
 			// ----------------------------------------------------------------------
-			[[nodiscard]]
-			virtual Result GetAdapterCount(uint32& _count) const = 0;
+			[[nodiscard]] virtual Result GetAdapterCount(uint32& _count) const = 0;
+			[[nodiscard]] virtual Result GetAdapter(uint32 _adapterID) const = 0;
 			//virtual Result GetAdapter(uint32 _index, RHI_Adapter** _adapter) const = 0;
 
 			//virtual Result LinkAdapter(RHI_Adapter* _adapter) = 0;
@@ -94,7 +95,8 @@ namespace Raydiance
 			virtual Sampler2D* CreateSampler2D(const Sampler2DDescriptor* _sampler2DDescripotr) = 0;
 
 		protected:
-			RHI_RenderDevice();
+			// Protected constructor, user should not create base instance.
+			RHI_RenderDevice(RHI_GraphicsAPI _api);
 
 			// API
 			RHI_GraphicsAPI m_API = RHI_GraphicsAPI::RHI_GRAPHICS_API_INVALID;

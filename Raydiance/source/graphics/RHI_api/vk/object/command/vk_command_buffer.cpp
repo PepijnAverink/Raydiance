@@ -36,7 +36,7 @@ namespace Raydiance
 		VKCommandBuffer::~VKCommandBuffer()
 		{
 			// Destroy commandBuffer obj
-			vkFreeCommandBuffers(((VKRenderDevice*)RHI_RenderDevice::Get().get())->GetDevice(), ((VKCommandPool*)m_CommandPool)->GetVKCommandPool(), 1, &m_CommandBufferObj);
+			vkFreeCommandBuffers(static_cast<VKRenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), ((VKCommandPool*)m_CommandPool)->GetVKCommandPool(), 1, &m_CommandBufferObj);
 		}
 
 		void VKCommandBuffer::Reset()

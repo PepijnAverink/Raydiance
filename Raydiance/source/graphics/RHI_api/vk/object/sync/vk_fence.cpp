@@ -18,17 +18,17 @@ namespace Raydiance
 
 		VKFence::~VKFence()
 		{
-			vkDestroyFence(((VKRenderDevice*)RHI_RenderDevice::Get().get())->GetDevice(), m_FenceObj, nullptr);
+			vkDestroyFence(static_cast<VKRenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_FenceObj, nullptr);
 		}
 
 		void VKFence::Reset()
 		{
-			vkResetFences(((VKRenderDevice*)RHI_RenderDevice::Get().get())->GetDevice(), 1, &m_FenceObj);
+			vkResetFences(static_cast<VKRenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), 1, &m_FenceObj);
 		}
 
 		void VKFence::WaitForFence()
 		{
-			vkWaitForFences(((VKRenderDevice*)RHI_RenderDevice::Get().get())->GetDevice(), 1, &m_FenceObj, VK_TRUE, UINT64_MAX);
+			vkWaitForFences(static_cast<VKRenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), 1, &m_FenceObj, VK_TRUE, UINT64_MAX);
 		}
 	}
 }

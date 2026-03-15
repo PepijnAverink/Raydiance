@@ -56,7 +56,7 @@ namespace Raydiance
 				Logger::Log("VK_ERROR - Failed to create 'ImageView' object.", LogType::LOG_TYPE_ERROR);
 		}
 
-		VKTexture2D::VKTexture2D(VKRenderDevice* _renderDevice, VkImage _resource, const Texture2DDescriptor* _texture2DDescriptor)
+		VKTexture2D::VKTexture2D(VKRenderDevice& _renderDevice, VkImage _resource, const Texture2DDescriptor* _texture2DDescriptor)
 			: Texture2D(_texture2DDescriptor)
 			, m_ImageObj(_resource)
 		{
@@ -75,20 +75,20 @@ namespace Raydiance
 			createInfo.subresourceRange.baseArrayLayer = 0;
 			createInfo.subresourceRange.layerCount = 1;
 
-			if (vkCreateImageView(_renderDevice->GetDevice(), &createInfo, nullptr, &m_ImageViewObj) != VK_SUCCESS)
+			if (vkCreateImageView(_renderDevice.GetDevice(), &createInfo, nullptr, &m_ImageViewObj) != VK_SUCCESS)
 				Logger::Log("VK_ERROR - Failed to create 'ImageView' object.", LogType::LOG_TYPE_ERROR);
 		}
 
 		VKTexture2D::~VKTexture2D()
 		{
-			vkDestroyImage(((VKRenderDevice*)RHI_RenderDevice::Get().get())->GetDevice(), m_ImageObj, nullptr);
-			vkFreeMemory(((VKRenderDevice*)RHI_RenderDevice::Get().get())->GetDevice(), m_BufferMemory, nullptr);
+			vkDestroyImage(static_cast<VKRenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_ImageObj, nullptr);
+			vkFreeMemory(static_cast<VKRenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_BufferMemory, nullptr);
 			FreeImageView();
 		}
 
 		void VKTexture2D::FreeImageView()
 		{
-			vkDestroyImageView(((VKRenderDevice*)RHI_RenderDevice::Get().get())->GetDevice(), m_ImageViewObj, nullptr);
+			vkDestroyImageView(static_cast<VKRenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_ImageViewObj, nullptr);
 		}
 
 		uint32_t VKTexture2D::FindMemoryType(VKRenderDevice* _renderDevice, uint32_t typeFilter, VkMemoryPropertyFlags properties) {

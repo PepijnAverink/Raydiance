@@ -70,11 +70,17 @@ namespace Raydiance
 
 
 			RHI_GraphicsAPI api = RHI_GraphicsAPI::RHI_GRAPHICS_API_VULKAN;
-			m_RenderDevice = RHI_RenderDevice::Create(api);
-			m_RenderDevice->Initialize(renderDeviceDesc);
+			Result res = RHI_RenderDevice::Create(api);
+			if (CheckError(res) == true)
+			{
+				Logger::Log("Failed to create the 'RHI_RenderDevice' object.", LogType::LOG_TYPE_ERROR);
+				Logger::Log("No further evidence what went wrong, please see earlier logs.", LogType::LOG_TYPE_ERROR);
+				return;
+			}
+			RHI_RenderDevice::Get().Initialize(renderDeviceDesc);
 
 			uint32 i = 0;
-			m_RenderDevice->GetAdapterCount(i);
+			RHI_RenderDevice::Get().GetAdapterCount(i);
 
 			// CommandQueue
 			// --------------------------------------------------------------------
@@ -82,7 +88,7 @@ namespace Raydiance
 			commandQueueDesc.Name = "GeneralCommandQueue";
 			commandQueueDesc.Type = CommandQueueType::COMMAND_QUEUE_TYPE_GRAPHICS;
 
-			m_CommandQueue = m_RenderDevice->CreateCommandQueue(&commandQueueDesc);
+			m_CommandQueue = RHI_RenderDevice::Get().CreateCommandQueue(&commandQueueDesc);
 
 			// Swapchain
 			// --------------------------------------------------------------------
@@ -93,7 +99,7 @@ namespace Raydiance
 			swapchainDesc.Height = _window->GetHeight();
 
 			// Create swapchain and query dimensions
-			m_Swapchain			 = m_RenderDevice->CreateSwapchain(m_CommandQueue, &swapchainDesc);
+			m_Swapchain			 = RHI_RenderDevice::Get().CreateSwapchain(m_CommandQueue, &swapchainDesc);
 			m_ClientWidth		 = m_Swapchain->GetWidth();
 			m_ClientHeight		 = m_Swapchain->GetHeight();
 			m_BackbufferCount	 = m_Swapchain->GetBufferCount();
@@ -103,7 +109,10 @@ namespace Raydiance
 		{
 			delete m_Swapchain;
 			delete m_CommandQueue;
-			///delete m_RenderDevice;
+
+			// Destroying the 'RHI_RenderDevice' object should happen after all other graphics objects are destroyed, 
+			//	since they might be using the 'RHI_RenderDevice' object internally.
+			RHI_RenderDevice::Destroy();
 		}
 	}
 }

@@ -67,9 +67,9 @@ namespace Raydiance
 
 		VKInputLayout::~VKInputLayout()
 		{
-			vkDestroyPipelineLayout(((VKRenderDevice*)RHI_RenderDevice::Get().get())->GetDevice(), m_PipelineLayoutObj, nullptr);
+			vkDestroyPipelineLayout(static_cast<VKRenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_PipelineLayoutObj, nullptr);
 			for (int i = 0; i < m_DescriptorSetLayouts.size(); i++)
-				vkDestroyDescriptorSetLayout(((VKRenderDevice*)RHI_RenderDevice::Get().get())->GetDevice(), m_DescriptorSetLayouts[i], nullptr);
+				vkDestroyDescriptorSetLayout(static_cast<VKRenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_DescriptorSetLayouts[i], nullptr);
 		}
 	}
 }

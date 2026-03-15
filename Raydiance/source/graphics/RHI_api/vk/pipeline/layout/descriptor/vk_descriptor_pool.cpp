@@ -33,7 +33,7 @@ namespace Raydiance
 
 		VKDescriptorPool::~VKDescriptorPool()
 		{
-			vkDestroyDescriptorPool(((VKRenderDevice*)RHI_RenderDevice::Get().get())->GetDevice(), m_DescriptorPoolObj, nullptr);
+			vkDestroyDescriptorPool(static_cast<VKRenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_DescriptorPoolObj, nullptr);
 		}
 
 		DescriptorSet* VKDescriptorPool::AllocateDescriptorSet(const DescriptorSetDescriptor* _descriptorSetDescriptor)

@@ -27,14 +27,14 @@ namespace Raydiance
 			static uint32_t GetCurrntBackbufferIndex();
 
 			// Probably delete these
-			inline std::shared_ptr<RHI_RenderDevice> GetRenderDevice() const { return m_RenderDevice; }
+			inline RHI_RenderDevice& GetRenderDevice() const { return RHI_RenderDevice::Get(); }
 			inline RHI_Swapchain* GetSwapchain() const { return m_Swapchain; }
 
 		private:
 			RendererBackend(Window* _window);
 			~RendererBackend();
 
-			std::shared_ptr<RHI_RenderDevice> m_RenderDevice = nullptr;
+			//std::shared_ptr<RHI_RenderDevice> m_RenderDevice = nullptr;
 			CommandQueue* m_CommandQueue = nullptr;
 
 			RHI_Swapchain* m_Swapchain = nullptr;

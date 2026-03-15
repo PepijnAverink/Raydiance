@@ -43,16 +43,16 @@ namespace Raydiance
 
 		VKBuffer::~VKBuffer()
 		{
-			vkDestroyBuffer(((VKRenderDevice*)RHI_RenderDevice::Get().get())->GetDevice(), m_BufferObj, nullptr);
-			vkFreeMemory(((VKRenderDevice*)RHI_RenderDevice::Get().get())->GetDevice(), m_BufferMemory, nullptr);
+			vkDestroyBuffer(static_cast<VKRenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_BufferObj, nullptr);
+			vkFreeMemory(static_cast<VKRenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_BufferMemory, nullptr);
 		}
 
 		void VKBuffer::SetData(void* _data, const uint32_t _size)
 		{
 			void* data;
-			vkMapMemory(((VKRenderDevice*)RHI_RenderDevice::Get().get())->GetDevice(), m_BufferMemory, 0, m_Size, 0, &data);
+			vkMapMemory(static_cast<VKRenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_BufferMemory, 0, m_Size, 0, &data);
 			memcpy(data, _data, (size_t)_size);
-			vkUnmapMemory(((VKRenderDevice*)RHI_RenderDevice::Get().get())->GetDevice(), m_BufferMemory);
+			vkUnmapMemory(static_cast<VKRenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_BufferMemory);
 		}
 
 		uint32_t VKBuffer::FindMemoryType(VKRenderDevice* _renderDevice, uint32_t typeFilter, VkMemoryPropertyFlags properties) {

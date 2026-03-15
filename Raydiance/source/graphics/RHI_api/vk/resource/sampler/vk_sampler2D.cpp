@@ -31,7 +31,7 @@ namespace Raydiance
 		}
 		VKSampler2D::~VKSampler2D()
 		{
-			vkDestroySampler(((VKRenderDevice*)RHI_RenderDevice::Get().get())->GetDevice(), m_SamplerObj, nullptr);
+			vkDestroySampler(static_cast<VKRenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_SamplerObj, nullptr);
 		}
 	}
 }

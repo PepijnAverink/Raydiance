@@ -20,7 +20,7 @@ namespace Raydiance
 			allocInfo.descriptorSetCount = 1;
 			allocInfo.pSetLayouts = &layout;
 
-			if (vkAllocateDescriptorSets(((VKRenderDevice*)RHI_RenderDevice::Get().get())->GetDevice(), &allocInfo, &m_DescriptorSetObj) != VK_SUCCESS)
+			if (vkAllocateDescriptorSets(static_cast<VKRenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), &allocInfo, &m_DescriptorSetObj) != VK_SUCCESS)
 				Logger::Log("VK_ERROR - Failed to allocate 'DescriptorSet' object.", LogType::LOG_TYPE_ERROR);
 		}
 
@@ -47,7 +47,7 @@ namespace Raydiance
 			descriptorWrite.pImageInfo = nullptr; // Optional
 			descriptorWrite.pTexelBufferView = nullptr; // Optional
 
-			vkUpdateDescriptorSets(((VKRenderDevice*)RHI_RenderDevice::Get().get())->GetDevice(), 1, &descriptorWrite, 0, nullptr);
+			vkUpdateDescriptorSets(static_cast<VKRenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), 1, &descriptorWrite, 0, nullptr);
 		}
 
 		void VKDescriptorSet::AllocateDescriptor(Texture2D* _texture, Sampler2D* _sampler, const uint32_t _bindingIndex, const uint32_t _arrayIndex)
@@ -68,7 +68,7 @@ namespace Raydiance
 			descriptorWrite.pImageInfo = &imageInfo; // Optional
 			descriptorWrite.pTexelBufferView = nullptr; // Optional
 
-			vkUpdateDescriptorSets(((VKRenderDevice*)RHI_RenderDevice::Get().get())->GetDevice(), 1, &descriptorWrite, 0, nullptr);
+			vkUpdateDescriptorSets(static_cast<VKRenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), 1, &descriptorWrite, 0, nullptr);
 		}
 	}
 }

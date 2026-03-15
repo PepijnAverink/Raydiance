@@ -76,7 +76,7 @@ namespace Raydiance
 
 		VKRenderPass::~VKRenderPass()
 		{
-			vkDestroyRenderPass(((VKRenderDevice*)RHI_RenderDevice::Get().get())->GetDevice(), m_RenderPassObj, nullptr);
+			vkDestroyRenderPass(static_cast<VKRenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_RenderPassObj, nullptr);
 		}
 	}
 }

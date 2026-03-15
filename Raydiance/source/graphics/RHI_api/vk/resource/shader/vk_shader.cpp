@@ -27,7 +27,7 @@ namespace Raydiance
 
 		VKShader::~VKShader()
 		{
-			vkDestroyShaderModule(((VKRenderDevice*)RHI_RenderDevice::Get().get())->GetDevice(), m_ShaderModule, nullptr);
+			vkDestroyShaderModule(static_cast<VKRenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_ShaderModule, nullptr);
 		}
 	}
 }

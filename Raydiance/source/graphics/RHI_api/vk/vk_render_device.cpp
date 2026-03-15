@@ -1,5 +1,4 @@
 #include "core/stdafx.h"
-
 //#include "./graphics/RHI_api/vk/vk_render_device.h"
 //
 //#include "./graphics/RHI_api/vk/object/command/vk_command_pool.h"
@@ -72,11 +71,8 @@ namespace Raydiance
         QueueFamilyIndices FindQueueFamilies(VkPhysicalDevice device, VkSurfaceKHR _surface);
 
         VKRenderDevice::VKRenderDevice()
-            : RHI_RenderDevice()
-        {
-            // Assign the API
-            m_API = RHI_GraphicsAPI::RHI_GRAPHICS_API_VULKAN;
-        }
+            : RHI_RenderDevice(RHI_GraphicsAPI::RHI_GRAPHICS_API_VULKAN)
+        { }
 
         VKRenderDevice::~VKRenderDevice()
         {
@@ -218,7 +214,7 @@ namespace Raydiance
                 }
 
                 m_GraphicsQueueID = indices.graphicsFamily.value();
-                m_PresentQueueID = indices.presentFamily.value();
+                m_PresentQueueID  = indices.presentFamily.value();
             }
 
             return Raydiance::Result::RESULT_GOOD;
@@ -226,8 +222,22 @@ namespace Raydiance
 
         Result VKRenderDevice::GetAdapterCount(uint32& _count) const
         {
+            _count = 0;
+
             // Get the number of devices
+            if (m_Instance == VK_NULL_HANDLE)
+            {
+                Logger::Log("vkInstance == VK_NULL_HANDLE, RHI_VK_RenderDevice probably isn't initialized correctly.", LogType::LOG_TYPE_ERROR);
+				return Result::RESULT_ERROR;
+            }
+
+			// Gather the number of devices (or adapters)
             vkEnumeratePhysicalDevices(m_Instance, &_count, nullptr);
+            return Result::RESULT_GOOD;
+        }
+
+        Result VKRenderDevice::GetAdapter(uint32 _adapterID) const
+        {
             return Result::RESULT_GOOD;
         }
 
@@ -260,7 +270,7 @@ namespace Raydiance
 
         RHI_Swapchain* VKRenderDevice::CreateSwapchain(CommandQueue* _commandQueue, const RHI_SwapchainDescriptor* _swapchainDescriptor)
         {
-            VKSwapchain* swapchain = new VKSwapchain(this, _commandQueue, _swapchainDescriptor);
+            VKSwapchain* swapchain = new VKSwapchain(*this, _commandQueue, _swapchainDescriptor);
             return swapchain;
         }
 
