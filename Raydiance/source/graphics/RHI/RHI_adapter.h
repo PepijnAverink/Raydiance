@@ -17,13 +17,19 @@ namespace Raydiance
 					 RHI_Adapter(void) = default;
 			virtual ~RHI_Adapter(void) = default;
 
+			inline const std::string_view GetName() const { return m_Name; }
+			inline const std::string_view GetVendor() const { return m_Vendor; }
+
+			inline uint64 GetVRam() const { return m_VRam; }
+			inline RHI_AdapterType GetType() const { return m_Type; }
+
 		protected:
 			// Raw stored data about the adapter
 			std::string		m_Name;
 			std::string		m_Vendor;
-			uint32			m_VRam = 0;
+			uint64			m_VRam = 0;
 
-			RHI_AdapterType m_Type = RHI_AdapterType::RHI_ADAPTER_TYPE_INVALID;
+			RHI_AdapterType m_Type = RHI_AdapterType::RHI_ADAPTER_TYPE_INTEGRATED;
 		};
 
 		inline std::string ResolvePCI_ID(uint32_t _id)

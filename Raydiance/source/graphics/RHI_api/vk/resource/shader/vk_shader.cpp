@@ -8,7 +8,7 @@ namespace Raydiance
 {
 	namespace Graphics
 	{
-		VKShader::VKShader(VKRenderDevice* _renderDevice, const ShaderDescriptor* _shaderDescriptor)
+		VKShader::VKShader(RHI_VK_RenderDevice* _renderDevice, const ShaderDescriptor* _shaderDescriptor)
 			: Shader(_shaderDescriptor)
 		{
 			// Read shader code
@@ -28,7 +28,7 @@ namespace Raydiance
 
 		VKShader::~VKShader()
 		{
-			vkDestroyShaderModule(static_cast<VKRenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_ShaderModule, nullptr);
+			vkDestroyShaderModule(static_cast<RHI_VK_RenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_ShaderModule, nullptr);
 		}
 	}
 }

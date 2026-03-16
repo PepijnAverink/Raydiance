@@ -1,6 +1,6 @@
 #pragma once
 #include "./graphics/RHI/object/sync/RHI_fence.h"
-#include "./graphics/RHI_api/vk/vk_render_device.h"
+#include "./graphics/RHI_api/vk/RHI_VK_render_device.h"
 
 namespace Raydiance
 {
@@ -9,7 +9,7 @@ namespace Raydiance
 		class VKFence final : public RHI_Fence
 		{
 		public:
-			VKFence(VKRenderDevice* _renderDevice, const RHI_FenceDescriptor* _fenceDescriptor);
+			VKFence(RHI_VK_RenderDevice* _renderDevice, const RHI_FenceDescriptor* _fenceDescriptor);
 			virtual ~VKFence();
 
 			virtual void Reset() override;

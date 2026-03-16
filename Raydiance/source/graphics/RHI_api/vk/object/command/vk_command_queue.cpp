@@ -9,7 +9,7 @@ namespace Raydiance
 {
 	namespace Graphics
 	{
-		VKCommandQueue::VKCommandQueue(VKRenderDevice* _renderDevice, const CommandQueueDescriptor* _commandQueueDescriptor)
+		VKCommandQueue::VKCommandQueue(RHI_VK_RenderDevice* _renderDevice, const CommandQueueDescriptor* _commandQueueDescriptor)
 			: CommandQueue(_commandQueueDescriptor)
 		{
 			if (_commandQueueDescriptor->Type == CommandQueueType::COMMAND_QUEUE_TYPE_GRAPHICS)

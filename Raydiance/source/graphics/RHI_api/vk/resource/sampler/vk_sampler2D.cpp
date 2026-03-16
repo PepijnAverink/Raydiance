@@ -2,6 +2,8 @@
 #include "./graphics/RHI_api/vk/resource/sampler/vk_sampler2D.h"
 
 // Graphics includes
+#include "./graphics/RHI_api/vk/RHI_VK_adapter.h"
+
 #include "./graphics/RHI_api/vk/resource/sampler/vk_filter_mode.h"
 #include "./graphics/RHI_api/vk/resource/sampler/vk_address_mode.h"
 
@@ -9,11 +11,11 @@ namespace Raydiance
 {
 	namespace Graphics
 	{
-		VKSampler2D::VKSampler2D(VKRenderDevice* _renderDevice, const Sampler2DDescriptor* _sampler2DDescriptor)
+		VKSampler2D::VKSampler2D(RHI_VK_RenderDevice* _renderDevice, const Sampler2DDescriptor* _sampler2DDescriptor)
 			: Sampler2D(_sampler2DDescriptor)
 		{
 			VkPhysicalDeviceProperties properties{};
-			vkGetPhysicalDeviceProperties(_renderDevice->GetPhysicalDevice(), &properties);
+			vkGetPhysicalDeviceProperties(static_cast<const RHI_VK_Adapter&>(_renderDevice->GetActiveAdapter()).GetPhysicalDevice(), &properties);
 
 			VkSamplerCreateInfo samplerInfo{};
 			samplerInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO;
@@ -36,7 +38,7 @@ namespace Raydiance
 		}
 		VKSampler2D::~VKSampler2D()
 		{
-			vkDestroySampler(static_cast<VKRenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_SamplerObj, nullptr);
+			vkDestroySampler(static_cast<RHI_VK_RenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_SamplerObj, nullptr);
 		}
 	}
 }

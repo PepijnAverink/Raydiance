@@ -2,6 +2,8 @@
 #include "./graphics/RHI_api/vk/resource/buffer/vk_buffer.h"
 
 // Graphics includes
+#include "./graphics/RHI_api/VK/RHI_VK_adapter.h"
+
 #include "./graphics/RHI_api/vk/resource/vk_resource_format.h"
 #include "./graphics/RHI_api/vk/resource/buffer/vk_buffer_usage.h"
 #include "./graphics/RHI_api/vk/resource/vk_resource_memory_type.h"
@@ -10,7 +12,7 @@ namespace Raydiance
 {
 	namespace Graphics
 	{
-		VKBuffer::VKBuffer(VKRenderDevice* _renderDevice, const BufferDescriptor* _bufferDescriptor)
+		VKBuffer::VKBuffer(RHI_VK_RenderDevice* _renderDevice, const BufferDescriptor* _bufferDescriptor)
 			: Buffer(_bufferDescriptor)
 			, m_IndexFormat(ResolveVKIndexFormat(m_Layout.GetElements()[0].Type))
 		{
@@ -45,21 +47,21 @@ namespace Raydiance
 
 		VKBuffer::~VKBuffer()
 		{
-			vkDestroyBuffer(static_cast<VKRenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_BufferObj, nullptr);
-			vkFreeMemory(static_cast<VKRenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_BufferMemory, nullptr);
+			vkDestroyBuffer(static_cast<RHI_VK_RenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_BufferObj, nullptr);
+			vkFreeMemory(static_cast<RHI_VK_RenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_BufferMemory, nullptr);
 		}
 
 		void VKBuffer::SetData(void* _data, const uint32_t _size)
 		{
 			void* data;
-			vkMapMemory(static_cast<VKRenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_BufferMemory, 0, m_Size, 0, &data);
+			vkMapMemory(static_cast<RHI_VK_RenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_BufferMemory, 0, m_Size, 0, &data);
 			memcpy(data, _data, (size_t)_size);
-			vkUnmapMemory(static_cast<VKRenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_BufferMemory);
+			vkUnmapMemory(static_cast<RHI_VK_RenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_BufferMemory);
 		}
 
-		uint32_t VKBuffer::FindMemoryType(VKRenderDevice* _renderDevice, uint32_t typeFilter, VkMemoryPropertyFlags properties) {
+		uint32_t VKBuffer::FindMemoryType(RHI_VK_RenderDevice* _renderDevice, uint32_t typeFilter, VkMemoryPropertyFlags properties) {
 			VkPhysicalDeviceMemoryProperties memProperties;
-			vkGetPhysicalDeviceMemoryProperties(_renderDevice->GetPhysicalDevice(), &memProperties);
+			vkGetPhysicalDeviceMemoryProperties(static_cast<const RHI_VK_Adapter&>(_renderDevice->GetActiveAdapter()).GetPhysicalDevice(), &memProperties);
 
 			for (uint32_t i = 0; i < memProperties.memoryTypeCount; i++) {
 				if ((typeFilter & (1 << i)) && (memProperties.memoryTypes[i].propertyFlags & properties) == properties) {

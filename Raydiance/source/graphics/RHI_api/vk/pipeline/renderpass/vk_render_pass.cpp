@@ -11,7 +11,7 @@ namespace Raydiance
 {
 	namespace Graphics
 	{
-		VKRenderPass::VKRenderPass(VKRenderDevice* _renderDevice, const RenderPassDescriptor* _renderPassDescriptor)
+		VKRenderPass::VKRenderPass(RHI_VK_RenderDevice* _renderDevice, const RenderPassDescriptor* _renderPassDescriptor)
 			: RenderPass(_renderPassDescriptor)
 		{
 			VkAttachmentReference depthAttachment;
@@ -78,7 +78,7 @@ namespace Raydiance
 
 		VKRenderPass::~VKRenderPass()
 		{
-			vkDestroyRenderPass(static_cast<VKRenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_RenderPassObj, nullptr);
+			vkDestroyRenderPass(static_cast<RHI_VK_RenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_RenderPassObj, nullptr);
 		}
 	}
 }

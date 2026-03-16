@@ -339,7 +339,7 @@
     <ClInclude Include="source\graphics\RHI_api\vk\resource\vk_resource_state.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI_api\vk\vk_render_device.h">
+    <ClInclude Include="source\graphics\RHI_api\vk\RHI_VK_render_device.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\graphics\RHI_api\RHI_graphics_api.h">
@@ -405,7 +405,7 @@
     <ClInclude Include="source\graphics\RHI\RHI_adapter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI_api\vk\RHI_vk_adapter.h">
+    <ClInclude Include="source\graphics\RHI_api\vk\RHI_VK_adapter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\pch.h">
@@ -521,7 +521,7 @@
     <ClCompile Include="source\graphics\RHI_api\vk\resource\texture\vk_texture2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\graphics\RHI_api\vk\vk_render_device.cpp">
+    <ClCompile Include="source\graphics\RHI_api\vk\RHI_VK_render_device.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\graphics\renderer\camera\camera.cpp">
@@ -554,7 +554,7 @@
     <ClCompile Include="source\graphics\RHI\RHI_adapter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\graphics\RHI_api\vk\RHI_vk_adapter.cpp">
+    <ClCompile Include="source\graphics\RHI_api\vk\RHI_VK_adapter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\pch.cpp">

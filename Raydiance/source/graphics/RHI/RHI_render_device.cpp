@@ -1,5 +1,5 @@
 //#include "./graphics/RHI/render_device.h"
-//#include "./graphics/RHI_api/vk/vk_render_device.h"
+//#include "./graphics/RHI_api/vk/RHI_VK_render_device.h"
 //
 //#include "./core/error/logger.h"
 #include "./pch.h"
@@ -8,7 +8,7 @@
 
 // Graphics includes
 #include "./graphics/RHI/RHI_render_device.h"
-#include "./graphics/RHI_api/vk/vk_render_device.h"
+#include "./graphics/RHI_api/vk/RHI_VK_render_device.h"
 
 namespace Raydiance
 {
@@ -23,7 +23,7 @@ namespace Raydiance
 			if (s_RenderDevice == nullptr)
 			// VULKAN-API
 			if (_api == RHI_GraphicsAPI::RHI_GRAPHICS_API_VULKAN)
-				s_RenderDevice = std::make_shared<VKRenderDevice>();
+				s_RenderDevice = std::make_shared<RHI_VK_RenderDevice>();
 
 			// Return
 			if (s_RenderDevice != nullptr)

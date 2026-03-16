@@ -11,23 +11,24 @@ namespace Raydiance
 	namespace Graphics
 	{
 		enum class CommandQueueType;
-		class VKRenderDevice final : public RHI_RenderDevice
+		class RHI_VK_RenderDevice final : public RHI_RenderDevice
 		{
 		public:
-			VKRenderDevice();
-			~VKRenderDevice();
+			RHI_VK_RenderDevice();
+			~RHI_VK_RenderDevice();
 
 			virtual Raydiance::Result Initialize(const Raydiance::Graphics::RHI_RenderDeviceDescriptor& _renderDeviceDescriptor) override;
 
 			// Adapter functions
 			// ----------------------------------------------------------------------
 			[[nodiscard]] virtual Result GetAdapterCount(uint32& _count) const override;
-			[[nodiscard]] virtual Result GetAdapter(const uint32 _adapterID) const override;
+			[[nodiscard]] virtual Result GetAdapter(const uint32 _adapterID, std::unique_ptr<RHI_Adapter>& _adapter) const override;
+
+			[[nodiscard]] virtual Result LinkAdapter(std::unique_ptr<RHI_Adapter> _adapter) override;
 
 			inline VkInstance GetVKInstance() const { return m_Instance; }
 			inline VkSurfaceKHR GetVKSurface() const { return m_Surface; }
 
-			inline VkPhysicalDevice GetPhysicalDevice() const { return m_PhysicalDevice; }
 			inline VkDevice GetDevice() const { return m_Device; }
 
 			inline uint32_t GetPresentQueueID() const { return m_PresentQueueID; }
@@ -67,7 +68,6 @@ namespace Raydiance
 			VkSurfaceKHR m_Surface;
 
 			VkDevice m_Device;
-			VkPhysicalDevice m_PhysicalDevice = VK_NULL_HANDLE;
 
 			uint32_t m_PresentQueueID = 0;
 			uint32_t m_GraphicsQueueID = 0;

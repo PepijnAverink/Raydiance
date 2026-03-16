@@ -5,7 +5,7 @@ namespace Raydiance
 {
 	namespace Graphics
 	{
-		VKFence::VKFence(VKRenderDevice* _renderDevice, const RHI_FenceDescriptor* _fenceDescriptor)
+		VKFence::VKFence(RHI_VK_RenderDevice* _renderDevice, const RHI_FenceDescriptor* _fenceDescriptor)
 			: RHI_Fence(_fenceDescriptor)
 		{
 			VkFenceCreateInfo fenceInfo{};
@@ -18,17 +18,17 @@ namespace Raydiance
 
 		VKFence::~VKFence()
 		{
-			vkDestroyFence(static_cast<VKRenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_FenceObj, nullptr);
+			vkDestroyFence(static_cast<RHI_VK_RenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_FenceObj, nullptr);
 		}
 
 		void VKFence::Reset()
 		{
-			vkResetFences(static_cast<VKRenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), 1, &m_FenceObj);
+			vkResetFences(static_cast<RHI_VK_RenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), 1, &m_FenceObj);
 		}
 
 		void VKFence::WaitForFence()
 		{
-			vkWaitForFences(static_cast<VKRenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), 1, &m_FenceObj, VK_TRUE, UINT64_MAX);
+			vkWaitForFences(static_cast<RHI_VK_RenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), 1, &m_FenceObj, VK_TRUE, UINT64_MAX);
 		}
 	}
 }

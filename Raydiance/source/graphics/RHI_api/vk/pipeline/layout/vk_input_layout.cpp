@@ -9,7 +9,7 @@ namespace Raydiance
 {
 	namespace Graphics
 	{
-		VKInputLayout::VKInputLayout(VKRenderDevice* _renderDevice, const InputLayoutDescriptor* _inputLayoutDescriptor)
+		VKInputLayout::VKInputLayout(RHI_VK_RenderDevice* _renderDevice, const InputLayoutDescriptor* _inputLayoutDescriptor)
 			: InputLayout(_inputLayoutDescriptor)
 		{
 			uint32_t descriptorCount = 0;
@@ -69,9 +69,9 @@ namespace Raydiance
 
 		VKInputLayout::~VKInputLayout()
 		{
-			vkDestroyPipelineLayout(static_cast<VKRenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_PipelineLayoutObj, nullptr);
+			vkDestroyPipelineLayout(static_cast<RHI_VK_RenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_PipelineLayoutObj, nullptr);
 			for (int i = 0; i < m_DescriptorSetLayouts.size(); i++)
-				vkDestroyDescriptorSetLayout(static_cast<VKRenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_DescriptorSetLayouts[i], nullptr);
+				vkDestroyDescriptorSetLayout(static_cast<RHI_VK_RenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_DescriptorSetLayouts[i], nullptr);
 		}
 	}
 }

@@ -10,7 +10,7 @@ namespace Raydiance
 {
 	namespace Graphics
 	{
-		VKDescriptorPool::VKDescriptorPool(VKRenderDevice* _renderDevice, const DescriptorPoolDescriptor* _descriptorPoolDescriptor)
+		VKDescriptorPool::VKDescriptorPool(RHI_VK_RenderDevice* _renderDevice, const DescriptorPoolDescriptor* _descriptorPoolDescriptor)
 			: DescriptorPool(_descriptorPoolDescriptor)
 		{
 			std::vector<VkDescriptorPoolSize> sizes;
@@ -35,7 +35,7 @@ namespace Raydiance
 
 		VKDescriptorPool::~VKDescriptorPool()
 		{
-			vkDestroyDescriptorPool(static_cast<VKRenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_DescriptorPoolObj, nullptr);
+			vkDestroyDescriptorPool(static_cast<RHI_VK_RenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_DescriptorPoolObj, nullptr);
 		}
 
 		DescriptorSet* VKDescriptorPool::AllocateDescriptorSet(const DescriptorSetDescriptor* _descriptorSetDescriptor)

@@ -2,13 +2,14 @@
 #include "./graphics/RHI_api/vk/resource/texture/vk_texture2D.h"
 
 // Grpahics includes
+#include "./graphics/RHI_api/vk/RHI_VK_adapter.h"
 #include "./graphics/RHI_api/vk/resource/vk_resource_format.h"
 
 namespace Raydiance
 {
 	namespace Graphics
 	{
-		VKTexture2D::VKTexture2D(VKRenderDevice* _renderDevice, const Texture2DDescriptor* _texture2DDescriptor)
+		VKTexture2D::VKTexture2D(RHI_VK_RenderDevice* _renderDevice, const Texture2DDescriptor* _texture2DDescriptor)
 			: Texture2D(_texture2DDescriptor)
 		{
 			VkImageCreateInfo imageInfo{};
@@ -59,7 +60,7 @@ namespace Raydiance
 				Logger::Log("VK_ERROR - Failed to create 'ImageView' object.", LogType::LOG_TYPE_ERROR);
 		}
 
-		VKTexture2D::VKTexture2D(VKRenderDevice& _renderDevice, VkImage _resource, const Texture2DDescriptor* _texture2DDescriptor)
+		VKTexture2D::VKTexture2D(RHI_VK_RenderDevice& _renderDevice, VkImage _resource, const Texture2DDescriptor* _texture2DDescriptor)
 			: Texture2D(_texture2DDescriptor)
 			, m_ImageObj(_resource)
 		{
@@ -84,19 +85,19 @@ namespace Raydiance
 
 		VKTexture2D::~VKTexture2D()
 		{
-			vkDestroyImage(static_cast<VKRenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_ImageObj, nullptr);
-			vkFreeMemory(static_cast<VKRenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_BufferMemory, nullptr);
+			vkDestroyImage(static_cast<RHI_VK_RenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_ImageObj, nullptr);
+			vkFreeMemory(static_cast<RHI_VK_RenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_BufferMemory, nullptr);
 			FreeImageView();
 		}
 
 		void VKTexture2D::FreeImageView()
 		{
-			vkDestroyImageView(static_cast<VKRenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_ImageViewObj, nullptr);
+			vkDestroyImageView(static_cast<RHI_VK_RenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_ImageViewObj, nullptr);
 		}
 
-		uint32_t VKTexture2D::FindMemoryType(VKRenderDevice* _renderDevice, uint32_t typeFilter, VkMemoryPropertyFlags properties) {
+		uint32_t VKTexture2D::FindMemoryType(RHI_VK_RenderDevice* _renderDevice, uint32_t typeFilter, VkMemoryPropertyFlags properties) {
 			VkPhysicalDeviceMemoryProperties memProperties;
-			vkGetPhysicalDeviceMemoryProperties(_renderDevice->GetPhysicalDevice(), &memProperties);
+			vkGetPhysicalDeviceMemoryProperties(static_cast<const RHI_VK_Adapter&>(_renderDevice->GetActiveAdapter()).GetPhysicalDevice(), &memProperties);
 
 			for (uint32_t i = 0; i < memProperties.memoryTypeCount; i++) {
 				if ((typeFilter & (1 << i)) && (memProperties.memoryTypes[i].propertyFlags & properties) == properties) {

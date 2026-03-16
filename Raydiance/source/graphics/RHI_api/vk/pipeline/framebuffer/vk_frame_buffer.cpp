@@ -9,7 +9,7 @@ namespace Raydiance
 {
     namespace Graphics
     {
-        VKFrameBuffer::VKFrameBuffer(VKRenderDevice* _renderDevice, const FrameBufferDescriptor* _frameBufferDescriptor)
+        VKFrameBuffer::VKFrameBuffer(RHI_VK_RenderDevice* _renderDevice, const FrameBufferDescriptor* _frameBufferDescriptor)
             : FrameBuffer(_frameBufferDescriptor)
         {
             std::vector<VkImageView> imageViews;
@@ -33,7 +33,7 @@ namespace Raydiance
 
         VKFrameBuffer::~VKFrameBuffer()
         {
-            vkDestroyFramebuffer(static_cast<VKRenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_FrameBufferObj, nullptr);
+            vkDestroyFramebuffer(static_cast<RHI_VK_RenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_FrameBufferObj, nullptr);
         }
     }
 }

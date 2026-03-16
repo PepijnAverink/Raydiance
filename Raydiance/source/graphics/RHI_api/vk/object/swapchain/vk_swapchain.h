@@ -1,6 +1,6 @@
 #pragma once
 #include "./graphics/RHI/object/swapchain/RHI_swapchain.h"
-#include "./graphics/RHI_api/vk/vk_render_device.h"
+#include "./graphics/RHI_api/vk/RHI_VK_render_device.h"
 
 //#include <vector>
 
@@ -12,7 +12,7 @@ namespace Raydiance
 		class VKSwapchain final : public RHI_Swapchain
 		{
 		public:
-			VKSwapchain(VKRenderDevice& _renderDevice, CommandQueue* _commandQueue, const RHI_SwapchainDescriptor* _swapchainDescriptor);
+			VKSwapchain(RHI_VK_RenderDevice& _renderDevice, CommandQueue* _commandQueue, const RHI_SwapchainDescriptor* _swapchainDescriptor);
 			virtual ~VKSwapchain();
 
 			virtual void Resize(CommandQueue* _commandQueue, const uint32_t _width, const uint32_t _height) override;
@@ -23,7 +23,7 @@ namespace Raydiance
 			inline VkSwapchainKHR GetVKSwapchain() const { return m_SwapChainObj; }
 
 		private:
-			void CreateSwapchain(VKRenderDevice& _renderDevice, CommandQueue* _commandQueue);
+			void CreateSwapchain(RHI_VK_RenderDevice& _renderDevice, CommandQueue* _commandQueue);
 
 			VkSwapchainKHR m_SwapChainObj;
 		};

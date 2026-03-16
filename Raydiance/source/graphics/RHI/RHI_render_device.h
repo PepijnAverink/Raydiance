@@ -5,10 +5,9 @@
 // Graphics includes
 #include "./graphics/RHI_api/RHI_graphics_api.h"
 
+#include "./graphics/RHI/RHI_adapter.h"
+#include "./graphics/RHI/RHI_debug_mode.h"
 #include "./graphics/RHI/RHI_render_device_descriptor.h"
-
-//#include "graphics/api/graphics_api.h"
-//#include "graphics/RHI/debug_mode.h"
 
 #include <memory>
 
@@ -56,6 +55,7 @@ namespace Raydiance
 			// Public destructor
 			virtual ~RHI_RenderDevice();
 
+
 			// RHI_RenderDevice creation, retrieval and destruction
 			// ====================================================
 			[[nodiscard]] static Result Create(RHI_GraphicsAPI _api);
@@ -66,14 +66,18 @@ namespace Raydiance
 			// Singleton getter
 			[[nodiscard]] static RHI_RenderDevice& Get();
 
+
+			// TODO:: Check if adapter functions can be marked with noexcept.
 			// Adapter functions
 			// ----------------------------------------------------------------------
 			[[nodiscard]] virtual Result GetAdapterCount(uint32& _count) const = 0;
-			[[nodiscard]] virtual Result GetAdapter(const uint32 _adapterID) const = 0;
+			[[nodiscard]] virtual Result GetAdapter(const uint32 _adapterID, std::unique_ptr<RHI_Adapter>& _adapter) const = 0;
 
-			//virtual Result GetAdapter(uint32 _index, RHI_Adapter** _adapter) const = 0;
+			[[nodiscard]] virtual Result LinkAdapter(std::unique_ptr<RHI_Adapter> _adapter) = 0;
 
-			//virtual Result LinkAdapter(RHI_Adapter* _adapter) = 0;
+
+			// Gets the active physical adapter.
+			[[nodiscard]] inline RHI_Adapter& GetActiveAdapter() const noexcept { return *m_Adapter; }
 
 
 			virtual CommandPool*   CreateCommandPool(const CommandPoolDescriptor* _commandPoolDescriptor) = 0;
@@ -95,19 +99,26 @@ namespace Raydiance
 			virtual Texture2D* CreateTexture2D(const Texture2DDescriptor* _texture2DDescriptor) = 0;
 			virtual Sampler2D* CreateSampler2D(const Sampler2DDescriptor* _sampler2DDescripotr) = 0;
 
+
 		protected:
 			// Protected constructor, user should not create base instance.
 			RHI_RenderDevice(RHI_GraphicsAPI _api);
 
-			// API
-			RHI_GraphicsAPI m_API = RHI_GraphicsAPI::RHI_GRAPHICS_API_INVALID;
+			// Graphics API of the 'RHI_RenderDevice' object, set at construction and cannot be changed.
+			RHI_GraphicsAPI				 m_API = RHI_GraphicsAPI::RHI_GRAPHICS_API_INVALID;
+			std::unique_ptr<RHI_Adapter> m_Adapter; // The active adapter also cannot be changed after it is linked to the device.
+
 
 			// DebugMode
+			// ----------------------------------------------------------------
 			// Set's the DebugEnabled according to the DebugMode
-			bool m_DebugEnabled = false;
-			Raydiance::Graphics::RHI_DebugMode m_DebugMode = Raydiance::Graphics::RHI_DebugMode::RHI_DEBUG_MODE_INVALID;
-			void CorrectDebugMode();
+			bool		  m_DebugEnabled = false;
+			RHI_DebugMode m_DebugMode    = RHI_DebugMode::RHI_DEBUG_MODE_INVALID;
 
+
+		private:
+			// Should only be called by the local initialization function.
+			void CorrectDebugMode();
 		};
 	}
 }

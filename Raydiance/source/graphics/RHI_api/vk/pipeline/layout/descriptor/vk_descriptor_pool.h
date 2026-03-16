@@ -1,6 +1,6 @@
 #pragma once
 #include "./graphics/RHI/pipeline/layout/descriptor/descriptor_pool.h"
-#include "./graphics/RHI_api/vk/vk_render_device.h"
+#include "./graphics/RHI_api/vk/RHI_VK_render_device.h"
 
 namespace Raydiance
 {
@@ -9,7 +9,7 @@ namespace Raydiance
 		class VKDescriptorPool final : public DescriptorPool
 		{
 		public:
-			VKDescriptorPool(VKRenderDevice* _renderDevice, const DescriptorPoolDescriptor* _descriptorPoolDescriptor);
+			VKDescriptorPool(RHI_VK_RenderDevice* _renderDevice, const DescriptorPoolDescriptor* _descriptorPoolDescriptor);
 			virtual ~VKDescriptorPool();
 
 			virtual DescriptorSet* AllocateDescriptorSet(const DescriptorSetDescriptor* _descriptorSetDescriptor) override;

@@ -122,7 +122,7 @@
 #include "graphics/RHI/RHI_render_device_descriptor.h"
 #include "graphics/RHI/RHI_render_device.h"
 
-#include "graphics/RHI_api/vk/vk_render_device.h"
+#include "graphics/RHI_api/vk/RHI_VK_render_device.h"
 #include "graphics/RHI_api/vk/resource/buffer/vk_buffer_usage.h"
 #include "graphics/RHI_api/vk/resource/buffer/vk_buffer.h"
 #include "graphics/RHI_api/vk/resource/texture/vk_texture2D.h"

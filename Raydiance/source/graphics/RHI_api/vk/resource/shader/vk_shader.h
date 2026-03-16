@@ -1,6 +1,6 @@
 #pragma once
 #include "./graphics/RHI/resource/shader/shader.h"
-#include "./graphics/RHI_api/vk/vk_render_device.h"
+#include "./graphics/RHI_api/vk/RHI_VK_render_device.h"
 
 namespace Raydiance
 {
@@ -9,7 +9,7 @@ namespace Raydiance
 		class VKShader : public Shader
 		{
 		public:
-			VKShader(VKRenderDevice* _renderDevice, const ShaderDescriptor* _shaderDescriptor);
+			VKShader(RHI_VK_RenderDevice* _renderDevice, const ShaderDescriptor* _shaderDescriptor);
 			~VKShader();
 
 			// Vulkan specific method

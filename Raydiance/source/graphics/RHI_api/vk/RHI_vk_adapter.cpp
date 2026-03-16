@@ -8,18 +8,33 @@ namespace Raydiance
 {
 	namespace Graphics
 	{
-		RHI_VK_Adapter::RHI_VK_Adapter(const VkPhysicalDevice& _physicsalDevice)
-			: m_PhysicalDevice(_physicsalDevice)
+		RHI_VK_Adapter::RHI_VK_Adapter(const VkPhysicalDevice& _physicalDevice)
+			: m_PhysicalDevice(_physicalDevice)
 		{
 			// Gather physical device properties
-			VkPhysicalDeviceProperties properties;
-			vkGetPhysicalDeviceProperties(m_PhysicalDevice, &properties);
+			vkGetPhysicalDeviceProperties(m_PhysicalDevice, &m_Properties);
 
 			// Set internal properties based on adapter query
 			// ----------------------------------------------
-			m_Name   = properties.deviceName;
-			m_Vendor = ResolvePCI_ID(properties.vendorID);
-			m_Type   = ResolveVKAdapterType(properties.deviceType);
+			m_Name   = m_Properties.deviceName;
+			m_Vendor = ResolvePCI_ID(m_Properties.vendorID);
+			m_Type   = ResolveVKAdapterType(m_Properties.deviceType);
+
+			// Determine the available device local memory.
+			vkGetPhysicalDeviceMemoryProperties(m_PhysicalDevice, &m_MemoryProperties);
+
+			// Loop over the memory heaps and find the one with the largest size that is device local memory.
+			for (uint32 i = 0; i < m_MemoryProperties.memoryHeapCount; ++i)
+			{
+				const auto& heap = m_MemoryProperties.memoryHeaps[i];
+
+				// Store the size of the largest device local memory heap.
+				if (heap.flags & VK_MEMORY_HEAP_DEVICE_LOCAL_BIT)
+					m_VRam = std::max<uint64>(m_VRam, heap.size);
+			}
 		}
+
+		RHI_VK_Adapter::~RHI_VK_Adapter(void)
+		{ }
 	}
 }

@@ -5,7 +5,7 @@ namespace Raydiance
 {
 	namespace Graphics
 	{
-		VKCommandPool::VKCommandPool(VKRenderDevice* _renderDevice, const CommandPoolDescriptor* _commandPoolDescriptor)
+		VKCommandPool::VKCommandPool(RHI_VK_RenderDevice* _renderDevice, const CommandPoolDescriptor* _commandPoolDescriptor)
 			: CommandPool(_commandPoolDescriptor)
 		{
 			// Craetion info
@@ -21,12 +21,12 @@ namespace Raydiance
 
 		VKCommandPool::~VKCommandPool()
 		{
-			vkDestroyCommandPool(static_cast<VKRenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_CommandPoolObj, nullptr);
+			vkDestroyCommandPool(static_cast<RHI_VK_RenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_CommandPoolObj, nullptr);
 		}
 
 		void VKCommandPool::Reset()
 		{
-			vkResetCommandPool(static_cast<VKRenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_CommandPoolObj, VK_COMMAND_POOL_RESET_RELEASE_RESOURCES_BIT);
+			vkResetCommandPool(static_cast<RHI_VK_RenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_CommandPoolObj, VK_COMMAND_POOL_RESET_RELEASE_RESOURCES_BIT);
 		}
 	}
 }

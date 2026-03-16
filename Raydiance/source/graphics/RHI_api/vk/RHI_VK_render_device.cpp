@@ -1,5 +1,5 @@
 #include "./pch.h"
-#include "./graphics/RHI_api/vk/vk_render_device.h"
+#include "./graphics/RHI_api/vk/RHI_VK_render_device.h"
 
 // Graphics includes
 #include "./graphics/RHI_api/vk/object/command/vk_command_pool.h"
@@ -69,11 +69,11 @@ namespace Raydiance
         };
         QueueFamilyIndices FindQueueFamilies(VkPhysicalDevice device, VkSurfaceKHR _surface);
 
-        VKRenderDevice::VKRenderDevice()
+        RHI_VK_RenderDevice::RHI_VK_RenderDevice()
             : RHI_RenderDevice(RHI_GraphicsAPI::RHI_GRAPHICS_API_VULKAN)
         { }
 
-        VKRenderDevice::~VKRenderDevice()
+        RHI_VK_RenderDevice::~RHI_VK_RenderDevice()
         {
             vkDestroyDevice(m_Device, nullptr);
 
@@ -84,7 +84,7 @@ namespace Raydiance
             vkDestroyInstance(m_Instance, nullptr);
         }
 
-        Raydiance::Result VKRenderDevice::Initialize(const Raydiance::Graphics::RHI_RenderDeviceDescriptor& _renderDeviceDescriptor)
+        Raydiance::Result RHI_VK_RenderDevice::Initialize(const Raydiance::Graphics::RHI_RenderDeviceDescriptor& _renderDeviceDescriptor)
         {
             // Object storing the result of all interal functions.
             Raydiance::Result result = Raydiance::Result::RESULT_INVALID;
@@ -171,55 +171,10 @@ namespace Raydiance
             if (vkCreateWin32SurfaceKHR(m_Instance, &surfaceCreateInfo, NULL, &m_Surface) != VK_SUCCESS)
                 Logger::Log("VK_ERROR - Failed to create surface.", LogType::LOG_TYPE_ERROR);
 
-            // Get the hardware device
-            GetVKPhysicalDevice();
-
-
-            {
-                QueueFamilyIndices indices = FindQueueFamilies(m_PhysicalDevice, m_Surface);
-
-                std::vector<VkDeviceQueueCreateInfo> queueCreateInfos;
-                std::set<uint32_t> uniqueQueueFamilies = { indices.graphicsFamily.value(), indices.presentFamily.value() };
-
-                float queuePriority = 1.0f;
-                for (uint32_t queueFamily : uniqueQueueFamilies) {
-                    VkDeviceQueueCreateInfo queueCreateInfo{};
-                    queueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-                    queueCreateInfo.queueFamilyIndex = queueFamily;
-                    queueCreateInfo.queueCount = 1;
-                    queueCreateInfo.pQueuePriorities = &queuePriority;
-                    queueCreateInfos.push_back(queueCreateInfo);
-                }
-
-                VkPhysicalDeviceFeatures deviceFeatures{};
-                deviceFeatures.samplerAnisotropy = VK_TRUE;
-
-                VkDeviceCreateInfo createInfo{};
-                createInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
-                createInfo.queueCreateInfoCount = static_cast<uint32_t>(queueCreateInfos.size());
-                createInfo.pQueueCreateInfos = queueCreateInfos.data();
-                createInfo.pEnabledFeatures = &deviceFeatures;
-                createInfo.enabledExtensionCount = static_cast<uint32_t>(deviceExtensions.size());
-                createInfo.ppEnabledExtensionNames = deviceExtensions.data();
-                createInfo.enabledLayerCount = 0;
-
-                if (m_DebugEnabled == true) {
-                    createInfo.enabledLayerCount = static_cast<uint32_t>(validationLayers.size());
-                    createInfo.ppEnabledLayerNames = validationLayers.data();
-                }
-
-                if (vkCreateDevice(m_PhysicalDevice, &createInfo, nullptr, &m_Device) != VK_SUCCESS) {
-                    throw std::runtime_error("failed to create logical device!");
-                }
-
-                m_GraphicsQueueID = indices.graphicsFamily.value();
-                m_PresentQueueID  = indices.presentFamily.value();
-            }
-
             return Raydiance::Result::RESULT_GOOD;
         }
 
-        Result VKRenderDevice::GetAdapterCount(uint32& _count) const
+        Result RHI_VK_RenderDevice::GetAdapterCount(uint32& _count) const
         {
             _count = 0;
 
@@ -235,7 +190,7 @@ namespace Raydiance
             return Result::RESULT_GOOD;
         }
 
-        Result VKRenderDevice::GetAdapter(const uint32 _adapterID) const
+        Result RHI_VK_RenderDevice::GetAdapter(const uint32 _adapterID, std::unique_ptr<RHI_Adapter>& _adapter) const
         {
             // Get the number of devices
             if (m_Instance == VK_NULL_HANDLE)
@@ -264,11 +219,61 @@ namespace Raydiance
             vkEnumeratePhysicalDevices(m_Instance, &count, devices.data());
 
             // Gather info about the specific adapter requested
-            RHI_VK_Adapter adapter = RHI_VK_Adapter(devices[_adapterID]);
+            _adapter = std::make_unique<RHI_VK_Adapter>(devices[_adapterID]);
             return Result::RESULT_GOOD;
         }
 
-        uint32_t VKRenderDevice::GetQueueFamilyID(const CommandQueueType _type) const
+        Result RHI_VK_RenderDevice::LinkAdapter(std::unique_ptr<RHI_Adapter> _adapter)
+        {
+            // Sets the active adapter
+            m_Adapter = std::move(_adapter);
+
+            // Cast the adapter to a vulkan specific adapter.
+            const RHI_VK_Adapter* physicalDevice = static_cast<const RHI_VK_Adapter*>(m_Adapter.get());
+
+            QueueFamilyIndices indices = FindQueueFamilies(physicalDevice->GetPhysicalDevice(), m_Surface);
+
+            std::vector<VkDeviceQueueCreateInfo> queueCreateInfos;
+            std::set<uint32_t> uniqueQueueFamilies = { indices.graphicsFamily.value(), indices.presentFamily.value() };
+
+            float queuePriority = 1.0f;
+            for (uint32_t queueFamily : uniqueQueueFamilies) {
+                VkDeviceQueueCreateInfo queueCreateInfo{};
+                queueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+                queueCreateInfo.queueFamilyIndex = queueFamily;
+                queueCreateInfo.queueCount = 1;
+                queueCreateInfo.pQueuePriorities = &queuePriority;
+                queueCreateInfos.push_back(queueCreateInfo);
+            }
+
+            VkPhysicalDeviceFeatures deviceFeatures{};
+            deviceFeatures.samplerAnisotropy = VK_TRUE;
+
+            VkDeviceCreateInfo createInfo{};
+            createInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
+            createInfo.queueCreateInfoCount = static_cast<uint32_t>(queueCreateInfos.size());
+            createInfo.pQueueCreateInfos = queueCreateInfos.data();
+            createInfo.pEnabledFeatures = &deviceFeatures;
+            createInfo.enabledExtensionCount = static_cast<uint32_t>(deviceExtensions.size());
+            createInfo.ppEnabledExtensionNames = deviceExtensions.data();
+            createInfo.enabledLayerCount = 0;
+
+            if (m_DebugEnabled == true) {
+                createInfo.enabledLayerCount = static_cast<uint32_t>(validationLayers.size());
+                createInfo.ppEnabledLayerNames = validationLayers.data();
+            }
+
+            if (vkCreateDevice(physicalDevice->GetPhysicalDevice(), &createInfo, nullptr, &m_Device) != VK_SUCCESS) {
+                throw std::runtime_error("failed to create logical device!");
+            }
+
+            m_GraphicsQueueID = indices.graphicsFamily.value();
+            m_PresentQueueID = indices.presentFamily.value();
+
+            return Result::RESULT_GOOD;
+        }
+
+        uint32_t RHI_VK_RenderDevice::GetQueueFamilyID(const CommandQueueType _type) const
         {
             // TODO:: add support for other types of queues
             if (_type == CommandQueueType::COMMAND_QUEUE_TYPE_GRAPHICS)
@@ -277,91 +282,91 @@ namespace Raydiance
             return 0;
         }
 
-        CommandPool* VKRenderDevice::CreateCommandPool(const CommandPoolDescriptor* _commandPoolDescriptor)
+        CommandPool* RHI_VK_RenderDevice::CreateCommandPool(const CommandPoolDescriptor* _commandPoolDescriptor)
         {
             VKCommandPool* commandPool = new VKCommandPool(this, _commandPoolDescriptor);
             return commandPool;
         }
 
-        CommandBuffer* VKRenderDevice::CreateCommandBuffer(const CommandBufferDescriptor* _commandBufferDescriptor)
+        CommandBuffer* RHI_VK_RenderDevice::CreateCommandBuffer(const CommandBufferDescriptor* _commandBufferDescriptor)
         {
             VKCommandBuffer* commandBuffer = new VKCommandBuffer(this, _commandBufferDescriptor);
             return commandBuffer;
         }
 
-        CommandQueue* VKRenderDevice::CreateCommandQueue(const CommandQueueDescriptor* _commandQueueDescriptor)
+        CommandQueue* RHI_VK_RenderDevice::CreateCommandQueue(const CommandQueueDescriptor* _commandQueueDescriptor)
         {
             VKCommandQueue* commandQueue = new VKCommandQueue(this, _commandQueueDescriptor);
             return commandQueue;
         }
 
-        RHI_Swapchain* VKRenderDevice::CreateSwapchain(CommandQueue* _commandQueue, const RHI_SwapchainDescriptor* _swapchainDescriptor)
+        RHI_Swapchain* RHI_VK_RenderDevice::CreateSwapchain(CommandQueue* _commandQueue, const RHI_SwapchainDescriptor* _swapchainDescriptor)
         {
             VKSwapchain* swapchain = new VKSwapchain(*this, _commandQueue, _swapchainDescriptor);
             return swapchain;
         }
 
-        GraphicsPipeline* VKRenderDevice::CreateGraphicsPipeline(const GraphicsPipelineDescriptor* _graphicsPipelineDescriptor)
+        GraphicsPipeline* RHI_VK_RenderDevice::CreateGraphicsPipeline(const GraphicsPipelineDescriptor* _graphicsPipelineDescriptor)
         {
             VKGraphicsPipeline* graphicsPipeline = new VKGraphicsPipeline(this, _graphicsPipelineDescriptor);
             return graphicsPipeline;
         }
 
-        InputLayout* VKRenderDevice::CreateInputLayout(const InputLayoutDescriptor* _inputLayoutDescriptor)
+        InputLayout* RHI_VK_RenderDevice::CreateInputLayout(const InputLayoutDescriptor* _inputLayoutDescriptor)
         {
             VKInputLayout* inputLayout = new VKInputLayout(this, _inputLayoutDescriptor);
             return inputLayout;
         }
 
-        RenderPass* VKRenderDevice::CreateRenderPass(const RenderPassDescriptor* _renderPassDescriptor)
+        RenderPass* RHI_VK_RenderDevice::CreateRenderPass(const RenderPassDescriptor* _renderPassDescriptor)
         {
             RenderPass* renderPass = new VKRenderPass(this, _renderPassDescriptor);
             return renderPass;
         }
 
-        FrameBuffer* VKRenderDevice::CreateFrameBuffer(const FrameBufferDescriptor* _frameBufferDescriptor)
+        FrameBuffer* RHI_VK_RenderDevice::CreateFrameBuffer(const FrameBufferDescriptor* _frameBufferDescriptor)
         {
             VKFrameBuffer* frameBuffer = new VKFrameBuffer(this, _frameBufferDescriptor);
             return frameBuffer;
         }
 
-        DescriptorPool* VKRenderDevice::CreateDescriptorPool(const DescriptorPoolDescriptor* _descriptorPoolDescriptor)
+        DescriptorPool* RHI_VK_RenderDevice::CreateDescriptorPool(const DescriptorPoolDescriptor* _descriptorPoolDescriptor)
         {
             VKDescriptorPool* descroptorPool = new VKDescriptorPool(this, _descriptorPoolDescriptor);
             return descroptorPool;
         }
 
-        Buffer* VKRenderDevice::CreateBuffer(const BufferDescriptor* _bufferDescriptor)
+        Buffer* RHI_VK_RenderDevice::CreateBuffer(const BufferDescriptor* _bufferDescriptor)
         {
             VKBuffer* buffer = new VKBuffer(this, _bufferDescriptor);
             return buffer;
         }
 
-        Shader* VKRenderDevice::CreateShader(const ShaderDescriptor* _shaderDescriptor)
+        Shader* RHI_VK_RenderDevice::CreateShader(const ShaderDescriptor* _shaderDescriptor)
         {
             VKShader* shader = new VKShader(this, _shaderDescriptor);
             return shader;
         }
 
-        Texture2D* VKRenderDevice::CreateTexture2D(const Texture2DDescriptor* _texture2DDescriptor)
+        Texture2D* RHI_VK_RenderDevice::CreateTexture2D(const Texture2DDescriptor* _texture2DDescriptor)
         {
             VKTexture2D* texture = new VKTexture2D(this, _texture2DDescriptor);
             return texture;
         }
 
-        Sampler2D* VKRenderDevice::CreateSampler2D(const Sampler2DDescriptor* _sampler2DDescripotr)
+        Sampler2D* RHI_VK_RenderDevice::CreateSampler2D(const Sampler2DDescriptor* _sampler2DDescripotr)
         {
             VKSampler2D* sampler = new VKSampler2D(this, _sampler2DDescripotr);
             return sampler;
         }
 
-        RHI_Fence* VKRenderDevice::CreateFence(const RHI_FenceDescriptor* _fenceDescriptor)
+        RHI_Fence* RHI_VK_RenderDevice::CreateFence(const RHI_FenceDescriptor* _fenceDescriptor)
         {
             VKFence* fence = new VKFence(this, _fenceDescriptor);
             return fence;
         }
 
-        bool VKRenderDevice::CheckValidationLayerSupport()
+        bool RHI_VK_RenderDevice::CheckValidationLayerSupport()
         {
             // Enumerate over all the layers
             uint32_t layerCount;
@@ -393,7 +398,7 @@ namespace Raydiance
             return true;
         }
 
-        void VKRenderDevice::GetVKPhysicalDevice()
+        void RHI_VK_RenderDevice::GetVKPhysicalDevice()
         {
             // Get the number of devices
             uint32_t deviceCount = 0;
@@ -467,12 +472,12 @@ namespace Raydiance
                 }
 
                 // Set device
-                m_PhysicalDevice = device;
+                //m_PhysicalDevice = device;
                 return;
             }
 
-            if (m_PhysicalDevice == VK_NULL_HANDLE)
-                Logger::Log("VK_ERROR - No physical device found.", LogType::LOG_TYPE_ERROR);
+           // if (m_PhysicalDevice == VK_NULL_HANDLE)
+           //     Logger::Log("VK_ERROR - No physical device found.", LogType::LOG_TYPE_ERROR);
         }
 
         QueueFamilyIndices FindQueueFamilies(VkPhysicalDevice device, VkSurfaceKHR _surface) {

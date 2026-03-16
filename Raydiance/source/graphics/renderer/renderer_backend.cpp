@@ -4,6 +4,8 @@
 // Core includes
 #include "./core/window/window.h"
 
+#include <format>
+
 namespace Raydiance
 {
 	namespace Graphics
@@ -83,13 +85,30 @@ namespace Raydiance
 			}
 			RHI_RenderDevice::Get().Initialize(renderDeviceDesc);
 
+
 			uint32 adapterCount = 0;
 			RHI_RenderDevice::Get().GetAdapterCount(adapterCount);
-
-			for (int i = 0; i < adapterCount; i++)
 			{
-				RHI_RenderDevice::Get().GetAdapter(i);
+				std::unique_ptr<RHI_Adapter> activeAdapter;
+				for (int i = 0; i < adapterCount; i++)
+				{
+					std::unique_ptr<RHI_Adapter> tempAdapter;
+					RHI_RenderDevice::Get().GetAdapter(i, tempAdapter);
+
+					if (activeAdapter == nullptr)
+						activeAdapter = std::move(tempAdapter);
+					else if (tempAdapter->GetVRam() > activeAdapter->GetVRam() && 
+						(activeAdapter->GetType() == RHI_AdapterType::RHI_ADAPTER_TYPE_INTEGRATED || tempAdapter->GetType() == RHI_AdapterType::RHI_ADAPTER_TYPE_DISCRETE))
+						activeAdapter = std::move(tempAdapter);
+				}
+
+				RHI_RenderDevice::Get().LinkAdapter(std::move(activeAdapter));
 			}
+
+			// Log gpu information
+			RHI_Adapter adapter = RHI_RenderDevice::Get().GetActiveAdapter();
+			Logger::Log(std::format("Adapter linked to deive: {}", adapter.GetName()), LogType::LOG_TYPE_INFO);
+
 
 			// CommandQueue
 			// --------------------------------------------------------------------

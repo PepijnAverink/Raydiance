@@ -1,6 +1,6 @@
 #pragma once
 #include "./graphics/RHI/object/command/command_pool.h"
-#include "./graphics/RHI_api/vk/vk_render_device.h"
+#include "./graphics/RHI_api/vk/RHI_VK_render_device.h"
 
 namespace Raydiance
 {
@@ -9,7 +9,7 @@ namespace Raydiance
 		class VKCommandPool final : public CommandPool
 		{
 		public:
-			VKCommandPool(VKRenderDevice* _renderDevice, const CommandPoolDescriptor* _commandPoolDescriptor);
+			VKCommandPool(RHI_VK_RenderDevice* _renderDevice, const CommandPoolDescriptor* _commandPoolDescriptor);
 			virtual ~VKCommandPool();
 
 			virtual void Reset() override;

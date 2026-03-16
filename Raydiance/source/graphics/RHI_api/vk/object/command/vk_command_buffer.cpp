@@ -18,7 +18,7 @@ namespace Raydiance
 {
 	namespace Graphics
 	{
-		VKCommandBuffer::VKCommandBuffer(VKRenderDevice* _renderDevice, const CommandBufferDescriptor* _commandBufferDescriptor)
+		VKCommandBuffer::VKCommandBuffer(RHI_VK_RenderDevice* _renderDevice, const CommandBufferDescriptor* _commandBufferDescriptor)
 			: CommandBuffer(_commandBufferDescriptor)
 		{
 			// Creation info
@@ -36,7 +36,7 @@ namespace Raydiance
 		VKCommandBuffer::~VKCommandBuffer()
 		{
 			// Destroy commandBuffer obj
-			vkFreeCommandBuffers(static_cast<VKRenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), ((VKCommandPool*)m_CommandPool)->GetVKCommandPool(), 1, &m_CommandBufferObj);
+			vkFreeCommandBuffers(static_cast<RHI_VK_RenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), ((VKCommandPool*)m_CommandPool)->GetVKCommandPool(), 1, &m_CommandBufferObj);
 		}
 
 		void VKCommandBuffer::Reset()

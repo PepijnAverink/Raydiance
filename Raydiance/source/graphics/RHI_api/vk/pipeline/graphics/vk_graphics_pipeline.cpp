@@ -19,7 +19,7 @@ namespace Raydiance
 {
     namespace Graphics
     {
-        VKGraphicsPipeline::VKGraphicsPipeline(VKRenderDevice* _renderDevice, const GraphicsPipelineDescriptor* _graphicsPipelineDescriptor)
+        VKGraphicsPipeline::VKGraphicsPipeline(RHI_VK_RenderDevice* _renderDevice, const GraphicsPipelineDescriptor* _graphicsPipelineDescriptor)
             : GraphicsPipeline(_graphicsPipelineDescriptor)
         {
             std::vector<VkPipelineShaderStageCreateInfo> shaderStages;
@@ -161,7 +161,7 @@ namespace Raydiance
 
         VKGraphicsPipeline::~VKGraphicsPipeline()
         {
-            vkDestroyPipeline(static_cast<VKRenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_GraphicsPipelineObj, nullptr);
+            vkDestroyPipeline(static_cast<RHI_VK_RenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_GraphicsPipelineObj, nullptr);
         }
     }
 }

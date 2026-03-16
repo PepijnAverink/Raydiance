@@ -273,9 +273,9 @@
     <ClInclude Include="source\graphics\RHI_api\vk\resource\vk_resource_format.h" />
     <ClInclude Include="source\graphics\RHI_api\vk\resource\vk_resource_memory_type.h" />
     <ClInclude Include="source\graphics\RHI_api\vk\resource\vk_resource_state.h" />
-    <ClInclude Include="source\graphics\RHI_api\vk\RHI_vk_adapter.h" />
+    <ClInclude Include="source\graphics\RHI_api\vk\RHI_VK_adapter.h" />
     <ClInclude Include="source\graphics\RHI_api\vk\RHI_VK_adapter_type.h" />
-    <ClInclude Include="source\graphics\RHI_api\vk\vk_render_device.h" />
+    <ClInclude Include="source\graphics\RHI_api\vk\RHI_VK_render_device.h" />
     <ClInclude Include="source\graphics\renderer\camera\camera.h" />
     <ClInclude Include="source\graphics\renderer\camera\camera_controller.h" />
     <ClInclude Include="source\graphics\renderer\camera\orthographic.h" />
@@ -330,8 +330,8 @@
     <ClCompile Include="source\graphics\RHI_api\vk\resource\sampler\vk_sampler2D.cpp" />
     <ClCompile Include="source\graphics\RHI_api\vk\resource\shader\vk_shader.cpp" />
     <ClCompile Include="source\graphics\RHI_api\vk\resource\texture\vk_texture2D.cpp" />
-    <ClCompile Include="source\graphics\RHI_api\vk\RHI_vk_adapter.cpp" />
-    <ClCompile Include="source\graphics\RHI_api\vk\vk_render_device.cpp" />
+    <ClCompile Include="source\graphics\RHI_api\vk\RHI_VK_adapter.cpp" />
+    <ClCompile Include="source\graphics\RHI_api\vk\RHI_VK_render_device.cpp" />
     <ClCompile Include="source\graphics\renderer\camera\camera.cpp" />
     <ClCompile Include="source\graphics\renderer\camera\camera_controller.cpp" />
     <ClCompile Include="source\graphics\renderer\material\material.cpp" />

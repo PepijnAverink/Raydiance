@@ -1,6 +1,6 @@
 #pragma once
 #include "./graphics/RHI/object/command/command_buffer.h"
-#include "./graphics/RHI_api/vk/vk_render_device.h"
+#include "./graphics/RHI_api/vk/RHI_VK_render_device.h"
 
 namespace Raydiance
 {
@@ -11,7 +11,7 @@ namespace Raydiance
 		class VKCommandBuffer final : public CommandBuffer
 		{
 		public:
-			VKCommandBuffer(VKRenderDevice* _renderDevice, const CommandBufferDescriptor* _commandBufferDescriptor);
+			VKCommandBuffer(RHI_VK_RenderDevice* _renderDevice, const CommandBufferDescriptor* _commandBufferDescriptor);
 			virtual ~VKCommandBuffer();
 
 			virtual void Reset() override;
