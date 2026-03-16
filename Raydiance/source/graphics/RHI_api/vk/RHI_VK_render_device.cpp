@@ -84,10 +84,10 @@ namespace Raydiance
             vkDestroyInstance(m_Instance, nullptr);
         }
 
-        Raydiance::Result RHI_VK_RenderDevice::Initialize(const Raydiance::Graphics::RHI_RenderDeviceDescriptor& _renderDeviceDescriptor)
+        Result RHI_VK_RenderDevice::Initialize(const RHI_RenderDeviceDescriptor& _renderDeviceDescriptor)
         {
             // Object storing the result of all interal functions.
-            Raydiance::Result result = Raydiance::Result::RESULT_INVALID;
+            Result result = Result::RESULT_INVALID;
 
             // Initialize the base class of the RHI_RenderDevice graphics object class,
             // And error check the result.
@@ -171,7 +171,7 @@ namespace Raydiance
             if (vkCreateWin32SurfaceKHR(m_Instance, &surfaceCreateInfo, NULL, &m_Surface) != VK_SUCCESS)
                 Logger::Log("VK_ERROR - Failed to create surface.", LogType::LOG_TYPE_ERROR);
 
-            return Raydiance::Result::RESULT_GOOD;
+            return Result::RESULT_GOOD;
         }
 
         Result RHI_VK_RenderDevice::GetAdapterCount(uint32& _count) const
@@ -480,7 +480,10 @@ namespace Raydiance
            //     Logger::Log("VK_ERROR - No physical device found.", LogType::LOG_TYPE_ERROR);
         }
 
-        QueueFamilyIndices FindQueueFamilies(VkPhysicalDevice device, VkSurfaceKHR _surface) {
+
+        // TODO:: Probably remove this function
+        QueueFamilyIndices FindQueueFamilies(VkPhysicalDevice device, VkSurfaceKHR _surface) 
+        {
             QueueFamilyIndices indices;
 
             uint32_t queueFamilyCount = 0;

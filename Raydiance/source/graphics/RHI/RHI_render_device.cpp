@@ -56,7 +56,7 @@ namespace Raydiance
 		RHI_RenderDevice::~RHI_RenderDevice()
 		{ }
 
-		Result RHI_RenderDevice::Initialize(const Raydiance::Graphics::RHI_RenderDeviceDescriptor& _renderDeviceDescriptor)
+		Result RHI_RenderDevice::Initialize(const RHI_RenderDeviceDescriptor& _renderDeviceDescriptor)
 		{
 			// Set the debug mode
 			m_DebugMode = _renderDeviceDescriptor.DebugMode;
@@ -75,13 +75,13 @@ namespace Raydiance
 		{
 			switch (m_DebugMode)
 			{
-			case Raydiance::Graphics::RHI_DebugMode::RHI_DEBUG_MODE_ALWAYS:
+			case RHI_DebugMode::RHI_DEBUG_MODE_ALWAYS:
 				m_DebugEnabled = true;
 				break;
-			case Raydiance::Graphics::RHI_DebugMode::RHI_DEBUG_MODE_NEVER:
+			case RHI_DebugMode::RHI_DEBUG_MODE_NEVER:
 				m_DebugEnabled = false;
 				break;
-			case Raydiance::Graphics::RHI_DebugMode::RHI_DEBUG_MODE_DEBUG_ONLY:
+			case RHI_DebugMode::RHI_DEBUG_MODE_DEBUG_ONLY:
 #if defined(_DEBUG)
 				m_DebugEnabled = true;
 #else

@@ -14,10 +14,12 @@ namespace Raydiance
 		class RHI_VK_RenderDevice final : public RHI_RenderDevice
 		{
 		public:
-			RHI_VK_RenderDevice();
-			~RHI_VK_RenderDevice();
+			// Public constructor and desctructor
+					 RHI_VK_RenderDevice(void);
+			virtual ~RHI_VK_RenderDevice(void);
 
-			virtual Raydiance::Result Initialize(const Raydiance::Graphics::RHI_RenderDeviceDescriptor& _renderDeviceDescriptor) override;
+
+			virtual Result Initialize(const RHI_RenderDeviceDescriptor& _renderDeviceDescriptor) override;
 
 			// Adapter functions
 			// ----------------------------------------------------------------------

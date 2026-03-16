@@ -70,8 +70,8 @@ namespace Raydiance
 		{
 			// RenderDevice
 			// --------------------------------------------------------------------
-			Raydiance::Graphics::RHI_RenderDeviceDescriptor renderDeviceDesc;
-			renderDeviceDesc.DebugMode			= Raydiance::Graphics::RHI_DebugMode::RHI_DEBUG_MODE_DEBUG_ONLY;
+			RHI_RenderDeviceDescriptor renderDeviceDesc;
+			renderDeviceDesc.DebugMode			= RHI_DebugMode::RHI_DEBUG_MODE_DEBUG_ONLY;
 			renderDeviceDesc.NativeWindowHandle = _window->GetWindowHandlePtr();
 
 
