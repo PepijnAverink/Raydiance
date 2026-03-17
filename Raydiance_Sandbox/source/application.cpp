@@ -69,6 +69,7 @@ void Application::OnTerminate()
     m_Renderer->OnTerminate();
     delete m_Renderer;
 
+    m_AquireFence.reset();
     //delete m_AquireFence;
 
     delete m_CommandBuffer;
