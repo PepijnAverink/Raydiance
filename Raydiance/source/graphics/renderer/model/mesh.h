@@ -2,6 +2,7 @@
 #include "./graphics/renderer/model/sub_mesh.h"
 #include "./graphics/RHI/resource/buffer/buffer.h"
 
+#include <memory>
 #include <vector>
 
 namespace Raydiance
@@ -9,7 +10,7 @@ namespace Raydiance
 	namespace Graphics
 	{
 		class CommandBuffer;
-		class RHI_Fence;
+		class RHI_FenceCPU;
 		class Mesh
 		{
 		public:
@@ -27,8 +28,8 @@ namespace Raydiance
 			inline Buffer* GetIndexBuffer()  const { return m_IndexBuffer; }
 
 		protected:
-			void CreateVertexBuffer(CommandBuffer* _commandBuffer, RHI_Fence* _fence, void* _data, const uint32_t _size, BufferLayout _layout);
-			void CreateIndexBuffer(CommandBuffer* _commandBuffer, RHI_Fence* _fence, void* _data, const uint32_t _size, BufferLayout _layout);
+			void CreateVertexBuffer(CommandBuffer* _commandBuffer, std::shared_ptr<RHI_FenceCPU> _fence, void* _data, const uint32_t _size, BufferLayout _layout);
+			void CreateIndexBuffer(CommandBuffer* _commandBuffer, std::shared_ptr<RHI_FenceCPU> _fence, void* _data, const uint32_t _size, BufferLayout _layout);
 
 			// Helper for friend classes.
 			void AddSubmesh(SubMesh _mesh);

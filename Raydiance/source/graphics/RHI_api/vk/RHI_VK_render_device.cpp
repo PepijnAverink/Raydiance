@@ -6,7 +6,7 @@
 #include "./graphics/RHI_api/vk/object/command/vk_command_buffer.h"
 #include "./graphics/RHI_api/vk/object/command/vk_command_queue.h"
 #include "./graphics/RHI_api/vk/object/swapchain/vk_swapchain.h"
-#include "./graphics/RHI_api/vk/object/sync/vk_fence.h"
+#include "./graphics/RHI_api/vk/object/sync/RHI_VK_fenceCPU.h"
 
 #include "./graphics/RHI_api/vk/pipeline/graphics/vk_graphics_pipeline.h"
 #include "./graphics/RHI_api/vk/pipeline/layout/vk_input_layout.h"
@@ -360,9 +360,23 @@ namespace Raydiance
             return sampler;
         }
 
-        RHI_Fence* RHI_VK_RenderDevice::CreateFence(const RHI_FenceDescriptor* _fenceDescriptor)
+        std::shared_ptr<RHI_FenceCPU> RHI_VK_RenderDevice::CreateFenceCPU(const RHI_FenceCPUDescriptor& _fenceDescriptor)
         {
-            VKFence* fence = new VKFence(this, _fenceDescriptor);
+            std::shared_ptr<RHI_VK_FenceCPU> fence = std::make_shared<RHI_VK_FenceCPU>();
+            Result result  = fence->Initialize(*this, _fenceDescriptor);
+
+            // Error check
+            if (CheckError(result) == true)
+            {
+                // Destroy pointer
+                //delete fence;
+
+                // Log error
+                Logger::Log("Initialization of RHI_VK_FenceCPU failed.", LogType::LOG_TYPE_ERROR);
+                Logger::Log("No further evidence what went wrong, please see earlier logs.", LogType::LOG_TYPE_ERROR);
+                return nullptr;
+            }
+
             return fence;
         }
 

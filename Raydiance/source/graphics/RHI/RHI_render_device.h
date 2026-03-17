@@ -24,8 +24,8 @@ namespace Raydiance
 		class CommandQueueDescriptor;
 		class RHI_Swapchain;
 		class RHI_SwapchainDescriptor;
-		class RHI_Fence;
-		class RHI_FenceDescriptor;
+		class RHI_FenceCPU;
+		class RHI_FenceCPUDescriptor;
 
 		class GraphicsPipeline;
 		class GraphicsPipelineDescriptor;
@@ -61,8 +61,8 @@ namespace Raydiance
 			[[nodiscard]] static Result Create(RHI_GraphicsAPI _api);
 			[[nodiscard]] static Result Destroy();
 
-			[[nodiscard]] virtual Result Initialize(const RHI_RenderDeviceDescriptor& _renderDeviceDescriptor);
-
+			[[nodiscard]] virtual Result Initialize(const RHI_RenderDeviceDescriptor& _renderDeviceDescriptor); // Needs to be public, because we are not making an abstract version implicitely.
+																												// TODO:: Could move Initialize() call into create(), then its abstracted away from the user, and this can be proetected, like it should.
 			// Singleton getter
 			[[nodiscard]] static RHI_RenderDevice& Get();
 
@@ -75,16 +75,16 @@ namespace Raydiance
 
 			[[nodiscard]] virtual Result LinkAdapter(std::unique_ptr<RHI_Adapter> _adapter) = 0;
 
-
+			
 			// Gets the active physical adapter.
-			[[nodiscard]] inline RHI_Adapter& GetActiveAdapter() const noexcept { return *m_Adapter; }
+			[[nodiscard]] inline const RHI_Adapter& GetActiveAdapter() const noexcept { return *m_Adapter; }
 
 
 			virtual CommandPool*   CreateCommandPool(const CommandPoolDescriptor* _commandPoolDescriptor) = 0;
 			virtual CommandBuffer* CreateCommandBuffer(const CommandBufferDescriptor* _commandBufferDescriptor) = 0;
 			virtual CommandQueue*  CreateCommandQueue(const CommandQueueDescriptor* _commandQueueDescriptor) = 0;
 			virtual RHI_Swapchain* CreateSwapchain(CommandQueue* _commandQueue, const RHI_SwapchainDescriptor* _swapchainDescriptor) = 0;
-			virtual RHI_Fence*     CreateFence(const RHI_FenceDescriptor* _fenceDescriptor) = 0;
+			[[nodiscard]] virtual std::shared_ptr<RHI_FenceCPU> CreateFenceCPU(const RHI_FenceCPUDescriptor& _fenceDescriptor) = 0;
 
 			virtual GraphicsPipeline* CreateGraphicsPipeline(const GraphicsPipelineDescriptor* _graphicsPipelineDescriptor) = 0;
 			virtual InputLayout* CreateInputLayout(const InputLayoutDescriptor* _inputLayoutDescriptor) = 0;

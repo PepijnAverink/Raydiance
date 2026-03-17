@@ -96,10 +96,10 @@
     <ClInclude Include="source\graphics\RHI\object\swapchain\RHI_swapchain_descriptor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\object\sync\RHI_fence.h">
+    <ClInclude Include="source\graphics\RHI\object\sync\RHI_fenceCPU.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\object\sync\RHI_fence_descriptor.h">
+    <ClInclude Include="source\graphics\RHI\object\sync\RHI_fenceCPU_descriptor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\graphics\RHI\pipeline\framebuffer\frame_buffer.h">
@@ -264,7 +264,7 @@
     <ClInclude Include="source\graphics\RHI_api\vk\object\swapchain\vk_swapchain.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI_api\vk\object\sync\vk_fence.h">
+    <ClInclude Include="source\graphics\RHI_api\vk\object\sync\RHI_VK_fenceCPU.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\graphics\RHI_api\vk\pipeline\framebuffer\vk_frame_buffer.h">
@@ -417,6 +417,15 @@
     <ClInclude Include="source\graphics\RHI_api\vk\RHI_VK_adapter_type.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\core\memory\allocator\allocation_statistics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\core\memory\allocator\basic_allocator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\core\memory\allocator\debug_allocator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\core\system\file_system.cpp">
@@ -440,7 +449,7 @@
     <ClCompile Include="source\graphics\RHI\object\swapchain\RHI_swapchain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\graphics\RHI\object\sync\RHI_fence.cpp">
+    <ClCompile Include="source\graphics\RHI\object\sync\RHI_fenceCPU.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\graphics\RHI\pipeline\framebuffer\frame_buffer.cpp">
@@ -488,7 +497,7 @@
     <ClCompile Include="source\graphics\RHI_api\vk\object\swapchain\vk_swapchain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\graphics\RHI_api\vk\object\sync\vk_fence.cpp">
+    <ClCompile Include="source\graphics\RHI_api\vk\object\sync\RHI_VK_fenceCPU.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\graphics\RHI_api\vk\pipeline\framebuffer\vk_frame_buffer.cpp">

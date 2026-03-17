@@ -8,7 +8,7 @@ namespace Raydiance
 		class Quad : public Mesh
 		{
 		public:
-			Quad(CommandBuffer* _commandBuffer, RHI_Fence* _fence);
+			Quad(CommandBuffer* _commandBuffer, std::shared_ptr<RHI_FenceCPU> _fence);
 		};
 	}
 }

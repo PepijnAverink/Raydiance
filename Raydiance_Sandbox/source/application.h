@@ -38,7 +38,7 @@ private:
 
 	Window* m_Window = nullptr;
 
-	RHI_Fence* m_AquireFence = nullptr;
+	std::shared_ptr<RHI_FenceCPU> m_AquireFence = nullptr;
 
 	Mesh* m_Mesh         = nullptr;
 

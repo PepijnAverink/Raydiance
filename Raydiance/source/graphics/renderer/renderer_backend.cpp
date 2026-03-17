@@ -24,12 +24,12 @@ namespace Raydiance
 			delete s_RenderBackend;
 		}
 
-		void RendererBackend::SubmitCommandBuffer(CommandBuffer* _commandBuffer, RHI_Fence* _fence)
+		void RendererBackend::SubmitCommandBuffer(CommandBuffer* _commandBuffer, std::shared_ptr<RHI_FenceCPU> _fence)
 		{
 			s_RenderBackend->m_CommandQueue->SubmitCommandBuffer(_commandBuffer, _fence);
 		}
 
-		uint32_t RendererBackend::AquireNewFrame(RHI_Fence* _fence)
+		uint32_t RendererBackend::AquireNewFrame(std::shared_ptr<RHI_FenceCPU> _fence)
 		{
 			return s_RenderBackend->m_Swapchain->AquireNewImage(s_RenderBackend->m_CommandQueue, _fence);
 		}

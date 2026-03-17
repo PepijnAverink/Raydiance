@@ -20,7 +20,7 @@ private:
 	Raydiance::Graphics::CommandPool*   m_CommandPool   = nullptr;
 	Raydiance::Graphics::CommandBuffer* m_CommandBuffer = nullptr;
 
-	Raydiance::Graphics::RHI_Fence* m_Fence = nullptr;
+	std::shared_ptr<Raydiance::Graphics::RHI_FenceCPU> m_Fence = nullptr;
 
 	Raydiance::Graphics::RenderPass*  m_RenderPass  = nullptr;
 	Raydiance::Graphics::InputLayout* m_InputLayout = nullptr;

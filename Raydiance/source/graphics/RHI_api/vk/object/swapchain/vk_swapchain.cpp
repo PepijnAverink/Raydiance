@@ -4,7 +4,7 @@
 // Graphics includes
 #include "./graphics/RHI_api/vk/RHI_VK_adapter.h"
 
-#include "./graphics/RHI_api/vk/object/sync/vk_fence.h"
+#include "./graphics/RHI_api/vk/object/sync/RHI_VK_fenceCPU.h"
 #include "./graphics/RHI_api/vk/object/command/vk_command_queue.h"
 
 #include "./graphics/RHI_api/vk/resource/vk_resource_format.h"
@@ -45,9 +45,9 @@ namespace Raydiance
 			CreateSwapchain(device, _commandQueue);
 		}
 
-		uint32_t VKSwapchain::AquireNewImage(CommandQueue* _commandQueue, RHI_Fence* _fence)
+		uint32_t VKSwapchain::AquireNewImage(CommandQueue* _commandQueue, std::shared_ptr<RHI_FenceCPU> _fence)
 		{
-			VkResult result = vkAcquireNextImageKHR(static_cast<RHI_VK_RenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_SwapChainObj, UINT64_MAX, VK_NULL_HANDLE, ((VKFence*)_fence)->GetVKFence(), &m_CurrentBufferIndex);
+			VkResult result = vkAcquireNextImageKHR(static_cast<RHI_VK_RenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_SwapChainObj, UINT64_MAX, VK_NULL_HANDLE, ((RHI_VK_FenceCPU*)_fence.get())->GetVKFence(), &m_CurrentBufferIndex);
 			return m_CurrentBufferIndex;
 		}
 

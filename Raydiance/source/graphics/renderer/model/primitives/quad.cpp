@@ -21,7 +21,7 @@ namespace Raydiance
             0, 1, 2, 2, 3, 0
         };
 
-        Quad::Quad(CommandBuffer* _commandBuffer, RHI_Fence* _fence)
+        Quad::Quad(CommandBuffer* _commandBuffer, std::shared_ptr<RHI_FenceCPU> _fence)
         {
             CreateVertexBuffer(_commandBuffer, _fence, vertices.data(), sizeof(vertices[0]) * vertices.size(), BufferLayout({ { "POS",  ResourceFormat::RESOURCE_FORMAT_R32G32B32_SFLOAT },
                  { "TEX",  ResourceFormat::RESOURCE_FORMAT_R32G32_SFLOAT } }));

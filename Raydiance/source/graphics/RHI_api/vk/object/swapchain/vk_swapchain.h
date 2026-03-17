@@ -17,7 +17,7 @@ namespace Raydiance
 
 			virtual void Resize(CommandQueue* _commandQueue, const uint32_t _width, const uint32_t _height) override;
 
-			virtual uint32_t AquireNewImage(CommandQueue* _commandQueue, RHI_Fence* _fence) override;
+			virtual uint32_t AquireNewImage(CommandQueue* _commandQueue, std::shared_ptr<RHI_FenceCPU> _fence) override;
 			virtual void Present(CommandQueue* _commandQueue) override;
 
 			inline VkSwapchainKHR GetVKSwapchain() const { return m_SwapChainObj; }

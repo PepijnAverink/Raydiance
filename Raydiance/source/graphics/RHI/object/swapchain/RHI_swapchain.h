@@ -9,7 +9,7 @@ namespace Raydiance
 	namespace Graphics
 	{
 		class CommandQueue;
-		class RHI_Fence;
+		class RHI_FenceCPU;
 
 		class Texture2D;
 		class TextureView;
@@ -21,7 +21,7 @@ namespace Raydiance
 
 			virtual void Resize(CommandQueue* _commandQueue, const uint32_t _width, const uint32_t _height) = 0;
 
-			virtual uint32_t AquireNewImage(CommandQueue* _commandQueue, RHI_Fence* _fence) = 0;
+			virtual uint32_t AquireNewImage(CommandQueue* _commandQueue, std::shared_ptr<RHI_FenceCPU> _fence) = 0;
 			virtual void Present(CommandQueue* _commandQueue) = 0;
 
 			inline uint32_t GetBufferCount() const { return m_BufferCount; }

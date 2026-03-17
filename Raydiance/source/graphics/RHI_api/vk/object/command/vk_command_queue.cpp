@@ -3,7 +3,7 @@
 
 // Graphics includes
 #include "./graphics/RHI_api/vk/object/command/vk_command_buffer.h"
-#include "./graphics/RHI_api/vk/object/sync/vk_fence.h"
+#include "./graphics/RHI_api/vk/object/sync/RHI_VK_fenceCPU.h"
 
 namespace Raydiance
 {
@@ -27,7 +27,7 @@ namespace Raydiance
 		{
 		}
 
-		void VKCommandQueue::SubmitCommandBuffer(CommandBuffer* _commandBuffer, RHI_Fence* _fence)
+		void VKCommandQueue::SubmitCommandBuffer(CommandBuffer* _commandBuffer, std::shared_ptr<RHI_FenceCPU> _fence)
 		{
 			VkCommandBuffer cmbuffer = ((VKCommandBuffer*)_commandBuffer)->GetVKCommandBuffer();
 			VkPipelineStageFlags waitStages[] = { VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT }; // TODO:: abstract this
@@ -40,7 +40,7 @@ namespace Raydiance
 			submitInfo.pCommandBuffers = &cmbuffer;
 			submitInfo.signalSemaphoreCount = 0;
 
-			if (vkQueueSubmit(m_QueueObj, 1, &submitInfo, ((VKFence*)_fence)->GetVKFence()) != VK_SUCCESS)
+			if (vkQueueSubmit(m_QueueObj, 1, &submitInfo, ((RHI_VK_FenceCPU*)_fence.get())->GetVKFence()) != VK_SUCCESS)
 				Logger::Log("VK_ERROR - Failed to submit CommandBuffer.", LogType::LOG_TYPE_ERROR);
 		}
 	}

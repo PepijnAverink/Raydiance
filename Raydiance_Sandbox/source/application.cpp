@@ -8,6 +8,8 @@ glm::mat4 model;
 
 void Application::OnInitialize()
 {
+    //Raydiance::DebugAllocator<void>::printStats();
+
     // Create a basic window
     m_Window = new Window("GameEngine", 1280, 720);
     m_Window->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
@@ -28,8 +30,8 @@ void Application::OnInitialize()
     // CommandBuffer
     {
         CommandBufferDescriptor commandBufferDesc = {};
-        commandBufferDesc.Name = "CommandBuffer";
-        commandBufferDesc.Type = CommandBufferType::COMMAND_BUFFER_TYPE_DIRECT;
+        commandBufferDesc.Name        = "CommandBuffer";
+        commandBufferDesc.Type        = CommandBufferType::COMMAND_BUFFER_TYPE_DIRECT;
         commandBufferDesc.CommandPool = m_CommandPool;
 
         m_CommandBuffer = m_RenderBackend->GetRenderDevice().CreateCommandBuffer(&commandBufferDesc);
@@ -37,11 +39,11 @@ void Application::OnInitialize()
 
     // Fences
     {
-        RHI_FenceDescriptor fenceDesc;
+        RHI_FenceCPUDescriptor fenceDesc;
         fenceDesc.Name    = "ExecuteFence";
         fenceDesc.TimeOut = UINT64_MAX;
 
-        m_AquireFence = m_RenderBackend->GetRenderDevice().CreateFence(&fenceDesc);
+        m_AquireFence = m_RenderBackend->GetRenderDevice().CreateFenceCPU(fenceDesc);
     }
 
     m_Renderer = new DefaultRenderer();
@@ -67,7 +69,7 @@ void Application::OnTerminate()
     m_Renderer->OnTerminate();
     delete m_Renderer;
 
-    delete m_AquireFence;
+    //delete m_AquireFence;
 
     delete m_CommandBuffer;
     delete m_CommandPool;
@@ -125,9 +127,8 @@ void Application::CalculateFrameStats()
 
 void Application::OnRender()
 {
-        m_AquireFence->Reset();
         uint32_t imageIndex = RendererBackend::AquireNewFrame(m_AquireFence);
-        m_AquireFence->WaitForFence();
+        m_AquireFence->Wait();
 
         m_Renderer->BeginScene(m_Camera);
         m_Renderer->DrawMesh(m_Mesh, model);

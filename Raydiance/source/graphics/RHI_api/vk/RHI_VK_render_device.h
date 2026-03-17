@@ -42,7 +42,7 @@ namespace Raydiance
 			virtual CommandBuffer* CreateCommandBuffer(const CommandBufferDescriptor* _commandBufferDescriptor) override;
 			virtual CommandQueue* CreateCommandQueue(const CommandQueueDescriptor* _commandQueueDescriptor) override;
 			virtual RHI_Swapchain* CreateSwapchain(CommandQueue* _commandQueue, const RHI_SwapchainDescriptor* _swapchainDescriptor) override;
-			virtual RHI_Fence* CreateFence(const RHI_FenceDescriptor* _fenceDescriptor) override;
+			[[nodiscard]] virtual std::shared_ptr<RHI_FenceCPU> CreateFenceCPU(const RHI_FenceCPUDescriptor& _fenceDescriptor) override;
 
 			virtual GraphicsPipeline* CreateGraphicsPipeline(const GraphicsPipelineDescriptor* _graphicsPipelineDescriptor) override;
 			virtual InputLayout* CreateInputLayout(const InputLayoutDescriptor* _inputLayoutDescriptor) override;

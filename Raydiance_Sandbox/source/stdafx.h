@@ -56,8 +56,8 @@
 #include "graphics/RHI/object/swapchain/RHI_swapchain_descriptor.h"
 #include "graphics/RHI/object/swapchain/RHI_swapchain.h"
 
-#include "graphics/RHI/object/sync/RHI_fence_descriptor.h"
-#include "graphics/RHI/object/sync/RHI_fence.h"
+#include "graphics/RHI/object/sync/RHI_FenceCPU_descriptor.h"
+#include "graphics/RHI/object/sync/RHI_FenceCPU.h"
 
 
 #include "graphics/RHI/pipeline/framebuffer/frame_buffer.h"
@@ -136,7 +136,7 @@
 #include "graphics/RHI_api/vk/resource/vk_resource_memory_type.h"
 #include "graphics/RHI_api/vk/object/swapchain/vk_swapchain.h"
 
-#include "graphics/RHI_api/vk/object/sync/vk_fence.h"
+#include "graphics/RHI_api/vk/object/sync/RHI_VK_fenceCPU.h"
 
 #include "graphics/RHI_api/vk/pipeline/framebuffer/vk_frame_buffer.h"
 

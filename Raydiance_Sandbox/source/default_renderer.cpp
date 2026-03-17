@@ -28,11 +28,11 @@ void DefaultRenderer::OnInitialize(Raydiance::Graphics::RendererBackend* _backen
 
     // Fences
     // --------------------------------------------------------------------
-    RHI_FenceDescriptor fenceDesc;
+    RHI_FenceCPUDescriptor fenceDesc;
     fenceDesc.Name    = "ExecuteFence";
     fenceDesc.TimeOut = UINT64_MAX;
 
-    m_Fence = m_RendererBackend->GetRenderDevice().CreateFence(&fenceDesc);
+    m_Fence = m_RendererBackend->GetRenderDevice().CreateFenceCPU(fenceDesc);
 
     // RenderPass
     // --------------------------------------------------------------------
@@ -159,9 +159,8 @@ void DefaultRenderer::OnInitialize(Raydiance::Graphics::RendererBackend* _backen
     m_CommandBuffer->TransitionTexture(m_Texture, ResourceState::RESOURCE_STATE_GENERAL_WRITE, ResourceState::RESOURCE_STATE_SHADER_READ_ONLY);
     m_CommandBuffer->EndRecording();
 
-    m_Fence->Reset();
     RendererBackend::SubmitCommandBuffer(m_CommandBuffer, m_Fence);
-    m_Fence->WaitForFence();
+    m_Fence->Wait();
     delete buffer;
 
     Sampler2DDescriptor samplerDesc;
@@ -206,7 +205,7 @@ void DefaultRenderer::OnTerminate()
 
     delete m_RenderPass;
 
-    delete m_Fence;
+    //delete m_Fence;
     delete m_CommandBuffer;
     delete m_CommandPool;
 }
@@ -278,9 +277,8 @@ void DefaultRenderer::EndScene()
     m_CommandBuffer->EndRenderPass();
     m_CommandBuffer->EndRecording();
 
-    m_Fence->Reset();
     RendererBackend::SubmitCommandBuffer(m_CommandBuffer, m_Fence);
-    m_Fence->WaitForFence();
+    m_Fence->Wait();
 }
 
 void DefaultRenderer::DrawMesh(Raydiance::Graphics::Mesh* _mesh, const glm::mat4& transform)

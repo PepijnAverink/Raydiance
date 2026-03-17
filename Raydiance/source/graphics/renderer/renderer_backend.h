@@ -1,7 +1,7 @@
 #pragma once
 // Grpahics includes
 #include "./graphics/RHI/RHI_render_device.h"
-#include "./graphics/RHI/object/sync/RHI_fence.h"
+#include "./graphics/RHI/object/sync/RHI_FenceCPU.h"
 #include "./graphics/RHI/object/command/command_queue.h"
 #include "./graphics/RHI/object/command/command_buffer.h"
 #include "./graphics/RHI/object/swapchain/RHI_swapchain.h"
@@ -18,9 +18,9 @@ namespace Raydiance
 			static RendererBackend* Create(Window* _window);
 			static void Destroy();
 
-			static void SubmitCommandBuffer(CommandBuffer* _commandBuffer, RHI_Fence* _fence);
+			static void SubmitCommandBuffer(CommandBuffer* _commandBuffer, std::shared_ptr<RHI_FenceCPU> _fence);
 
-			static uint32_t AquireNewFrame(RHI_Fence* _fence);
+			static uint32_t AquireNewFrame(std::shared_ptr<RHI_FenceCPU> _fence);
 			static void Present();
 
 			static void OnResize(const uint32_t _width, const uint32_t _height);

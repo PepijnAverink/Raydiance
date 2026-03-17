@@ -6,6 +6,7 @@
 #include "./graphics/RHI/RHI_render_device.h"
 #include "./graphics/RHI/object/command/command_buffer.h"
 
+#include "./graphics/RHI/object/sync/RHI_fenceCPU.h"
 
 namespace Raydiance
 {
@@ -17,7 +18,7 @@ namespace Raydiance
             delete m_IndexBuffer;
         }
 
-        void Mesh::CreateVertexBuffer(CommandBuffer* _commandBuffer, RHI_Fence* _fence, void* _data, const uint32_t _size, BufferLayout _layout)
+        void Mesh::CreateVertexBuffer(CommandBuffer* _commandBuffer, std::shared_ptr<RHI_FenceCPU> _fence, void* _data, const uint32_t _size, BufferLayout _layout)
         {
             BufferDescriptor bufferDesc;
             bufferDesc.Name = "Generated-VertexStagingBuffer";
@@ -43,14 +44,14 @@ namespace Raydiance
             _commandBuffer->CopyBuffer(stagingBuffer, m_VertexBuffer, _size);
             _commandBuffer->EndRecording();
 
-            _fence->Reset();
+            //_fence->Reset();
             RendererBackend::SubmitCommandBuffer(_commandBuffer, _fence);
-            _fence->WaitForFence();
+            _fence->Wait();
 
             delete stagingBuffer;
         }
 
-        void Mesh::CreateIndexBuffer(CommandBuffer* _commandBuffer, RHI_Fence* _fence, void* _data, const uint32_t _size, BufferLayout _layout)
+        void Mesh::CreateIndexBuffer(CommandBuffer* _commandBuffer, std::shared_ptr<RHI_FenceCPU> _fence, void* _data, const uint32_t _size, BufferLayout _layout)
         {
             BufferDescriptor bufferDesc;
             bufferDesc.Name = "Generated-IndexStagingBuffer";
@@ -76,9 +77,8 @@ namespace Raydiance
             _commandBuffer->CopyBuffer(stagingBuffer, m_IndexBuffer, _size);
             _commandBuffer->EndRecording();
 
-            _fence->Reset();
             RendererBackend::SubmitCommandBuffer(_commandBuffer, _fence);
-            _fence->WaitForFence();
+            _fence->Wait();
 
             delete stagingBuffer;
         }

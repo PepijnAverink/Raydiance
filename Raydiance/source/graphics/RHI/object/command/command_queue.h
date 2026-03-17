@@ -7,14 +7,14 @@ namespace Raydiance
 	namespace Graphics
 	{
 		class CommandBuffer;
-		class RHI_Fence;
+		class RHI_FenceCPU;
 		class CommandQueue
 		{
 		public:
 			CommandQueue(const CommandQueueDescriptor* _commandQueueDescriptor);
 			virtual ~CommandQueue();
 
-			virtual void SubmitCommandBuffer(CommandBuffer* _commandBuffer, RHI_Fence* _fence) = 0;
+			virtual void SubmitCommandBuffer(CommandBuffer* _commandBuffer, std::shared_ptr<RHI_FenceCPU> _fence) = 0;
 
 			inline bool CheckSupportFlag(uint32_t _flag) const { return (m_SupportFlags & _flag); }
 

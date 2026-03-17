@@ -12,7 +12,7 @@ namespace Raydiance
 			VKCommandQueue(RHI_VK_RenderDevice* _renderDevice, const CommandQueueDescriptor* _commandQueueDescriptor);
 			virtual ~VKCommandQueue();
 
-			virtual void SubmitCommandBuffer(CommandBuffer* _commandBuffer, RHI_Fence* _fence) override;
+			virtual void SubmitCommandBuffer(CommandBuffer* _commandBuffer, std::shared_ptr<RHI_FenceCPU> _fence) override;
 
 			inline VkQueue GetVKQueue() const { return m_QueueObj; }
 
