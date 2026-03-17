@@ -5,7 +5,7 @@
 #include "./graphics/RHI_api/vk/object/command/vk_command_pool.h"
 #include "./graphics/RHI_api/vk/object/command/vk_command_buffer.h"
 #include "./graphics/RHI_api/vk/object/command/vk_command_queue.h"
-#include "./graphics/RHI_api/vk/object/swapchain/vk_swapchain.h"
+#include "./graphics/RHI_api/vk/object/swapchain/RHI_VK_swapchain.h"
 #include "./graphics/RHI_api/vk/object/sync/RHI_VK_fenceCPU.h"
 
 #include "./graphics/RHI_api/vk/pipeline/graphics/vk_graphics_pipeline.h"
@@ -302,7 +302,7 @@ namespace Raydiance
 
         RHI_Swapchain* RHI_VK_RenderDevice::CreateSwapchain(CommandQueue* _commandQueue, const RHI_SwapchainDescriptor* _swapchainDescriptor)
         {
-            VKSwapchain* swapchain = new VKSwapchain(*this, _commandQueue, _swapchainDescriptor);
+            RHI_VK_Swapchain* swapchain = new RHI_VK_Swapchain(*this, _commandQueue, _swapchainDescriptor);
             return swapchain;
         }
 

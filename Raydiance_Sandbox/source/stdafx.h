@@ -134,7 +134,7 @@
 #include "graphics/RHI_api/vk/resource/vk_resource_format.h"
 #include "graphics/RHI_api/vk/resource/vk_resource_state.h"
 #include "graphics/RHI_api/vk/resource/vk_resource_memory_type.h"
-#include "graphics/RHI_api/vk/object/swapchain/vk_swapchain.h"
+#include "graphics/RHI_api/vk/object/swapchain/RHI_VK_swapchain.h"
 
 #include "graphics/RHI_api/vk/object/sync/RHI_VK_fenceCPU.h"
 

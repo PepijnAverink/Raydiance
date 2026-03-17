@@ -250,7 +250,7 @@
     <ClInclude Include="source\graphics\RHI_api\vk\object\command\vk_command_buffer.h" />
     <ClInclude Include="source\graphics\RHI_api\vk\object\command\vk_command_pool.h" />
     <ClInclude Include="source\graphics\RHI_api\vk\object\command\vk_command_queue.h" />
-    <ClInclude Include="source\graphics\RHI_api\vk\object\swapchain\vk_swapchain.h" />
+    <ClInclude Include="source\graphics\RHI_api\vk\object\swapchain\RHI_VK_swapchain.h" />
     <ClInclude Include="source\graphics\RHI_api\vk\object\sync\RHI_VK_fenceCPU.h" />
     <ClInclude Include="source\graphics\RHI_api\vk\pipeline\framebuffer\vk_frame_buffer.h" />
     <ClInclude Include="source\graphics\RHI_api\vk\pipeline\graphics\rasterizer\vk_cull_mode.h" />
@@ -321,7 +321,7 @@
     <ClCompile Include="source\graphics\RHI_api\vk\object\command\vk_command_buffer.cpp" />
     <ClCompile Include="source\graphics\RHI_api\vk\object\command\vk_command_pool.cpp" />
     <ClCompile Include="source\graphics\RHI_api\vk\object\command\vk_command_queue.cpp" />
-    <ClCompile Include="source\graphics\RHI_api\vk\object\swapchain\vk_swapchain.cpp" />
+    <ClCompile Include="source\graphics\RHI_api\vk\object\swapchain\RHI_VK_swapchain.cpp" />
     <ClCompile Include="source\graphics\RHI_api\vk\object\sync\RHI_VK_fenceCPU.cpp" />
     <ClCompile Include="source\graphics\RHI_api\vk\pipeline\framebuffer\vk_frame_buffer.cpp" />
     <ClCompile Include="source\graphics\RHI_api\vk\pipeline\graphics\vk_graphics_pipeline.cpp" />

@@ -1,5 +1,5 @@
 #include "./pch.h"
-#include "./graphics/RHI_api/vk/object/swapchain/vk_swapchain.h"
+#include "./graphics/RHI_api/vk/object/swapchain/RHI_VK_swapchain.h"
 
 // Graphics includes
 #include "./graphics/RHI_api/vk/RHI_VK_adapter.h"
@@ -17,19 +17,19 @@ namespace Raydiance
 {
 	namespace Graphics
 	{
-		VKSwapchain::VKSwapchain(RHI_VK_RenderDevice& _renderDevice, CommandQueue* _commandQueue, const RHI_SwapchainDescriptor* _swapchainDescriptor)
+		RHI_VK_Swapchain::RHI_VK_Swapchain(RHI_VK_RenderDevice& _renderDevice, CommandQueue* _commandQueue, const RHI_SwapchainDescriptor* _swapchainDescriptor)
 			: RHI_Swapchain(_swapchainDescriptor)
 		{
 			CreateSwapchain(_renderDevice, _commandQueue);
 		}
 
-		VKSwapchain::~VKSwapchain()
+		RHI_VK_Swapchain::~RHI_VK_Swapchain()
 		{
 			for (uint32_t i = 0; i < m_BufferCount; i++)
 				((VKTexture2D*)m_Textures[i])->FreeImageView();
 			vkDestroySwapchainKHR(static_cast<RHI_VK_RenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_SwapChainObj, nullptr);
 		}
-		void VKSwapchain::Resize(CommandQueue* _commandQueue, const uint32_t _width, const uint32_t _height)
+		void RHI_VK_Swapchain::Resize(CommandQueue* _commandQueue, const uint32_t _width, const uint32_t _height)
 		{
 			// Cleanup
 			for (uint32_t i = 0; i < m_BufferCount; i++)
@@ -45,13 +45,13 @@ namespace Raydiance
 			CreateSwapchain(device, _commandQueue);
 		}
 
-		uint32_t VKSwapchain::AquireNewImage(CommandQueue* _commandQueue, std::shared_ptr<RHI_FenceCPU> _fence)
+		uint32_t RHI_VK_Swapchain::AquireNewImage(CommandQueue* _commandQueue, std::shared_ptr<RHI_FenceCPU> _fence)
 		{
 			VkResult result = vkAcquireNextImageKHR(static_cast<RHI_VK_RenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_SwapChainObj, UINT64_MAX, VK_NULL_HANDLE, ((RHI_VK_FenceCPU*)_fence.get())->GetVKFence(), &m_CurrentBufferIndex);
 			return m_CurrentBufferIndex;
 		}
 
-		void VKSwapchain::Present(CommandQueue* _commandQueue)
+		void RHI_VK_Swapchain::Present(CommandQueue* _commandQueue)
 		{
 			VkPresentInfoKHR presentInfo{};
 			presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
@@ -63,7 +63,7 @@ namespace Raydiance
 			vkQueuePresentKHR(((VKCommandQueue*)_commandQueue)->GetVKQueue(), &presentInfo);
 		}
 
-		void VKSwapchain::CreateSwapchain(RHI_VK_RenderDevice& _renderDevice, CommandQueue* _commandQueue)
+		void RHI_VK_Swapchain::CreateSwapchain(RHI_VK_RenderDevice& _renderDevice, CommandQueue* _commandQueue)
 		{
 			const auto& physicalDevice = static_cast<const RHI_VK_Adapter&>(_renderDevice.GetActiveAdapter()).GetPhysicalDevice();
 

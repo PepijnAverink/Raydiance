@@ -17,7 +17,7 @@ namespace Raydiance
 			inline VkImageView GetVKTextureView() const { return m_ImageViewObj; }
 
 		private:
-			friend class VKSwapchain;
+			friend class RHI_VK_Swapchain;
 			void FreeImageView();
 
 			uint32_t FindMemoryType(RHI_VK_RenderDevice* _renderDevice, uint32_t typeFilter, VkMemoryPropertyFlags properties);
