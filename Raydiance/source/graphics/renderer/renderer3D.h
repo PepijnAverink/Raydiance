@@ -26,6 +26,8 @@ namespace Raydiance
 		class Renderer3D
 		{
 		public:
+			virtual ~Renderer3D(void) = default;
+
 			virtual void OnInitialize(RendererBackend* _backend);
 			virtual void OnTerminate();
 

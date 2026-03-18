@@ -1,8 +1,11 @@
 #pragma once
 #include "./graphics/RHI/object/swapchain/RHI_swapchain_descriptor.h"
+
 #include "graphics/RHI/resource/resource_format.h"
 
-#include <vector>
+#include "./core/error/result.h"
+
+#include <vector> // TODO:: Use array...
 
 namespace Raydiance
 {
@@ -16,29 +19,32 @@ namespace Raydiance
 		class RHI_Swapchain
 		{
 		public:
-			RHI_Swapchain(const RHI_SwapchainDescriptor* _swapchainDescriptor);
-			virtual ~RHI_Swapchain();
+			// Public destructor
+			virtual ~RHI_Swapchain(void);
 
-			virtual void Resize(CommandQueue* _commandQueue, const uint32_t _width, const uint32_t _height) = 0;
+			virtual void Resize(const CommandQueue& _commandQueue, const uint32 _width, const uint32 _height) = 0;
 
-			virtual uint32_t AquireNewImage(CommandQueue* _commandQueue, std::shared_ptr<RHI_FenceCPU> _fence) = 0;
+			virtual uint32 AquireNewImage(CommandQueue* _commandQueue, std::shared_ptr<RHI_FenceCPU> _fence) = 0;
 			virtual void     Present(CommandQueue* _commandQueue) = 0;
 
-			inline uint32_t GetBufferCount() const { return m_BufferCount; }
-			inline uint32_t GetCurrentBufferIndex() const { return m_CurrentBufferIndex; }
+			inline uint32 GetBufferCount() const { return m_BufferCount; }
+			inline uint32 GetCurrentBufferIndex() const { return m_CurrentBufferIndex; }
 
-			inline uint32_t GetWidth() const { return m_Width; }
-			inline uint32_t GetHeight() const { return m_Height; }
+			inline uint32 GetWidth() const { return m_Width; }
+			inline uint32 GetHeight() const { return m_Height; }
 
 			inline ResourceFormat GetFormat() const { return m_Format; }
 
-			inline Texture2D* GetTextureAtIndex(const uint32_t _i) const { return m_Textures[_i]; }
+			inline Texture2D* GetTextureAtIndex(const uint32 _i) const { return m_Textures[_i]; }
 
 		protected:
-			Window* m_WindowPtr = nullptr;
-			uint32_t m_Width;
-			uint32_t m_Height;
+			// Protected constructor and initialize(), user should not create base instance.
+			RHI_Swapchain(void);
+			[[nodiscard]] const Result Initialize(const RHI_SwapchainDescriptor& _swapchainDescriptor);
 
+			Window* m_WindowPtr = nullptr;
+			uint32  m_Width;
+			uint32  m_Height;
 
 			ResourceFormat m_Format = ResourceFormat::RESOURCE_FORMAT_NONE;
 

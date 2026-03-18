@@ -5,13 +5,13 @@ namespace Raydiance
 {
 	namespace Graphics
 	{
-		VKCommandPool::VKCommandPool(RHI_VK_RenderDevice* _renderDevice, const CommandPoolDescriptor* _commandPoolDescriptor)
+		VKCommandPool::VKCommandPool(RHI_VK_RenderDevice* _renderDevice, const CommandPoolDescriptor& _commandPoolDescriptor)
 			: CommandPool(_commandPoolDescriptor)
 		{
 			// Craetion info
 			VkCommandPoolCreateInfo poolInfo{};
 			poolInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
-			poolInfo.queueFamilyIndex = _renderDevice->GetQueueFamilyID(_commandPoolDescriptor->Type);
+			poolInfo.queueFamilyIndex = _renderDevice->GetQueueFamilyID(_commandPoolDescriptor.Type);
 			poolInfo.flags = VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
 
 			// Create CommandPool

@@ -60,7 +60,7 @@ namespace Raydiance
 				Logger::Log("VK_ERROR - Failed to create 'ImageView' object.", LogType::LOG_TYPE_ERROR);
 		}
 
-		VKTexture2D::VKTexture2D(RHI_VK_RenderDevice& _renderDevice, VkImage _resource, const Texture2DDescriptor* _texture2DDescriptor)
+		VKTexture2D::VKTexture2D(const RHI_VK_RenderDevice& _renderDevice, VkImage _resource, const Texture2DDescriptor* _texture2DDescriptor)
 			: Texture2D(_texture2DDescriptor)
 			, m_ImageObj(_resource)
 		{

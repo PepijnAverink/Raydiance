@@ -5,10 +5,9 @@ namespace Raydiance
 {
 	namespace Graphics
 	{
-		CommandPool::CommandPool(const CommandPoolDescriptor* _commandPoolDescriptor)
-			: m_Type(_commandPoolDescriptor->Type)
-		{
-		}
+		CommandPool::CommandPool(const CommandPoolDescriptor& _commandPoolDescriptor)
+			: m_Type(_commandPoolDescriptor.Type)
+		{ }
 
 		CommandPool::~CommandPool()
 		{

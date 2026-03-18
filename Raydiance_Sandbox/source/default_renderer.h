@@ -5,6 +5,8 @@
 class DefaultRenderer : public Raydiance::Graphics::Renderer3D
 {
 public:
+	virtual ~DefaultRenderer();
+
 	virtual void OnInitialize(Raydiance::Graphics::RendererBackend* _backend) override;
 	virtual void OnTerminate() override;
 
@@ -17,8 +19,8 @@ public:
 	virtual void DrawSubMesh(Raydiance::Graphics::Mesh* _mesh, const uint32_t _subMeshID, const glm::mat4& transform) override;
 
 private:
-	Raydiance::Graphics::CommandPool*   m_CommandPool   = nullptr;
-	Raydiance::Graphics::CommandBuffer* m_CommandBuffer = nullptr;
+	std::shared_ptr<Raydiance::Graphics::CommandPool>   m_CommandPool   = nullptr;
+	std::shared_ptr<Raydiance::Graphics::CommandBuffer> m_CommandBuffer = nullptr;
 
 	std::shared_ptr<Raydiance::Graphics::RHI_FenceCPU> m_Fence = nullptr;
 

@@ -10,7 +10,7 @@ namespace Raydiance
 		{
 		public:
 			VKTexture2D(RHI_VK_RenderDevice* _renderDevice, const Texture2DDescriptor* _texture2DDescriptor);
-			VKTexture2D(RHI_VK_RenderDevice& _renderDevice, VkImage _resource, const Texture2DDescriptor* _texture2DDescriptor);
+			VKTexture2D(const RHI_VK_RenderDevice& _renderDevice, VkImage _resource, const Texture2DDescriptor* _texture2DDescriptor);
 			virtual ~VKTexture2D();
 
 			inline VkImage GetVKTexture() const { return m_ImageObj; }

@@ -45,8 +45,8 @@ private:
 	RendererBackend* m_RenderBackend = nullptr;
 	Renderer3D* m_Renderer = nullptr;
 
-	CommandPool* m_CommandPool = nullptr;
-	CommandBuffer* m_CommandBuffer = nullptr;
+	std::shared_ptr<CommandPool>   m_CommandPool = nullptr;
+	std::shared_ptr<CommandBuffer> m_CommandBuffer = nullptr;
 
 	int m_MouseX, m_MouseY;
 	bool m_FirstMouse = true;

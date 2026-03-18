@@ -38,11 +38,13 @@ namespace Raydiance
 
 			uint32_t GetQueueFamilyID(const CommandQueueType _type) const;
 
-			virtual CommandPool* CreateCommandPool(const CommandPoolDescriptor* _commandPoolDescriptor) override;
-			virtual CommandBuffer* CreateCommandBuffer(const CommandBufferDescriptor* _commandBufferDescriptor) override;
-			virtual CommandQueue* CreateCommandQueue(const CommandQueueDescriptor* _commandQueueDescriptor) override;
-			virtual RHI_Swapchain* CreateSwapchain(CommandQueue* _commandQueue, const RHI_SwapchainDescriptor* _swapchainDescriptor) override;
-			[[nodiscard]] virtual std::shared_ptr<RHI_FenceCPU> CreateFenceCPU(const RHI_FenceCPUDescriptor& _fenceDescriptor) override;
+			// Create functions
+			// ----------------------------------------------------------------------
+			[[nodiscard]] virtual std::shared_ptr<CommandPool>   CreateCommandPool(const CommandPoolDescriptor& _commandPoolDescriptor) override;
+			[[nodiscard]] virtual std::shared_ptr<CommandBuffer> CreateCommandBuffer(const CommandBufferDescriptor& _commandBufferDescriptor) override;
+			[[nodiscard]] virtual std::shared_ptr<CommandQueue>  CreateCommandQueue(const CommandQueueDescriptor& _commandQueueDescriptor) override;
+			[[nodiscard]] virtual std::shared_ptr<RHI_Swapchain> CreateSwapchain(const CommandQueue& _commandQueue, const RHI_SwapchainDescriptor& _swapchainDescriptor) override;
+			[[nodiscard]] virtual std::shared_ptr<RHI_FenceCPU>  CreateFenceCPU(const RHI_FenceCPUDescriptor& _fenceDescriptor) override;
 
 			virtual GraphicsPipeline* CreateGraphicsPipeline(const GraphicsPipelineDescriptor* _graphicsPipelineDescriptor) override;
 			virtual InputLayout* CreateInputLayout(const InputLayoutDescriptor* _inputLayoutDescriptor) override;

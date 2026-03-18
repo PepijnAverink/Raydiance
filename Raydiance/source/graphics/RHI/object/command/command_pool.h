@@ -9,7 +9,7 @@ namespace Raydiance
 		class CommandPool
 		{
 		public:
-			CommandPool(const CommandPoolDescriptor* _commandPoolDescriptor);
+			CommandPool(const CommandPoolDescriptor& _commandPoolDescriptor);
 			virtual ~CommandPool();
 
 			virtual void Reset() = 0;

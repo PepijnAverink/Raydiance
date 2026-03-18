@@ -14,26 +14,28 @@ namespace Raydiance
 			vkDestroyFence(static_cast<RHI_VK_RenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_FenceObj, nullptr);
 		}
 
-		const Result RHI_VK_FenceCPU::Initialize(RHI_VK_RenderDevice& _renderDevice, const RHI_FenceCPUDescriptor& _fenceDescriptor)
+		const Result RHI_VK_FenceCPU::Initialize(const RHI_VK_RenderDevice& _renderDevice, const RHI_FenceCPUDescriptor& _fenceDescriptor)
 		{
 			// Object storing the result of all interal functions.
 			Result result = Result::RESULT_INVALID;
 
-			// Initialize the base class of the std::shared_ptr<RHI_FenceCPU> graphics object class,
+			// Initialize the base class of the RHI_FenceCPU graphics object class,
 			// And error check the result.
 			// --------------------------------------------------------------------------
 			result = RHI_FenceCPU::Initialize(_fenceDescriptor);
 			if (CheckError(result) == true)
 			{
 				// When result is RESULT_ERROR || RESULT_FATAL.
-				Logger::Log("Error while intitializing the base class of the 'std::shared_ptr<RHI_FenceCPU>' object.", LogType::LOG_TYPE_ERROR);
+				Logger::Log("Error while intitializing the base class of the 'RHI_FenceCPU' object.", LogType::LOG_TYPE_ERROR);
 				Logger::Log("No further evidence what went wrong, please see earlier logs.", LogType::LOG_TYPE_ERROR);
 				return result;
 			}
 
+
 			// ==========================================================================
 			// The actual VULKAN initialization follows
 			// ==========================================================================
+
 			VkFenceCreateInfo fenceInfo{};
 			fenceInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
 			fenceInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;

@@ -9,7 +9,7 @@ namespace Raydiance
 		class VKCommandPool final : public CommandPool
 		{
 		public:
-			VKCommandPool(RHI_VK_RenderDevice* _renderDevice, const CommandPoolDescriptor* _commandPoolDescriptor);
+			VKCommandPool(RHI_VK_RenderDevice* _renderDevice, const CommandPoolDescriptor& _commandPoolDescriptor);
 			virtual ~VKCommandPool();
 
 			virtual void Reset() override;

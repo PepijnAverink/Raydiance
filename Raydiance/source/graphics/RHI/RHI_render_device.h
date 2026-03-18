@@ -80,11 +80,13 @@ namespace Raydiance
 			[[nodiscard]] inline const RHI_Adapter& GetActiveAdapter() const noexcept { return *m_Adapter; }
 
 
-			virtual CommandPool*   CreateCommandPool(const CommandPoolDescriptor* _commandPoolDescriptor) = 0;
-			virtual CommandBuffer* CreateCommandBuffer(const CommandBufferDescriptor* _commandBufferDescriptor) = 0;
-			virtual CommandQueue*  CreateCommandQueue(const CommandQueueDescriptor* _commandQueueDescriptor) = 0;
-			virtual RHI_Swapchain* CreateSwapchain(CommandQueue* _commandQueue, const RHI_SwapchainDescriptor* _swapchainDescriptor) = 0;
-			[[nodiscard]] virtual std::shared_ptr<RHI_FenceCPU> CreateFenceCPU(const RHI_FenceCPUDescriptor& _fenceDescriptor) = 0;
+			// Create functions
+			// ----------------------------------------------------------------------
+			[[nodiscard]] virtual std::shared_ptr<CommandPool>   CreateCommandPool(const CommandPoolDescriptor& _commandPoolDescriptor) = 0;
+			[[nodiscard]] virtual std::shared_ptr<CommandBuffer> CreateCommandBuffer(const CommandBufferDescriptor& _commandBufferDescriptor) = 0;
+			[[nodiscard]] virtual std::shared_ptr<CommandQueue>  CreateCommandQueue(const CommandQueueDescriptor& _commandQueueDescriptor) = 0;
+			[[nodiscard]] virtual std::shared_ptr<RHI_Swapchain> CreateSwapchain(const CommandQueue& _commandQueue, const RHI_SwapchainDescriptor& _swapchainDescriptor) = 0;
+			[[nodiscard]] virtual std::shared_ptr<RHI_FenceCPU>  CreateFenceCPU(const RHI_FenceCPUDescriptor& _fenceDescriptor) = 0;
 
 			virtual GraphicsPipeline* CreateGraphicsPipeline(const GraphicsPipelineDescriptor* _graphicsPipelineDescriptor) = 0;
 			virtual InputLayout* CreateInputLayout(const InputLayoutDescriptor* _inputLayoutDescriptor) = 0;

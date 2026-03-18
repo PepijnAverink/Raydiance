@@ -13,18 +13,22 @@ namespace Raydiance
 		class RHI_VK_Swapchain final : public RHI_Swapchain
 		{
 		public:
-			RHI_VK_Swapchain(RHI_VK_RenderDevice& _renderDevice, CommandQueue* _commandQueue, const RHI_SwapchainDescriptor* _swapchainDescriptor);
-			virtual ~RHI_VK_Swapchain();
+			// Constructor and descructor
+			// ======================================
+					 RHI_VK_Swapchain(void);
+			virtual ~RHI_VK_Swapchain(void);
 
-			virtual void Resize(CommandQueue* _commandQueue, const uint32_t _width, const uint32_t _height) override;
+			[[nodiscard]] const Result Initialize(const RHI_VK_RenderDevice& _renderDevice, const CommandQueue& _commandQueue, const RHI_SwapchainDescriptor& _swapchainDescriptor);
 
-			virtual uint32_t AquireNewImage(CommandQueue* _commandQueue, std::shared_ptr<RHI_FenceCPU> _fence) override;
+			virtual void Resize(const CommandQueue& _commandQueue, const uint32 _width, const uint32 _height) override;
+
+			virtual uint32 AquireNewImage(CommandQueue* _commandQueue, std::shared_ptr<RHI_FenceCPU> _fence) override;
 			virtual void Present(CommandQueue* _commandQueue) override;
 
 			inline VkSwapchainKHR GetRHI_VK_Swapchain() const { return m_SwapChainObj; }
 
 		private:
-			void CreateSwapchain(RHI_VK_RenderDevice& _renderDevice, CommandQueue* _commandQueue);
+			void CreateSwapchain(const RHI_VK_RenderDevice& _renderDevice, const CommandQueue& _commandQueue);
 
 			VkSwapchainKHR m_SwapChainObj;
 		};

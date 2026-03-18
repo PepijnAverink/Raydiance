@@ -11,7 +11,7 @@ namespace Raydiance
 		class CommandQueue
 		{
 		public:
-			CommandQueue(const CommandQueueDescriptor* _commandQueueDescriptor);
+			CommandQueue(const CommandQueueDescriptor& _commandQueueDescriptor);
 			virtual ~CommandQueue();
 
 			virtual void SubmitCommandBuffer(CommandBuffer* _commandBuffer, std::shared_ptr<RHI_FenceCPU> _fence) = 0;

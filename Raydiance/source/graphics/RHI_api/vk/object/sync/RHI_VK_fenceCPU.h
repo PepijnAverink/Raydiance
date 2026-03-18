@@ -12,17 +12,19 @@ namespace Raydiance
 		class RHI_VK_FenceCPU final : public RHI_FenceCPU
 		{
 		public:
-			RHI_VK_FenceCPU(void);
+			// Constructor and descructor
+			// ======================================
+			         RHI_VK_FenceCPU(void);
 			virtual ~RHI_VK_FenceCPU(void);
 
-			[[nodiscard]] const Result Initialize(RHI_VK_RenderDevice& _renderDevice, const RHI_FenceCPUDescriptor& _fenceDescriptor);
+			[[nodiscard]] const Result Initialize(const RHI_VK_RenderDevice& _renderDevice, const RHI_FenceCPUDescriptor& _fenceDescriptor);
 
 			// TODO:: MAYBEEEE not [[nodiscard]]???
 			[[nodiscard]] virtual const Result Wait(void) override;
 
 
 			// Vulkan specific getters
-			inline const VkFence& GetVKFence() const { return m_FenceObj; }
+			inline const VkFence& GetVKFence(void) const { return m_FenceObj; }
 
 		private:
 			VkFence m_FenceObj;

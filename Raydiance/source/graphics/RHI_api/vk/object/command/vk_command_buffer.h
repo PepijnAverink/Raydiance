@@ -11,7 +11,7 @@ namespace Raydiance
 		class VKCommandBuffer final : public CommandBuffer
 		{
 		public:
-			VKCommandBuffer(RHI_VK_RenderDevice* _renderDevice, const CommandBufferDescriptor* _commandBufferDescriptor);
+			VKCommandBuffer(RHI_VK_RenderDevice* _renderDevice, const CommandBufferDescriptor& _commandBufferDescriptor);
 			virtual ~VKCommandBuffer();
 
 			virtual void Reset() override;

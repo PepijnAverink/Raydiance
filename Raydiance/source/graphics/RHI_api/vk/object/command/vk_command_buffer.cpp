@@ -18,13 +18,13 @@ namespace Raydiance
 {
 	namespace Graphics
 	{
-		VKCommandBuffer::VKCommandBuffer(RHI_VK_RenderDevice* _renderDevice, const CommandBufferDescriptor* _commandBufferDescriptor)
+		VKCommandBuffer::VKCommandBuffer(RHI_VK_RenderDevice* _renderDevice, const CommandBufferDescriptor& _commandBufferDescriptor)
 			: CommandBuffer(_commandBufferDescriptor)
 		{
 			// Creation info
 			VkCommandBufferAllocateInfo allocInfo{};
 			allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
-			allocInfo.commandPool = ((VKCommandPool*)_commandBufferDescriptor->CommandPool)->GetVKCommandPool();
+			allocInfo.commandPool = ((VKCommandPool*)_commandBufferDescriptor.CommandPool)->GetVKCommandPool();
 			allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
 			allocInfo.commandBufferCount = 1;
 

@@ -24,7 +24,7 @@ void Application::OnInitialize()
         commandPoolDesc.Name = "CommandPool";
         commandPoolDesc.Type = CommandQueueType::COMMAND_QUEUE_TYPE_GRAPHICS;
 
-        m_CommandPool = m_RenderBackend->GetRenderDevice().CreateCommandPool(&commandPoolDesc);
+        m_CommandPool = m_RenderBackend->GetRenderDevice().CreateCommandPool(commandPoolDesc);
     }
 
     // CommandBuffer
@@ -32,9 +32,9 @@ void Application::OnInitialize()
         CommandBufferDescriptor commandBufferDesc = {};
         commandBufferDesc.Name        = "CommandBuffer";
         commandBufferDesc.Type        = CommandBufferType::COMMAND_BUFFER_TYPE_DIRECT;
-        commandBufferDesc.CommandPool = m_CommandPool;
+        commandBufferDesc.CommandPool = m_CommandPool.get();
 
-        m_CommandBuffer = m_RenderBackend->GetRenderDevice().CreateCommandBuffer(&commandBufferDesc);
+        m_CommandBuffer = m_RenderBackend->GetRenderDevice().CreateCommandBuffer(commandBufferDesc);
     }
 
     // Fences
@@ -49,7 +49,7 @@ void Application::OnInitialize()
     m_Renderer = new DefaultRenderer();
     m_Renderer->OnInitialize(m_RenderBackend);
 
-    m_Mesh = new Cube(m_CommandBuffer, m_AquireFence);
+    m_Mesh = new Cube(m_CommandBuffer.get(), m_AquireFence);
     model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
 
     m_Camera = new Perspective(glm::vec3(0.0f, 0.0f, 2.0f), glm::vec3(0.0f, 0.0f, 0.0f),
@@ -72,8 +72,11 @@ void Application::OnTerminate()
     m_AquireFence.reset();
     //delete m_AquireFence;
 
-    delete m_CommandBuffer;
-    delete m_CommandPool;
+    // TODO:: Move these fuckers out of application, so no manual reset is required.
+    m_CommandBuffer.reset();
+    //delete m_CommandBuffer;
+    m_CommandPool.reset();
+    //delete m_CommandPool;
 
     RendererBackend::Destroy();
     delete m_Window;

@@ -31,19 +31,19 @@ namespace Raydiance
 
 			// Probably delete these
 			inline RHI_RenderDevice& GetRenderDevice() const { return RHI_RenderDevice::Get(); }
-			inline RHI_Swapchain* GetSwapchain() const { return m_Swapchain; }
+			inline RHI_Swapchain&    GetSwapchain()    const { return *m_Swapchain; }
 
 		private:
 			RendererBackend(Window* _window);
 			~RendererBackend();
 
 			//std::shared_ptr<RHI_RenderDevice> m_RenderDevice = nullptr;
-			CommandQueue* m_CommandQueue = nullptr;
+			std::shared_ptr<CommandQueue>  m_CommandQueue = nullptr;
+			std::shared_ptr<RHI_Swapchain> m_Swapchain    = nullptr;
 
-			RHI_Swapchain* m_Swapchain = nullptr;
-			uint32_t   m_ClientWidth = 0;
-			uint32_t   m_ClientHeight = 0;
-			uint32_t   m_BackbufferCount = 0;
+			uint32 m_ClientWidth     = 0;
+			uint32 m_ClientHeight    = 0;
+			uint32 m_BackbufferCount = 0;
 		};
 	}
 }

@@ -13,7 +13,7 @@ namespace Raydiance
 		{
 		public:
 			// Public destructor
-			virtual ~RHI_FenceCPU();
+			virtual ~RHI_FenceCPU(void);
 
 			// TODO:: MAYBEEEE not [[nodiscard]]???
 			[[nodiscard]] virtual const Result Wait() = 0;

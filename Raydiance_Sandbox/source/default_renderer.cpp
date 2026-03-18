@@ -1,6 +1,11 @@
 #include "default_renderer.h"
 #include "stdafx.h"
 
+DefaultRenderer::~DefaultRenderer()
+{
+    int z = 0;
+}
+
 void DefaultRenderer::OnInitialize(Raydiance::Graphics::RendererBackend* _backend)
 {
 	// Initalizing base of Render3D...
@@ -14,16 +19,16 @@ void DefaultRenderer::OnInitialize(Raydiance::Graphics::RendererBackend* _backen
     commandPoolDesc.Name = "CommandPool";
     commandPoolDesc.Type = CommandQueueType::COMMAND_QUEUE_TYPE_GRAPHICS;
 
-    m_CommandPool = m_RendererBackend->GetRenderDevice().CreateCommandPool(&commandPoolDesc);
+    m_CommandPool = m_RendererBackend->GetRenderDevice().CreateCommandPool(commandPoolDesc);
 
     // CommandBuffer
     // --------------------------------------------------------------------
     CommandBufferDescriptor commandBufferDesc = {};
     commandBufferDesc.Name = "CommandBuffer";
     commandBufferDesc.Type = CommandBufferType::COMMAND_BUFFER_TYPE_DIRECT;
-    commandBufferDesc.CommandPool = m_CommandPool;
+    commandBufferDesc.CommandPool = m_CommandPool.get();
 
-    m_CommandBuffer = m_RendererBackend->GetRenderDevice().CreateCommandBuffer(&commandBufferDesc);
+    m_CommandBuffer = m_RendererBackend->GetRenderDevice().CreateCommandBuffer(commandBufferDesc);
     
 
     // Fences
@@ -58,7 +63,7 @@ void DefaultRenderer::OnInitialize(Raydiance::Graphics::RendererBackend* _backen
         frameBufferDesc.Width  = RendererBackend::GetClientWidth();
         frameBufferDesc.Height = RendererBackend::GetClientHeight();
         frameBufferDesc.Contigious  = true;
-        frameBufferDesc.Attachments = { {m_RendererBackend->GetSwapchain()->GetTextureAtIndex(i), FrameBufferAttachmentType::FRAME_BUFFER_ATTACHMENT_TYPE_COLOR }, };
+        frameBufferDesc.Attachments = { {m_RendererBackend->GetSwapchain().GetTextureAtIndex(i), FrameBufferAttachmentType::FRAME_BUFFER_ATTACHMENT_TYPE_COLOR }, };
         frameBufferDesc.RenderPass  = m_RenderPass;
 
         m_FrameBuffers[i] = m_RendererBackend->GetRenderDevice().CreateFrameBuffer(&frameBufferDesc);
@@ -159,7 +164,7 @@ void DefaultRenderer::OnInitialize(Raydiance::Graphics::RendererBackend* _backen
     m_CommandBuffer->TransitionTexture(m_Texture, ResourceState::RESOURCE_STATE_GENERAL_WRITE, ResourceState::RESOURCE_STATE_SHADER_READ_ONLY);
     m_CommandBuffer->EndRecording();
 
-    RendererBackend::SubmitCommandBuffer(m_CommandBuffer, m_Fence);
+    RendererBackend::SubmitCommandBuffer(m_CommandBuffer.get(), m_Fence);
     m_Fence->Wait();
     delete buffer;
 
@@ -206,8 +211,8 @@ void DefaultRenderer::OnTerminate()
     delete m_RenderPass;
 
     //delete m_Fence;
-    delete m_CommandBuffer;
-    delete m_CommandPool;
+    //delete m_CommandBuffer;
+    //delete m_CommandPool;
 }
 
 void DefaultRenderer::OnResize(const uint32_t _width, const uint32_t _height)
@@ -221,7 +226,7 @@ void DefaultRenderer::OnResize(const uint32_t _width, const uint32_t _height)
         frameBufferDesc.Width = RendererBackend::GetClientWidth();
         frameBufferDesc.Height = RendererBackend::GetClientHeight();
         frameBufferDesc.Contigious = true;
-        frameBufferDesc.Attachments = { {m_RendererBackend->GetSwapchain()->GetTextureAtIndex(i), FrameBufferAttachmentType::FRAME_BUFFER_ATTACHMENT_TYPE_COLOR }, };
+        frameBufferDesc.Attachments = { {m_RendererBackend->GetSwapchain().GetTextureAtIndex(i), FrameBufferAttachmentType::FRAME_BUFFER_ATTACHMENT_TYPE_COLOR }, };
         frameBufferDesc.RenderPass = m_RenderPass;
 
         m_FrameBuffers[i] = m_RendererBackend->GetRenderDevice().CreateFrameBuffer(&frameBufferDesc);
@@ -277,7 +282,7 @@ void DefaultRenderer::EndScene()
     m_CommandBuffer->EndRenderPass();
     m_CommandBuffer->EndRecording();
 
-    RendererBackend::SubmitCommandBuffer(m_CommandBuffer, m_Fence);
+    RendererBackend::SubmitCommandBuffer(m_CommandBuffer.get(), m_Fence);
     m_Fence->Wait();
 }
 

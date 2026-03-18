@@ -9,10 +9,10 @@ namespace Raydiance
 {
 	namespace Graphics
 	{
-		VKCommandQueue::VKCommandQueue(RHI_VK_RenderDevice* _renderDevice, const CommandQueueDescriptor* _commandQueueDescriptor)
+		VKCommandQueue::VKCommandQueue(RHI_VK_RenderDevice* _renderDevice, const CommandQueueDescriptor&_commandQueueDescriptor)
 			: CommandQueue(_commandQueueDescriptor)
 		{
-			if (_commandQueueDescriptor->Type == CommandQueueType::COMMAND_QUEUE_TYPE_GRAPHICS)
+			if (_commandQueueDescriptor.Type == CommandQueueType::COMMAND_QUEUE_TYPE_GRAPHICS)
 			{
 				vkGetDeviceQueue(_renderDevice->GetDevice(), _renderDevice->GetGraphicsQueueID(), 0, &m_QueueObj);
 				if (_renderDevice->GetGraphicsQueueID() == _renderDevice->GetPresentQueueID())

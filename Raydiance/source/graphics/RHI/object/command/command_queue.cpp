@@ -5,7 +5,7 @@ namespace Raydiance
 {
 	namespace Graphics
 	{
-		CommandQueue::CommandQueue(const CommandQueueDescriptor* _commandQueueDescriptor)
+		CommandQueue::CommandQueue(const CommandQueueDescriptor& _commandQueueDescriptor)
 		{
 
 		}

@@ -17,19 +17,45 @@ namespace Raydiance
 {
 	namespace Graphics
 	{
-		RHI_VK_Swapchain::RHI_VK_Swapchain(RHI_VK_RenderDevice& _renderDevice, CommandQueue* _commandQueue, const RHI_SwapchainDescriptor* _swapchainDescriptor)
-			: RHI_Swapchain(_swapchainDescriptor)
-		{
-			CreateSwapchain(_renderDevice, _commandQueue);
-		}
+		RHI_VK_Swapchain::RHI_VK_Swapchain()
+			: RHI_Swapchain()
+		{ }
 
 		RHI_VK_Swapchain::~RHI_VK_Swapchain()
 		{
 			for (uint32_t i = 0; i < m_BufferCount; i++)
 				((VKTexture2D*)m_Textures[i])->FreeImageView();
+
 			vkDestroySwapchainKHR(static_cast<RHI_VK_RenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_SwapChainObj, nullptr);
 		}
-		void RHI_VK_Swapchain::Resize(CommandQueue* _commandQueue, const uint32_t _width, const uint32_t _height)
+
+		const Result RHI_VK_Swapchain::Initialize(const RHI_VK_RenderDevice& _renderDevice, const CommandQueue& _commandQueue, const RHI_SwapchainDescriptor& _swapchainDescriptor)
+		{
+			// Object storing the result of all interal functions.
+			Result result = Result::RESULT_INVALID;
+
+			// Initialize the base class of the RHI_Swapchain graphics object class,
+			// And error check the result.
+			// --------------------------------------------------------------------------
+			result = RHI_Swapchain::Initialize(_swapchainDescriptor);
+			if (CheckError(result) == true)
+			{
+				// When result is RESULT_ERROR || RESULT_FATAL.
+				Logger::Log("Error while intitializing the base class of the 'RHI_Swapchain' object.", LogType::LOG_TYPE_ERROR);
+				Logger::Log("No further evidence what went wrong, please see earlier logs.", LogType::LOG_TYPE_ERROR);
+				return result;
+			}
+
+
+			// ==========================================================================
+			// The actual VULKAN initialization follows
+			// ==========================================================================
+
+			CreateSwapchain(_renderDevice, _commandQueue);
+			return Result::RESULT_GOOD;
+		}
+
+		void RHI_VK_Swapchain::Resize(const CommandQueue& _commandQueue, const uint32 _width, const uint32 _height)
 		{
 			// Cleanup
 			for (uint32_t i = 0; i < m_BufferCount; i++)
@@ -54,16 +80,16 @@ namespace Raydiance
 		void RHI_VK_Swapchain::Present(CommandQueue* _commandQueue)
 		{
 			VkPresentInfoKHR presentInfo{};
-			presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
-			presentInfo.waitSemaphoreCount = 0;
-			presentInfo.swapchainCount = 1;
-			presentInfo.pSwapchains = &m_SwapChainObj;
-			presentInfo.pImageIndices = &m_CurrentBufferIndex;
+			presentInfo.sType			   = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
+			presentInfo.waitSemaphoreCount = 0; // TODO:: Look into semaphores here.
+			presentInfo.swapchainCount     = 1;
+			presentInfo.pSwapchains        = &m_SwapChainObj;
+			presentInfo.pImageIndices      = &m_CurrentBufferIndex;
 
 			vkQueuePresentKHR(((VKCommandQueue*)_commandQueue)->GetVKQueue(), &presentInfo);
 		}
 
-		void RHI_VK_Swapchain::CreateSwapchain(RHI_VK_RenderDevice& _renderDevice, CommandQueue* _commandQueue)
+		void RHI_VK_Swapchain::CreateSwapchain(const RHI_VK_RenderDevice& _renderDevice, const CommandQueue& _commandQueue)
 		{
 			const auto& physicalDevice = static_cast<const RHI_VK_Adapter&>(_renderDevice.GetActiveAdapter()).GetPhysicalDevice();
 
@@ -142,7 +168,7 @@ namespace Raydiance
 
 			uint32_t queueFamilyIndices[] = { _renderDevice.GetGraphicsQueueID(), _renderDevice.GetPresentQueueID() };
 
-			if (_commandQueue->CheckSupportFlag(COMMAND_QUEUE_SUPPORT_BIT_PRESENT)) {
+			if (_commandQueue.CheckSupportFlag(COMMAND_QUEUE_SUPPORT_BIT_PRESENT)) {
 				createInfo.imageSharingMode = VK_SHARING_MODE_CONCURRENT;
 				createInfo.queueFamilyIndexCount = 2;
 				createInfo.pQueueFamilyIndices = queueFamilyIndices;

@@ -2,7 +2,7 @@
 This project is still in early stages of development, and not everything will be working yet. Check back regularly for updates. 
 
 ```cpp
-Current line counter: 8332
+Current line counter: 8721
 ```
 
 ### Supported platforms:

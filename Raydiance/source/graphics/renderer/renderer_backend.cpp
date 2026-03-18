@@ -31,17 +31,17 @@ namespace Raydiance
 
 		uint32_t RendererBackend::AquireNewFrame(std::shared_ptr<RHI_FenceCPU> _fence)
 		{
-			return s_RenderBackend->m_Swapchain->AquireNewImage(s_RenderBackend->m_CommandQueue, _fence);
+			return s_RenderBackend->m_Swapchain->AquireNewImage(s_RenderBackend->m_CommandQueue.get(), _fence);
 		}
 
 		void RendererBackend::Present()
 		{
-			s_RenderBackend->m_Swapchain->Present(s_RenderBackend->m_CommandQueue);
+			s_RenderBackend->m_Swapchain->Present(s_RenderBackend->m_CommandQueue.get());
 		}
 
 		void RendererBackend::OnResize(const uint32_t _width, const uint32_t _height)
 		{
-			s_RenderBackend->m_Swapchain->Resize(s_RenderBackend->m_CommandQueue, _width, _height);
+			s_RenderBackend->m_Swapchain->Resize(*s_RenderBackend->m_CommandQueue, _width, _height);
 			s_RenderBackend->m_ClientWidth = s_RenderBackend->m_Swapchain->GetWidth();
 			s_RenderBackend->m_ClientHeight = s_RenderBackend->m_Swapchain->GetHeight();
 		}
@@ -116,7 +116,7 @@ namespace Raydiance
 			commandQueueDesc.Name = "GeneralCommandQueue";
 			commandQueueDesc.Type = CommandQueueType::COMMAND_QUEUE_TYPE_GRAPHICS;
 
-			m_CommandQueue = RHI_RenderDevice::Get().CreateCommandQueue(&commandQueueDesc);
+			m_CommandQueue = RHI_RenderDevice::Get().CreateCommandQueue(commandQueueDesc);
 
 			// Swapchain
 			// --------------------------------------------------------------------
@@ -127,7 +127,7 @@ namespace Raydiance
 			swapchainDesc.Height = _window->GetHeight();
 
 			// Create swapchain and query dimensions
-			m_Swapchain			 = RHI_RenderDevice::Get().CreateSwapchain(m_CommandQueue, &swapchainDesc);
+			m_Swapchain			 = RHI_RenderDevice::Get().CreateSwapchain(*m_CommandQueue, swapchainDesc);
 			m_ClientWidth		 = m_Swapchain->GetWidth();
 			m_ClientHeight		 = m_Swapchain->GetHeight();
 			m_BackbufferCount	 = m_Swapchain->GetBufferCount();
@@ -135,8 +135,9 @@ namespace Raydiance
 
 		RendererBackend::~RendererBackend()
 		{
-			delete m_Swapchain;
-			delete m_CommandQueue;
+			// Reset these shared_ptr to be sure these graphics objects get deleted before destroying the 'RHI_RenderDevice'.
+			m_Swapchain.reset();
+			m_CommandQueue.reset();
 
 			// Destroying the 'RHI_RenderDevice' object should happen after all other graphics objects are destroyed, 
 			//	since they might be using the 'RHI_RenderDevice' object internally.

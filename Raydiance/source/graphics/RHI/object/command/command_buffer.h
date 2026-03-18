@@ -19,7 +19,7 @@ namespace Raydiance
 		class CommandBuffer
 		{
 		public:
-			CommandBuffer(const CommandBufferDescriptor* _commandBufferDescriptor);
+			CommandBuffer(const CommandBufferDescriptor& _commandBufferDescriptor);
 			virtual ~CommandBuffer();
 
 			virtual void Reset() = 0;
@@ -51,7 +51,7 @@ namespace Raydiance
 
 		protected:
 			CommandBufferType m_Type = CommandBufferType::COMMAND_BUFFER_TYPE_NONE;
-			CommandPool* m_CommandPool = nullptr;
+			const CommandPool* m_CommandPool = nullptr;
 		};
 	}
 }

@@ -282,27 +282,38 @@ namespace Raydiance
             return 0;
         }
 
-        CommandPool* RHI_VK_RenderDevice::CreateCommandPool(const CommandPoolDescriptor* _commandPoolDescriptor)
+        std::shared_ptr<CommandPool> RHI_VK_RenderDevice::CreateCommandPool(const CommandPoolDescriptor& _commandPoolDescriptor)
         {
-            VKCommandPool* commandPool = new VKCommandPool(this, _commandPoolDescriptor);
+            std::shared_ptr<VKCommandPool> commandPool = std::make_shared<VKCommandPool>(this, _commandPoolDescriptor);
             return commandPool;
         }
 
-        CommandBuffer* RHI_VK_RenderDevice::CreateCommandBuffer(const CommandBufferDescriptor* _commandBufferDescriptor)
+        std::shared_ptr<CommandBuffer> RHI_VK_RenderDevice::CreateCommandBuffer(const CommandBufferDescriptor& _commandBufferDescriptor)
         {
-            VKCommandBuffer* commandBuffer = new VKCommandBuffer(this, _commandBufferDescriptor);
+            std::shared_ptr<VKCommandBuffer> commandBuffer = std::make_shared<VKCommandBuffer>(this, _commandBufferDescriptor);
             return commandBuffer;
         }
 
-        CommandQueue* RHI_VK_RenderDevice::CreateCommandQueue(const CommandQueueDescriptor* _commandQueueDescriptor)
+        std::shared_ptr<CommandQueue> RHI_VK_RenderDevice::CreateCommandQueue(const CommandQueueDescriptor& _commandQueueDescriptor)
         {
-            VKCommandQueue* commandQueue = new VKCommandQueue(this, _commandQueueDescriptor);
+            std::shared_ptr<VKCommandQueue> commandQueue = std::make_shared<VKCommandQueue>(this, _commandQueueDescriptor);
             return commandQueue;
         }
 
-        RHI_Swapchain* RHI_VK_RenderDevice::CreateSwapchain(CommandQueue* _commandQueue, const RHI_SwapchainDescriptor* _swapchainDescriptor)
+        std::shared_ptr<RHI_Swapchain> RHI_VK_RenderDevice::CreateSwapchain(const CommandQueue& _commandQueue, const RHI_SwapchainDescriptor& _swapchainDescriptor)
         {
-            RHI_VK_Swapchain* swapchain = new RHI_VK_Swapchain(*this, _commandQueue, _swapchainDescriptor);
+            std::shared_ptr<RHI_VK_Swapchain> swapchain = std::make_shared<RHI_VK_Swapchain>();
+            Result result = swapchain->Initialize(*this, _commandQueue, _swapchainDescriptor);
+
+            // Error check
+            if (CheckError(result) == true)
+            {
+                // Log error
+                Logger::Log("Initialization of RHI_VK_Swapchain failed.", LogType::LOG_TYPE_ERROR);
+                Logger::Log("No further evidence what went wrong, please see earlier logs.", LogType::LOG_TYPE_ERROR);
+                return nullptr;
+            }
+
             return swapchain;
         }
 
@@ -368,9 +379,6 @@ namespace Raydiance
             // Error check
             if (CheckError(result) == true)
             {
-                // Destroy pointer
-                //delete fence;
-
                 // Log error
                 Logger::Log("Initialization of RHI_VK_FenceCPU failed.", LogType::LOG_TYPE_ERROR);
                 Logger::Log("No further evidence what went wrong, please see earlier logs.", LogType::LOG_TYPE_ERROR);

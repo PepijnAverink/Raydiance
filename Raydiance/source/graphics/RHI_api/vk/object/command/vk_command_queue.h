@@ -9,7 +9,7 @@ namespace Raydiance
 		class VKCommandQueue final : public CommandQueue
 		{
 		public:
-			VKCommandQueue(RHI_VK_RenderDevice* _renderDevice, const CommandQueueDescriptor* _commandQueueDescriptor);
+			VKCommandQueue(RHI_VK_RenderDevice* _renderDevice, const CommandQueueDescriptor& _commandQueueDescriptor);
 			virtual ~VKCommandQueue();
 
 			virtual void SubmitCommandBuffer(CommandBuffer* _commandBuffer, std::shared_ptr<RHI_FenceCPU> _fence) override;

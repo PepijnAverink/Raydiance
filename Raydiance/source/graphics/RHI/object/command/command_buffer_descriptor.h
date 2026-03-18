@@ -13,9 +13,9 @@ namespace Raydiance
 		public:
 			CommandBufferDescriptor() = default;
 
-			std::string       Name;
-			CommandBufferType Type;
-			CommandPool* CommandPool = nullptr;
+			std::string        Name;
+			CommandBufferType  Type;
+			const CommandPool* CommandPool = nullptr;
 		};
 	}
 }
