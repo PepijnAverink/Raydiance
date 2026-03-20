@@ -273,10 +273,10 @@ namespace Raydiance
             return Result::RESULT_GOOD;
         }
 
-        uint32_t RHI_VK_RenderDevice::GetQueueFamilyID(const CommandQueueType _type) const
+        uint32_t RHI_VK_RenderDevice::GetQueueFamilyID(const RHI_CommandQueueType _type) const
         {
             // TODO:: add support for other types of queues
-            if (_type == CommandQueueType::COMMAND_QUEUE_TYPE_GRAPHICS)
+            if (_type == RHI_CommandQueueType::RHI_COMMAND_QUEUE_TYPE_GRAPHICS)
                 return m_GraphicsQueueID;
 
             return 0;
@@ -294,13 +294,24 @@ namespace Raydiance
             return commandBuffer;
         }
 
-        std::shared_ptr<CommandQueue> RHI_VK_RenderDevice::CreateCommandQueue(const CommandQueueDescriptor& _commandQueueDescriptor)
+        std::shared_ptr<RHI_CommandQueue> RHI_VK_RenderDevice::CreateCommandQueue(const RHI_CommandQueueDescriptor& _commandQueueDescriptor)
         {
-            std::shared_ptr<VKCommandQueue> commandQueue = std::make_shared<VKCommandQueue>(this, _commandQueueDescriptor);
+            std::shared_ptr<VKCommandQueue> commandQueue = std::make_shared<VKCommandQueue>();
+            Result result = commandQueue->Initialize(*this, _commandQueueDescriptor);
+
+            // Error check
+            if (CheckError(result) == true)
+            {
+                // Log error
+                Logger::Log("Initialization of RHI_VK_CommandQueue failed.", LogType::LOG_TYPE_ERROR);
+                Logger::Log("No further evidence what went wrong, please see earlier logs.", LogType::LOG_TYPE_ERROR);
+                return nullptr;
+            }
+
             return commandQueue;
         }
 
-        std::shared_ptr<RHI_Swapchain> RHI_VK_RenderDevice::CreateSwapchain(const CommandQueue& _commandQueue, const RHI_SwapchainDescriptor& _swapchainDescriptor)
+        std::shared_ptr<RHI_Swapchain> RHI_VK_RenderDevice::CreateSwapchain(const RHI_CommandQueue& _commandQueue, const RHI_SwapchainDescriptor& _swapchainDescriptor)
         {
             std::shared_ptr<RHI_VK_Swapchain> swapchain = std::make_shared<RHI_VK_Swapchain>();
             Result result = swapchain->Initialize(*this, _commandQueue, _swapchainDescriptor);

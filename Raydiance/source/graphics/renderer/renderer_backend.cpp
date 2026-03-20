@@ -112,9 +112,9 @@ namespace Raydiance
 
 			// CommandQueue
 			// --------------------------------------------------------------------
-			Graphics::CommandQueueDescriptor commandQueueDesc;
+			RHI_CommandQueueDescriptor commandQueueDesc;
 			commandQueueDesc.Name = "GeneralCommandQueue";
-			commandQueueDesc.Type = CommandQueueType::COMMAND_QUEUE_TYPE_GRAPHICS;
+			commandQueueDesc.Type = RHI_CommandQueueType::RHI_COMMAND_QUEUE_TYPE_GRAPHICS;
 
 			m_CommandQueue = RHI_RenderDevice::Get().CreateCommandQueue(commandQueueDesc);
 

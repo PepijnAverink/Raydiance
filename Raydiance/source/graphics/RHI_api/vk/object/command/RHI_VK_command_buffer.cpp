@@ -1,8 +1,8 @@
 #include "./pch.h"
-#include "./graphics/RHI_api/vk/object/command/vk_command_buffer.h"
+#include "./graphics/RHI_api/vk/object/command/RHI_VK_command_buffer.h"
 
 // Graphics includes
-#include "./graphics/RHI_api/vk/object/command/vk_command_pool.h"
+#include "./graphics/RHI_api/vk/object/command/RHI_VK_command_pool.h"
 
 #include "./graphics/RHI_api/vk/resource/buffer/vk_buffer.h"
 #include "./graphics/RHI_api/vk/resource/vk_resource_state.h"

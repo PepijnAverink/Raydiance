@@ -1,6 +1,6 @@
 #pragma once
 #include "./graphics/RHI/resource/resource_state.h"
-#include "./graphics/RHI/object/command/command_buffer_descriptor.h"
+#include "./graphics/RHI/object/command/RHI_command_buffer_descriptor.h"
 
 namespace Raydiance
 {
@@ -50,7 +50,7 @@ namespace Raydiance
 			virtual void DrawIndexed(const uint32_t _vertexOffset, const uint32_t _indexOffset, const uint32_t _indexCount) = 0;
 
 		protected:
-			CommandBufferType m_Type = CommandBufferType::COMMAND_BUFFER_TYPE_NONE;
+			RHI_CommandBufferType m_Type = RHI_CommandBufferType::RHI_COMMAND_BUFFER_TYPE_INVALID;
 			const CommandPool* m_CommandPool = nullptr;
 		};
 	}

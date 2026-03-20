@@ -2,8 +2,8 @@
 // Grpahics includes
 #include "./graphics/RHI/RHI_render_device.h"
 #include "./graphics/RHI/object/sync/RHI_FenceCPU.h"
-#include "./graphics/RHI/object/command/command_queue.h"
-#include "./graphics/RHI/object/command/command_buffer.h"
+#include "./graphics/RHI/object/command/RHI_command_queue.h"
+#include "./graphics/RHI/object/command/RHI_command_buffer.h"
 #include "./graphics/RHI/object/swapchain/RHI_swapchain.h"
 
 #include <memory>
@@ -38,7 +38,7 @@ namespace Raydiance
 			~RendererBackend();
 
 			//std::shared_ptr<RHI_RenderDevice> m_RenderDevice = nullptr;
-			std::shared_ptr<CommandQueue>  m_CommandQueue = nullptr;
+			std::shared_ptr<RHI_CommandQueue>  m_CommandQueue = nullptr;
 			std::shared_ptr<RHI_Swapchain> m_Swapchain    = nullptr;
 
 			uint32 m_ClientWidth     = 0;

@@ -1,5 +1,5 @@
 #pragma once
-#include "./graphics/RHI/object/command/command_buffer.h"
+#include "./graphics/RHI/object/command/RHI_command_buffer.h"
 #include "./graphics/RHI_api/vk/RHI_VK_render_device.h"
 
 namespace Raydiance

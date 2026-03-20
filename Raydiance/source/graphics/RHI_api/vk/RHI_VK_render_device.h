@@ -1,6 +1,6 @@
 #pragma once
 #include "./graphics/RHI/RHI_render_device.h"
-//#include "./graphics/RHI/object/command/command_queue_type.h"
+#include "./graphics/RHI/object/command/RHI_command_queue_type.h"
 
 // If running on windows define windows specific VK implementation
 
@@ -10,7 +10,6 @@ namespace Raydiance
 {
 	namespace Graphics
 	{
-		enum class CommandQueueType;
 		class RHI_VK_RenderDevice final : public RHI_RenderDevice
 		{
 		public:
@@ -36,14 +35,14 @@ namespace Raydiance
 			inline uint32_t GetPresentQueueID() const { return m_PresentQueueID; }
 			inline uint32_t GetGraphicsQueueID() const { return m_GraphicsQueueID; }
 
-			uint32_t GetQueueFamilyID(const CommandQueueType _type) const;
+			uint32_t GetQueueFamilyID(const RHI_CommandQueueType _type) const;
 
 			// Create functions
 			// ----------------------------------------------------------------------
 			[[nodiscard]] virtual std::shared_ptr<CommandPool>   CreateCommandPool(const CommandPoolDescriptor& _commandPoolDescriptor) override;
 			[[nodiscard]] virtual std::shared_ptr<CommandBuffer> CreateCommandBuffer(const CommandBufferDescriptor& _commandBufferDescriptor) override;
-			[[nodiscard]] virtual std::shared_ptr<CommandQueue>  CreateCommandQueue(const CommandQueueDescriptor& _commandQueueDescriptor) override;
-			[[nodiscard]] virtual std::shared_ptr<RHI_Swapchain> CreateSwapchain(const CommandQueue& _commandQueue, const RHI_SwapchainDescriptor& _swapchainDescriptor) override;
+			[[nodiscard]] virtual std::shared_ptr<RHI_CommandQueue>  CreateCommandQueue(const RHI_CommandQueueDescriptor& _commandQueueDescriptor) override;
+			[[nodiscard]] virtual std::shared_ptr<RHI_Swapchain> CreateSwapchain(const RHI_CommandQueue& _commandQueue, const RHI_SwapchainDescriptor& _swapchainDescriptor) override;
 			[[nodiscard]] virtual std::shared_ptr<RHI_FenceCPU>  CreateFenceCPU(const RHI_FenceCPUDescriptor& _fenceDescriptor) override;
 
 			virtual GraphicsPipeline* CreateGraphicsPipeline(const GraphicsPipelineDescriptor* _graphicsPipelineDescriptor) override;

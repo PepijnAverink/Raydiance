@@ -29,7 +29,7 @@ namespace Raydiance
 			vkDestroySwapchainKHR(static_cast<RHI_VK_RenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_SwapChainObj, nullptr);
 		}
 
-		const Result RHI_VK_Swapchain::Initialize(const RHI_VK_RenderDevice& _renderDevice, const CommandQueue& _commandQueue, const RHI_SwapchainDescriptor& _swapchainDescriptor)
+		const Result RHI_VK_Swapchain::Initialize(const RHI_VK_RenderDevice& _renderDevice, const RHI_CommandQueue& _commandQueue, const RHI_SwapchainDescriptor& _swapchainDescriptor)
 		{
 			// Object storing the result of all interal functions.
 			Result result = Result::RESULT_INVALID;
@@ -55,7 +55,7 @@ namespace Raydiance
 			return Result::RESULT_GOOD;
 		}
 
-		void RHI_VK_Swapchain::Resize(const CommandQueue& _commandQueue, const uint32 _width, const uint32 _height)
+		void RHI_VK_Swapchain::Resize(const RHI_CommandQueue& _commandQueue, const uint32 _width, const uint32 _height)
 		{
 			// Cleanup
 			for (uint32_t i = 0; i < m_BufferCount; i++)
@@ -71,13 +71,13 @@ namespace Raydiance
 			CreateSwapchain(device, _commandQueue);
 		}
 
-		uint32_t RHI_VK_Swapchain::AquireNewImage(CommandQueue* _commandQueue, std::shared_ptr<RHI_FenceCPU> _fence)
+		uint32_t RHI_VK_Swapchain::AquireNewImage(RHI_CommandQueue* _commandQueue, std::shared_ptr<RHI_FenceCPU> _fence)
 		{
 			VkResult result = vkAcquireNextImageKHR(static_cast<RHI_VK_RenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_SwapChainObj, UINT64_MAX, VK_NULL_HANDLE, ((RHI_VK_FenceCPU*)_fence.get())->GetVKFence(), &m_CurrentBufferIndex);
 			return m_CurrentBufferIndex;
 		}
 
-		void RHI_VK_Swapchain::Present(CommandQueue* _commandQueue)
+		void RHI_VK_Swapchain::Present(RHI_CommandQueue* _commandQueue)
 		{
 			VkPresentInfoKHR presentInfo{};
 			presentInfo.sType			   = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
@@ -89,7 +89,7 @@ namespace Raydiance
 			vkQueuePresentKHR(((VKCommandQueue*)_commandQueue)->GetVKQueue(), &presentInfo);
 		}
 
-		void RHI_VK_Swapchain::CreateSwapchain(const RHI_VK_RenderDevice& _renderDevice, const CommandQueue& _commandQueue)
+		void RHI_VK_Swapchain::CreateSwapchain(const RHI_VK_RenderDevice& _renderDevice, const RHI_CommandQueue& _commandQueue)
 		{
 			const auto& physicalDevice = static_cast<const RHI_VK_Adapter&>(_renderDevice.GetActiveAdapter()).GetPhysicalDevice();
 

@@ -63,31 +63,31 @@
     <ClInclude Include="source\core\error\logger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\object\command\command_buffer.h">
+    <ClInclude Include="source\graphics\RHI\object\command\RHI_command_buffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\object\command\command_buffer_descriptor.h">
+    <ClInclude Include="source\graphics\RHI\object\command\RHI_command_buffer_descriptor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\object\command\command_buffer_type.h">
+    <ClInclude Include="source\graphics\RHI\object\command\RHI_command_buffer_type.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\object\command\command_pool.h">
+    <ClInclude Include="source\graphics\RHI\object\command\RHI_command_pool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\object\command\command_pool_descriptor.h">
+    <ClInclude Include="source\graphics\RHI\object\command\RHI_command_pool_descriptor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\object\command\command_queue.h">
+    <ClInclude Include="source\graphics\RHI\object\command\RHI_command_queue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\object\command\command_queue_descriptor.h">
+    <ClInclude Include="source\graphics\RHI\object\command\RHI_command_queue_descriptor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\graphics\RHI\object\command\command_queue_support_bit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\object\command\command_queue_type.h">
+    <ClInclude Include="source\graphics\RHI\object\command\RHI_command_queue_type.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\graphics\RHI\object\swapchain\RHI_swapchain.h">
@@ -252,13 +252,13 @@
     <ClInclude Include="source\graphics\RHI\RHI_render_device_descriptor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI_api\vk\object\command\vk_command_buffer.h">
+    <ClInclude Include="source\graphics\RHI_api\vk\object\command\RHI_VK_command_buffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI_api\vk\object\command\vk_command_pool.h">
+    <ClInclude Include="source\graphics\RHI_api\vk\object\command\RHI_VK_command_pool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI_api\vk\object\command\vk_command_queue.h">
+    <ClInclude Include="source\graphics\RHI_api\vk\object\command\RHI_VK_command_queue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\graphics\RHI_api\vk\object\swapchain\RHI_VK_swapchain.h">
@@ -437,13 +437,13 @@
     <ClCompile Include="source\core\error\logger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\graphics\RHI\object\command\command_buffer.cpp">
+    <ClCompile Include="source\graphics\RHI\object\command\RHI_command_buffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\graphics\RHI\object\command\command_pool.cpp">
+    <ClCompile Include="source\graphics\RHI\object\command\RHI_command_pool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\graphics\RHI\object\command\command_queue.cpp">
+    <ClCompile Include="source\graphics\RHI\object\command\RHI_command_queue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\graphics\RHI\object\swapchain\RHI_swapchain.cpp">
@@ -485,13 +485,13 @@
     <ClCompile Include="source\graphics\RHI\RHI_render_device.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\graphics\RHI_api\vk\object\command\vk_command_buffer.cpp">
+    <ClCompile Include="source\graphics\RHI_api\vk\object\command\RHI_VK_command_buffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\graphics\RHI_api\vk\object\command\vk_command_pool.cpp">
+    <ClCompile Include="source\graphics\RHI_api\vk\object\command\RHI_VK_command_pool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\graphics\RHI_api\vk\object\command\vk_command_queue.cpp">
+    <ClCompile Include="source\graphics\RHI_api\vk\object\command\RHI_VK_command_queue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\graphics\RHI_api\vk\object\swapchain\RHI_VK_swapchain.cpp">

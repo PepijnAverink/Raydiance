@@ -1,6 +1,6 @@
 #pragma once
-#include "./graphics/RHI/object/command/command_buffer_type.h"
-#include "./graphics/RHI/object/command/command_pool.h"
+#include "./graphics/RHI/object/command/RHI_command_buffer_type.h"
+#include "./graphics/RHI/object/command/RHI_command_pool.h"
 
 #include <string>
 
@@ -14,7 +14,7 @@ namespace Raydiance
 			CommandBufferDescriptor() = default;
 
 			std::string        Name;
-			CommandBufferType  Type;
+			RHI_CommandBufferType  Type;
 			const CommandPool* CommandPool = nullptr;
 		};
 	}

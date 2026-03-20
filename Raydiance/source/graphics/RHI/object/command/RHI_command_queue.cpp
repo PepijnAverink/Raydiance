@@ -1,0 +1,19 @@
+#include "./pch.h"
+#include "./graphics/RHI/object/command/RHI_command_queue.h"
+
+namespace Raydiance
+{
+	namespace Graphics
+	{
+		RHI_CommandQueue::RHI_CommandQueue(void)
+		{ }
+
+		RHI_CommandQueue::~RHI_CommandQueue(void)
+		{ }
+
+		const Result RHI_CommandQueue::Initialize(const RHI_CommandQueueDescriptor& _commandQueueDescriptor)
+		{
+			return Result::RESULT_GOOD;
+		}
+	}
+}

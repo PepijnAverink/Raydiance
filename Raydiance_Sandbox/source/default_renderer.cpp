@@ -17,7 +17,7 @@ void DefaultRenderer::OnInitialize(Raydiance::Graphics::RendererBackend* _backen
     // --------------------------------------------------------------------
     CommandPoolDescriptor commandPoolDesc = {};
     commandPoolDesc.Name = "CommandPool";
-    commandPoolDesc.Type = CommandQueueType::COMMAND_QUEUE_TYPE_GRAPHICS;
+    commandPoolDesc.Type = RHI_CommandQueueType::RHI_COMMAND_QUEUE_TYPE_GRAPHICS;
 
     m_CommandPool = m_RendererBackend->GetRenderDevice().CreateCommandPool(commandPoolDesc);
 
@@ -25,7 +25,7 @@ void DefaultRenderer::OnInitialize(Raydiance::Graphics::RendererBackend* _backen
     // --------------------------------------------------------------------
     CommandBufferDescriptor commandBufferDesc = {};
     commandBufferDesc.Name = "CommandBuffer";
-    commandBufferDesc.Type = CommandBufferType::COMMAND_BUFFER_TYPE_DIRECT;
+    commandBufferDesc.Type = RHI_CommandBufferType::RHI_COMMAND_BUFFER_TYPE_DIRECT;
     commandBufferDesc.CommandPool = m_CommandPool.get();
 
     m_CommandBuffer = m_RendererBackend->GetRenderDevice().CreateCommandBuffer(commandBufferDesc);
