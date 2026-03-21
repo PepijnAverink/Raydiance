@@ -57,8 +57,8 @@ namespace Raydiance
 			samplerInfo.addressModeU			= ResolveVKAddressMode(_samplerDescriptor.AddressU);
 			samplerInfo.addressModeV			= ResolveVKAddressMode(_samplerDescriptor.AddressV);
 			samplerInfo.addressModeW			= ResolveVKAddressMode(_samplerDescriptor.AddressW);
-			samplerInfo.anisotropyEnable		= VK_TRUE;
-			samplerInfo.maxAnisotropy			= adapter.GetProperties().limits.maxSamplerAnisotropy;
+			samplerInfo.anisotropyEnable		= (adapter.GetFeatures().IsAnistropicFilteringSupported() == true) ? VK_TRUE : VK_FALSE;
+			samplerInfo.maxAnisotropy			=  adapter.GetProperties().limits.maxSamplerAnisotropy;
 			samplerInfo.borderColor				= VK_BORDER_COLOR_INT_OPAQUE_BLACK;
 			samplerInfo.unnormalizedCoordinates = VK_FALSE;
 			samplerInfo.compareEnable			= (_samplerDescriptor.CompareOp != RHI_CompareOp::RHI_COMPARE_OP_INVALID) ? VK_TRUE : VK_FALSE;

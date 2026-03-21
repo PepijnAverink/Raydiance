@@ -3,6 +3,8 @@
 
 // Graphics includes
 #include "./graphics/RHI_api/vk/RHI_VK_adapter_type.h"
+#include "./graphics/RHI_api/vk/RHI_VK_adapter_features.h"
+
 
 namespace Raydiance
 {
@@ -32,6 +34,10 @@ namespace Raydiance
 				if (heap.flags & VK_MEMORY_HEAP_DEVICE_LOCAL_BIT)
 					m_VRam = std::max<uint64>(m_VRam, heap.size);
 			}
+
+
+			// Define new features
+			m_Features = RHI_VK_AdapterFeatures(m_PhysicalDevice);
 		}
 
 		RHI_VK_Adapter::~RHI_VK_Adapter(void)
