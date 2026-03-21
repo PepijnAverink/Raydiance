@@ -10,14 +10,14 @@ namespace Raydiance
 {
 	namespace Graphics
 	{
-		class Fence;
-		class CommandPool;
-		class CommandBuffer;
+		class RHI_Fence;
+		class RHI_CommandPool;
+		class RHI_CommandBuffer;
 
-		class RenderPass;
-		class FrameBuffer;
-		class GraphicsPipeline;
-		class InputLayout;
+		class RHI_RenderPass;
+		class RHI_FrameBuffer;
+		class RHI_GraphicsPipeline;
+		class RHI_InputLayout;
 
 		class Mesh;
 		class Camera;

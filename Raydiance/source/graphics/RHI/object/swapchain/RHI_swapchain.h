@@ -4,7 +4,7 @@
 // Graphics includes
 #include "./graphics/RHI/object/command/RHI_command_queue.h"
 
-#include "graphics/RHI/resource/resource_format.h"
+#include "graphics/RHI/resource/RHI_resource_format.h"
 
 #include "./core/error/result.h"
 
@@ -16,7 +16,7 @@ namespace Raydiance
 	{
 		class RHI_FenceCPU;
 
-		class Texture2D;
+		class RHI_Texture2D;
 		class TextureView;
 		class RHI_Swapchain
 		{
@@ -35,9 +35,9 @@ namespace Raydiance
 			inline uint32 GetWidth() const { return m_Width; }
 			inline uint32 GetHeight() const { return m_Height; }
 
-			inline ResourceFormat GetFormat() const { return m_Format; }
+			inline RHI_ResourceFormat GetFormat() const { return m_Format; }
 
-			inline Texture2D* GetTextureAtIndex(const uint32 _i) const { return m_Textures[_i]; }
+			inline RHI_Texture2D* GetTextureAtIndex(const uint32 _i) const { return m_Textures[_i]; }
 
 		protected:
 			// Protected constructor and initialize(), user should not create base instance.
@@ -48,12 +48,12 @@ namespace Raydiance
 			uint32  m_Width     = 0;
 			uint32  m_Height    = 0;
 
-			ResourceFormat m_Format = ResourceFormat::RESOURCE_FORMAT_NONE;
+			RHI_ResourceFormat m_Format = RHI_ResourceFormat::RHI_RESOURCE_FORMAT_INVALID;
 
 			uint32_t m_BufferCount		  = 0;
 			uint32_t m_CurrentBufferIndex = 0;
 
-			std::vector<Texture2D*> m_Textures;
+			std::vector<RHI_Texture2D*> m_Textures;
 		};
 	}
 }

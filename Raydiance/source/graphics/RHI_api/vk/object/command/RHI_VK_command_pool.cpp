@@ -5,8 +5,8 @@ namespace Raydiance
 {
 	namespace Graphics
 	{
-		VKCommandPool::VKCommandPool(RHI_VK_RenderDevice* _renderDevice, const CommandPoolDescriptor& _commandPoolDescriptor)
-			: CommandPool(_commandPoolDescriptor)
+		RHI_VK_CommandPool::RHI_VK_CommandPool(RHI_VK_RenderDevice* _renderDevice, const RHI_CommandPoolDescriptor& _commandPoolDescriptor)
+			: RHI_CommandPool(_commandPoolDescriptor)
 		{
 			// Craetion info
 			VkCommandPoolCreateInfo poolInfo{};
@@ -19,12 +19,12 @@ namespace Raydiance
 				Logger::Log("VK_ERROR - Failed to create 'CommandPool' object.", LogType::LOG_TYPE_ERROR);
 		}
 
-		VKCommandPool::~VKCommandPool()
+		RHI_VK_CommandPool::~RHI_VK_CommandPool()
 		{
 			vkDestroyCommandPool(static_cast<RHI_VK_RenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_CommandPoolObj, nullptr);
 		}
 
-		void VKCommandPool::Reset()
+		void RHI_VK_CommandPool::Reset()
 		{
 			vkResetCommandPool(static_cast<RHI_VK_RenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_CommandPoolObj, VK_COMMAND_POOL_RESET_RELEASE_RESOURCES_BIT);
 		}

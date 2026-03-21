@@ -39,24 +39,24 @@ namespace Raydiance
 
 			// Create functions
 			// ----------------------------------------------------------------------
-			[[nodiscard]] virtual std::shared_ptr<CommandPool>   CreateCommandPool(const CommandPoolDescriptor& _commandPoolDescriptor) override;
-			[[nodiscard]] virtual std::shared_ptr<CommandBuffer> CreateCommandBuffer(const CommandBufferDescriptor& _commandBufferDescriptor) override;
+			[[nodiscard]] virtual std::shared_ptr<RHI_CommandPool>   CreateCommandPool(const RHI_CommandPoolDescriptor& _commandPoolDescriptor) override;
+			[[nodiscard]] virtual std::shared_ptr<RHI_CommandBuffer> CreateCommandBuffer(const RHI_CommandBufferDescriptor& _commandBufferDescriptor) override;
 			[[nodiscard]] virtual std::shared_ptr<RHI_CommandQueue>  CreateCommandQueue(const RHI_CommandQueueDescriptor& _commandQueueDescriptor) override;
 			[[nodiscard]] virtual std::shared_ptr<RHI_Swapchain> CreateSwapchain(const RHI_CommandQueue& _commandQueue, const RHI_SwapchainDescriptor& _swapchainDescriptor) override;
 			[[nodiscard]] virtual std::shared_ptr<RHI_FenceCPU>  CreateFenceCPU(const RHI_FenceCPUDescriptor& _fenceDescriptor) override;
 
-			virtual GraphicsPipeline* CreateGraphicsPipeline(const GraphicsPipelineDescriptor* _graphicsPipelineDescriptor) override;
-			virtual InputLayout* CreateInputLayout(const InputLayoutDescriptor* _inputLayoutDescriptor) override;
-			virtual RenderPass* CreateRenderPass(const RenderPassDescriptor* _renderPassDescriptor) override;
-			virtual FrameBuffer* CreateFrameBuffer(const FrameBufferDescriptor* _frameBufferDescriptor) override;
+			virtual RHI_GraphicsPipeline* CreateGraphicsPipeline(const RHI_GraphicsPipelineDescriptor* _graphicsPipelineDescriptor) override;
+			virtual RHI_InputLayout* CreateInputLayout(const RHI_InputLayoutDescriptor* _inputLayoutDescriptor) override;
+			virtual RHI_RenderPass* CreateRenderPass(const RHI_RenderPassDescriptor* _renderPassDescriptor) override;
+			virtual RHI_FrameBuffer* CreateFrameBuffer(const RHI_FrameBufferDescriptor* _frameBufferDescriptor) override;
 
-			virtual DescriptorPool* CreateDescriptorPool(const DescriptorPoolDescriptor* _descriptorPoolDescriptor) override;
+			virtual RHI_DescriptorPool* CreateDescriptorPool(const RHI_DescriptorPoolDescriptor* _descriptorPoolDescriptor) override;
 
-			virtual Buffer* CreateBuffer(const BufferDescriptor* _bufferDescriptor) override;
-			virtual Shader* CreateShader(const ShaderDescriptor* _shaderDescriptor) override;
+			virtual RHI_Buffer* CreateBuffer(const RHI_BufferDescriptor* _bufferDescriptor) override;
+			virtual RHI_Shader* CreateShader(const RHI_ShaderDescriptor* _shaderDescriptor) override;
 
-			virtual Texture2D* CreateTexture2D(const Texture2DDescriptor* _texture2DDescriptor) override;
-			virtual Sampler2D* CreateSampler2D(const Sampler2DDescriptor* _sampler2DDescripotr) override;
+			virtual RHI_Texture2D* CreateTexture2D(const RHI_Texture2DDescriptor* _texture2DDescriptor) override;
+			virtual RHI_Sampler2D* CreateSampler2D(const RHI_Sampler2DDescriptor* _sampler2DDescripotr) override;
 
 		private:
 			bool CheckValidationLayerSupport();

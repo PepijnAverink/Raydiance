@@ -1,5 +1,5 @@
 #pragma once
-#include "./graphics/RHI/pipeline/graphics/graphics_pipeline.h"
+#include "./graphics/RHI/pipeline/graphics/RHI_graphics_pipeline.h"
 
 namespace Raydiance
 {
@@ -10,7 +10,7 @@ namespace Raydiance
 		public:
 
 		protected:
-			GraphicsPipeline* m_GraphicsPipeline = nullptr;
+			RHI_GraphicsPipeline* m_GraphicsPipeline = nullptr;
 		};
 	}
 }

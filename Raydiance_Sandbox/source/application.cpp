@@ -20,7 +20,7 @@ void Application::OnInitialize()
 
     // CommandPool
     {
-        CommandPoolDescriptor commandPoolDesc = {};
+        RHI_CommandPoolDescriptor commandPoolDesc = {};
         commandPoolDesc.Name = "CommandPool";
         commandPoolDesc.Type = RHI_CommandQueueType::RHI_COMMAND_QUEUE_TYPE_GRAPHICS;
 
@@ -29,7 +29,7 @@ void Application::OnInitialize()
 
     // CommandBuffer
     {
-        CommandBufferDescriptor commandBufferDesc = {};
+        RHI_CommandBufferDescriptor commandBufferDesc = {};
         commandBufferDesc.Name        = "CommandBuffer";
         commandBufferDesc.Type        = RHI_CommandBufferType::RHI_COMMAND_BUFFER_TYPE_DIRECT;
         commandBufferDesc.CommandPool = m_CommandPool.get();

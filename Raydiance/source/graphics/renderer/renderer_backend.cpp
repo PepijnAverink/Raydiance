@@ -24,7 +24,7 @@ namespace Raydiance
 			delete s_RenderBackend;
 		}
 
-		void RendererBackend::SubmitCommandBuffer(CommandBuffer* _commandBuffer, std::shared_ptr<RHI_FenceCPU> _fence)
+		void RendererBackend::SubmitCommandBuffer(RHI_CommandBuffer* _commandBuffer, std::shared_ptr<RHI_FenceCPU> _fence)
 		{
 			s_RenderBackend->m_CommandQueue->SubmitCommandBuffer(_commandBuffer, _fence);
 		}

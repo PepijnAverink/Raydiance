@@ -6,15 +6,15 @@ namespace Raydiance
 {
 	namespace Graphics
 	{
-		class VKCommandPool final : public CommandPool
+		class RHI_VK_CommandPool final : public RHI_CommandPool
 		{
 		public:
-			VKCommandPool(RHI_VK_RenderDevice* _renderDevice, const CommandPoolDescriptor& _commandPoolDescriptor);
-			virtual ~VKCommandPool();
+			RHI_VK_CommandPool(RHI_VK_RenderDevice* _renderDevice, const RHI_CommandPoolDescriptor& _commandPoolDescriptor);
+			virtual ~RHI_VK_CommandPool();
 
 			virtual void Reset() override;
 
-			inline VkCommandPool GetVKCommandPool() const { return m_CommandPoolObj; }
+			inline VkCommandPool GetRHI_VK_CommandPool() const { return m_CommandPoolObj; }
 
 		private:
 			VkCommandPool m_CommandPoolObj;

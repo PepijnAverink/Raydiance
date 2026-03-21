@@ -15,7 +15,7 @@ void DefaultRenderer::OnInitialize(Raydiance::Graphics::RendererBackend* _backen
 
     // CommandPool
     // --------------------------------------------------------------------
-    CommandPoolDescriptor commandPoolDesc = {};
+    RHI_CommandPoolDescriptor commandPoolDesc = {};
     commandPoolDesc.Name = "CommandPool";
     commandPoolDesc.Type = RHI_CommandQueueType::RHI_COMMAND_QUEUE_TYPE_GRAPHICS;
 
@@ -23,7 +23,7 @@ void DefaultRenderer::OnInitialize(Raydiance::Graphics::RendererBackend* _backen
 
     // CommandBuffer
     // --------------------------------------------------------------------
-    CommandBufferDescriptor commandBufferDesc = {};
+    RHI_CommandBufferDescriptor commandBufferDesc = {};
     commandBufferDesc.Name = "CommandBuffer";
     commandBufferDesc.Type = RHI_CommandBufferType::RHI_COMMAND_BUFFER_TYPE_DIRECT;
     commandBufferDesc.CommandPool = m_CommandPool.get();
@@ -41,15 +41,15 @@ void DefaultRenderer::OnInitialize(Raydiance::Graphics::RendererBackend* _backen
 
     // RenderPass
     // --------------------------------------------------------------------
-    RenderPassDescriptor renderPassDesc = {};
+    RHI_RenderPassDescriptor renderPassDesc = {};
     renderPassDesc.Name = "RenderPass";
     renderPassDesc.Attachments = { {
-            RENDER_PASS_ATTACHMENT_TYPE_COLOR,
-            RESOURCE_FORMAT_B8G8R8A8_SRGB,
-            RENDER_PASS_LOAD_OP_CLEAR,
-            RENDER_PASS_STORE_OP_STORE,
-            RESOURCE_STATE_GENERAL_READ,
-            RESOURCE_STATE_PRESENT
+            RHI_RENDER_PASS_ATTACHMENT_TYPE_COLOR,
+            RHI_RESOURCE_FORMAT_B8G8R8A8_SRGB,
+            RHI_RENDER_PASS_LOAD_OP_CLEAR,
+            RHI_RENDER_PASS_STORE_OP_STORE,
+            RHI_RESOURCE_STATE_GENERAL_READ,
+            RHI_RESOURCE_STATE_PRESENT
     }, };
 
     m_RenderPass = m_RendererBackend->GetRenderDevice().CreateRenderPass(&renderPassDesc);
@@ -58,12 +58,12 @@ void DefaultRenderer::OnInitialize(Raydiance::Graphics::RendererBackend* _backen
     // --------------------------------------------------------------------
     m_FrameBuffers.resize(RendererBackend::GetBackbufferCount());
     for (uint32_t i = 0; i < RendererBackend::GetBackbufferCount(); i++) {
-        FrameBufferDescriptor frameBufferDesc = {};
+        RHI_FrameBufferDescriptor frameBufferDesc = {};
         frameBufferDesc.Name   = "FrameBuffer" + i;
         frameBufferDesc.Width  = RendererBackend::GetClientWidth();
         frameBufferDesc.Height = RendererBackend::GetClientHeight();
         frameBufferDesc.Contigious  = true;
-        frameBufferDesc.Attachments = { {m_RendererBackend->GetSwapchain().GetTextureAtIndex(i), FrameBufferAttachmentType::FRAME_BUFFER_ATTACHMENT_TYPE_COLOR }, };
+        frameBufferDesc.Attachments = { {m_RendererBackend->GetSwapchain().GetTextureAtIndex(i), RHI_FrameBufferAttachmentType::RHI_FRAME_BUFFER_ATTACHMENT_TYPE_COLOR }, };
         frameBufferDesc.RenderPass  = m_RenderPass;
 
         m_FrameBuffers[i] = m_RendererBackend->GetRenderDevice().CreateFrameBuffer(&frameBufferDesc);
@@ -71,48 +71,48 @@ void DefaultRenderer::OnInitialize(Raydiance::Graphics::RendererBackend* _backen
 
     // VertexShader
     // --------------------------------------------------------------------
-    ShaderDescriptor shaderDesc = {};
+    RHI_ShaderDescriptor shaderDesc = {};
     shaderDesc.Name       = "VertexShader";
     shaderDesc.Filepath   = "./assets/vert.spv";
     shaderDesc.EntryPoint = "main";
-    shaderDesc.Type = Raydiance::Graphics::ShaderType::SHADER_TYPE_VERTEX;
+    shaderDesc.Type = Raydiance::Graphics::RHI_ShaderType::RHI_SHADER_TYPE_VERTEX;
 
-    Shader* vertexShader = m_RendererBackend->GetRenderDevice().CreateShader(&shaderDesc);
+    RHI_Shader* vertexShader = m_RendererBackend->GetRenderDevice().CreateShader(&shaderDesc);
 
     // PixelShader
     // --------------------------------------------------------------------
     shaderDesc.Name       = "PixelShader";
     shaderDesc.Filepath   = "./assets/frag.spv";
     shaderDesc.EntryPoint = "main";
-    shaderDesc.Type = Raydiance::Graphics::ShaderType::SHADER_TYPE_PIXEL;
+    shaderDesc.Type = Raydiance::Graphics::RHI_ShaderType::RHI_SHADER_TYPE_PIXEL;
 
-    Shader* pixelShader = m_RendererBackend->GetRenderDevice().CreateShader(&shaderDesc);
+    RHI_Shader* pixelShader = m_RendererBackend->GetRenderDevice().CreateShader(&shaderDesc);
 
     // Create inputLayout
     // --------------------------------------------------------------------
-    InputLayoutDescriptor inputLayoutDesc = {};
+    RHI_InputLayoutDescriptor inputLayoutDesc = {};
     inputLayoutDesc.Name    = "InputLayout";
-    inputLayoutDesc.Layouts = { InputSet({ { "CameraMatrices", INPUT_TYPE_CONSTANT, SHADER_TYPE_FLAG_VERTEX, 0, sizeof(glm::mat4) * 3 }, }),
-                                InputSet({ { "ModelMatrix", INPUT_TYPE_SAMPLER2D, SHADER_TYPE_FLAG_PIXEL, 0, 1}, }) };
+    inputLayoutDesc.Layouts = { RHI_InputSet({ { "CameraMatrices", RHI_INPUT_TYPE_CONSTANT, SHADER_TYPE_FLAG_VERTEX, 0, sizeof(glm::mat4) * 3 }, }),
+                                RHI_InputSet({ { "ModelMatrix", RHI_INPUT_TYPE_SAMPLER2D, SHADER_TYPE_FLAG_PIXEL, 0, 1}, }) };
 
     m_InputLayout = m_RendererBackend->GetRenderDevice().CreateInputLayout(&inputLayoutDesc);
 
     // Create graphicsPipeline
     // --------------------------------------------------------------------
-    GraphicsPipelineDescriptor graphicsPipelineDesc = {};
+    RHI_GraphicsPipelineDescriptor graphicsPipelineDesc = {};
     graphicsPipelineDesc.Name         = "GraphicsPipeline";
-    graphicsPipelineDesc.CullMode     = CullMode::CULL_MODE_BACK;
-    graphicsPipelineDesc.FillMode     = FillMode::FILL_MODE_SOLID;
-    graphicsPipelineDesc.WindingOrder = WindingOrder::WINDING_ORDER_CCW;
-    graphicsPipelineDesc.Topology     = Topology::TOPOLOGY_TRIANGLE_LIST;
+    graphicsPipelineDesc.CullMode     = RHI_CullMode::RHI_CULL_MODE_BACK;
+    graphicsPipelineDesc.FillMode     = RHI_FillMode::RHI_FILL_MODE_SOLID;
+    graphicsPipelineDesc.WindingOrder = RHI_WindingOrder::RHI_WINDING_ORDER_CCW;
+    graphicsPipelineDesc.Topology     = RHI_Topology::RHI_TOPOLOGY_TRIANGLE_LIST;
     graphicsPipelineDesc.Width        = RendererBackend::GetClientWidth();
     graphicsPipelineDesc.Height       = RendererBackend::GetClientHeight();
     graphicsPipelineDesc.VertexShader = vertexShader;
     graphicsPipelineDesc.PixelShader  = pixelShader;
     graphicsPipelineDesc.InputLayout  = m_InputLayout;
     graphicsPipelineDesc.RenderPass   = m_RenderPass;
-    graphicsPipelineDesc.VertexLayout = VertexLayout({ { "POS",  ResourceFormat::RESOURCE_FORMAT_R32G32B32_SFLOAT },
-                                                       { "TEXCOORD",  ResourceFormat::RESOURCE_FORMAT_R32G32_SFLOAT }, });
+    graphicsPipelineDesc.VertexLayout = RHI_VertexLayout({ { "POS",      RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R32G32B32_SFLOAT },
+                                                           { "TEXCOORD", RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R32G32_SFLOAT }, });
 
     m_GraphicsPipeline = m_RendererBackend->GetRenderDevice().CreateGraphicsPipeline(&graphicsPipelineDesc);
     delete vertexShader;
@@ -121,12 +121,12 @@ void DefaultRenderer::OnInitialize(Raydiance::Graphics::RendererBackend* _backen
 
     // Create texture
 // ----------------------------------------------------------------------------
-    Texture2DDescriptor texture2DDesc = {};
+    RHI_Texture2DDescriptor texture2DDesc = {};
     texture2DDesc.Name = "TestTexture2D";
     texture2DDesc.Width = 16;
     texture2DDesc.Height = 16;
-    texture2DDesc.Format = ResourceFormat::RESOURCE_FORMAT_B8G8R8A8_SRGB;
-    texture2DDesc.State = ResourceState::RESOURCE_STATE_GENERAL_WRITE;
+    texture2DDesc.Format = RHI_ResourceFormat::RHI_RESOURCE_FORMAT_B8G8R8A8_SRGB;
+    texture2DDesc.State  = RHI_ResourceState::RHI_RESOURCE_STATE_GENERAL_WRITE;
 
     m_Texture = m_RendererBackend->GetRenderDevice().CreateTexture2D(&texture2DDesc);
 
@@ -148,43 +148,43 @@ void DefaultRenderer::OnInitialize(Raydiance::Graphics::RendererBackend* _backen
     }
 
     // Staging buffer
-    BufferDescriptor bufferDesc;
+    RHI_BufferDescriptor bufferDesc;
     bufferDesc.Name = "Generated-IndexStagingBuffer";
     bufferDesc.Size = sizeof(char) * 4 * 16 * 16;
-    bufferDesc.MemoryType = ResourceMemoryType::RESOURCE_MEMORY_TYPE_HOST_MEMORY;
-    bufferDesc.Usage = BufferUsage::BUFFER_USAGE_STAGING_BUFFER;
+    bufferDesc.MemoryType = RHI_ResourceMemoryType::RHI_RESOURCE_MEMORY_TYPE_CPU_MEMORY;
+    bufferDesc.Usage = RHI_BufferUsage::RHI_BUFFER_USAGE_STAGING_BUFFER;
     bufferDesc.Data = data.data();
-    bufferDesc.BufferLayout = BufferLayout({ { "TBUFFER",  Raydiance::Graphics::ResourceFormat::RESOURCE_FORMAT_B8G8R8A8_SRGB }, });
+    bufferDesc.BufferLayout = RHI_BufferLayout({ { "TBUFFER",  Raydiance::Graphics::RHI_ResourceFormat::RHI_RESOURCE_FORMAT_B8G8R8A8_SRGB }, });
 
-    Buffer* buffer = m_RendererBackend->GetRenderDevice().CreateBuffer(&bufferDesc);
+    RHI_Buffer* buffer = m_RendererBackend->GetRenderDevice().CreateBuffer(&bufferDesc);
 
     m_CommandBuffer->BeginRecording();
-    m_CommandBuffer->TransitionTexture(m_Texture, ResourceState::RESOURCE_STATE_UNDEFINED, ResourceState::RESOURCE_STATE_GENERAL_WRITE);
+    m_CommandBuffer->TransitionTexture(m_Texture, RHI_ResourceState::RHI_RESOURCE_STATE_INVALID, RHI_ResourceState::RHI_RESOURCE_STATE_GENERAL_WRITE);
     m_CommandBuffer->CopyBuffer(buffer, m_Texture);
-    m_CommandBuffer->TransitionTexture(m_Texture, ResourceState::RESOURCE_STATE_GENERAL_WRITE, ResourceState::RESOURCE_STATE_SHADER_READ_ONLY);
+    m_CommandBuffer->TransitionTexture(m_Texture, RHI_ResourceState::RHI_RESOURCE_STATE_GENERAL_WRITE, RHI_ResourceState::RHI_RESOURCE_STATE_SHADER_READ_ONLY);
     m_CommandBuffer->EndRecording();
 
     RendererBackend::SubmitCommandBuffer(m_CommandBuffer.get(), m_Fence);
     m_Fence->Wait();
     delete buffer;
 
-    Sampler2DDescriptor samplerDesc;
+    RHI_Sampler2DDescriptor samplerDesc;
     samplerDesc.Name     = "Sampler";
-    samplerDesc.Filter   = FilterMode::FILTER_MODE_NEAREST;
-    samplerDesc.AddressU = AddressMode::ADDRESS_MODE_REPEAT;
-    samplerDesc.AddressV = AddressMode::ADDRESS_MODE_REPEAT;
-    samplerDesc.AddressW = AddressMode::ADDRESS_MODE_REPEAT;
+    samplerDesc.Filter   = RHI_FilterMode::RHI_FILTER_MODE_NEAREST;
+    samplerDesc.AddressU = RHI_AddressMode::RHI_ADDRESS_MODE_REPEAT;
+    samplerDesc.AddressV = RHI_AddressMode::RHI_ADDRESS_MODE_REPEAT;
+    samplerDesc.AddressW = RHI_AddressMode::RHI_ADDRESS_MODE_REPEAT;
 
     m_Sampler = m_RendererBackend->GetRenderDevice().CreateSampler2D(&samplerDesc);
 
-    DescriptorPoolDescriptor poolDesc = {};
+    RHI_DescriptorPoolDescriptor poolDesc = {};
     poolDesc.Name = "DescriptorPool";
     poolDesc.MaxDescriptorSet = 1;
-    poolDesc.Sizes = { {INPUT_TYPE_SAMPLER2D, 1}, };
+    poolDesc.Sizes = { { RHI_INPUT_TYPE_SAMPLER2D, 1 }, };
 
     m_DescriptorPool = m_RendererBackend->GetRenderDevice().CreateDescriptorPool(&poolDesc);
 
-    DescriptorSetDescriptor setDesc = {};
+    RHI_DescriptorSetDescriptor setDesc = {};
     setDesc.Name = "DescriptorSet";
     setDesc.InputLayout = m_InputLayout;
     setDesc.SetIndex = 0;
@@ -221,12 +221,12 @@ void DefaultRenderer::OnResize(const uint32_t _width, const uint32_t _height)
     {
         delete m_FrameBuffers[i];
 
-        FrameBufferDescriptor frameBufferDesc = {};
+        RHI_FrameBufferDescriptor frameBufferDesc = {};
         frameBufferDesc.Name = "FrameBuffer" + i;
         frameBufferDesc.Width = RendererBackend::GetClientWidth();
         frameBufferDesc.Height = RendererBackend::GetClientHeight();
         frameBufferDesc.Contigious = true;
-        frameBufferDesc.Attachments = { {m_RendererBackend->GetSwapchain().GetTextureAtIndex(i), FrameBufferAttachmentType::FRAME_BUFFER_ATTACHMENT_TYPE_COLOR }, };
+        frameBufferDesc.Attachments = { {m_RendererBackend->GetSwapchain().GetTextureAtIndex(i), RHI_FrameBufferAttachmentType::RHI_FRAME_BUFFER_ATTACHMENT_TYPE_COLOR }, };
         frameBufferDesc.RenderPass = m_RenderPass;
 
         m_FrameBuffers[i] = m_RendererBackend->GetRenderDevice().CreateFrameBuffer(&frameBufferDesc);
@@ -236,7 +236,7 @@ void DefaultRenderer::OnResize(const uint32_t _width, const uint32_t _height)
 void DefaultRenderer::BeginScene(Raydiance::Graphics::Camera* _camera)
 {
     // ViewPort
-    ViewPort viewPort;
+    RHI_ViewPort viewPort;
     viewPort.X        = 0.0f;
     viewPort.Y        = 0.0f;
     viewPort.Width    = RendererBackend::GetClientWidth();
@@ -245,7 +245,7 @@ void DefaultRenderer::BeginScene(Raydiance::Graphics::Camera* _camera)
     viewPort.MaxDepth = 1.0f;
 
     // ScissorRect
-    ScissorRect scissorRect;
+    RHI_ScissorRect scissorRect;
     scissorRect.X = 0;
     scissorRect.Y = 0;
     scissorRect.Width = RendererBackend::GetClientWidth();

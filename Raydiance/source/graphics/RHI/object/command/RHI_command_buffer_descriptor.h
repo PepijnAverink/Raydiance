@@ -8,14 +8,14 @@ namespace Raydiance
 {
 	namespace Graphics
 	{
-		class CommandBufferDescriptor
+		class RHI_CommandBufferDescriptor
 		{
 		public:
-			CommandBufferDescriptor() = default;
+			RHI_CommandBufferDescriptor() = default;
 
 			std::string        Name;
 			RHI_CommandBufferType  Type;
-			const CommandPool* CommandPool = nullptr;
+			const RHI_CommandPool* CommandPool = nullptr;
 		};
 	}
 }

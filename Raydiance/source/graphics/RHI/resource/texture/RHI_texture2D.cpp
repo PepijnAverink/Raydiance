@@ -1,0 +1,19 @@
+#include "./pch.h"
+#include "./graphics/RHI/resource/texture/RHI_texture2D.h"
+
+namespace Raydiance
+{
+	namespace Graphics
+	{
+		RHI_Texture2D::RHI_Texture2D(const RHI_Texture2DDescriptor* _texture2DDescriptor)
+			: m_Width(_texture2DDescriptor->Width)
+			, m_Height(_texture2DDescriptor->Height)
+			, m_Format(_texture2DDescriptor->Format)
+			, m_State(_texture2DDescriptor->State)
+		{ }
+
+
+		RHI_Texture2D::~RHI_Texture2D()
+		{ }
+	}
+}

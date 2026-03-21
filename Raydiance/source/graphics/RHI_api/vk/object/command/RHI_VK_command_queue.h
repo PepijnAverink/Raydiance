@@ -6,15 +6,15 @@ namespace Raydiance
 {
 	namespace Graphics
 	{
-		class VKCommandQueue final : public RHI_CommandQueue
+		class RHI_VK_CommandQueue final : public RHI_CommandQueue
 		{
 		public:
-					 VKCommandQueue(void);
-			virtual ~VKCommandQueue(void);
+					 RHI_VK_CommandQueue(void);
+			virtual ~RHI_VK_CommandQueue(void);
 
 			[[nodiscard]] const Result Initialize(const RHI_VK_RenderDevice& _renderDevice, const RHI_CommandQueueDescriptor& _commandQueueDescriptor);
 
-			virtual void SubmitCommandBuffer(CommandBuffer* _commandBuffer, std::shared_ptr<RHI_FenceCPU> _fence) override;
+			virtual void SubmitCommandBuffer(RHI_CommandBuffer* _commandBuffer, std::shared_ptr<RHI_FenceCPU> _fence) override;
 
 			inline VkQueue GetVKQueue() const { return m_QueueObj; }
 

@@ -102,142 +102,142 @@
     <ClInclude Include="source\graphics\RHI\object\sync\RHI_fenceCPU_descriptor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\pipeline\framebuffer\frame_buffer.h">
+    <ClInclude Include="source\graphics\RHI\pipeline\framebuffer\RHI_frame_buffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\pipeline\framebuffer\frame_buffer_attachment.h">
+    <ClInclude Include="source\graphics\RHI\pipeline\framebuffer\RHI_frame_buffer_attachment.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\pipeline\framebuffer\frame_buffer_attachment_type.h">
+    <ClInclude Include="source\graphics\RHI\pipeline\framebuffer\RHI_frame_buffer_attachment_type.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\pipeline\framebuffer\frame_buffer_descriptor.h">
+    <ClInclude Include="source\graphics\RHI\pipeline\framebuffer\RHI_frame_buffer_descriptor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\pipeline\graphics\rasterizer\cull_mode.h">
+    <ClInclude Include="source\graphics\RHI\pipeline\graphics\rasterizer\RHI_cull_mode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\pipeline\graphics\rasterizer\fill_mode.h">
+    <ClInclude Include="source\graphics\RHI\pipeline\graphics\rasterizer\RHI_fill_mode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\pipeline\graphics\rasterizer\winding_order.h">
+    <ClInclude Include="source\graphics\RHI\pipeline\graphics\rasterizer\RHI_winding_order.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\pipeline\graphics\topology\topology.h">
+    <ClInclude Include="source\graphics\RHI\pipeline\graphics\topology\RHI_topology.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\pipeline\graphics\viewport\scissor_rect.h">
+    <ClInclude Include="source\graphics\RHI\pipeline\graphics\viewport\RHI_scissor_rect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\pipeline\graphics\viewport\view_port.h">
+    <ClInclude Include="source\graphics\RHI\pipeline\graphics\viewport\RHI_view_port.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\pipeline\graphics\graphics_pipeline.h">
+    <ClInclude Include="source\graphics\RHI\pipeline\graphics\RHI_graphics_pipeline.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\pipeline\graphics\graphics_pipeline_descriptor.h">
+    <ClInclude Include="source\graphics\RHI\pipeline\graphics\RHI_graphics_pipeline_descriptor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\pipeline\layout\descriptor\descriptor_pool.h">
+    <ClInclude Include="source\graphics\RHI\pipeline\layout\descriptor\RHI_descriptor_pool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\pipeline\layout\descriptor\descriptor_pool_descriptor.h">
+    <ClInclude Include="source\graphics\RHI\pipeline\layout\descriptor\RHI_descriptor_pool_descriptor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\pipeline\layout\descriptor\descriptor_pool_size.h">
+    <ClInclude Include="source\graphics\RHI\pipeline\layout\descriptor\RHI_descriptor_pool_size.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\pipeline\layout\descriptor\descriptor_set.h">
+    <ClInclude Include="source\graphics\RHI\pipeline\layout\descriptor\RHI_descriptor_set.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\pipeline\layout\descriptor\descriptor_set_descriptor.h">
+    <ClInclude Include="source\graphics\RHI\pipeline\layout\descriptor\RHI_descriptor_set_descriptor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\pipeline\layout\input_element.h">
+    <ClInclude Include="source\graphics\RHI\pipeline\layout\RHI_input_element.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\pipeline\layout\input_layout.h">
+    <ClInclude Include="source\graphics\RHI\pipeline\layout\RHI_input_layout.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\pipeline\layout\input_layout_descriptor.h">
+    <ClInclude Include="source\graphics\RHI\pipeline\layout\RHI_input_layout_descriptor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\pipeline\layout\input_set.h">
+    <ClInclude Include="source\graphics\RHI\pipeline\layout\RHI_input_set.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\pipeline\layout\input_type.h">
+    <ClInclude Include="source\graphics\RHI\pipeline\layout\RHI_input_type.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\pipeline\layout\vertex_element.h">
+    <ClInclude Include="source\graphics\RHI\pipeline\layout\RHI_vertex_element.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\pipeline\layout\vertex_layout.h">
+    <ClInclude Include="source\graphics\RHI\pipeline\layout\RHI_vertex_layout.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\pipeline\renderpass\render_pass.h">
+    <ClInclude Include="source\graphics\RHI\pipeline\renderpass\RHI_render_pass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\pipeline\renderpass\render_pass_attachment.h">
+    <ClInclude Include="source\graphics\RHI\pipeline\renderpass\RHI_render_pass_attachment.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\pipeline\renderpass\render_pass_attachment_type.h">
+    <ClInclude Include="source\graphics\RHI\pipeline\renderpass\RHI_render_pass_attachment_type.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\pipeline\renderpass\render_pass_descriptor.h">
+    <ClInclude Include="source\graphics\RHI\pipeline\renderpass\RHI_render_pass_descriptor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\pipeline\renderpass\render_pass_load_op.h">
+    <ClInclude Include="source\graphics\RHI\pipeline\renderpass\RHI_render_pass_load_op.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\pipeline\renderpass\render_pass_store_op.h">
+    <ClInclude Include="source\graphics\RHI\pipeline\renderpass\RHI_render_pass_store_op.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\resource\buffer\buffer.h">
+    <ClInclude Include="source\graphics\RHI\resource\buffer\RHI_buffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\resource\buffer\buffer_descriptor.h">
+    <ClInclude Include="source\graphics\RHI\resource\buffer\RHI_buffer_descriptor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\resource\buffer\buffer_usage.h">
+    <ClInclude Include="source\graphics\RHI\resource\buffer\RHI_buffer_usage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\resource\sampler\address_mode.h">
+    <ClInclude Include="source\graphics\RHI\resource\sampler\RHI_address_mode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\resource\sampler\filter_mode.h">
+    <ClInclude Include="source\graphics\RHI\resource\sampler\RHI_filter_mode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\resource\sampler\sampler2D.h">
+    <ClInclude Include="source\graphics\RHI\resource\sampler\RHI_sampler2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\resource\sampler\sampler2D_descriptor.h">
+    <ClInclude Include="source\graphics\RHI\resource\sampler\RHI_sampler2D_descriptor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\resource\shader\shader.h">
+    <ClInclude Include="source\graphics\RHI\resource\shader\RHI_shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\resource\shader\shader_descriptor.h">
+    <ClInclude Include="source\graphics\RHI\resource\shader\RHI_shader_descriptor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\resource\shader\shader_type.h">
+    <ClInclude Include="source\graphics\RHI\resource\shader\RHI_shader_type.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\resource\shader\shader_type_flags.h">
+    <ClInclude Include="source\graphics\RHI\resource\shader\RHI_shader_type_flags.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\resource\texture\texture2D.h">
+    <ClInclude Include="source\graphics\RHI\resource\texture\RHI_texture2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\resource\texture\texture2D_descriptor.h">
+    <ClInclude Include="source\graphics\RHI\resource\texture\RHI_texture2D_descriptor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\resource\resource_format.h">
+    <ClInclude Include="source\graphics\RHI\resource\RHI_resource_format.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\resource\resource_memory_type.h">
+    <ClInclude Include="source\graphics\RHI\resource\RHI_resource_memory_type.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\resource\resource_state.h">
+    <ClInclude Include="source\graphics\RHI\resource\RHI_resource_state.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\graphics\RHI\RHI_debug_mode.h">
@@ -264,76 +264,76 @@
     <ClInclude Include="source\graphics\RHI_api\vk\object\sync\RHI_VK_fenceCPU.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI_api\vk\pipeline\framebuffer\vk_frame_buffer.h">
+    <ClInclude Include="source\graphics\RHI_api\vk\pipeline\framebuffer\RHI_VK_frame_buffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI_api\vk\pipeline\graphics\rasterizer\vk_cull_mode.h">
+    <ClInclude Include="source\graphics\RHI_api\vk\pipeline\graphics\rasterizer\RHI_VK_cull_mode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI_api\vk\pipeline\graphics\rasterizer\vk_fill_mode.h">
+    <ClInclude Include="source\graphics\RHI_api\vk\pipeline\graphics\rasterizer\RHI_VK_fill_mode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI_api\vk\pipeline\graphics\rasterizer\vk_winding_order.h">
+    <ClInclude Include="source\graphics\RHI_api\vk\pipeline\graphics\rasterizer\RHI_VK_winding_order.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI_api\vk\pipeline\graphics\topology\vk_topology.h">
+    <ClInclude Include="source\graphics\RHI_api\vk\pipeline\graphics\topology\RHI_VK_topology.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI_api\vk\pipeline\graphics\vk_graphics_pipeline.h">
+    <ClInclude Include="source\graphics\RHI_api\vk\pipeline\graphics\RHI_VK_graphics_pipeline.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI_api\vk\pipeline\layout\descriptor\vk_descriptor_pool.h">
+    <ClInclude Include="source\graphics\RHI_api\vk\pipeline\layout\descriptor\RHI_VK_descriptor_pool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI_api\vk\pipeline\layout\descriptor\vk_descriptor_set.h">
+    <ClInclude Include="source\graphics\RHI_api\vk\pipeline\layout\descriptor\RHI_VK_descriptor_set.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI_api\vk\pipeline\layout\vk_input_layout.h">
+    <ClInclude Include="source\graphics\RHI_api\vk\pipeline\layout\RHI_VK_input_layout.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI_api\vk\pipeline\layout\vk_input_type.h">
+    <ClInclude Include="source\graphics\RHI_api\vk\pipeline\layout\RHI_VK_input_type.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI_api\vk\pipeline\renderpass\vk_render_pass.h">
+    <ClInclude Include="source\graphics\RHI_api\vk\pipeline\renderpass\RHI_VK_render_pass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI_api\vk\pipeline\renderpass\vk_render_pass_load_op.h">
+    <ClInclude Include="source\graphics\RHI_api\vk\pipeline\renderpass\RHI_VK_render_pass_load_op.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI_api\vk\pipeline\renderpass\vk_render_pass_store_op.h">
+    <ClInclude Include="source\graphics\RHI_api\vk\pipeline\renderpass\RHI_VK_render_pass_store_op.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI_api\vk\resource\buffer\vk_buffer.h">
+    <ClInclude Include="source\graphics\RHI_api\vk\resource\buffer\RHI_VK_buffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI_api\vk\resource\buffer\vk_buffer_usage.h">
+    <ClInclude Include="source\graphics\RHI_api\vk\resource\buffer\RHI_VK_buffer_usage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI_api\vk\resource\sampler\vk_address_mode.h">
+    <ClInclude Include="source\graphics\RHI_api\vk\resource\sampler\RHI_VK_address_mode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI_api\vk\resource\sampler\vk_filter_mode.h">
+    <ClInclude Include="source\graphics\RHI_api\vk\resource\sampler\RHI_VK_filter_mode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI_api\vk\resource\sampler\vk_sampler2D.h">
+    <ClInclude Include="source\graphics\RHI_api\vk\resource\sampler\RHI_VK_sampler2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI_api\vk\resource\shader\vk_shader.h">
+    <ClInclude Include="source\graphics\RHI_api\vk\resource\shader\RHI_VK_shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI_api\vk\resource\shader\vk_shader_type_flags.h">
+    <ClInclude Include="source\graphics\RHI_api\vk\resource\shader\RHI_VK_shader_type_flags.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI_api\vk\resource\texture\vk_texture2D.h">
+    <ClInclude Include="source\graphics\RHI_api\vk\resource\texture\RHI_VK_texture2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI_api\vk\resource\vk_resource_format.h">
+    <ClInclude Include="source\graphics\RHI_api\vk\resource\RHI_VK_resource_format.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI_api\vk\resource\vk_resource_memory_type.h">
+    <ClInclude Include="source\graphics\RHI_api\vk\resource\RHI_VK_resource_memory_type.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI_api\vk\resource\vk_resource_state.h">
+    <ClInclude Include="source\graphics\RHI_api\vk\resource\RHI_VK_resource_state.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\graphics\RHI_api\vk\RHI_VK_render_device.h">
@@ -449,34 +449,34 @@
     <ClCompile Include="source\graphics\RHI\object\sync\RHI_fenceCPU.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\graphics\RHI\pipeline\framebuffer\frame_buffer.cpp">
+    <ClCompile Include="source\graphics\RHI\pipeline\framebuffer\RHI_frame_buffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\graphics\RHI\pipeline\graphics\graphics_pipeline.cpp">
+    <ClCompile Include="source\graphics\RHI\pipeline\graphics\RHI_graphics_pipeline.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\graphics\RHI\pipeline\layout\descriptor\descriptor_pool.cpp">
+    <ClCompile Include="source\graphics\RHI\pipeline\layout\descriptor\RHI_descriptor_pool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\graphics\RHI\pipeline\layout\descriptor\descriptor_set.cpp">
+    <ClCompile Include="source\graphics\RHI\pipeline\layout\descriptor\RHI_descriptor_set.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\graphics\RHI\pipeline\layout\input_layout.cpp">
+    <ClCompile Include="source\graphics\RHI\pipeline\layout\RHI_input_layout.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\graphics\RHI\pipeline\renderpass\render_pass.cpp">
+    <ClCompile Include="source\graphics\RHI\pipeline\renderpass\RHI_render_pass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\graphics\RHI\resource\buffer\buffer.cpp">
+    <ClCompile Include="source\graphics\RHI\resource\buffer\RHI_buffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\graphics\RHI\resource\sampler\sampler2D.cpp">
+    <ClCompile Include="source\graphics\RHI\resource\sampler\RHI_sampler2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\graphics\RHI\resource\shader\shader.cpp">
+    <ClCompile Include="source\graphics\RHI\resource\shader\RHI_shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\graphics\RHI\resource\texture\texture2D.cpp">
+    <ClCompile Include="source\graphics\RHI\resource\texture\RHI_texture2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\graphics\RHI\RHI_render_device.cpp">
@@ -497,34 +497,34 @@
     <ClCompile Include="source\graphics\RHI_api\vk\object\sync\RHI_VK_fenceCPU.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\graphics\RHI_api\vk\pipeline\framebuffer\vk_frame_buffer.cpp">
+    <ClCompile Include="source\graphics\RHI_api\vk\pipeline\framebuffer\RHI_VK_frame_buffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\graphics\RHI_api\vk\pipeline\graphics\vk_graphics_pipeline.cpp">
+    <ClCompile Include="source\graphics\RHI_api\vk\pipeline\graphics\RHI_VK_graphics_pipeline.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\graphics\RHI_api\vk\pipeline\layout\descriptor\vk_descriptor_pool.cpp">
+    <ClCompile Include="source\graphics\RHI_api\vk\pipeline\layout\descriptor\RHI_VK_descriptor_pool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\graphics\RHI_api\vk\pipeline\layout\descriptor\vk_descriptor_set.cpp">
+    <ClCompile Include="source\graphics\RHI_api\vk\pipeline\layout\descriptor\RHI_VK_descriptor_set.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\graphics\RHI_api\vk\pipeline\layout\vk_input_layout.cpp">
+    <ClCompile Include="source\graphics\RHI_api\vk\pipeline\layout\RHI_VK_input_layout.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\graphics\RHI_api\vk\pipeline\renderpass\vk_render_pass.cpp">
+    <ClCompile Include="source\graphics\RHI_api\vk\pipeline\renderpass\RHI_VK_render_pass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\graphics\RHI_api\vk\resource\buffer\vk_buffer.cpp">
+    <ClCompile Include="source\graphics\RHI_api\vk\resource\buffer\RHI_VK_buffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\graphics\RHI_api\vk\resource\sampler\vk_sampler2D.cpp">
+    <ClCompile Include="source\graphics\RHI_api\vk\resource\sampler\RHI_VK_sampler2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\graphics\RHI_api\vk\resource\shader\vk_shader.cpp">
+    <ClCompile Include="source\graphics\RHI_api\vk\resource\shader\RHI_VK_shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\graphics\RHI_api\vk\resource\texture\vk_texture2D.cpp">
+    <ClCompile Include="source\graphics\RHI_api\vk\resource\texture\RHI_VK_texture2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\graphics\RHI_api\vk\RHI_VK_render_device.cpp">

@@ -21,11 +21,11 @@ namespace Raydiance
             0, 1, 2, 2, 3, 0
         };
 
-        Quad::Quad(CommandBuffer* _commandBuffer, std::shared_ptr<RHI_FenceCPU> _fence)
+        Quad::Quad(RHI_CommandBuffer* _commandBuffer, std::shared_ptr<RHI_FenceCPU> _fence)
         {
-            CreateVertexBuffer(_commandBuffer, _fence, vertices.data(), sizeof(vertices[0]) * vertices.size(), BufferLayout({ { "POS",  ResourceFormat::RESOURCE_FORMAT_R32G32B32_SFLOAT },
-                 { "TEX",  ResourceFormat::RESOURCE_FORMAT_R32G32_SFLOAT } }));
-            CreateIndexBuffer(_commandBuffer, _fence, indices.data(), sizeof(indices[0]) * indices.size(), BufferLayout({ { "index",  Graphics::ResourceFormat::RESOURCE_FORMAT_R16_UINT }, }));
+            CreateVertexBuffer(_commandBuffer, _fence, vertices.data(), sizeof(vertices[0]) * vertices.size(), RHI_BufferLayout({ { "POS",  RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R32G32B32_SFLOAT },
+                 { "TEX",  RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R32G32_SFLOAT } }));
+            CreateIndexBuffer(_commandBuffer, _fence, indices.data(), sizeof(indices[0]) * indices.size(), RHI_BufferLayout({ { "index",  Graphics::RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R16_UINT }, }));
 
             SubMesh quad;
             quad.VertexOffset = 0;

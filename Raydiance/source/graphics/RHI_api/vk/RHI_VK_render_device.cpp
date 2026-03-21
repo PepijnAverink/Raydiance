@@ -8,18 +8,18 @@
 #include "./graphics/RHI_api/vk/object/swapchain/RHI_VK_swapchain.h"
 #include "./graphics/RHI_api/vk/object/sync/RHI_VK_fenceCPU.h"
 
-#include "./graphics/RHI_api/vk/pipeline/graphics/vk_graphics_pipeline.h"
-#include "./graphics/RHI_api/vk/pipeline/layout/vk_input_layout.h"
-#include "./graphics/RHI_api/vk/pipeline/renderpass/vk_render_pass.h"
-#include "./graphics/RHI_api/vk/pipeline/framebuffer/vk_frame_buffer.h"
+#include "./graphics/RHI_api/vk/pipeline/graphics/RHI_VK_graphics_pipeline.h"
+#include "./graphics/RHI_api/vk/pipeline/layout/RHI_VK_input_layout.h"
+#include "./graphics/RHI_api/vk/pipeline/renderpass/RHI_VK_render_pass.h"
+#include "./graphics/RHI_api/vk/pipeline/framebuffer/RHI_VK_frame_buffer.h"
 
-#include "./graphics/RHI_api/vk/pipeline/layout/descriptor/vk_descriptor_pool.h"
-#include "./graphics/RHI_api/vk/pipeline/layout/descriptor/vk_descriptor_set.h"
+#include "./graphics/RHI_api/vk/pipeline/layout/descriptor/RHI_VK_descriptor_pool.h"
+#include "./graphics/RHI_api/vk/pipeline/layout/descriptor/RHI_VK_descriptor_set.h"
 
-#include "./graphics/RHI_api/vk/resource/buffer/vk_buffer.h"
-#include "./graphics/RHI_api/vk/resource/shader/vk_shader.h"
-#include "./graphics/RHI_api/vk/resource/sampler/vk_sampler2D.h"
-#include "./graphics/RHI_api/vk/resource/texture/vk_texture2D.h"
+#include "./graphics/RHI_api/vk/resource/buffer/RHI_VK_buffer.h"
+#include "./graphics/RHI_api/vk/resource/shader/RHI_VK_shader.h"
+#include "./graphics/RHI_api/vk/resource/sampler/RHI_VK_sampler2D.h"
+#include "./graphics/RHI_api/vk/resource/texture/RHI_VK_texture2D.h"
 
 #include "./graphics/RHI_api/vk/RHI_VK_adapter.h"
 
@@ -282,21 +282,21 @@ namespace Raydiance
             return 0;
         }
 
-        std::shared_ptr<CommandPool> RHI_VK_RenderDevice::CreateCommandPool(const CommandPoolDescriptor& _commandPoolDescriptor)
+        std::shared_ptr<RHI_CommandPool> RHI_VK_RenderDevice::CreateCommandPool(const RHI_CommandPoolDescriptor& _commandPoolDescriptor)
         {
-            std::shared_ptr<VKCommandPool> commandPool = std::make_shared<VKCommandPool>(this, _commandPoolDescriptor);
+            std::shared_ptr<RHI_VK_CommandPool> commandPool = std::make_shared<RHI_VK_CommandPool>(this, _commandPoolDescriptor);
             return commandPool;
         }
 
-        std::shared_ptr<CommandBuffer> RHI_VK_RenderDevice::CreateCommandBuffer(const CommandBufferDescriptor& _commandBufferDescriptor)
+        std::shared_ptr<RHI_CommandBuffer> RHI_VK_RenderDevice::CreateCommandBuffer(const RHI_CommandBufferDescriptor& _commandBufferDescriptor)
         {
-            std::shared_ptr<VKCommandBuffer> commandBuffer = std::make_shared<VKCommandBuffer>(this, _commandBufferDescriptor);
+            std::shared_ptr<RHI_VK_CommandBuffer> commandBuffer = std::make_shared<RHI_VK_CommandBuffer>(this, _commandBufferDescriptor);
             return commandBuffer;
         }
 
         std::shared_ptr<RHI_CommandQueue> RHI_VK_RenderDevice::CreateCommandQueue(const RHI_CommandQueueDescriptor& _commandQueueDescriptor)
         {
-            std::shared_ptr<VKCommandQueue> commandQueue = std::make_shared<VKCommandQueue>();
+            std::shared_ptr<RHI_VK_CommandQueue> commandQueue = std::make_shared<RHI_VK_CommandQueue>();
             Result result = commandQueue->Initialize(*this, _commandQueueDescriptor);
 
             // Error check
@@ -328,57 +328,57 @@ namespace Raydiance
             return swapchain;
         }
 
-        GraphicsPipeline* RHI_VK_RenderDevice::CreateGraphicsPipeline(const GraphicsPipelineDescriptor* _graphicsPipelineDescriptor)
+        RHI_GraphicsPipeline* RHI_VK_RenderDevice::CreateGraphicsPipeline(const RHI_GraphicsPipelineDescriptor* _graphicsPipelineDescriptor)
         {
-            VKGraphicsPipeline* graphicsPipeline = new VKGraphicsPipeline(this, _graphicsPipelineDescriptor);
+            RHI_VK_GraphicsPipeline* graphicsPipeline = new RHI_VK_GraphicsPipeline(this, _graphicsPipelineDescriptor);
             return graphicsPipeline;
         }
 
-        InputLayout* RHI_VK_RenderDevice::CreateInputLayout(const InputLayoutDescriptor* _inputLayoutDescriptor)
+        RHI_InputLayout* RHI_VK_RenderDevice::CreateInputLayout(const RHI_InputLayoutDescriptor* _inputLayoutDescriptor)
         {
-            VKInputLayout* inputLayout = new VKInputLayout(this, _inputLayoutDescriptor);
+            RHI_VK_InputLayout* inputLayout = new RHI_VK_InputLayout(this, _inputLayoutDescriptor);
             return inputLayout;
         }
 
-        RenderPass* RHI_VK_RenderDevice::CreateRenderPass(const RenderPassDescriptor* _renderPassDescriptor)
+        RHI_RenderPass* RHI_VK_RenderDevice::CreateRenderPass(const RHI_RenderPassDescriptor* _renderPassDescriptor)
         {
-            RenderPass* renderPass = new VKRenderPass(this, _renderPassDescriptor);
+            RHI_RenderPass* renderPass = new RHI_VK_RenderPass(this, _renderPassDescriptor);
             return renderPass;
         }
 
-        FrameBuffer* RHI_VK_RenderDevice::CreateFrameBuffer(const FrameBufferDescriptor* _frameBufferDescriptor)
+        RHI_FrameBuffer* RHI_VK_RenderDevice::CreateFrameBuffer(const RHI_FrameBufferDescriptor* _frameBufferDescriptor)
         {
-            VKFrameBuffer* frameBuffer = new VKFrameBuffer(this, _frameBufferDescriptor);
+            RHI_VK_FrameBuffer* frameBuffer = new RHI_VK_FrameBuffer(this, _frameBufferDescriptor);
             return frameBuffer;
         }
 
-        DescriptorPool* RHI_VK_RenderDevice::CreateDescriptorPool(const DescriptorPoolDescriptor* _descriptorPoolDescriptor)
+        RHI_DescriptorPool* RHI_VK_RenderDevice::CreateDescriptorPool(const RHI_DescriptorPoolDescriptor* _descriptorPoolDescriptor)
         {
-            VKDescriptorPool* descroptorPool = new VKDescriptorPool(this, _descriptorPoolDescriptor);
+            RHI_VK_DescriptorPool* descroptorPool = new RHI_VK_DescriptorPool(this, _descriptorPoolDescriptor);
             return descroptorPool;
         }
 
-        Buffer* RHI_VK_RenderDevice::CreateBuffer(const BufferDescriptor* _bufferDescriptor)
+        RHI_Buffer* RHI_VK_RenderDevice::CreateBuffer(const RHI_BufferDescriptor* _bufferDescriptor)
         {
-            VKBuffer* buffer = new VKBuffer(this, _bufferDescriptor);
+            RHI_VK_Buffer* buffer = new RHI_VK_Buffer(this, _bufferDescriptor);
             return buffer;
         }
 
-        Shader* RHI_VK_RenderDevice::CreateShader(const ShaderDescriptor* _shaderDescriptor)
+        RHI_Shader* RHI_VK_RenderDevice::CreateShader(const RHI_ShaderDescriptor* _shaderDescriptor)
         {
-            VKShader* shader = new VKShader(this, _shaderDescriptor);
+            RHI_VK_Shader* shader = new RHI_VK_Shader(this, _shaderDescriptor);
             return shader;
         }
 
-        Texture2D* RHI_VK_RenderDevice::CreateTexture2D(const Texture2DDescriptor* _texture2DDescriptor)
+        RHI_Texture2D* RHI_VK_RenderDevice::CreateTexture2D(const RHI_Texture2DDescriptor* _texture2DDescriptor)
         {
-            VKTexture2D* texture = new VKTexture2D(this, _texture2DDescriptor);
+            RHI_VK_Texture2D* texture = new RHI_VK_Texture2D(this, _texture2DDescriptor);
             return texture;
         }
 
-        Sampler2D* RHI_VK_RenderDevice::CreateSampler2D(const Sampler2DDescriptor* _sampler2DDescripotr)
+        RHI_Sampler2D* RHI_VK_RenderDevice::CreateSampler2D(const RHI_Sampler2DDescriptor* _sampler2DDescripotr)
         {
-            VKSampler2D* sampler = new VKSampler2D(this, _sampler2DDescripotr);
+            RHI_VK_Sampler2D* sampler = new RHI_VK_Sampler2D(this, _sampler2DDescripotr);
             return sampler;
         }
 

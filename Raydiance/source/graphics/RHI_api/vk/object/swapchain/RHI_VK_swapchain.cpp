@@ -7,8 +7,8 @@
 #include "./graphics/RHI_api/vk/object/sync/RHI_VK_fenceCPU.h"
 #include "./graphics/RHI_api/vk/object/command/RHI_VK_command_queue.h"
 
-#include "./graphics/RHI_api/vk/resource/vk_resource_format.h"
-#include "./graphics/RHI_api/vk/resource/texture/vk_texture2D.h"
+#include "./graphics/RHI_api/vk/resource/RHI_VK_resource_format.h"
+#include "./graphics/RHI_api/vk/resource/texture/RHI_VK_texture2D.h"
 
 // Core includes
 #include "./core/window/window.h"
@@ -24,7 +24,7 @@ namespace Raydiance
 		RHI_VK_Swapchain::~RHI_VK_Swapchain()
 		{
 			for (uint32_t i = 0; i < m_BufferCount; i++)
-				((VKTexture2D*)m_Textures[i])->FreeImageView();
+				((RHI_VK_Texture2D*)m_Textures[i])->FreeImageView();
 
 			vkDestroySwapchainKHR(static_cast<RHI_VK_RenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_SwapChainObj, nullptr);
 		}
@@ -59,7 +59,7 @@ namespace Raydiance
 		{
 			// Cleanup
 			for (uint32_t i = 0; i < m_BufferCount; i++)
-				((VKTexture2D*)m_Textures[i])->FreeImageView();
+				((RHI_VK_Texture2D*)m_Textures[i])->FreeImageView();
 			vkDestroySwapchainKHR(static_cast<RHI_VK_RenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_SwapChainObj, nullptr);
 			m_Textures.clear();
 
@@ -86,7 +86,7 @@ namespace Raydiance
 			presentInfo.pSwapchains        = &m_SwapChainObj;
 			presentInfo.pImageIndices      = &m_CurrentBufferIndex;
 
-			vkQueuePresentKHR(((VKCommandQueue*)_commandQueue)->GetVKQueue(), &presentInfo);
+			vkQueuePresentKHR(((RHI_VK_CommandQueue*)_commandQueue)->GetVKQueue(), &presentInfo);
 		}
 
 		void RHI_VK_Swapchain::CreateSwapchain(const RHI_VK_RenderDevice& _renderDevice, const RHI_CommandQueue& _commandQueue)
@@ -191,7 +191,7 @@ namespace Raydiance
 			m_BufferCount = imageCount;
 			m_Format = ResolveResourceFormat(format.format);
 
-			Texture2DDescriptor textureDesc = {};
+			RHI_Texture2DDescriptor textureDesc = {};
 			textureDesc.Width = m_Width;
 			textureDesc.Height = m_Height;
 			textureDesc.Format = ResolveResourceFormat(format.format);
@@ -199,7 +199,7 @@ namespace Raydiance
 			for (uint32_t i = 0; i < m_BufferCount; i++)
 			{
 				textureDesc.Name = "SwapchainImage" + i;
-				m_Textures.push_back(new VKTexture2D(_renderDevice, images[i], &textureDesc));
+				m_Textures.push_back(new RHI_VK_Texture2D(_renderDevice, images[i], &textureDesc));
 			}
 		}
 	}

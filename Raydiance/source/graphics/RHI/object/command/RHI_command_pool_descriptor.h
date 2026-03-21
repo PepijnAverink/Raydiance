@@ -6,10 +6,10 @@ namespace Raydiance
 {
 	namespace Graphics
 	{
-		class CommandPoolDescriptor
+		class RHI_CommandPoolDescriptor
 		{
 		public:
-			CommandPoolDescriptor() = default;
+			RHI_CommandPoolDescriptor() = default;
 
 			std::string      Name;
 			RHI_CommandQueueType Type = RHI_CommandQueueType::RHI_COMMAND_QUEUE_TYPE_INVALID;

@@ -6,11 +6,11 @@ namespace Raydiance
 	namespace Graphics
 	{
 
-		class CommandPool
+		class RHI_CommandPool
 		{
 		public:
-			CommandPool(const CommandPoolDescriptor& _commandPoolDescriptor);
-			virtual ~CommandPool();
+			RHI_CommandPool(const RHI_CommandPoolDescriptor& _commandPoolDescriptor);
+			virtual ~RHI_CommandPool();
 
 			virtual void Reset() = 0;
 

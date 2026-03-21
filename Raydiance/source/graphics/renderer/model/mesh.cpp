@@ -18,23 +18,23 @@ namespace Raydiance
             delete m_IndexBuffer;
         }
 
-        void Mesh::CreateVertexBuffer(CommandBuffer* _commandBuffer, std::shared_ptr<RHI_FenceCPU> _fence, void* _data, const uint32_t _size, BufferLayout _layout)
+        void Mesh::CreateVertexBuffer(RHI_CommandBuffer* _commandBuffer, std::shared_ptr<RHI_FenceCPU> _fence, void* _data, const uint32_t _size, RHI_BufferLayout _layout)
         {
-            BufferDescriptor bufferDesc;
+            RHI_BufferDescriptor bufferDesc;
             bufferDesc.Name = "Generated-VertexStagingBuffer";
             bufferDesc.Size = _size;
-            bufferDesc.MemoryType = ResourceMemoryType::RESOURCE_MEMORY_TYPE_HOST_MEMORY;
-            bufferDesc.Usage = BufferUsage::BUFFER_USAGE_STAGING_BUFFER;
+            bufferDesc.MemoryType = RHI_ResourceMemoryType::RHI_RESOURCE_MEMORY_TYPE_CPU_MEMORY;
+            bufferDesc.Usage = RHI_BufferUsage::RHI_BUFFER_USAGE_STAGING_BUFFER;
             bufferDesc.Data = _data;
             bufferDesc.BufferLayout = _layout;
 
-            Buffer* stagingBuffer = RHI_RenderDevice::Get().CreateBuffer(&bufferDesc);
+            RHI_Buffer* stagingBuffer = RHI_RenderDevice::Get().CreateBuffer(&bufferDesc);
 
             bufferDesc = {};
             bufferDesc.Name = "Generated-VertexBuffer";
             bufferDesc.Size = _size;
-            bufferDesc.MemoryType = ResourceMemoryType::RESOURCE_MEMORY_TYPE_DEVICE_MEMORY;
-            bufferDesc.Usage = BufferUsage::BUFFER_USAGE_VERTEX_BUFFER;
+            bufferDesc.MemoryType = RHI_ResourceMemoryType::RHI_RESOURCE_MEMORY_TYPE_GPU_MEMORY;
+            bufferDesc.Usage = RHI_BufferUsage::RHI_BUFFER_USAGE_VERTEX_BUFFER;
             bufferDesc.Data = nullptr;
             bufferDesc.BufferLayout = _layout;
 
@@ -51,23 +51,23 @@ namespace Raydiance
             delete stagingBuffer;
         }
 
-        void Mesh::CreateIndexBuffer(CommandBuffer* _commandBuffer, std::shared_ptr<RHI_FenceCPU> _fence, void* _data, const uint32_t _size, BufferLayout _layout)
+        void Mesh::CreateIndexBuffer(RHI_CommandBuffer* _commandBuffer, std::shared_ptr<RHI_FenceCPU> _fence, void* _data, const uint32_t _size, RHI_BufferLayout _layout)
         {
-            BufferDescriptor bufferDesc;
+            RHI_BufferDescriptor bufferDesc;
             bufferDesc.Name = "Generated-IndexStagingBuffer";
             bufferDesc.Size = _size;
-            bufferDesc.MemoryType = ResourceMemoryType::RESOURCE_MEMORY_TYPE_HOST_MEMORY;
-            bufferDesc.Usage = BufferUsage::BUFFER_USAGE_STAGING_BUFFER;
+            bufferDesc.MemoryType = RHI_ResourceMemoryType::RHI_RESOURCE_MEMORY_TYPE_CPU_MEMORY;
+            bufferDesc.Usage = RHI_BufferUsage::RHI_BUFFER_USAGE_STAGING_BUFFER;
             bufferDesc.Data = _data;
             bufferDesc.BufferLayout = _layout;
 
-            Buffer* stagingBuffer = RHI_RenderDevice::Get().CreateBuffer(&bufferDesc);
+            RHI_Buffer* stagingBuffer = RHI_RenderDevice::Get().CreateBuffer(&bufferDesc);
 
             bufferDesc = {};
             bufferDesc.Name = "Generated-IndexBuffer";
             bufferDesc.Size = _size;
-            bufferDesc.MemoryType = ResourceMemoryType::RESOURCE_MEMORY_TYPE_DEVICE_MEMORY;
-            bufferDesc.Usage = BufferUsage::BUFFER_USAGE_INDEX_BUFFER;
+            bufferDesc.MemoryType = RHI_ResourceMemoryType::RHI_RESOURCE_MEMORY_TYPE_GPU_MEMORY;
+            bufferDesc.Usage = RHI_BufferUsage::RHI_BUFFER_USAGE_INDEX_BUFFER;
             bufferDesc.Data = nullptr;
             bufferDesc.BufferLayout = _layout;
 

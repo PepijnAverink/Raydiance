@@ -18,7 +18,7 @@ namespace Raydiance
 			static RendererBackend* Create(Window* _window);
 			static void Destroy();
 
-			static void SubmitCommandBuffer(CommandBuffer* _commandBuffer, std::shared_ptr<RHI_FenceCPU> _fence);
+			static void SubmitCommandBuffer(RHI_CommandBuffer* _commandBuffer, std::shared_ptr<RHI_FenceCPU> _fence);
 
 			static uint32_t AquireNewFrame(std::shared_ptr<RHI_FenceCPU> _fence);
 			static void Present();

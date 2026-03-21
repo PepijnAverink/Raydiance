@@ -9,14 +9,14 @@ namespace Raydiance
 {
 	namespace Graphics
 	{
-		VKCommandQueue::VKCommandQueue(void)
+		RHI_VK_CommandQueue::RHI_VK_CommandQueue(void)
 			: RHI_CommandQueue()
 		{ }
 
-		VKCommandQueue::~VKCommandQueue(void)
+		RHI_VK_CommandQueue::~RHI_VK_CommandQueue(void)
 		{ }
 
-		const Result VKCommandQueue::Initialize(const RHI_VK_RenderDevice& _renderDevice, const RHI_CommandQueueDescriptor& _commandQueueDescriptor)
+		const Result RHI_VK_CommandQueue::Initialize(const RHI_VK_RenderDevice& _renderDevice, const RHI_CommandQueueDescriptor& _commandQueueDescriptor)
 		{
 			// Object storing the result of all interal functions.
 			Result result = Result::RESULT_INVALID;
@@ -49,9 +49,9 @@ namespace Raydiance
 			return Result::RESULT_GOOD;
 		}
 
-		void VKCommandQueue::SubmitCommandBuffer(CommandBuffer* _commandBuffer, std::shared_ptr<RHI_FenceCPU> _fence)
+		void RHI_VK_CommandQueue::SubmitCommandBuffer(RHI_CommandBuffer* _commandBuffer, std::shared_ptr<RHI_FenceCPU> _fence)
 		{
-			VkCommandBuffer cmbuffer = ((VKCommandBuffer*)_commandBuffer)->GetVKCommandBuffer();
+			VkCommandBuffer cmbuffer = ((RHI_VK_CommandBuffer*)_commandBuffer)->GetRHI_VK_CommandBuffer();
 			VkPipelineStageFlags waitStages[] = { VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT }; // TODO:: abstract this
 
 			VkSubmitInfo submitInfo{};

@@ -5,14 +5,12 @@ namespace Raydiance
 {
 	namespace Graphics
 	{
-		CommandBuffer::CommandBuffer(const CommandBufferDescriptor&_commandBufferDescriptor)
+		RHI_CommandBuffer::RHI_CommandBuffer(const RHI_CommandBufferDescriptor&_commandBufferDescriptor)
 			: m_Type(_commandBufferDescriptor.Type)
 			, m_CommandPool(_commandBufferDescriptor.CommandPool)
-		{
-		}
+		{ }
 
-		CommandBuffer::~CommandBuffer()
-		{
-		}
+		RHI_CommandBuffer::~RHI_CommandBuffer()
+		{ }
 	}
 }
