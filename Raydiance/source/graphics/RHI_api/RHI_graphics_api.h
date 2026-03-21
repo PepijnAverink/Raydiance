@@ -8,7 +8,7 @@ namespace Raydiance
 {
 	namespace Graphics
 	{
-		enum class RHI_GraphicsAPI : uint8
+		enum class RHI_GraphicsAPI : uint32
 		{
 			RHI_GRAPHICS_API_INVALID = 0x00,
 			RHI_GRAPHICS_API_VULKAN  = 0x01,
@@ -16,7 +16,7 @@ namespace Raydiance
 
 
 		[[nodiscard]]
-		inline constexpr std::string_view RHI_GraphicsApiToString(RHI_GraphicsAPI _api) noexcept
+		inline constexpr const std::string& RHI_GraphicsApiToString(RHI_GraphicsAPI _api) noexcept
 		{
 			switch (_api)
 			{

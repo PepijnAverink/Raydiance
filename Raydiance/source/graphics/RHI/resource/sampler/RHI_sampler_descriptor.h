@@ -1,19 +1,26 @@
 #pragma once
+// Graphics includes
 #include "./graphics/RHI/resource/sampler/RHI_address_mode.h"
 #include "./graphics/RHI/resource/sampler/RHI_filter_mode.h"
-
-#include <string>
 
 namespace Raydiance
 {
 	namespace Graphics
 	{
-		class RHI_Sampler2DDescriptor
+		struct RHI_SamplerDescriptor final
 		{
 		public:
-			RHI_Sampler2DDescriptor() = default;
+			// Default constructor and descructor
+			// ======================================
+			 RHI_SamplerDescriptor(void) = default;
+			~RHI_SamplerDescriptor(void) = default;
 
-			std::string Name;
+
+			// DebugName
+			std::string		Name;
+
+			// Raw data used for object creation
+			// ======================================
 			RHI_FilterMode  Filter   = RHI_FilterMode::RHI_FILTER_MODE_INVALID;
 			RHI_AddressMode AddressU = RHI_AddressMode::RHI_ADDRESS_MODE_INVALID;
 			RHI_AddressMode AddressV = RHI_AddressMode::RHI_ADDRESS_MODE_INVALID;

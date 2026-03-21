@@ -49,7 +49,7 @@
 
 #include "graphics/RHI/resource/sampler/RHI_address_mode.h"
 #include "graphics/RHI/resource/sampler/RHI_filter_mode.h"
-#include "graphics/RHI/resource/sampler/RHI_sampler2D_descriptor.h"
+#include "graphics/RHI/resource/sampler/RHI_sampler_descriptor.h"
 #include "graphics/RHI/resource/RHI_resource_format.h"
 
 
@@ -150,7 +150,7 @@
 
 #include "graphics/RHI_api/vk/resource/sampler/RHI_VK_filter_mode.h"
 #include "graphics/RHI_api/vk/resource/sampler/RHI_VK_address_mode.h"
-#include "graphics/RHI_api/vk/resource/sampler/RHI_VK_sampler2D.h"
+#include "graphics/RHI_api/vk/resource/sampler/RHI_VK_sampler.h"
 
 #include "graphics/RHI_api/vk/pipeline/layout/descriptor/RHI_VK_descriptor_set.h"
 #include "graphics/RHI_api/vk/pipeline/layout/descriptor/RHI_VK_descriptor_pool.h"

@@ -7,7 +7,7 @@ namespace Raydiance
 {
 	namespace Graphics
 	{
-		enum RHI_InputFlag : uint8
+		enum RHI_InputFlag : uint32
 		{
 			RHI_INPUT_FLAG_INVALID			= 0x00,
 			RHI_INPUT_FLAG_UNORDERED_ACCESS = 0x01,

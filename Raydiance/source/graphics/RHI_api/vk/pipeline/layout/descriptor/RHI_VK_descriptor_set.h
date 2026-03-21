@@ -12,7 +12,7 @@ namespace Raydiance
 			virtual ~RHI_VK_DescriptorSet();
 
 			virtual void AllocateDescriptor(RHI_Buffer* _buffer, const uint32_t _bindingIndex, const uint32_t _arrayIndex) override;
-			virtual void AllocateDescriptor(RHI_Texture2D* _texture, RHI_Sampler2D* _sampler, const uint32_t _bindingIndex, const uint32_t _arrayIndex) override;
+			virtual void AllocateDescriptor(RHI_Texture2D* _texture, RHI_Sampler* _sampler, const uint32_t _bindingIndex, const uint32_t _arrayIndex) override;
 
 			inline VkDescriptorSet GetRHI_VK_DescriptorSet() const { return m_DescriptorSetObj; }
 

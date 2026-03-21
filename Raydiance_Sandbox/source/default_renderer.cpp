@@ -168,14 +168,14 @@ void DefaultRenderer::OnInitialize(Raydiance::Graphics::RendererBackend* _backen
     m_Fence->Wait();
     delete buffer;
 
-    RHI_Sampler2DDescriptor samplerDesc;
+    RHI_SamplerDescriptor samplerDesc;
     samplerDesc.Name     = "Sampler";
     samplerDesc.Filter   = RHI_FilterMode::RHI_FILTER_MODE_NEAREST;
     samplerDesc.AddressU = RHI_AddressMode::RHI_ADDRESS_MODE_REPEAT;
     samplerDesc.AddressV = RHI_AddressMode::RHI_ADDRESS_MODE_REPEAT;
     samplerDesc.AddressW = RHI_AddressMode::RHI_ADDRESS_MODE_REPEAT;
 
-    m_Sampler = m_RendererBackend->GetRenderDevice().CreateSampler2D(&samplerDesc);
+    m_Sampler = m_RendererBackend->GetRenderDevice().CreateSampler(samplerDesc);
 
     RHI_DescriptorPoolDescriptor poolDesc = {};
     poolDesc.Name = "DescriptorPool";

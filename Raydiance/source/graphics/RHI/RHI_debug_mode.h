@@ -3,12 +3,13 @@
 #include "./core/container/types.h"
 #include "./core/error/logger.h"
 
+
 namespace Raydiance
 {
 	namespace Graphics
 	{
-		// Enables the debug layer depending on this structure
-		enum class RHI_DebugMode : uint8
+		// Enables the debug layer depending on this structure.
+		enum class RHI_DebugMode : uint32
 		{
 			RHI_DEBUG_MODE_INVALID    = 0x00,
 			RHI_DEBUG_MODE_ALWAYS	  = 0x01,

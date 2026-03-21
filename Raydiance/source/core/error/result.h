@@ -3,7 +3,7 @@
 
 namespace Raydiance
 {
-	enum class Result : uint8
+	enum class Result : uint32
 	{
 		RESULT_INVALID = 0x00,
 		RESULT_GOOD    = 0x01,
@@ -14,6 +14,6 @@ namespace Raydiance
 
 	inline bool CheckError(Result _result)
 	{
-		return ((uint8)_result & (uint8)Result::RESULT_ERROR) == (uint8)Result::RESULT_ERROR;
+		return ((uint32)_result & (uint32)Result::RESULT_ERROR) == (uint32)Result::RESULT_ERROR;
 	}
 }

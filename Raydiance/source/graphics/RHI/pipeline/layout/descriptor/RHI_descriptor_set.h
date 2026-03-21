@@ -6,7 +6,7 @@ namespace Raydiance
 	namespace Graphics
 	{
 		class RHI_Texture2D;
-		class RHI_Sampler2D;
+		class RHI_Sampler;
 		class RHI_Buffer;
 		class RHI_DescriptorSet
 		{
@@ -15,7 +15,7 @@ namespace Raydiance
 			virtual ~RHI_DescriptorSet();
 
 			virtual void AllocateDescriptor(RHI_Buffer* _buffer, const uint32_t _bindingIndex, const uint32_t _arrayIndex) = 0;
-			virtual void AllocateDescriptor(RHI_Texture2D* _texture, RHI_Sampler2D* _sampler, const uint32_t _bindingIndex, const uint32_t _arrayIndex) = 0;
+			virtual void AllocateDescriptor(RHI_Texture2D* _texture, RHI_Sampler* _sampler, const uint32_t _bindingIndex, const uint32_t _arrayIndex) = 0;
 
 		protected:
 

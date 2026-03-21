@@ -8,7 +8,7 @@ namespace Raydiance
 {
 	namespace Graphics
 	{
-		enum class RHI_BufferUsageFlag : uint8
+		enum class RHI_BufferUsageFlag : uint32
 		{
 			RHI_BUFFER_USAGE_FLAG_INVALID		   = 0x00,
 			RHI_BUFFER_USAGE_FLAG_VERTEX_BUFFER    = 0x01,

@@ -18,7 +18,7 @@
 
 #include "./graphics/RHI_api/vk/resource/buffer/RHI_VK_buffer.h"
 #include "./graphics/RHI_api/vk/resource/shader/RHI_VK_shader.h"
-#include "./graphics/RHI_api/vk/resource/sampler/RHI_VK_sampler2D.h"
+#include "./graphics/RHI_api/vk/resource/sampler/RHI_VK_sampler.h"
 #include "./graphics/RHI_api/vk/resource/texture/RHI_VK_texture2D.h"
 
 #include "./graphics/RHI_api/vk/RHI_VK_adapter.h"
@@ -376,9 +376,9 @@ namespace Raydiance
             return texture;
         }
 
-        RHI_Sampler2D* RHI_VK_RenderDevice::CreateSampler2D(const RHI_Sampler2DDescriptor* _sampler2DDescripotr)
+        RHI_Sampler* RHI_VK_RenderDevice::CreateSampler(const RHI_SamplerDescriptor& _sampler2DDescripotr)
         {
-            RHI_VK_Sampler2D* sampler = new RHI_VK_Sampler2D(this, _sampler2DDescripotr);
+            RHI_VK_Sampler* sampler = new RHI_VK_Sampler(*this, _sampler2DDescripotr);
             return sampler;
         }
 

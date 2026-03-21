@@ -1,10 +1,5 @@
 #pragma once
 #include <stdint.h>
-#include <string>
-#include <vector>
-
-#include <map>
-#include <unordered_map>
 
 typedef uint8_t  uint8;
 typedef int8_t   int8;

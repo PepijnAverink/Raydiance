@@ -47,8 +47,8 @@ namespace Raydiance
 		class RHI_ShaderDescriptor;
 		class RHI_Texture2D;
 		class RHI_Texture2DDescriptor;
-		class RHI_Sampler2D;
-		class RHI_Sampler2DDescriptor;
+		class RHI_Sampler;
+		class RHI_SamplerDescriptor;
 		class RHI_RenderDevice
 		{
 		public:
@@ -85,21 +85,21 @@ namespace Raydiance
 			[[nodiscard]] virtual std::shared_ptr<RHI_CommandPool>   CreateCommandPool   (const RHI_CommandPoolDescriptor&   _commandPoolDescriptor)   = 0;
 			[[nodiscard]] virtual std::shared_ptr<RHI_CommandBuffer> CreateCommandBuffer (const RHI_CommandBufferDescriptor& _commandBufferDescriptor) = 0;
 			[[nodiscard]] virtual std::shared_ptr<RHI_CommandQueue>  CreateCommandQueue  (const RHI_CommandQueueDescriptor&  _commandQueueDescriptor)  = 0;
+			
 			[[nodiscard]] virtual std::shared_ptr<RHI_Swapchain>     CreateSwapchain     (const RHI_CommandQueue&		     _commandQueue, const RHI_SwapchainDescriptor& _swapchainDescriptor) = 0;
 			[[nodiscard]] virtual std::shared_ptr<RHI_FenceCPU>      CreateFenceCPU      (const RHI_FenceCPUDescriptor&      _fenceDescriptor) = 0;
 
-			virtual RHI_GraphicsPipeline* CreateGraphicsPipeline(const RHI_GraphicsPipelineDescriptor* _graphicsPipelineDescriptor) = 0;
-			virtual RHI_InputLayout* CreateInputLayout(const RHI_InputLayoutDescriptor* _inputLayoutDescriptor) = 0;
-			virtual RHI_RenderPass* CreateRenderPass(const RHI_RenderPassDescriptor* _renderPassDescriptor) = 0;
-			virtual RHI_FrameBuffer* CreateFrameBuffer(const RHI_FrameBufferDescriptor* _frameBufferDescriptor) = 0;
+			[[nodiscard]] virtual RHI_GraphicsPipeline* CreateGraphicsPipeline(const RHI_GraphicsPipelineDescriptor* _graphicsPipelineDescriptor) = 0;
+			[[nodiscard]] virtual RHI_InputLayout* CreateInputLayout(const RHI_InputLayoutDescriptor* _inputLayoutDescriptor) = 0;
+			[[nodiscard]] virtual RHI_RenderPass* CreateRenderPass(const RHI_RenderPassDescriptor* _renderPassDescriptor) = 0;
+			[[nodiscard]] virtual RHI_FrameBuffer* CreateFrameBuffer(const RHI_FrameBufferDescriptor* _frameBufferDescriptor) = 0;
 
-			virtual RHI_DescriptorPool* CreateDescriptorPool(const RHI_DescriptorPoolDescriptor* _descriptorPoolDescriptor) = 0;
+			[[nodiscard]] virtual RHI_DescriptorPool* CreateDescriptorPool(const RHI_DescriptorPoolDescriptor* _descriptorPoolDescriptor) = 0;
 
-			virtual RHI_Buffer* CreateBuffer(const RHI_BufferDescriptor* _bufferDescriptor) = 0;
-			virtual RHI_Shader* CreateShader(const RHI_ShaderDescriptor* _shaderDescriptor) = 0;
-
-			virtual RHI_Texture2D* CreateTexture2D(const RHI_Texture2DDescriptor* _texture2DDescriptor) = 0;
-			virtual RHI_Sampler2D* CreateSampler2D(const RHI_Sampler2DDescriptor* _sampler2DDescripotr) = 0;
+			[[nodiscard]] virtual RHI_Buffer* CreateBuffer(const RHI_BufferDescriptor* _bufferDescriptor) = 0;
+			[[nodiscard]] virtual RHI_Shader* CreateShader(const RHI_ShaderDescriptor* _shaderDescriptor) = 0;
+			[[nodiscard]] virtual RHI_Texture2D* CreateTexture2D(const RHI_Texture2DDescriptor* _texture2DDescriptor) = 0;
+			[[nodiscard]] virtual RHI_Sampler* CreateSampler(const RHI_SamplerDescriptor& _sampler2DDescripotr) = 0;
 
 
 		protected:

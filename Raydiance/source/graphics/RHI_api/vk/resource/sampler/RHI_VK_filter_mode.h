@@ -18,7 +18,7 @@ namespace Raydiance
 				return VK_FILTER_NEAREST;
 			}
 
-			Logger::Log("VK_ERROR - Failed to resolve FilterMode: " + _mode, LogType::LOG_TYPE_ERROR);
+			Logger::Log(std::format("Failed to resolve FilterMode: {}", RHI_FilterModeToString(_mode)), LogType::LOG_TYPE_ERROR);
 			return VK_FILTER_NEAREST;
 		}
 	}

@@ -6,7 +6,7 @@ namespace Raydiance
 {
 	namespace Graphics
 	{
-		enum class RHI_CommandQueueType : uint8
+		enum class RHI_CommandQueueType : uint32
 		{
 			RHI_COMMAND_QUEUE_TYPE_INVALID  = 0x00,
 			RHI_COMMAND_QUEUE_TYPE_GRAPHICS = 0x01,

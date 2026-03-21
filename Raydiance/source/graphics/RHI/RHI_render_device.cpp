@@ -1,7 +1,3 @@
-//#include "./graphics/RHI/render_device.h"
-//#include "./graphics/RHI_api/vk/RHI_VK_render_device.h"
-//
-//#include "./core/error/logger.h"
 #include "./pch.h"
 
 #include "./core/error/assert.h"
@@ -10,9 +6,9 @@
 #include "./graphics/RHI/RHI_render_device.h"
 #include "./graphics/RHI_api/vk/RHI_VK_render_device.h"
 
+
 namespace Raydiance
 {
-
 	namespace Graphics
 	{
 		// Static instance

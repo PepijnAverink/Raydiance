@@ -207,10 +207,10 @@
     <ClInclude Include="source\graphics\RHI\resource\sampler\RHI_filter_mode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\resource\sampler\RHI_sampler2D.h">
+    <ClInclude Include="source\graphics\RHI\resource\sampler\RHI_sampler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\resource\sampler\RHI_sampler2D_descriptor.h">
+    <ClInclude Include="source\graphics\RHI\resource\sampler\RHI_sampler_descriptor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\graphics\RHI\resource\shader\RHI_shader.h">
@@ -315,7 +315,7 @@
     <ClInclude Include="source\graphics\RHI_api\vk\resource\sampler\RHI_VK_filter_mode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI_api\vk\resource\sampler\RHI_VK_sampler2D.h">
+    <ClInclude Include="source\graphics\RHI_api\vk\resource\sampler\RHI_VK_sampler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\graphics\RHI_api\vk\resource\shader\RHI_VK_shader.h">
@@ -429,6 +429,9 @@
     <ClInclude Include="source\graphics\RHI\pipeline\layout\RHI_input_flag.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\graphics\RHI\resource\sampler\RHI_compare_op.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\core\system\file_system.cpp">
@@ -476,7 +479,7 @@
     <ClCompile Include="source\graphics\RHI\resource\buffer\RHI_buffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\graphics\RHI\resource\sampler\RHI_sampler2D.cpp">
+    <ClCompile Include="source\graphics\RHI\resource\sampler\RHI_sampler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\graphics\RHI\resource\shader\RHI_shader.cpp">
@@ -524,7 +527,7 @@
     <ClCompile Include="source\graphics\RHI_api\vk\resource\buffer\RHI_VK_buffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\graphics\RHI_api\vk\resource\sampler\RHI_VK_sampler2D.cpp">
+    <ClCompile Include="source\graphics\RHI_api\vk\resource\sampler\RHI_VK_sampler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\graphics\RHI_api\vk\resource\shader\RHI_VK_shader.cpp">

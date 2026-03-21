@@ -30,7 +30,7 @@ private:
 
 	std::vector<Raydiance::Graphics::RHI_FrameBuffer*> m_FrameBuffers;
 
-	Raydiance::Graphics::RHI_Sampler2D* m_Sampler = nullptr;
+	Raydiance::Graphics::RHI_Sampler* m_Sampler = nullptr;
 	Raydiance::Graphics::RHI_Texture2D* m_Texture = nullptr;
 
 	Raydiance::Graphics::RHI_DescriptorPool* m_DescriptorPool = nullptr;

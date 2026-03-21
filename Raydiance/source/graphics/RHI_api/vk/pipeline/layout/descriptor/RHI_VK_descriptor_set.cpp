@@ -9,8 +9,8 @@
 #include "./graphics/RHI_api/vk/resource/buffer/RHI_VK_buffer.h"
 #include "./graphics/RHI_api/vk/resource/buffer/RHI_VK_buffer_usage.h"
 
+#include "./graphics/RHI_api/vk/resource/sampler/RHI_VK_sampler.h"
 #include "./graphics/RHI_api/vk/resource/texture/RHI_VK_texture2D.h"
-#include "./graphics/RHI_api/vk/resource/sampler/RHI_VK_sampler2D.h"
 
 
 namespace Raydiance
@@ -59,12 +59,12 @@ namespace Raydiance
 			vkUpdateDescriptorSets(static_cast<RHI_VK_RenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), 1, &descriptorWrite, 0, nullptr);
 		}
 
-		void RHI_VK_DescriptorSet::AllocateDescriptor(RHI_Texture2D* _texture, RHI_Sampler2D* _sampler, const uint32_t _bindingIndex, const uint32_t _arrayIndex)
+		void RHI_VK_DescriptorSet::AllocateDescriptor(RHI_Texture2D* _texture, RHI_Sampler* _sampler, const uint32_t _bindingIndex, const uint32_t _arrayIndex)
 		{
 			VkDescriptorImageInfo imageInfo{};
 			imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 			imageInfo.imageView = ((RHI_VK_Texture2D*)_texture)->GetVKTextureView();
-			imageInfo.sampler = ((RHI_VK_Sampler2D*)_sampler)->GetVKSampler();
+			imageInfo.sampler = ((RHI_VK_Sampler*)_sampler)->GetVKSampler();
 
 			VkWriteDescriptorSet descriptorWrite{};
 			descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
