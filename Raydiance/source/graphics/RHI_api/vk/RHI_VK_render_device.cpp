@@ -2,9 +2,9 @@
 #include "./graphics/RHI_api/vk/RHI_VK_render_device.h"
 
 // Graphics includes
-#include "./graphics/RHI_api/vk/object/command/vk_command_pool.h"
-#include "./graphics/RHI_api/vk/object/command/vk_command_buffer.h"
-#include "./graphics/RHI_api/vk/object/command/vk_command_queue.h"
+#include "./graphics/RHI_api/vk/object/command/RHI_VK_command_pool.h"
+#include "./graphics/RHI_api/vk/object/command/RHI_VK_command_buffer.h"
+#include "./graphics/RHI_api/vk/object/command/RHI_VK_command_queue.h"
 #include "./graphics/RHI_api/vk/object/swapchain/RHI_VK_swapchain.h"
 #include "./graphics/RHI_api/vk/object/sync/RHI_VK_fenceCPU.h"
 

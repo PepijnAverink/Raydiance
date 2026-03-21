@@ -5,7 +5,7 @@
 #include "./graphics/RHI_api/vk/RHI_VK_adapter.h"
 
 #include "./graphics/RHI_api/vk/object/sync/RHI_VK_fenceCPU.h"
-#include "./graphics/RHI_api/vk/object/command/vk_command_queue.h"
+#include "./graphics/RHI_api/vk/object/command/RHI_VK_command_queue.h"
 
 #include "./graphics/RHI_api/vk/resource/vk_resource_format.h"
 #include "./graphics/RHI_api/vk/resource/texture/vk_texture2D.h"

@@ -236,7 +236,6 @@
     <ClInclude Include="source\graphics\RHI\resource\resource_format.h" />
     <ClInclude Include="source\graphics\RHI\resource\resource_memory_type.h" />
     <ClInclude Include="source\graphics\RHI\resource\resource_state.h" />
-    <ClInclude Include="source\graphics\RHI\resource\resource_type.h" />
     <ClInclude Include="source\graphics\RHI\resource\sampler\address_mode.h" />
     <ClInclude Include="source\graphics\RHI\resource\sampler\filter_mode.h" />
     <ClInclude Include="source\graphics\RHI\resource\sampler\sampler2D.h" />

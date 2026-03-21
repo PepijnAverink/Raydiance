@@ -105,7 +105,6 @@
 
 
 #include "graphics/RHI/resource/resource_state.h"
-#include "graphics/RHI/resource/resource_type.h"
 
 #include "graphics/RHI/resource/shader/shader_type.h"
 

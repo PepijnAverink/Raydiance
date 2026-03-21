@@ -240,9 +240,6 @@
     <ClInclude Include="source\graphics\RHI\resource\resource_state.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\resource\resource_type.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="source\graphics\RHI\RHI_debug_mode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
