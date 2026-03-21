@@ -7,7 +7,7 @@ namespace Raydiance
 	{
 		RHI_Buffer::RHI_Buffer(const RHI_BufferDescriptor* _bufferDescriptor)
 			: m_Size(_bufferDescriptor->Size)
-			, m_Usage(_bufferDescriptor->Usage)
+			, m_UsageFlags(_bufferDescriptor->UsageFlags)
 			, m_Layout(_bufferDescriptor->BufferLayout)
 		{ }
 

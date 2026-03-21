@@ -122,8 +122,8 @@ void DefaultRenderer::OnInitialize(Raydiance::Graphics::RendererBackend* _backen
     // Create texture
 // ----------------------------------------------------------------------------
     RHI_Texture2DDescriptor texture2DDesc = {};
-    texture2DDesc.Name = "TestTexture2D";
-    texture2DDesc.Width = 16;
+    texture2DDesc.Name   = "TestTexture2D";
+    texture2DDesc.Width  = 16;
     texture2DDesc.Height = 16;
     texture2DDesc.Format = RHI_ResourceFormat::RHI_RESOURCE_FORMAT_B8G8R8A8_SRGB;
     texture2DDesc.State  = RHI_ResourceState::RHI_RESOURCE_STATE_GENERAL_WRITE;
@@ -152,7 +152,7 @@ void DefaultRenderer::OnInitialize(Raydiance::Graphics::RendererBackend* _backen
     bufferDesc.Name = "Generated-IndexStagingBuffer";
     bufferDesc.Size = sizeof(char) * 4 * 16 * 16;
     bufferDesc.MemoryType = RHI_ResourceMemoryType::RHI_RESOURCE_MEMORY_TYPE_CPU_MEMORY;
-    bufferDesc.Usage = RHI_BufferUsage::RHI_BUFFER_USAGE_STAGING_BUFFER;
+    bufferDesc.UsageFlags = static_cast<uint32>(RHI_BufferUsageFlag::RHI_BUFFER_USAGE_FLAG_STAGING_BUFFER);
     bufferDesc.Data = data.data();
     bufferDesc.BufferLayout = RHI_BufferLayout({ { "TBUFFER",  Raydiance::Graphics::RHI_ResourceFormat::RHI_RESOURCE_FORMAT_B8G8R8A8_SRGB }, });
 

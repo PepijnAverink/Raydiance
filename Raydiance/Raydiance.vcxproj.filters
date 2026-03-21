@@ -198,7 +198,7 @@
     <ClInclude Include="source\graphics\RHI\resource\buffer\RHI_buffer_descriptor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\resource\buffer\RHI_buffer_usage.h">
+    <ClInclude Include="source\graphics\RHI\resource\buffer\RHI_buffer_usage_flag.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\graphics\RHI\resource\sampler\RHI_address_mode.h">
@@ -421,6 +421,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\core\memory\allocator\debug_allocator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\graphics\RHI_api\vk\pipeline\layout\descriptor\RHI_VK_descriptor_type.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\graphics\RHI\pipeline\layout\RHI_input_flag.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

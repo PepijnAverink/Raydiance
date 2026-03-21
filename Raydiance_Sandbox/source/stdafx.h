@@ -101,7 +101,7 @@
 #include "graphics/RHI/resource/RHI_resource_memory_type.h"
 #include "graphics/RHI/resource/buffer/RHI_buffer.h"
 #include "graphics/RHI/resource/buffer/RHI_buffer_descriptor.h"
-#include "graphics/RHI/resource/buffer/RHI_buffer_usage.h"
+#include "graphics/RHI/resource/buffer/RHI_buffer_usage_flag.h"
 
 
 #include "graphics/RHI/resource/RHI_resource_state.h"

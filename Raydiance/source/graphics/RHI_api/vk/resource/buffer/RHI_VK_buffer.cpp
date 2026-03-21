@@ -21,7 +21,7 @@ namespace Raydiance
 			VkBufferCreateInfo bufferInfo{};
 			bufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
 			bufferInfo.size = _bufferDescriptor->Size;
-			bufferInfo.usage = ResolveRHI_VK_BufferUsage(_bufferDescriptor->Usage);
+			bufferInfo.usage = ResolveRHI_VK_BufferUsage(_bufferDescriptor->UsageFlags);
 			bufferInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 
 			if (vkCreateBuffer(_renderDevice->GetDevice(), &bufferInfo, nullptr, &m_BufferObj) != VK_SUCCESS)

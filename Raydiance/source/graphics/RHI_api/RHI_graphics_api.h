@@ -1,17 +1,21 @@
 #pragma once
+// Core includes
 #include "./core/error/logger.h"
+#include "./core/container/types.h"
+
 
 namespace Raydiance
 {
 	namespace Graphics
 	{
-		enum class RHI_GraphicsAPI
+		enum class RHI_GraphicsAPI : uint8
 		{
 			RHI_GRAPHICS_API_INVALID = 0x00,
 			RHI_GRAPHICS_API_VULKAN  = 0x01,
 		};
 
-		[[nodiscard]] // TODO:: Implement string_view.
+
+		[[nodiscard]]
 		inline constexpr std::string_view RHI_GraphicsApiToString(RHI_GraphicsAPI _api) noexcept
 		{
 			switch (_api)

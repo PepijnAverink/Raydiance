@@ -4,6 +4,8 @@
 // Graphics includes
 #include "./graphics/RHI_api/vk/pipeline/layout/RHI_VK_input_layout.h"
 
+#include "./graphics/RHI_api/vk/pipeline/layout/descriptor/RHI_VK_descriptor_type.h"
+
 #include "./graphics/RHI_api/vk/resource/buffer/RHI_VK_buffer.h"
 #include "./graphics/RHI_api/vk/resource/buffer/RHI_VK_buffer_usage.h"
 
@@ -44,14 +46,14 @@ namespace Raydiance
 			bufferInfo.range = _buffer->GetSize();
 
 			VkWriteDescriptorSet descriptorWrite{};
-			descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-			descriptorWrite.dstSet = m_DescriptorSetObj;
-			descriptorWrite.dstBinding = _bindingIndex;
-			descriptorWrite.dstArrayElement = _arrayIndex;
-			descriptorWrite.descriptorType = ResolveVKDescriptorType(_buffer->GetUsage());
-			descriptorWrite.descriptorCount = 1;
-			descriptorWrite.pBufferInfo = &bufferInfo;
-			descriptorWrite.pImageInfo = nullptr; // Optional
+			descriptorWrite.sType			 = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+			descriptorWrite.dstSet			 = m_DescriptorSetObj;
+			descriptorWrite.dstBinding		 = _bindingIndex;
+			descriptorWrite.dstArrayElement  = _arrayIndex;
+			descriptorWrite.descriptorType   = ResolveVKDescriptorType(_buffer->GetUsageFlags());
+			descriptorWrite.descriptorCount  = 1;
+			descriptorWrite.pBufferInfo      = &bufferInfo;
+			descriptorWrite.pImageInfo       = nullptr; // Optional
 			descriptorWrite.pTexelBufferView = nullptr; // Optional
 
 			vkUpdateDescriptorSets(static_cast<RHI_VK_RenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), 1, &descriptorWrite, 0, nullptr);

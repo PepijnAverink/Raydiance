@@ -24,8 +24,8 @@ namespace Raydiance
             bufferDesc.Name = "Generated-VertexStagingBuffer";
             bufferDesc.Size = _size;
             bufferDesc.MemoryType = RHI_ResourceMemoryType::RHI_RESOURCE_MEMORY_TYPE_CPU_MEMORY;
-            bufferDesc.Usage = RHI_BufferUsage::RHI_BUFFER_USAGE_STAGING_BUFFER;
-            bufferDesc.Data = _data;
+            bufferDesc.UsageFlags = static_cast<uint32>(RHI_BufferUsageFlag::RHI_BUFFER_USAGE_FLAG_STAGING_BUFFER);
+            bufferDesc.Data       = _data;
             bufferDesc.BufferLayout = _layout;
 
             RHI_Buffer* stagingBuffer = RHI_RenderDevice::Get().CreateBuffer(&bufferDesc);
@@ -34,7 +34,7 @@ namespace Raydiance
             bufferDesc.Name = "Generated-VertexBuffer";
             bufferDesc.Size = _size;
             bufferDesc.MemoryType = RHI_ResourceMemoryType::RHI_RESOURCE_MEMORY_TYPE_GPU_MEMORY;
-            bufferDesc.Usage = RHI_BufferUsage::RHI_BUFFER_USAGE_VERTEX_BUFFER;
+            bufferDesc.UsageFlags = static_cast<uint32>(RHI_BufferUsageFlag::RHI_BUFFER_USAGE_FLAG_VERTEX_BUFFER);
             bufferDesc.Data = nullptr;
             bufferDesc.BufferLayout = _layout;
 
@@ -57,7 +57,7 @@ namespace Raydiance
             bufferDesc.Name = "Generated-IndexStagingBuffer";
             bufferDesc.Size = _size;
             bufferDesc.MemoryType = RHI_ResourceMemoryType::RHI_RESOURCE_MEMORY_TYPE_CPU_MEMORY;
-            bufferDesc.Usage = RHI_BufferUsage::RHI_BUFFER_USAGE_STAGING_BUFFER;
+            bufferDesc.UsageFlags = static_cast<uint32>(RHI_BufferUsageFlag::RHI_BUFFER_USAGE_FLAG_STAGING_BUFFER);
             bufferDesc.Data = _data;
             bufferDesc.BufferLayout = _layout;
 
@@ -67,8 +67,8 @@ namespace Raydiance
             bufferDesc.Name = "Generated-IndexBuffer";
             bufferDesc.Size = _size;
             bufferDesc.MemoryType = RHI_ResourceMemoryType::RHI_RESOURCE_MEMORY_TYPE_GPU_MEMORY;
-            bufferDesc.Usage = RHI_BufferUsage::RHI_BUFFER_USAGE_INDEX_BUFFER;
-            bufferDesc.Data = nullptr;
+            bufferDesc.UsageFlags = static_cast<uint32>(RHI_BufferUsageFlag::RHI_BUFFER_USAGE_FLAG_INDEX_BUFFER);
+            bufferDesc.Data       = nullptr;
             bufferDesc.BufferLayout = _layout;
 
             m_IndexBuffer = RHI_RenderDevice::Get().CreateBuffer(&bufferDesc);

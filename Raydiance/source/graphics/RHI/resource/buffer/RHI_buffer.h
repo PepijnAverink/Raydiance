@@ -14,14 +14,19 @@ namespace Raydiance
 
 			virtual void SetData(void* _data, const uint32_t _size) = 0;
 
-			inline uint32_t GetSize() const { return m_Size; }
-			inline RHI_BufferUsage GetUsage() const { return m_Usage; }
+			[[nodiscard]] inline uint32 GetSize() const noexcept { return m_Size; }
 			inline const RHI_BufferLayout& GetBufferLayout() const { return m_Layout; }
 
-		protected:
-			uint32       m_Size;
+			// Flag functions
+			[[nodiscard]] inline uint32 GetUsageFlags() const noexcept 
+				{ return m_UsageFlags; }
+			[[nodiscard]] inline bool   CheckUsageFlags(const RHI_BufferUsageFlag _flag) const noexcept 
+				{ return (m_UsageFlags&static_cast<uint32>(_flag)); }
 
-			RHI_BufferUsage  m_Usage;
+		protected:
+			uint32			 m_Size;
+
+			uint32			 m_UsageFlags;
 			RHI_BufferLayout m_Layout;
 		};
 	}
