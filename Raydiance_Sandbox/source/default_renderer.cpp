@@ -169,11 +169,14 @@ void DefaultRenderer::OnInitialize(Raydiance::Graphics::RendererBackend* _backen
     delete buffer;
 
     RHI_SamplerDescriptor samplerDesc;
-    samplerDesc.Name     = "Sampler";
-    samplerDesc.Filter   = RHI_FilterMode::RHI_FILTER_MODE_NEAREST;
-    samplerDesc.AddressU = RHI_AddressMode::RHI_ADDRESS_MODE_REPEAT;
-    samplerDesc.AddressV = RHI_AddressMode::RHI_ADDRESS_MODE_REPEAT;
-    samplerDesc.AddressW = RHI_AddressMode::RHI_ADDRESS_MODE_REPEAT;
+    samplerDesc.Name      = "Sampler";
+    samplerDesc.CompareOp = RHI_CompareOp::RHI_COMPARE_OP_ALWAYS;
+    samplerDesc.MinFilter = RHI_FilterMode::RHI_FILTER_MODE_NEAREST;
+    samplerDesc.MagFilter = RHI_FilterMode::RHI_FILTER_MODE_NEAREST;
+    samplerDesc.MipFilter = RHI_FilterMode::RHI_FILTER_MODE_NEAREST;
+    samplerDesc.AddressU  = RHI_AddressMode::RHI_ADDRESS_MODE_REPEAT;
+    samplerDesc.AddressV  = RHI_AddressMode::RHI_ADDRESS_MODE_REPEAT;
+    samplerDesc.AddressW  = RHI_AddressMode::RHI_ADDRESS_MODE_REPEAT;
 
     m_Sampler = m_RendererBackend->GetRenderDevice().CreateSampler(samplerDesc);
 

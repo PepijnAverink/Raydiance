@@ -270,6 +270,7 @@
     <ClInclude Include="source\graphics\RHI_api\vk\resource\buffer\RHI_VK_buffer.h" />
     <ClInclude Include="source\graphics\RHI_api\vk\resource\buffer\RHI_VK_buffer_usage.h" />
     <ClInclude Include="source\graphics\RHI_api\vk\resource\sampler\RHI_VK_address_mode.h" />
+    <ClInclude Include="source\graphics\RHI_api\vk\resource\sampler\RHI_VK_compare_op.h" />
     <ClInclude Include="source\graphics\RHI_api\vk\resource\sampler\RHI_VK_filter_mode.h" />
     <ClInclude Include="source\graphics\RHI_api\vk\resource\sampler\RHI_VK_sampler.h" />
     <ClInclude Include="source\graphics\RHI_api\vk\resource\shader\RHI_VK_shader.h" />

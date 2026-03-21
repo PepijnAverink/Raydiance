@@ -9,8 +9,12 @@ namespace Raydiance
 		class RHI_VK_Sampler : public RHI_Sampler
 		{
 		public:
-			RHI_VK_Sampler(const RHI_VK_RenderDevice& _renderDevice, const RHI_SamplerDescriptor& _sampler2DDescriptor);
-			virtual ~RHI_VK_Sampler();
+			// Constructor and descructor
+			// ======================================
+			         RHI_VK_Sampler(void);
+			virtual ~RHI_VK_Sampler(void);
+
+			[[nodiscard]] const Result Initialize(const RHI_VK_RenderDevice& _renderDevice, const RHI_SamplerDescriptor& _samplerDescriptor);
 
 			inline VkSampler GetVKSampler() const { return m_SamplerObj; }
 

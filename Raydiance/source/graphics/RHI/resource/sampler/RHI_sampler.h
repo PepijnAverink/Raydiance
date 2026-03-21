@@ -31,7 +31,7 @@ namespace Raydiance
 		protected:
 			// Protected constructor and initialize(), user should not create base instance.
 			RHI_Sampler(void);
-			const Result Intiialize(const RHI_SamplerDescriptor& _samplerDescriptor);
+			const Result Initialize(const RHI_SamplerDescriptor& _samplerDescriptor);
 
 
 			// Raw stored data about the sampler

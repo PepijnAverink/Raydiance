@@ -16,6 +16,8 @@ namespace Raydiance
 
 			inline const VkPhysicalDevice GetPhysicalDevice() const { return m_PhysicalDevice; }
 
+			inline const VkPhysicalDeviceProperties& GetProperties() const { return m_Properties; }
+
 		private:
 			// The Vulkan physical device handle associated with this adapter.
 			VkPhysicalDevice				 m_PhysicalDevice = VK_NULL_HANDLE;

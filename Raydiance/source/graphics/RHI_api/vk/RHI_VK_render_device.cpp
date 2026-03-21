@@ -378,7 +378,18 @@ namespace Raydiance
 
         RHI_Sampler* RHI_VK_RenderDevice::CreateSampler(const RHI_SamplerDescriptor& _sampler2DDescripotr)
         {
-            RHI_VK_Sampler* sampler = new RHI_VK_Sampler(*this, _sampler2DDescripotr);
+            RHI_VK_Sampler* sampler = new RHI_VK_Sampler();
+            Result result = sampler->Initialize(*this, _sampler2DDescripotr);
+
+            // Error check
+            if (CheckError(result) == true)
+            {
+                // Log error
+                Logger::Log("Initialization of RHI_VK_Sampler failed.", LogType::LOG_TYPE_ERROR);
+                Logger::Log("No further evidence what went wrong, please see earlier logs.", LogType::LOG_TYPE_ERROR);
+                return nullptr;
+            }
+
             return sampler;
         }
 
