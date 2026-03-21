@@ -239,17 +239,17 @@ void DefaultRenderer::BeginScene(Raydiance::Graphics::Camera* _camera)
     RHI_ViewPort viewPort;
     viewPort.X        = 0.0f;
     viewPort.Y        = 0.0f;
-    viewPort.Width    = RendererBackend::GetClientWidth();
-    viewPort.Height   = RendererBackend::GetClientHeight();
+    viewPort.Width    = static_cast<float>(RendererBackend::GetClientWidth());
+    viewPort.Height   = static_cast<float>(RendererBackend::GetClientHeight());
     viewPort.MinDepth = 0.0f;
     viewPort.MaxDepth = 1.0f;
 
     // ScissorRect
     RHI_ScissorRect scissorRect;
-    scissorRect.X = 0;
-    scissorRect.Y = 0;
-    scissorRect.Width = RendererBackend::GetClientWidth();
-    scissorRect.Height = RendererBackend::GetClientHeight();
+    scissorRect.X      = 0;
+    scissorRect.Y      = 0;
+    scissorRect.Width  = static_cast<float>(RendererBackend::GetClientWidth());
+    scissorRect.Height = static_cast<float>(RendererBackend::GetClientHeight());
 
 
     // Retreives the current index of the swapchain buffer

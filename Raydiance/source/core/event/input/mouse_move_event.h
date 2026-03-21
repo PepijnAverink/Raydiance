@@ -48,5 +48,5 @@ public:
 
 private:
 	int m_X, m_Y;
-	State m_State;
+	State m_State = State::NONE;
 };

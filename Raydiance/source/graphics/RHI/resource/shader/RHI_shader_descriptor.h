@@ -13,8 +13,8 @@ namespace Raydiance
 		public:
 			RHI_ShaderDescriptor() = default;
 
-			std::string  Name;
-			RHI_ShaderType   Type;
+			std::string    Name;
+			RHI_ShaderType Type = RHI_ShaderType::RHI_SHADER_TYPE_INVALID;
 
 			std::string Filepath;
 			std::string EntryPoint;

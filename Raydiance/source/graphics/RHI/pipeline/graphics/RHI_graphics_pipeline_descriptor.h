@@ -36,14 +36,14 @@ namespace Raydiance
 			RHI_WindingOrder WindingOrder = RHI_WindingOrder::RHI_WINDING_ORDER_INVALID;
 
 			// Viewport
-			uint32_t	Width;
-			uint32_t	Height;
+			uint32_t	Width		= 0;
+			uint32_t	Height		= 0;
 			RHI_ViewPort    ViewPort;
 			RHI_ScissorRect ScissorRect;
 
 			// Shaders
 			RHI_Shader* VertexShader = nullptr;
-			RHI_Shader* PixelShader = nullptr;
+			RHI_Shader* PixelShader  = nullptr;
 
 			// RenderPass
 			RHI_RenderPass* RenderPass = nullptr;

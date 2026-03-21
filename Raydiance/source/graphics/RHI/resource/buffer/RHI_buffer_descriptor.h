@@ -19,7 +19,7 @@ namespace Raydiance
 			std::string		 Name;
 
 			void*			 Data = nullptr;
-			uint32_t		 Size;
+			uint32   		 Size;
 			RHI_BufferLayout BufferLayout;
 
 			uint32			 UsageFlags = 0;

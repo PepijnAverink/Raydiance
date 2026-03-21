@@ -13,8 +13,8 @@ namespace Raydiance
 		public:
 			RHI_CommandBufferDescriptor() = default;
 
-			std::string        Name;
-			RHI_CommandBufferType  Type;
+			std::string			   Name;
+			RHI_CommandBufferType  Type = RHI_CommandBufferType::RHI_COMMAND_BUFFER_TYPE_INVALID;
 			const RHI_CommandPool* CommandPool = nullptr;
 		};
 	}

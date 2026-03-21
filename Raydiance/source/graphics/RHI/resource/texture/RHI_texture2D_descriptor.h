@@ -14,8 +14,8 @@ namespace Raydiance
 			RHI_Texture2DDescriptor() = default;
 
 			std::string Name;
-			uint32_t Width;
-			uint32_t Height;
+			uint32 Width = 0;
+			uint32 Height = 0;
 
 			RHI_ResourceFormat Format = RHI_ResourceFormat::RHI_RESOURCE_FORMAT_INVALID;
 			RHI_ResourceState State   = RHI_ResourceState::RHI_RESOURCE_STATE_INVALID;

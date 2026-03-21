@@ -14,8 +14,8 @@ namespace Raydiance
 			RHI_FrameBufferDescriptor() = default;
 
 			std::string Name;
-			uint32_t    Width;
-			uint32_t    Height;
+			uint32_t    Width	= 0;
+			uint32_t    Height  = 0;
 
 			bool	    Contigious = false;
 			std::vector<RHI_FrameBufferAttachment> Attachments;

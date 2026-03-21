@@ -14,10 +14,10 @@ namespace Raydiance
 			RHI_Sampler2DDescriptor() = default;
 
 			std::string Name;
-			RHI_FilterMode  Filter;
-			RHI_AddressMode AddressU;
-			RHI_AddressMode AddressV;
-			RHI_AddressMode AddressW;
+			RHI_FilterMode  Filter   = RHI_FilterMode::RHI_FILTER_MODE_INVALID;
+			RHI_AddressMode AddressU = RHI_AddressMode::RHI_ADDRESS_MODE_INVALID;
+			RHI_AddressMode AddressV = RHI_AddressMode::RHI_ADDRESS_MODE_INVALID;
+			RHI_AddressMode AddressW = RHI_AddressMode::RHI_ADDRESS_MODE_INVALID;
 		};
 	}
 }

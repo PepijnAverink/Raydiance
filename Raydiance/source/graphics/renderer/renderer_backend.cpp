@@ -90,7 +90,7 @@ namespace Raydiance
 			RHI_RenderDevice::Get().GetAdapterCount(adapterCount);
 			{
 				std::unique_ptr<RHI_Adapter> activeAdapter;
-				for (int i = 0; i < adapterCount; i++)
+				for (uint32 i = 0; i < adapterCount; i++)
 				{
 					std::unique_ptr<RHI_Adapter> tempAdapter;
 					RHI_RenderDevice::Get().GetAdapter(i, tempAdapter);

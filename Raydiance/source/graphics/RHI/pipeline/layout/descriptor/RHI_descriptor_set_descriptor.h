@@ -11,10 +11,10 @@ namespace Raydiance
 		public:
 			RHI_DescriptorSetDescriptor() = default;
 
-			std::string		Name;
+			std::string		 Name;
 
-			RHI_InputLayout* InputLayout;
-			uint32_t        SetIndex;
+			RHI_InputLayout* InputLayout = nullptr;
+			uint32           SetIndex	 = 0;
 		};
 	}
 }
