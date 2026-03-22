@@ -10,8 +10,9 @@ namespace Raydiance
 	{
 		enum class RHI_GraphicsAPI : uint32
 		{
-			RHI_GRAPHICS_API_INVALID = 0x00,
-			RHI_GRAPHICS_API_VULKAN  = 0x01,
+			RHI_GRAPHICS_API_INVALID   = 0x00,
+			RHI_GRAPHICS_API_VULKAN    = 0x01,
+			RHI_GRAPHICS_API_DIRECTX12 = 0x02,
 		};
 
 
