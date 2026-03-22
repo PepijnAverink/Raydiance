@@ -169,7 +169,7 @@ void DefaultRenderer::OnInitialize(Raydiance::Graphics::RendererBackend* _backen
     delete buffer;
 
     RHI_SamplerDescriptor samplerDesc;
-    samplerDesc.Name      = "Sampler";
+    samplerDesc.DebugName = "Sampler";
     samplerDesc.CompareOp = RHI_CompareOp::RHI_COMPARE_OP_ALWAYS;
     samplerDesc.MinFilter = RHI_FilterMode::RHI_FILTER_MODE_NEAREST;
     samplerDesc.MagFilter = RHI_FilterMode::RHI_FILTER_MODE_NEAREST;

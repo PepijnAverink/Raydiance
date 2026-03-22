@@ -65,8 +65,8 @@ namespace Raydiance
 			samplerInfo.compareOp				= ResolveVKCompareOp(_samplerDescriptor.CompareOp);
 			samplerInfo.mipmapMode				= VK_SAMPLER_MIPMAP_MODE_LINEAR;
 			samplerInfo.mipLodBias				= _samplerDescriptor.MipLodBias;
-			samplerInfo.minLod					= _samplerDescriptor.MinLOD;
-			samplerInfo.maxLod					= _samplerDescriptor.MaxLOD;
+			samplerInfo.minLod					= _samplerDescriptor.MinLod;
+			samplerInfo.maxLod					= _samplerDescriptor.MaxLod;
 
 			if (vkCreateSampler(_renderDevice.GetDevice(), &samplerInfo, nullptr, &m_SamplerObj) != VK_SUCCESS)
 			{
