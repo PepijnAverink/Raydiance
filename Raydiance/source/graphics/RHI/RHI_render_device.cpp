@@ -5,6 +5,7 @@
 // Graphics includes
 #include "./graphics/RHI/RHI_render_device.h"
 #include "./graphics/RHI_api/vk/RHI_VK_render_device.h"
+#include "./graphics/RHI_api/dx12/RHI_DX12_render_device.h"
 
 
 namespace Raydiance
@@ -16,10 +17,20 @@ namespace Raydiance
 
 		Result RHI_RenderDevice::Create(RHI_GraphicsAPI _api)
 		{
-			if (s_RenderDevice == nullptr)
+			// Check for an already existing device
+			if (s_RenderDevice != nullptr)
+			{
+				Logger::Log("Cannot create a new RHI_RenderDevice object while the old device is still active.", LogType::LOG_TYPE_ERROR);
+				return Result::RESULT_ERROR;
+			}
+
 			// VULKAN-API
 			if (_api == RHI_GraphicsAPI::RHI_GRAPHICS_API_VULKAN)
 				s_RenderDevice = std::make_shared<RHI_VK_RenderDevice>();
+			// DIRECTX12-API
+			if (_api == RHI_GraphicsAPI::RHI_GRAPHICS_API_DIRECTX12)
+				s_RenderDevice = std::make_shared<RHI_DX12_RenderDevice>();
+
 
 			// Return
 			if (s_RenderDevice != nullptr)
@@ -72,16 +83,16 @@ namespace Raydiance
 			switch (m_DebugMode)
 			{
 			case RHI_DebugMode::RHI_DEBUG_MODE_ALWAYS:
-				m_DebugEnabled = true;
+				m_DebugModeEnabled = true;
 				break;
 			case RHI_DebugMode::RHI_DEBUG_MODE_NEVER:
-				m_DebugEnabled = false;
+				m_DebugModeEnabled = false;
 				break;
 			case RHI_DebugMode::RHI_DEBUG_MODE_DEBUG_ONLY:
 #if defined(_DEBUG)
-				m_DebugEnabled = true;
+				m_DebugModeEnabled = true;
 #else
-				m_DebugEnabled = false;
+				m_DebugModeEnabled = false;
 #endif
 				break;
 			}

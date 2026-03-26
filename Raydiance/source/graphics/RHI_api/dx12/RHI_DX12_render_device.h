@@ -2,6 +2,10 @@
 // Parant class include
 #include "./graphics/RHI/RHI_render_device.h"
 
+#include <d3d12.h>
+#include <dxgi.h>
+#include <dxgi1_3.h>
+
 namespace Raydiance
 {
 	namespace Graphics
@@ -42,6 +46,10 @@ namespace Raydiance
 
 			[[nodiscard]] virtual RHI_Sampler*			CreateSampler(const RHI_SamplerDescriptor& _sampler2DDescripotr) override;
 			[[nodiscard]] virtual RHI_Texture2D*		CreateTexture2D(const RHI_Texture2DDescriptor* _texture2DDescriptor) override;
+
+
+		private:
+			IDXGIFactory* m_Factory = nullptr;
 		};
 	}
 }

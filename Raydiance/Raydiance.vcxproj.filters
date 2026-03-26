@@ -444,6 +444,9 @@
     <ClInclude Include="source\graphics\RHI_api\dx12\RHI_DX12_render_device.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\graphics\RHI_api\dx12\RHI_DX12_adapter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\core\system\file_system.cpp">
@@ -591,6 +594,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\graphics\RHI_api\dx12\RHI_DX12_render_device.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\graphics\RHI_api\dx12\RHI_DX12_adapter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

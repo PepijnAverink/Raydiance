@@ -1,4 +1,11 @@
+#include "./pch.h"
 #include "./graphics/RHI_api/dx12/RHI_DX12_render_device.h"
+
+#include "./graphics/RHI_api/dx12/RHI_DX12_adapter.h"
+
+
+// Generic includes
+
 
 namespace Raydiance
 {
@@ -13,16 +20,93 @@ namespace Raydiance
 
 		Result RHI_DX12_RenderDevice::Initialize(const RHI_RenderDeviceDescriptor& _renderDeviceDescriptor)
 		{
+			// Object storing the result of all interal functions.
+			Result result = Result::RESULT_INVALID;
+
+			// Initialize the base class of the RHI_RenderDevice graphics object class,
+			// And error check the result.
+			// --------------------------------------------------------------------------
+			result = RHI_RenderDevice::Initialize(_renderDeviceDescriptor);
+			if (CheckError(result) == true)
+			{
+				// When result is RESULT_ERROR || RESULT_FATAL.
+				Logger::Log("Error while intitializing the base class of the 'RHI_RenderDevice' object.", LogType::LOG_TYPE_ERROR);
+				Logger::Log("No further evidence what went wrong, please see earlier logs.", LogType::LOG_TYPE_ERROR);
+				return result;
+			}
+
+			// ==========================================================================
+			// The actual D3D12 initialization follows
+			// ==========================================================================
+
+			// Create DXGI-factory object
+			UINT createFactoryFlags = (IsDebugModeEnabled() == true) ? DXGI_CREATE_FACTORY_DEBUG : 0;
+			CreateDXGIFactory2(createFactoryFlags, IID_PPV_ARGS(&m_Factory));
+
+			// Enabling debug mode if set
+			if (IsDebugModeEnabled() == true)
+			{
+				ID3D12Debug* pDx12Debug;
+				if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&pDx12Debug))))
+					pDx12Debug->EnableDebugLayer();
+			}
+
+			return result;
 			return Result::RESULT_GOOD;
 		}
+
 		Result RHI_DX12_RenderDevice::GetAdapterCount(uint32& _count) const
 		{
+			// Get the number of devices
+			if (m_Factory == nullptr)
+			{
+				Logger::Log("IDXGIFactory == NULL, RHI_DX12_RenderDevice probably isn't initialized correctly.", LogType::LOG_TYPE_ERROR);
+				return Result::RESULT_ERROR;
+			}
+
+			_count = 0;
+			IDXGIAdapter* adapter = nullptr;
+			for (uint32_t i = 0; DXGI_ERROR_NOT_FOUND != m_Factory->EnumAdapters(i, &adapter); i++)
+			{
+				adapter->Release();
+				_count++;
+			}
+
 			return Result::RESULT_GOOD;
 		}
+
 		Result RHI_DX12_RenderDevice::GetAdapter(const uint32 _adapterID, std::unique_ptr<RHI_Adapter>& _adapter) const
 		{
+			// Get the number of devices
+			if (m_Factory == nullptr)
+			{
+				Logger::Log("IDXGIFactory == NULL, RHI_DX12_RenderDevice probably isn't initialized correctly.", LogType::LOG_TYPE_ERROR);
+				return Result::RESULT_ERROR;
+			}
+
+			// Query the number of adapters present in this device
+			uint32 count = 0;
+			GetAdapterCount(count);
+
+			// Error checking on the number of presen adapters
+			if (count <= _adapterID)
+			{
+				Logger::Log("The user queried a non-existing adapter, could not retrieve any information for the 'RHI_AdapterInfo' class.", LogType::LOG_TYPE_ERROR);
+				return Result::RESULT_ERROR;
+			}
+
+			ComPtr<IDXGIAdapter> adapter = nullptr;
+			if (m_Factory->EnumAdapters(_adapterID, adapter.GetAddressOf()) == DXGI_ERROR_NOT_FOUND)
+			{
+				printf("[Error] Adapter with index %i could not be found.", _adapterID);
+				return Result::RESULT_ERROR;
+			}
+
+			// Gather info about the specific adapter requested
+			_adapter = std::make_unique<RHI_DX12_Adapter>(adapter);
 			return Result::RESULT_GOOD;
 		}
+
 		Result RHI_DX12_RenderDevice::LinkAdapter(std::unique_ptr<RHI_Adapter> _adapter)
 		{
 			return Result::RESULT_GOOD;

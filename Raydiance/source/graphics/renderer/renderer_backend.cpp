@@ -75,7 +75,8 @@ namespace Raydiance
 			renderDeviceDesc.NativeWindowHandle = _window->GetWindowHandlePtr();
 
 
-			RHI_GraphicsAPI api = RHI_GraphicsAPI::RHI_GRAPHICS_API_VULKAN;
+			// RHI_GraphicsAPI api = RHI_GraphicsAPI::RHI_GRAPHICS_API_VULKAN;
+			RHI_GraphicsAPI api = RHI_GraphicsAPI::RHI_GRAPHICS_API_DIRECTX12;
 			Result res = RHI_RenderDevice::Create(api);
 			if (CheckError(res) == true)
 			{
