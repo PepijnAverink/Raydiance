@@ -41,7 +41,7 @@ namespace Raydiance
 
 			// Create DXGI-factory object
 			UINT createFactoryFlags = (IsDebugModeEnabled() == true) ? DXGI_CREATE_FACTORY_DEBUG : 0;
-			CreateDXGIFactory2(createFactoryFlags, IID_PPV_ARGS(&m_Factory));
+			CreateDXGIFactory2(createFactoryFlags, IID_PPV_ARGS(m_Factory.GetAddressOf()));
 
 			// Enabling debug mode if set
 			if (IsDebugModeEnabled() == true)
@@ -95,7 +95,7 @@ namespace Raydiance
 				return Result::RESULT_ERROR;
 			}
 
-			ComPtr<IDXGIAdapter> adapter = nullptr;
+			Microsoft::WRL::ComPtr<IDXGIAdapter> adapter = nullptr;
 			if (m_Factory->EnumAdapters(_adapterID, adapter.GetAddressOf()) == DXGI_ERROR_NOT_FOUND)
 			{
 				printf("[Error] Adapter with index %i could not be found.", _adapterID);
@@ -109,6 +109,20 @@ namespace Raydiance
 
 		Result RHI_DX12_RenderDevice::LinkAdapter(std::unique_ptr<RHI_Adapter> _adapter)
 		{
+			// Sets the active adapter
+			m_Adapter = std::move(_adapter);
+
+			// Cast the adapter to a vulkan specific adapter.
+			const RHI_DX12_Adapter* d3d12_adapter = static_cast<const RHI_DX12_Adapter*>(m_Adapter.get());
+
+
+			// Create the RenderDevice using the adapter specified by the user
+			if (D3D12CreateDevice((IDXGIAdapter1*)d3d12_adapter->GetPhysicalDevice().Get(), D3D_FEATURE_LEVEL_11_0, IID_PPV_ARGS(m_Device.GetAddressOf())) != S_OK)
+			{
+				printf("[Error] Failed to create D3D12Device.");
+				return Result::RESULT_ERROR;
+			}
+
 			return Result::RESULT_GOOD;
 		}
 		std::shared_ptr<RHI_CommandPool> RHI_DX12_RenderDevice::CreateCommandPool(const RHI_CommandPoolDescriptor& _commandPoolDescriptor)

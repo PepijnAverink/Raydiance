@@ -11,8 +11,6 @@
 #include <memory>
 #include <wrl/client.h>
 
-using Microsoft::WRL::ComPtr;
-
 
 namespace Raydiance
 {
@@ -21,13 +19,13 @@ namespace Raydiance
 		class RHI_DX12_Adapter final : public RHI_Adapter
 		{
 		public:
-			RHI_DX12_Adapter(ComPtr<IDXGIAdapter> _adapter);
+			RHI_DX12_Adapter(Microsoft::WRL::ComPtr<IDXGIAdapter> _adapter);
 			virtual ~RHI_DX12_Adapter(void);
 
-			inline const ComPtr<IDXGIAdapter> GetPhysicalDevice() const { return m_Adapter; }
+			inline const Microsoft::WRL::ComPtr<IDXGIAdapter> GetPhysicalDevice() const { return m_Adapter; }
 
 		private:
-			ComPtr<IDXGIAdapter> m_Adapter = nullptr;
+			Microsoft::WRL::ComPtr<IDXGIAdapter> m_Adapter = nullptr;
 		};
 	}
 }

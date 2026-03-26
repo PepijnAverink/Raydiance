@@ -2,9 +2,16 @@
 // Parant class include
 #include "./graphics/RHI/RHI_render_device.h"
 
+
+// DirectX12 includes
 #include <d3d12.h>
 #include <dxgi.h>
 #include <dxgi1_3.h>
+
+
+// Generic includes
+#include <wrl/client.h>
+
 
 namespace Raydiance
 {
@@ -49,7 +56,8 @@ namespace Raydiance
 
 
 		private:
-			IDXGIFactory* m_Factory = nullptr;
+			Microsoft::WRL::ComPtr<IDXGIFactory> m_Factory = nullptr;
+			Microsoft::WRL::ComPtr<ID3D12Device> m_Device  = nullptr;
 		};
 	}
 }

@@ -7,7 +7,7 @@ namespace Raydiance
 {
 	namespace Graphics
 	{
-		RHI_DX12_Adapter::RHI_DX12_Adapter(ComPtr<IDXGIAdapter> _adapter)
+		RHI_DX12_Adapter::RHI_DX12_Adapter(Microsoft::WRL::ComPtr<IDXGIAdapter> _adapter)
 			: m_Adapter(std::move(_adapter))
 		{
 			// Get adapterDesc
