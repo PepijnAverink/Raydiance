@@ -6,6 +6,7 @@
 // Generic includes
 #include <string>
 
+
 namespace Raydiance
 {
 	namespace Graphics

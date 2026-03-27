@@ -2,6 +2,8 @@
 #include "./graphics/RHI/resource/RHI_resource_state.h"
 #include "./graphics/RHI/object/command/RHI_command_buffer_descriptor.h"
 
+#include "./core/error/result.h"
+
 namespace Raydiance
 {
 	namespace Graphics

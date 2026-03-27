@@ -101,6 +101,10 @@ namespace Raydiance
 			[[nodiscard]] virtual RHI_Texture2D* CreateTexture2D(const RHI_Texture2DDescriptor* _texture2DDescriptor) = 0;
 			[[nodiscard]] virtual RHI_Sampler* CreateSampler(const RHI_SamplerDescriptor& _sampler2DDescripotr) = 0;
 
+			// Utility functions
+			// ----------------------------------------------------------------------
+			inline RHI_DebugMode  GetDebugMode() const { return m_DebugMode; }
+			inline bool     IsDebugModeEnabled() const { return m_DebugModeEnabled; }
 
 		protected:
 			// Protected constructor, user should not create base instance.
@@ -114,8 +118,8 @@ namespace Raydiance
 			// DebugMode
 			// ----------------------------------------------------------------
 			// Set's the DebugEnabled according to the DebugMode
-			bool		  m_DebugEnabled = false;
-			RHI_DebugMode m_DebugMode    = RHI_DebugMode::RHI_DEBUG_MODE_INVALID;
+			bool		  m_DebugModeEnabled = false;
+			RHI_DebugMode m_DebugMode        = RHI_DebugMode::RHI_DEBUG_MODE_INVALID;
 
 
 		private:

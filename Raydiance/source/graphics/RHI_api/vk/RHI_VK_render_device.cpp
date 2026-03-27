@@ -77,7 +77,7 @@ namespace Raydiance
         {
             vkDestroyDevice(m_Device, nullptr);
 
-            if (m_DebugEnabled == true)
+            if (IsDebugModeEnabled() == true)
                 DestroyDebugUtilsMessengerEXT(m_Instance, m_DebugMessenger, nullptr);
 
             vkDestroySurfaceKHR(m_Instance, m_Surface, nullptr);
@@ -107,8 +107,8 @@ namespace Raydiance
 
 
             // Corrct debug mode
-            if (m_DebugEnabled == true)
-                m_DebugEnabled = CheckValidationLayerSupport();
+            if (IsDebugModeEnabled() == true)
+                m_DebugModeEnabled = CheckValidationLayerSupport();
 
             // Current extensions
             std::vector<const char*> extensions = { "VK_KHR_surface" };
@@ -116,7 +116,7 @@ namespace Raydiance
 #if defined(_WIN32)
                 extensions.push_back("VK_KHR_win32_surface");
 #endif
-                if (m_DebugEnabled)
+                if (IsDebugModeEnabled() == true)
                     extensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
             }
 
@@ -139,7 +139,7 @@ namespace Raydiance
 
             // Enable debug layer
             VkDebugUtilsMessengerCreateInfoEXT debugCreateInfo = {};
-            if (m_DebugEnabled == true) {
+            if (IsDebugModeEnabled() == true) {
                 debugCreateInfo.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
                 debugCreateInfo.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;
                 debugCreateInfo.messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
@@ -155,7 +155,7 @@ namespace Raydiance
                 Logger::Log("VK_ERROR - Failed to create the vulkan instance.", LogType::LOG_TYPE_ERROR);
 
             // Enable debug messenger if debugmode is enabled
-            if (m_DebugEnabled == true)
+            if (IsDebugModeEnabled() == true)
                 if (CreateDebugUtilsMessengerEXT(m_Instance, &debugCreateInfo, nullptr, &m_DebugMessenger) != VK_SUCCESS)
                     Logger::Log("VK_ERROR - Failed to serup the vulkan debug messenger.", LogType::LOG_TYPE_ERROR);
 
@@ -258,7 +258,7 @@ namespace Raydiance
             createInfo.ppEnabledExtensionNames = deviceExtensions.data();
             createInfo.enabledLayerCount = 0;
 
-            if (m_DebugEnabled == true) {
+            if (IsDebugModeEnabled() == true) {
                 createInfo.enabledLayerCount = static_cast<uint32_t>(validationLayers.size());
                 createInfo.ppEnabledLayerNames = validationLayers.data();
             }
