@@ -3,6 +3,13 @@
 #include "./graphics/RHI/object/command/RHI_command_buffer.h"
 
 
+// D3D12 includes
+#include <d3d12.h>
+
+// Generic includes
+#include <wrl/client.h>
+
+
 namespace Raydiance
 {
 	namespace Graphics
@@ -13,11 +20,8 @@ namespace Raydiance
 		class RHI_DX12_CommandBuffer final : public RHI_CommandBuffer
 		{
 		public:
-					 RHI_DX12_CommandBuffer();
+					 RHI_DX12_CommandBuffer(RHI_DX12_RenderDevice* _renderDevice, const RHI_CommandBufferDescriptor& _commandBufferDescriptor);
 			virtual ~RHI_DX12_CommandBuffer();
-
-			[[nodiscard]] const Result Initialize(RHI_DX12_RenderDevice& _renderDevice, const RHI_CommandBufferDescriptor& _commandBufferDescriptor);
-
 
 			virtual void Reset() override;
 
@@ -46,9 +50,11 @@ namespace Raydiance
 			virtual void Draw(const uint32_t _vertexOffset, const uint32_t _vertexCount) override;
 			virtual void DrawIndexed(const uint32_t _vertexOffset, const uint32_t _indexOffset, const uint32_t _indexCount) override;
 
+			// Getters
+			inline virtual Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList4> GetD3DCommandBuffer() const { return m_CommandListObj; }
 
 		private:
-
+			Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList4> m_CommandListObj;
 		};
 	}
 }

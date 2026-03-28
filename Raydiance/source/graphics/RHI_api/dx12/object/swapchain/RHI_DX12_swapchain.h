@@ -2,9 +2,13 @@
 // Parent class include
 #include "./graphics/RHI/object/swapchain/RHI_swapchain.h"
 
-// Graphics includes
+// D3D12 includes
+#include <d3d12.h>
+#include <d3d12.h>
+#include <dxgi1_4.h>
 
-#include <memory>
+// Generic includes
+#include <wrl/client.h>
 
 namespace Raydiance
 {
@@ -26,9 +30,9 @@ namespace Raydiance
 			virtual uint32 AquireNewImage(RHI_CommandQueue* _commandQueue, std::shared_ptr<RHI_FenceCPU> _fence) override;
 			virtual void Present(RHI_CommandQueue* _commandQueue) override;
 
-
+			inline virtual Microsoft::WRL::ComPtr<IDXGISwapChain3> GetD3DSwapchain(void) const { return m_SwapchainObj; }
 		private:
-
+			Microsoft::WRL::ComPtr<IDXGISwapChain3> m_SwapchainObj = nullptr;
 		};
 	}
 }

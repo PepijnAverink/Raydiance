@@ -7,6 +7,10 @@
 #include <d3d12.h>
 
 
+// Generic includes
+#include <wrl/client.h>
+
+
 namespace Raydiance
 {
 	namespace Graphics
@@ -25,7 +29,15 @@ namespace Raydiance
 			// TODO:: MAYBEEEE not [[nodiscard]]???
 			[[nodiscard]] virtual const Result Wait(void) override;
 
+			// Getters
+			inline Microsoft::WRL::ComPtr<ID3D12Fence> GetD3DFence() const { return m_FenceObj; }
+			inline uint64   GetFenceValue() const { return m_FenceValue; }
+
 		private:
+			Microsoft::WRL::ComPtr<ID3D12Fence> m_FenceObj = nullptr;
+
+			uint64 m_FenceValue;
+			HANDLE m_FenceEvent;
 		};
 	}
 }

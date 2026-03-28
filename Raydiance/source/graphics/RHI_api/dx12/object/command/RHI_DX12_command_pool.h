@@ -1,6 +1,12 @@
 #pragma once
 #include "./graphics/RHI/object/command/RHI_command_pool.h"
 
+// D3D12 includes
+#include <d3d12.h>
+
+// Generic includes
+#include <wrl/client.h>
+
 
 namespace Raydiance
 {
@@ -15,10 +21,10 @@ namespace Raydiance
 
 			virtual void Reset() override;
 
+			inline Microsoft::WRL::ComPtr<ID3D12CommandAllocator> GetD3DCommandPool() const { return m_CommandAllocatorObj; }
 
 		private:
-
-
+			Microsoft::WRL::ComPtr<ID3D12CommandAllocator> m_CommandAllocatorObj = nullptr;
 		};
 	}
 }

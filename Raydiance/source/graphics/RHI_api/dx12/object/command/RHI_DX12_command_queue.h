@@ -27,7 +27,7 @@ namespace Raydiance
 
 
 		private:
-			Microsoft::WRL::ComPtr<ID3D12CommandQueue> m_CommandQueueObj;
+			Microsoft::WRL::ComPtr<ID3D12CommandQueue> m_CommandQueueObj = nullptr;
 		};
 	}
 }

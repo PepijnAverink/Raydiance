@@ -47,7 +47,7 @@ namespace Raydiance
 			}
 
 			// Set name of the commandQueueObj
-			if (_commandQueueDescriptor.DebugName.empty() != true)
+			if (_commandQueueDescriptor.DebugName.empty() == false) // TODO:: Maybe only in debug mode
 				m_CommandQueueObj->SetName(StringToWString(_commandQueueDescriptor.DebugName).c_str());
 			return result;
 		}

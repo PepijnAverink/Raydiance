@@ -18,7 +18,7 @@ namespace Raydiance
 			uint32 Height = 0;
 
 			RHI_ResourceFormat Format = RHI_ResourceFormat::RHI_RESOURCE_FORMAT_INVALID;
-			RHI_ResourceState State   = RHI_ResourceState::RHI_RESOURCE_STATE_INVALID;
+			RHI_ResourceState  State  = RHI_ResourceState::RHI_RESOURCE_STATE_INVALID;
 		};
 	}
 }

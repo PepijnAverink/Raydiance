@@ -474,6 +474,18 @@
     <ClInclude Include="source\graphics\RHI_api\vk\object\command\RHI_VK_command_buffer_type.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\graphics\RHI_api\dx12\object\command\RHI_DX12_command_buffer_type.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\graphics\RHI_api\dx12\resource\texture\RHI_DX12_texture2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\graphics\RHI_api\dx12\resource\RHI_DX12_resource_state.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\graphics\RHI_api\dx12\resource\RHI_DX12_resource_format.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\core\system\file_system.cpp">
@@ -639,6 +651,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\graphics\RHI_api\dx12\object\sync\RHI_DX12_fenceCPU.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\graphics\RHI_api\dx12\resource\texture\RHI_DX12_texture2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

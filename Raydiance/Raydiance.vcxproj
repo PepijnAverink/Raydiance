@@ -212,11 +212,15 @@
     <ClInclude Include="source\graphics\RHI\RHI_adapter_features.h" />
     <ClInclude Include="source\graphics\RHI\RHI_adapter_type.h" />
     <ClInclude Include="source\graphics\RHI_api\dx12\object\command\RHI_DX12_command_buffer.h" />
+    <ClInclude Include="source\graphics\RHI_api\dx12\object\command\RHI_DX12_command_buffer_type.h" />
     <ClInclude Include="source\graphics\RHI_api\dx12\object\command\RHI_DX12_command_pool.h" />
     <ClInclude Include="source\graphics\RHI_api\dx12\object\command\RHI_DX12_command_queue.h" />
     <ClInclude Include="source\graphics\RHI_api\dx12\object\command\RHI_DX12_command_queue_type.h" />
     <ClInclude Include="source\graphics\RHI_api\dx12\object\swapchain\RHI_DX12_swapchain.h" />
     <ClInclude Include="source\graphics\RHI_api\dx12\object\sync\RHI_DX12_fenceCPU.h" />
+    <ClInclude Include="source\graphics\RHI_api\dx12\resource\RHI_DX12_resource_format.h" />
+    <ClInclude Include="source\graphics\RHI_api\dx12\resource\RHI_DX12_resource_state.h" />
+    <ClInclude Include="source\graphics\RHI_api\dx12\resource\texture\RHI_DX12_texture2D.h" />
     <ClInclude Include="source\graphics\RHI_api\dx12\RHI_DX12_adapter.h" />
     <ClInclude Include="source\graphics\RHI_api\dx12\RHI_DX12_render_device.h" />
     <ClInclude Include="source\graphics\RHI_api\RHI_graphics_api.h" />
@@ -363,6 +367,7 @@
     <ClCompile Include="source\graphics\RHI_api\dx12\object\command\RHI_DX12_command_queue.cpp" />
     <ClCompile Include="source\graphics\RHI_api\dx12\object\swapchain\RHI_DX12_swapchain.cpp" />
     <ClCompile Include="source\graphics\RHI_api\dx12\object\sync\RHI_DX12_fenceCPU.cpp" />
+    <ClCompile Include="source\graphics\RHI_api\dx12\resource\texture\RHI_DX12_texture2D.cpp" />
     <ClCompile Include="source\graphics\RHI_api\dx12\RHI_DX12_adapter.cpp" />
     <ClCompile Include="source\graphics\RHI_api\dx12\RHI_DX12_render_device.cpp" />
     <ClCompile Include="source\graphics\RHI_api\vk\object\command\RHI_VK_command_buffer.cpp" />
