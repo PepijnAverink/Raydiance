@@ -14,10 +14,11 @@ namespace Raydiance
 			 RHI_CommandQueueDescriptor() = default;
 			~RHI_CommandQueueDescriptor() = default;
 
+
 			// Raw data used for object creation
 			// ======================================
-			std::string			 Name;
-			RHI_CommandQueueType Type = RHI_CommandQueueType::RHI_COMMAND_QUEUE_TYPE_INVALID;
+			std::string			 DebugName;														//   [OPTIONAL]
+			RHI_CommandQueueType Type = RHI_CommandQueueType::RHI_COMMAND_QUEUE_TYPE_INVALID;	// * Required
 		};
 	}
 }

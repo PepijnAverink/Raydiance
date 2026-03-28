@@ -6,7 +6,7 @@
 #include <d3d12.h>
 
 // Generic includes
-#include <memory>
+#include <wrl/client.h>
 
 namespace Raydiance
 {
@@ -25,6 +25,9 @@ namespace Raydiance
 
 			virtual void SubmitCommandBuffer(RHI_CommandBuffer* _commandBuffer, std::shared_ptr<RHI_FenceCPU> _fence) override;
 
+
+		private:
+			Microsoft::WRL::ComPtr<ID3D12CommandQueue> m_CommandQueueObj;
 		};
 	}
 }

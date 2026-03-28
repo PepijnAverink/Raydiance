@@ -55,6 +55,11 @@ namespace Raydiance
 			[[nodiscard]] virtual RHI_Texture2D*		CreateTexture2D(const RHI_Texture2DDescriptor* _texture2DDescriptor) override;
 
 
+			// Getter functions
+			// ----------------------------------------------------------------------
+			[[nodiscard]] inline Microsoft::WRL::ComPtr<IDXGIFactory> GetD3DFactory() const { return m_Factory; }
+			[[nodiscard]] inline Microsoft::WRL::ComPtr<ID3D12Device>  GetD3DDevice() const { return m_Device;  }
+
 		private:
 			Microsoft::WRL::ComPtr<IDXGIFactory> m_Factory = nullptr;
 			Microsoft::WRL::ComPtr<ID3D12Device> m_Device  = nullptr;
