@@ -15,7 +15,7 @@ namespace Raydiance
 			virtual void Reset() = 0;
 
 		protected:
-			RHI_CommandQueueType m_Type = RHI_CommandQueueType::RHI_COMMAND_QUEUE_TYPE_INVALID;
+			RHI_CommandBufferType m_Type = RHI_CommandBufferType::RHI_COMMAND_BUFFER_TYPE_INVALID;
 		};
 	}
 }

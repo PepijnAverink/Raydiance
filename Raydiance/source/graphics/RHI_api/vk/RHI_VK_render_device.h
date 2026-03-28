@@ -1,6 +1,6 @@
 #pragma once
 #include "./graphics/RHI/RHI_render_device.h"
-#include "./graphics/RHI/object/command/RHI_command_queue_type.h"
+#include "./graphics/RHI_api/vk/object/command/RHI_VK_command_queue_family.h"
 
 // If running on windows define windows specific VK implementation
 
@@ -32,11 +32,6 @@ namespace Raydiance
 
 			inline VkDevice GetDevice() const { return m_Device; }
 
-			inline uint32 GetPresentQueueID() const { return m_PresentQueueID; }
-			inline uint32 GetGraphicsQueueID() const { return m_GraphicsQueueID; }
-
-			uint32_t GetQueueFamilyID(const RHI_CommandQueueType _type) const;
-
 			// Create functions
 			// ----------------------------------------------------------------------
 			[[nodiscard]] virtual std::shared_ptr<RHI_CommandPool>   CreateCommandPool(const RHI_CommandPoolDescriptor& _commandPoolDescriptor) override;
@@ -58,6 +53,10 @@ namespace Raydiance
 			[[nodiscard]] virtual RHI_Sampler*   CreateSampler(const RHI_SamplerDescriptor& _sampler2DDescripotr) override;
 			[[nodiscard]] virtual RHI_Texture2D* CreateTexture2D(const RHI_Texture2DDescriptor* _texture2DDescriptor) override;
 
+			// Query the Vulkan Queue families allocated at startup
+			// --------------------------------------------------------------------------
+			const Result QueryCommandQueueIndex(RHI_CommandQueueType _type, uint32& _index) const;
+
 		private:
 			bool CheckValidationLayerSupport();
 			void GetVKPhysicalDevice();
@@ -68,12 +67,11 @@ namespace Raydiance
 
 			VkDebugUtilsMessengerEXT m_DebugMessenger;
 
-			VkSurfaceKHR m_Surface;
+			VkSurfaceKHR m_Surface = VK_NULL_HANDLE;
 
-			VkDevice m_Device;
+			VkDevice m_Device = VK_NULL_HANDLE;
 
-			uint32_t m_PresentQueueID = 0;
-			uint32_t m_GraphicsQueueID = 0;
+			std::vector<RHI_VK_CommandQueueFamily> m_CommandQueueFamilies;
 		};
 	}
 }

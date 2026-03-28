@@ -16,10 +16,14 @@ namespace Raydiance
 
 			virtual void SubmitCommandBuffer(RHI_CommandBuffer* _commandBuffer, std::shared_ptr<RHI_FenceCPU> _fence) override;
 
-			inline VkQueue GetVKQueue() const { return m_QueueObj; }
+			// Getter functions
+			// --------------------------------------------
+			inline VkQueue GetVKQueue()    const { return m_CommandQueueHandle; }
+			inline uint32  GetVKFamilyID() const { return m_FamilyID; }
 
 		private:
-			VkQueue m_QueueObj;
+			VkQueue m_CommandQueueHandle = VK_NULL_HANDLE;
+			uint32  m_FamilyID = 0;
 		};
 	}
 }

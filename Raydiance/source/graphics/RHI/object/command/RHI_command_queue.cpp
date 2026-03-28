@@ -13,6 +13,7 @@ namespace Raydiance
 
 		const Result RHI_CommandQueue::Initialize(const RHI_CommandQueueDescriptor& _commandQueueDescriptor)
 		{
+			m_Type = _commandQueueDescriptor.Type;
 			return Result::RESULT_GOOD;
 		}
 	}

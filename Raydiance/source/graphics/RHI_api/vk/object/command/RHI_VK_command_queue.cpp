@@ -37,15 +37,17 @@ namespace Raydiance
 			// ==========================================================================
 			// The actual VULKAN initialization follows
 			// ==========================================================================
-			if (_commandQueueDescriptor.Type == RHI_CommandQueueType::RHI_COMMAND_QUEUE_TYPE_GRAPHICS)
+			m_FamilyID = 0;
+			result = _renderDevice.QueryCommandQueueIndex(m_Type, m_FamilyID);
+			if (CheckError(result) == true)
 			{
-				vkGetDeviceQueue(_renderDevice.GetDevice(), _renderDevice.GetGraphicsQueueID(), 0, &m_QueueObj);
-				if (_renderDevice.GetGraphicsQueueID() == _renderDevice.GetPresentQueueID())
-				{
-					AddSupportFlag(COMMAND_QUEUE_SUPPORT_BIT_GRAPHICS);
-					AddSupportFlag(COMMAND_QUEUE_SUPPORT_BIT_PRESENT);
-				}
+				// When result is RESULT_ERROR || RESULT_FATAL.
+				Logger::Log("Error while querying the queue family, possibly not initialized on device creation.", LogType::LOG_TYPE_ERROR);
+				return result;
 			}
+
+			// Get the handle
+			vkGetDeviceQueue(_renderDevice.GetDevice(), m_FamilyID, 0, &m_CommandQueueHandle);
 			return Result::RESULT_GOOD;
 		}
 
@@ -62,7 +64,7 @@ namespace Raydiance
 			submitInfo.pCommandBuffers = &cmbuffer;
 			submitInfo.signalSemaphoreCount = 0;
 
-			if (vkQueueSubmit(m_QueueObj, 1, &submitInfo, ((RHI_VK_FenceCPU*)_fence.get())->GetVKFence()) != VK_SUCCESS)
+			if (vkQueueSubmit(m_CommandQueueHandle, 1, &submitInfo, ((RHI_VK_FenceCPU*)_fence.get())->GetVKFence()) != VK_SUCCESS)
 				Logger::Log("VK_ERROR - Failed to submit CommandBuffer.", LogType::LOG_TYPE_ERROR);
 		}
 	}

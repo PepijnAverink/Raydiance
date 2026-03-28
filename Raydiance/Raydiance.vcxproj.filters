@@ -465,6 +465,15 @@
     <ClInclude Include="source\graphics\RHI_api\dx12\object\command\RHI_DX12_command_queue_type.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\graphics\RHI\object\command\RHI_command_queue_allocation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\graphics\RHI_api\vk\object\command\RHI_VK_command_queue_family.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\graphics\RHI_api\vk\object\command\RHI_VK_command_buffer_type.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\core\system\file_system.cpp">

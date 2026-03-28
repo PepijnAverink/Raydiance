@@ -166,7 +166,7 @@ namespace Raydiance
 			createInfo.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
 			createInfo.imageSharingMode = VK_SHARING_MODE_EXCLUSIVE;
 
-			uint32_t queueFamilyIndices[] = { _renderDevice.GetGraphicsQueueID(), _renderDevice.GetPresentQueueID() };
+			uint32_t queueFamilyIndices[] = { static_cast<const RHI_VK_CommandQueue*>(&_commandQueue)->GetVKFamilyID() };
 
 			if (_commandQueue.CheckSupportFlag(COMMAND_QUEUE_SUPPORT_BIT_PRESENT)) {
 				createInfo.imageSharingMode = VK_SHARING_MODE_CONCURRENT;

@@ -22,7 +22,7 @@ void Application::OnInitialize()
     {
         RHI_CommandPoolDescriptor commandPoolDesc = {};
         commandPoolDesc.Name = "CommandPool";
-        commandPoolDesc.Type = RHI_CommandQueueType::RHI_COMMAND_QUEUE_TYPE_GRAPHICS;
+        commandPoolDesc.Type = RHI_CommandBufferType::RHI_COMMAND_BUFFER_TYPE_DIRECT;
 
         m_CommandPool = m_RenderBackend->GetRenderDevice().CreateCommandPool(commandPoolDesc);
     }

@@ -122,6 +122,8 @@ namespace Raydiance
 			RHI_DebugMode m_DebugMode        = RHI_DebugMode::RHI_DEBUG_MODE_INVALID;
 
 
+			std::vector<RHI_CommandQueueAllocation> m_CommandQueueAllocations;
+
 		private:
 			// Should only be called by the local initialization function.
 			void CorrectDebugMode();

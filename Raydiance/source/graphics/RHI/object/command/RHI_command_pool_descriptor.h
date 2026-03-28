@@ -1,5 +1,5 @@
 #pragma once
-#include "./graphics/RHI/object/command/RHI_command_queue_type.h"
+#include "./graphics/RHI/object/command/RHI_command_buffer_type.h"
 #include <string>
 
 namespace Raydiance
@@ -12,7 +12,7 @@ namespace Raydiance
 			RHI_CommandPoolDescriptor() = default;
 
 			std::string      Name;
-			RHI_CommandQueueType Type = RHI_CommandQueueType::RHI_COMMAND_QUEUE_TYPE_INVALID;
+			RHI_CommandBufferType Type = RHI_CommandBufferType::RHI_COMMAND_BUFFER_TYPE_INVALID;
 		};
 	}
 }

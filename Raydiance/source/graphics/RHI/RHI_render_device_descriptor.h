@@ -1,8 +1,9 @@
 #pragma once
-#include "./graphics/RHI_api/RHI_graphics_api.h"
 #include "./graphics/RHI/RHI_debug_mode.h"
+#include "./graphics/RHI/object/command/RHI_command_queue_allocation.h"
 
-class Window;
+
+class Window; // TODO:: ????
 namespace Raydiance
 {
 	namespace Graphics
@@ -19,6 +20,9 @@ namespace Raydiance
 			// Raw data used for object creation
 			// ======================================
 			RHI_DebugMode DebugMode = RHI_DebugMode::RHI_DEBUG_MODE_INVALID;
+
+			// CommandQueues, should be allocated at startup
+			std::vector<RHI_CommandQueueAllocation> CommandQueues;
 
 			void* NativeWindowHandle = nullptr;
 		};

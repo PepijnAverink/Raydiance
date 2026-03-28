@@ -30,9 +30,9 @@ namespace Raydiance
 
 
 			// Functionality for support flags
-			inline void AddSupportFlag(uint32_t _flag) { m_SupportFlags &= _flag; }
-			inline void RemoveSupportFlag(uint32_t _flag) { m_SupportFlags &= ~_flag; }
 			uint32_t m_SupportFlags = COMMAND_QUEUE_SUPPORT_BIT_NONE;
+
+			RHI_CommandQueueType m_Type = RHI_CommandQueueType::RHI_COMMAND_QUEUE_TYPE_INVALID;
 		};
 	}
 }

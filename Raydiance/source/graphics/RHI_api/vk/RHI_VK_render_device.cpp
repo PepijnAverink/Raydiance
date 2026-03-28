@@ -231,19 +231,87 @@ namespace Raydiance
             // Cast the adapter to a vulkan specific adapter.
             const RHI_VK_Adapter* physicalDevice = static_cast<const RHI_VK_Adapter*>(m_Adapter.get());
 
-            QueueFamilyIndices indices = FindQueueFamilies(physicalDevice->GetPhysicalDevice(), m_Surface);
+            // Get the number of queue families
+            uint32_t queueFamilyPropertyCount = 0;
+            vkGetPhysicalDeviceQueueFamilyProperties(physicalDevice->GetPhysicalDevice(), &queueFamilyPropertyCount, NULL);
+
+            // Get properties of the physical device queues
+            std::vector<VkQueueFamilyProperties> queueFamilyPropertiesList(queueFamilyPropertyCount);
+            vkGetPhysicalDeviceQueueFamilyProperties(physicalDevice->GetPhysicalDevice(), &queueFamilyPropertyCount, queueFamilyPropertiesList.data());
+
+            // Pre-allocate the largest list-size for queue priorities
+            std::vector<float> queuePriorities;
+            for (uint32 i = 0; i < m_CommandQueueAllocations.size(); i++)
+            {
+                // If the count is larger, then set a new max
+                if (m_CommandQueueAllocations[i].Count > queuePriorities.size())
+                    queuePriorities.resize(m_CommandQueueAllocations[i].Count, 1.0f);
+            }
 
             std::vector<VkDeviceQueueCreateInfo> queueCreateInfos;
-            std::set<uint32_t> uniqueQueueFamilies = { indices.graphicsFamily.value(), indices.presentFamily.value() };
+            for (uint32 i = 0; i < m_CommandQueueAllocations.size(); i++)
+            {
+                // Get allocation for the queues
+                RHI_CommandQueueAllocation allocation = m_CommandQueueAllocations[i];
 
-            float queuePriority = 1.0f;
-            for (uint32_t queueFamily : uniqueQueueFamilies) {
                 VkDeviceQueueCreateInfo queueCreateInfo{};
+                queueCreateInfo.pNext = NULL;
                 queueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-                queueCreateInfo.queueFamilyIndex = queueFamily;
-                queueCreateInfo.queueCount = 1;
-                queueCreateInfo.pQueuePriorities = &queuePriority;
-                queueCreateInfos.push_back(queueCreateInfo);
+                queueCreateInfo.queueCount = allocation.Count;
+                queueCreateInfo.pQueuePriorities = queuePriorities.data();
+
+                // Loop over the queues
+                for (uint32_t j = 0; j < queueFamilyPropertiesList.size(); j++)
+                {
+                    RHI_VK_CommandQueueFamily family;
+                    family.Index = j;
+                    family.Count = queueFamilyPropertiesList[j].queueCount;
+                    family.SurfaceSupport = false;
+
+                    queueCreateInfo.queueFamilyIndex = j;
+
+                    if (queueFamilyPropertiesList[j].queueFlags & VK_QUEUE_GRAPHICS_BIT && allocation.Type == RHI_CommandQueueType::RHI_COMMAND_QUEUE_TYPE_GRAPHICS)
+                    {
+                        family.Type = RHI_CommandQueueType::RHI_COMMAND_QUEUE_TYPE_GRAPHICS;
+                        family.SurfaceSupport = true;
+                        m_CommandQueueFamilies.push_back(family);
+
+                        queueCreateInfos.push_back(queueCreateInfo);
+                        break;
+                    }
+                    else if (queueFamilyPropertiesList[j].queueFlags & VK_QUEUE_COMPUTE_BIT && allocation.Type == RHI_CommandQueueType::RHI_COMMAND_QUEUE_TYPE_COMPUTE)
+                    {
+                        family.Type = RHI_CommandQueueType::RHI_COMMAND_QUEUE_TYPE_COMPUTE;
+                        m_CommandQueueFamilies.push_back(family);
+
+                        queueCreateInfos.push_back(queueCreateInfo);
+                        break;
+                    }
+                    else if (queueFamilyPropertiesList[j].queueFlags & VK_QUEUE_TRANSFER_BIT && allocation.Type == RHI_CommandQueueType::RHI_COMMAND_QUEUE_TYPE_COPY)
+                    {
+                        family.Type = RHI_CommandQueueType::RHI_COMMAND_QUEUE_TYPE_COPY;
+                        m_CommandQueueFamilies.push_back(family);
+
+                        queueCreateInfos.push_back(queueCreateInfo);
+                        break;
+                    }
+                    else if (queueFamilyPropertiesList[j].queueFlags & VK_QUEUE_VIDEO_DECODE_BIT_KHR && allocation.Type == RHI_CommandQueueType::RHI_COMMAND_QUEUE_TYPE_VIDEO_DECODE)
+                    {
+                        family.Type = RHI_CommandQueueType::RHI_COMMAND_QUEUE_TYPE_VIDEO_DECODE;
+                        m_CommandQueueFamilies.push_back(family);
+
+                        queueCreateInfos.push_back(queueCreateInfo);
+                        break;
+                    }
+                    else if (queueFamilyPropertiesList[j].queueFlags & VK_QUEUE_VIDEO_ENCODE_BIT_KHR && allocation.Type == RHI_CommandQueueType::RHI_COMMAND_QUEUE_TYPE_VIDEO_ENCODE)
+                    {
+                        family.Type = RHI_CommandQueueType::RHI_COMMAND_QUEUE_TYPE_VIDEO_ENCODE;
+                        m_CommandQueueFamilies.push_back(family);
+
+                        queueCreateInfos.push_back(queueCreateInfo);
+                        break;
+                    }
+                }
             }
 
             VkPhysicalDeviceFeatures deviceFeatures{};
@@ -267,19 +335,7 @@ namespace Raydiance
                 throw std::runtime_error("failed to create logical device!");
             }
 
-            m_GraphicsQueueID = indices.graphicsFamily.value();
-            m_PresentQueueID = indices.presentFamily.value();
-
             return Result::RESULT_GOOD;
-        }
-
-        uint32_t RHI_VK_RenderDevice::GetQueueFamilyID(const RHI_CommandQueueType _type) const
-        {
-            // TODO:: add support for other types of queues
-            if (_type == RHI_CommandQueueType::RHI_COMMAND_QUEUE_TYPE_GRAPHICS)
-                return m_GraphicsQueueID;
-
-            return 0;
         }
 
         std::shared_ptr<RHI_CommandPool> RHI_VK_RenderDevice::CreateCommandPool(const RHI_CommandPoolDescriptor& _commandPoolDescriptor)
@@ -408,6 +464,21 @@ namespace Raydiance
             }
 
             return fence;
+        }
+
+        const Result RHI_VK_RenderDevice::QueryCommandQueueIndex(RHI_CommandQueueType _type, uint32& _index) const
+        {
+            for (uint32 i = 0; i < m_CommandQueueFamilies.size(); i++)
+            {
+                if (m_CommandQueueFamilies[i].Type == _type)
+                {
+                    _index = m_CommandQueueFamilies[i].Index;
+                    return Result::RESULT_GOOD;
+                }
+            }
+
+            _index = 0;
+            return Result::RESULT_ERROR;
         }
 
         bool RHI_VK_RenderDevice::CheckValidationLayerSupport()

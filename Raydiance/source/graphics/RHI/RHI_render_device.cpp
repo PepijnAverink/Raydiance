@@ -69,6 +69,9 @@ namespace Raydiance
 			m_DebugMode = _renderDeviceDescriptor.DebugMode;
 			CorrectDebugMode();
 
+			// Set the allocation space of the command queues
+			m_CommandQueueAllocations = _renderDeviceDescriptor.CommandQueues;
+
 			return Result::RESULT_GOOD;
 		}
 

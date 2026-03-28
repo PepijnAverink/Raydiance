@@ -1,6 +1,8 @@
 #include "./pch.h"
 #include "./graphics/RHI_api/vk/object/command/RHI_VK_command_pool.h"
 
+#include "./graphics/RHI_api/vk/object/command/RHI_VK_command_buffer_type.h"
+
 namespace Raydiance
 {
 	namespace Graphics
@@ -8,10 +10,13 @@ namespace Raydiance
 		RHI_VK_CommandPool::RHI_VK_CommandPool(RHI_VK_RenderDevice* _renderDevice, const RHI_CommandPoolDescriptor& _commandPoolDescriptor)
 			: RHI_CommandPool(_commandPoolDescriptor)
 		{
+			uint32 queueIndex = 0;
+			_renderDevice->QueryCommandQueueIndex(ResolveCommandBufferType(_commandPoolDescriptor.Type), queueIndex);
+
 			// Craetion info
 			VkCommandPoolCreateInfo poolInfo{};
 			poolInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
-			poolInfo.queueFamilyIndex = _renderDevice->GetQueueFamilyID(_commandPoolDescriptor.Type);
+			poolInfo.queueFamilyIndex = queueIndex;
 			poolInfo.flags = VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
 
 			// Create CommandPool
