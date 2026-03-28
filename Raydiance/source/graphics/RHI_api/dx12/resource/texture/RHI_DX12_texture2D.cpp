@@ -2,6 +2,11 @@
 #include "./graphics/RHI_api/dx12/resource/texture/RHI_DX12_texture2D.h"
 #include "./graphics/RHI_api/dx12/RHI_DX12_render_device.h"
 
+#include "./graphics/RHI_api/dx12/resource/RHI_DX12_resource_format.h"
+#include "./graphics/RHI_api/dx12/resource/RHI_DX12_resource_state.h"
+
+#include "./graphics/RHI_api/dx12/resource/texture/RHI_DX12_texture_usage.h"
+
 #include "./utility/string_utility.h"
 
 namespace Raydiance
@@ -50,12 +55,12 @@ namespace Raydiance
 				useClearValue = true;
 			}
 
-			if (_renderDevice->GetD3DDevice()->CreateCommittedResource(&uploadProp, D3D12_HEAP_FLAG_NONE, &bufferProp, ResolveDX12ResourceState(RHI_ResourceState::RHI_RESOURCE_STATE_COMMON), useClearValue == false ? NULL : &clearValue, IID_PPV_ARGS(&m_TextureObj)) != S_OK)
+			if (_renderDevice->GetD3DDevice()->CreateCommittedResource(&uploadProp, D3D12_HEAP_FLAG_NONE, &bufferProp, ResolveDX12ResourceState(RHI_ResourceState::RHI_RESOURCE_STATE_GENERAL_READ), useClearValue == false ? NULL : &clearValue, IID_PPV_ARGS(&m_TextureObj)) != S_OK)
 			{
 				Logger::Log("Failed to create DX12Texture2D...", LogType::LOG_TYPE_ERROR);
 			}
 
-			m_TextureObj->SetName(StringToWString(_texture2DDescriptor->Name).c_str());
+			m_TextureObj->SetName(StringToWString(_texture2DDescriptor->DebugName).c_str());
 		}
 
 		RHI_DX12_Texture2D::RHI_DX12_Texture2D(const RHI_DX12_RenderDevice& _renderDevice, Microsoft::WRL::ComPtr<ID3D12Resource> _resource, const RHI_Texture2DDescriptor* _texture2DDescriptor)

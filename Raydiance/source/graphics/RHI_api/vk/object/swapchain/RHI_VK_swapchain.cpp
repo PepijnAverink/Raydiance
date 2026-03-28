@@ -24,7 +24,7 @@ namespace Raydiance
 		RHI_VK_Swapchain::~RHI_VK_Swapchain()
 		{
 			for (uint32_t i = 0; i < m_BufferCount; i++)
-				((RHI_VK_Texture2D*)m_Textures[i])->FreeImageView();
+				((RHI_VK_Texture2D*)m_RenderTargets[i])->FreeImageView();
 
 			vkDestroySwapchainKHR(static_cast<RHI_VK_RenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_SwapChainObj, nullptr);
 		}
@@ -59,9 +59,9 @@ namespace Raydiance
 		{
 			// Cleanup
 			for (uint32_t i = 0; i < m_BufferCount; i++)
-				((RHI_VK_Texture2D*)m_Textures[i])->FreeImageView();
+				((RHI_VK_Texture2D*)m_RenderTargets[i])->FreeImageView();
 			vkDestroySwapchainKHR(static_cast<RHI_VK_RenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_SwapChainObj, nullptr);
-			m_Textures.clear();
+			m_RenderTargets.clear();
 
 			m_Width = _width;
 			m_Height = _height;
@@ -73,8 +73,8 @@ namespace Raydiance
 
 		uint32_t RHI_VK_Swapchain::AquireNewImage(RHI_CommandQueue* _commandQueue, std::shared_ptr<RHI_FenceCPU> _fence)
 		{
-			VkResult result = vkAcquireNextImageKHR(static_cast<RHI_VK_RenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_SwapChainObj, UINT64_MAX, VK_NULL_HANDLE, ((RHI_VK_FenceCPU*)_fence.get())->GetVKFence(), &m_CurrentBufferIndex);
-			return m_CurrentBufferIndex;
+			VkResult result = vkAcquireNextImageKHR(static_cast<RHI_VK_RenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_SwapChainObj, UINT64_MAX, VK_NULL_HANDLE, ((RHI_VK_FenceCPU*)_fence.get())->GetVKFence(), &m_BufferIndex);
+			return m_BufferIndex;
 		}
 
 		void RHI_VK_Swapchain::Present(RHI_CommandQueue* _commandQueue)
@@ -84,7 +84,7 @@ namespace Raydiance
 			presentInfo.waitSemaphoreCount = 0; // TODO:: Look into semaphores here.
 			presentInfo.swapchainCount     = 1;
 			presentInfo.pSwapchains        = &m_SwapChainObj;
-			presentInfo.pImageIndices      = &m_CurrentBufferIndex;
+			presentInfo.pImageIndices      = &m_BufferIndex;
 
 			vkQueuePresentKHR(((RHI_VK_CommandQueue*)_commandQueue)->GetVKQueue(), &presentInfo);
 		}
@@ -189,7 +189,7 @@ namespace Raydiance
 			images.resize(imageCount);
 			vkGetSwapchainImagesKHR(_renderDevice.GetDevice(), m_SwapChainObj, &imageCount, images.data());
 			m_BufferCount = imageCount;
-			m_Format = ResolveResourceFormat(format.format);
+			m_ResourceFormat = ResolveResourceFormat(format.format);
 
 			RHI_Texture2DDescriptor textureDesc = {};
 			textureDesc.Width = m_Width;
@@ -198,8 +198,8 @@ namespace Raydiance
 
 			for (uint32_t i = 0; i < m_BufferCount; i++)
 			{
-				textureDesc.Name = "SwapchainImage" + i;
-				m_Textures.push_back(new RHI_VK_Texture2D(_renderDevice, images[i], &textureDesc));
+				textureDesc.DebugName = "SwapchainImage" + i;
+				m_RenderTargets.push_back(new RHI_VK_Texture2D(_renderDevice, images[i], &textureDesc));
 			}
 		}
 	}

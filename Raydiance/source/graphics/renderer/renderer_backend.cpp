@@ -75,8 +75,8 @@ namespace Raydiance
 			renderDeviceDesc.NativeWindowHandle = _window->GetWindowHandlePtr();
 			renderDeviceDesc.CommandQueues = { { RHI_CommandQueueType::RHI_COMMAND_QUEUE_TYPE_GRAPHICS, 1 }, };
 
-			RHI_GraphicsAPI api = RHI_GraphicsAPI::RHI_GRAPHICS_API_VULKAN;
-			//RHI_GraphicsAPI api = RHI_GraphicsAPI::RHI_GRAPHICS_API_DIRECTX12;
+			//RHI_GraphicsAPI api = RHI_GraphicsAPI::RHI_GRAPHICS_API_VULKAN;
+			RHI_GraphicsAPI api = RHI_GraphicsAPI::RHI_GRAPHICS_API_DIRECTX12;
 			Result res = RHI_RenderDevice::Create(api);
 			if (CheckError(res) == true)
 			{
@@ -129,6 +129,8 @@ namespace Raydiance
 
 			// Create swapchain and query dimensions
 			m_Swapchain			 = RHI_RenderDevice::Get().CreateSwapchain(*m_CommandQueue, swapchainDesc);
+
+
 			m_ClientWidth		 = m_Swapchain->GetWidth();
 			m_ClientHeight		 = m_Swapchain->GetHeight();
 			m_BackbufferCount	 = m_Swapchain->GetBufferCount();

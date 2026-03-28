@@ -14,7 +14,7 @@ namespace Raydiance
 {
 	namespace Graphics
 	{
-		class RHI_Swapchain;
+		class RHI_DX12_RenderDevice;
 		class RHI_DX12_Swapchain final : public RHI_Swapchain
 		{
 		public:
@@ -23,7 +23,7 @@ namespace Raydiance
 					 RHI_DX12_Swapchain(void);
 			virtual ~RHI_DX12_Swapchain(void);
 
-			[[nodiscard]] const Result Initialize(const RHI_DX12_Swapchain& _renderDevice, const RHI_CommandQueue& _commandQueue, const RHI_SwapchainDescriptor& _swapchainDescriptor);
+			[[nodiscard]] const Result Initialize(const RHI_DX12_RenderDevice& _renderDevice, const RHI_CommandQueue& _commandQueue, const RHI_SwapchainDescriptor& _swapchainDescriptor);
 
 			virtual void Resize(const RHI_CommandQueue& _commandQueue, const uint32 _width, const uint32 _height) override;
 

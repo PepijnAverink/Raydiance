@@ -12,6 +12,22 @@ namespace Raydiance
 		RHI_VK_Texture2D::RHI_VK_Texture2D(RHI_VK_RenderDevice* _renderDevice, const RHI_Texture2DDescriptor* _texture2DDescriptor)
 			: RHI_Texture2D(_texture2DDescriptor)
 		{
+			// TODO:: Make a resolve function for this
+			VkImageUsageFlags use = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
+			if (_texture2DDescriptor->UsageFlags & static_cast<uint32>(RHI_TextureUsageFlags::RHI_TEXTURE_USAGE_FLAGS_DEPTH_ACCESS))
+			{
+				use = VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT | VK_IMAGE_USAGE_STORAGE_BIT | VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT;
+			}
+			else if (_texture2DDescriptor->UsageFlags & static_cast<uint32>(RHI_TextureUsageFlags::RHI_TEXTURE_USAGE_FLAGS_RENDER_ACCESS))
+			{
+				use = VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT | VK_IMAGE_USAGE_STORAGE_BIT | VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
+			}
+			else
+			{
+				use = VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT | VK_IMAGE_USAGE_STORAGE_BIT;
+			}
+
+
 			VkImageCreateInfo imageInfo{};
 			imageInfo.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
 			imageInfo.imageType = VK_IMAGE_TYPE_2D;
@@ -23,7 +39,7 @@ namespace Raydiance
 			imageInfo.format = ResolveVKResourceFormat(_texture2DDescriptor->Format);
 			imageInfo.tiling = VK_IMAGE_TILING_OPTIMAL;
 			imageInfo.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-			imageInfo.usage = VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT;
+			imageInfo.usage = use; //VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT;
 			imageInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 			imageInfo.samples = VK_SAMPLE_COUNT_1_BIT;
 			imageInfo.flags = 0; // Optional

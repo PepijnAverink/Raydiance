@@ -122,11 +122,11 @@ void DefaultRenderer::OnInitialize(Raydiance::Graphics::RendererBackend* _backen
     // Create texture
 // ----------------------------------------------------------------------------
     RHI_Texture2DDescriptor texture2DDesc = {};
-    texture2DDesc.Name   = "TestTexture2D";
-    texture2DDesc.Width  = 16;
-    texture2DDesc.Height = 16;
-    texture2DDesc.Format = RHI_ResourceFormat::RHI_RESOURCE_FORMAT_B8G8R8A8_SRGB;
-    texture2DDesc.State  = RHI_ResourceState::RHI_RESOURCE_STATE_GENERAL_WRITE;
+    texture2DDesc.DebugName     = "TestTexture2D";
+    texture2DDesc.Width         = 16;
+    texture2DDesc.Height        = 16;
+    texture2DDesc.Format        = RHI_ResourceFormat::RHI_RESOURCE_FORMAT_B8G8R8A8_SRGB;
+    texture2DDesc.InitialState  = RHI_ResourceState::RHI_RESOURCE_STATE_GENERAL_WRITE;
 
     m_Texture = m_RendererBackend->GetRenderDevice().CreateTexture2D(&texture2DDesc);
 

@@ -25,6 +25,8 @@ namespace Raydiance
 
 			virtual void SubmitCommandBuffer(RHI_CommandBuffer* _commandBuffer, std::shared_ptr<RHI_FenceCPU> _fence) override;
 
+			// Getters
+			inline Microsoft::WRL::ComPtr<ID3D12CommandQueue> GetD3DCommandQueue() const { return m_CommandQueueObj; }
 
 		private:
 			Microsoft::WRL::ComPtr<ID3D12CommandQueue> m_CommandQueueObj = nullptr;

@@ -25,7 +25,6 @@ namespace Raydiance
 
 		private:
 			Microsoft::WRL::ComPtr<ID3D12Resource> m_TextureObj = nullptr;
-
 		};
 	}
 }

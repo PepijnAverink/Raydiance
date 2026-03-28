@@ -30,14 +30,14 @@ namespace Raydiance
 			virtual void   Present(RHI_CommandQueue* _commandQueue) = 0;
 
 			inline uint32 GetBufferCount() const { return m_BufferCount; }
-			inline uint32 GetCurrentBufferIndex() const { return m_CurrentBufferIndex; }
+			inline uint32 GetCurrentBufferIndex() const { return m_BufferIndex; }
 
 			inline uint32 GetWidth() const { return m_Width; }
 			inline uint32 GetHeight() const { return m_Height; }
 
-			inline RHI_ResourceFormat GetFormat() const { return m_Format; }
+			inline RHI_ResourceFormat GetFormat() const { return m_ResourceFormat; }
 
-			inline RHI_Texture2D* GetTextureAtIndex(const uint32 _i) const { return m_Textures[_i]; }
+			inline RHI_Texture2D* GetTextureAtIndex(const uint32 _i) const { return m_RenderTargets[_i]; }
 
 		protected:
 			// Protected constructor and initialize(), user should not create base instance.
@@ -48,12 +48,13 @@ namespace Raydiance
 			uint32  m_Width     = 0;
 			uint32  m_Height    = 0;
 
-			RHI_ResourceFormat m_Format = RHI_ResourceFormat::RHI_RESOURCE_FORMAT_INVALID;
+			RHI_ResourceFormat m_ResourceFormat = RHI_ResourceFormat::RHI_RESOURCE_FORMAT_INVALID;
 
-			uint32_t m_BufferCount		  = 0;
-			uint32_t m_CurrentBufferIndex = 0;
+			uint32_t m_BufferCount = 0;
+			uint32_t m_BufferIndex = 0;
 
-			std::vector<RHI_Texture2D*> m_Textures;
+			bool	 m_VSync = false; // TODO:: Check if this works for all api's
+			std::vector<RHI_Texture2D*> m_RenderTargets;
 		};
 	}
 }

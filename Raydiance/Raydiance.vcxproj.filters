@@ -486,6 +486,12 @@
     <ClInclude Include="source\graphics\RHI_api\dx12\resource\RHI_DX12_resource_format.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\graphics\RHI\resource\texture\RHI_texture_usage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\graphics\RHI_api\dx12\resource\texture\RHI_DX12_texture_usage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\core\system\file_system.cpp">

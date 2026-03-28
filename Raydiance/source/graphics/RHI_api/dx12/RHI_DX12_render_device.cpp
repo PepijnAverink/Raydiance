@@ -4,6 +4,13 @@
 #include "./graphics/RHI_api/dx12/RHI_DX12_adapter.h"
 
 
+#include "./graphics/RHI_api/dx12/object/command/RHI_DX12_command_queue.h"
+#include "./graphics/RHI_api/dx12/object/command/RHI_DX12_command_buffer.h"
+#include "./graphics/RHI_api/dx12/object/command/RHI_DX12_command_pool.h"
+#include "./graphics/RHI_api/dx12/object/swapchain/RHI_DX12_swapchain.h"
+#include "./graphics/RHI_api/dx12/object/sync/RHI_DX12_fenceCPU.h"
+#include "./graphics/RHI_api/dx12/resource/texture/RHI_DX12_texture2D.h"
+
 // Generic includes
 
 
@@ -125,21 +132,48 @@ namespace Raydiance
 
 			return Result::RESULT_GOOD;
 		}
+
 		std::shared_ptr<RHI_CommandPool> RHI_DX12_RenderDevice::CreateCommandPool(const RHI_CommandPoolDescriptor& _commandPoolDescriptor)
 		{
-			return std::shared_ptr<RHI_CommandPool>();
+			std::shared_ptr<RHI_DX12_CommandPool> commandPool = std::make_shared<RHI_DX12_CommandPool>(this, _commandPoolDescriptor);
+			return commandPool;
 		}
 		std::shared_ptr<RHI_CommandBuffer> RHI_DX12_RenderDevice::CreateCommandBuffer(const RHI_CommandBufferDescriptor& _commandBufferDescriptor)
 		{
-			return std::shared_ptr<RHI_CommandBuffer>();
+			std::shared_ptr<RHI_DX12_CommandBuffer> commandBuffer = std::make_shared<RHI_DX12_CommandBuffer>(this, _commandBufferDescriptor);
+			return commandBuffer;
 		}
 		std::shared_ptr<RHI_CommandQueue> RHI_DX12_RenderDevice::CreateCommandQueue(const RHI_CommandQueueDescriptor& _commandQueueDescriptor)
 		{
-			return std::shared_ptr<RHI_CommandQueue>();
+			std::shared_ptr<RHI_DX12_CommandQueue> commandQueue = std::make_shared<RHI_DX12_CommandQueue>();
+			Result result = commandQueue->Initialize(*this, _commandQueueDescriptor);
+
+			// Error check
+			if (CheckError(result) == true)
+			{
+				// Log error
+				Logger::Log("Initialization of RHI_VK_CommandQueue failed.", LogType::LOG_TYPE_ERROR);
+				Logger::Log("No further evidence what went wrong, please see earlier logs.", LogType::LOG_TYPE_ERROR);
+				return nullptr;
+			}
+
+			return commandQueue;
 		}
 		std::shared_ptr<RHI_Swapchain> RHI_DX12_RenderDevice::CreateSwapchain(const RHI_CommandQueue& _commandQueue, const RHI_SwapchainDescriptor& _swapchainDescriptor)
 		{
-			return std::shared_ptr<RHI_Swapchain>();
+			std::shared_ptr<RHI_DX12_Swapchain> swapchain = std::make_shared<RHI_DX12_Swapchain>();
+			Result result = swapchain->Initialize(*this, _commandQueue, _swapchainDescriptor);
+
+			// Error check
+			if (CheckError(result) == true)
+			{
+				// Log error
+				Logger::Log("Initialization of RHI_DX12_Swapchain failed.", LogType::LOG_TYPE_ERROR);
+				Logger::Log("No further evidence what went wrong, please see earlier logs.", LogType::LOG_TYPE_ERROR);
+				return nullptr;
+			}
+
+			return swapchain;
 		}
 		std::shared_ptr<RHI_FenceCPU> RHI_DX12_RenderDevice::CreateFenceCPU(const RHI_FenceCPUDescriptor& _fenceDescriptor)
 		{
