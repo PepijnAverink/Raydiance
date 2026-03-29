@@ -14,6 +14,8 @@ namespace Raydiance
 			{
 			case RHI_CullMode::RHI_CULL_MODE_INVALID:
 				return VK_CULL_MODE_NONE;
+			case RHI_CullMode::RHI_CULL_MODE_NONE:
+				return VK_CULL_MODE_NONE;
 			case RHI_CullMode::RHI_CULL_MODE_FRONT:
 				return VK_CULL_MODE_FRONT_BIT;
 			case RHI_CullMode::RHI_CULL_MODE_BACK:

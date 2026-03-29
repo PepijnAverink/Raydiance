@@ -18,7 +18,7 @@ namespace Raydiance
 			virtual void AllocateDescriptor(RHI_Texture2D* _texture, RHI_Sampler* _sampler, const uint32_t _bindingIndex, const uint32_t _arrayIndex) = 0;
 
 		protected:
-
+			RHI_InputSet m_InputSet;
 		};
 	}
 }

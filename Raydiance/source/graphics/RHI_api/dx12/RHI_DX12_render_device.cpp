@@ -9,7 +9,12 @@
 #include "./graphics/RHI_api/dx12/object/command/RHI_DX12_command_pool.h"
 #include "./graphics/RHI_api/dx12/object/swapchain/RHI_DX12_swapchain.h"
 #include "./graphics/RHI_api/dx12/object/sync/RHI_DX12_fenceCPU.h"
+
+
+#include "./graphics/RHI_api/dx12/resource/buffer/RHI_DX12_buffer.h"
+#include "./graphics/RHI_api/dx12/resource/sampler/RHI_DX12_Sampler.h"
 #include "./graphics/RHI_api/dx12/resource/texture/RHI_DX12_texture2D.h"
+
 
 // Generic includes
 
@@ -201,7 +206,8 @@ namespace Raydiance
 		}
 		RHI_Buffer* RHI_DX12_RenderDevice::CreateBuffer(const RHI_BufferDescriptor* _bufferDescriptor)
 		{
-			return nullptr;
+			RHI_DX12_Buffer* buffer = new RHI_DX12_Buffer(this, _bufferDescriptor);
+			return buffer;
 		}
 		RHI_Shader* RHI_DX12_RenderDevice::CreateShader(const RHI_ShaderDescriptor* _shaderDescriptor)
 		{
@@ -209,11 +215,134 @@ namespace Raydiance
 		}
 		RHI_Sampler* RHI_DX12_RenderDevice::CreateSampler(const RHI_SamplerDescriptor& _sampler2DDescripotr)
 		{
-			return nullptr;
+			RHI_DX12_Sampler* sampler = new RHI_DX12_Sampler();
+			sampler->Initialize(*this, _sampler2DDescripotr);
+			return sampler;
 		}
+
 		RHI_Texture2D* RHI_DX12_RenderDevice::CreateTexture2D(const RHI_Texture2DDescriptor* _texture2DDescriptor)
 		{
+			RHI_DX12_Texture2D* texture = new RHI_DX12_Texture2D(this, _texture2DDescriptor);
+			return texture;
+		}
+
+		RHI_DX12_DescriptorHeapAllocation* RHI_DX12_RenderDevice::AllocateCPUDescriptor(D3D12_DESCRIPTOR_HEAP_TYPE _type, const uint32_t _count)
+		{
+			switch (_type)
+			{
+			case D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV:
+				return m_CPUDescriptorHeap_CBV_SRV_UAV->AllocateDescriptors(_count);
+			case D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER:
+				return m_CPUDescriptorHeap_SAMPLER->AllocateDescriptors(_count);
+			case D3D12_DESCRIPTOR_HEAP_TYPE_RTV:
+				return m_CPUDescriptorHeap_RTV->AllocateDescriptors(_count);
+			case D3D12_DESCRIPTOR_HEAP_TYPE_DSV:
+				return m_CPUDescriptorHeap_DSV->AllocateDescriptors(_count);
+			}
+
 			return nullptr;
+		}
+
+		RHI_DX12_DescriptorHeapAllocation* RHI_DX12_RenderDevice::AllocateGPUDescriptor(D3D12_DESCRIPTOR_HEAP_TYPE _type, const uint32_t _count)
+		{
+			switch (_type)
+			{
+			case D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV:
+				return m_GPUDescriptorHeap_CBV_SRV_UAV->AllocateDescriptors(_count);
+			case D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER:
+				return m_GPUDescriptorHeap_SAMPLER->AllocateDescriptors(_count);
+			}
+
+			return nullptr;
+		}
+
+		RHI_DX12_DescriptorHeap* RHI_DX12_RenderDevice::GetCPUDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE _type)
+		{
+			switch (_type)
+			{
+			case D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV:
+				return m_CPUDescriptorHeap_CBV_SRV_UAV;
+			case D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER:
+				return m_CPUDescriptorHeap_SAMPLER;
+			case D3D12_DESCRIPTOR_HEAP_TYPE_RTV:
+				return m_CPUDescriptorHeap_RTV;
+			case D3D12_DESCRIPTOR_HEAP_TYPE_DSV:
+				return m_CPUDescriptorHeap_DSV;
+			}
+
+			return nullptr;
+		}
+
+		RHI_DX12_DescriptorHeap* RHI_DX12_RenderDevice::GetGPUDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE _type)
+		{
+			switch (_type)
+			{
+			case D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV:
+				return m_GPUDescriptorHeap_CBV_SRV_UAV;
+			case D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER:
+				return m_GPUDescriptorHeap_SAMPLER;
+			}
+
+			return nullptr;
+		}
+
+		void RHI_DX12_RenderDevice::CreateDescriptorHeaps()
+		{
+			{
+				RHI_DX12_DescritorHeapDescriptor descriptorHeapDesc = {};
+				descriptorHeapDesc.Name = "CPUDescriptorHeap_CBV_SRV_UAV";
+				descriptorHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
+				descriptorHeapDesc.Access = RHI_DX12_DescriptorHeapAccess::RHI_DX12_DESCRIPTOR_HEAP_ACCESS_CPU;
+				descriptorHeapDesc.Count = 8192;
+
+				m_CPUDescriptorHeap_CBV_SRV_UAV = new RHI_DX12_DescriptorHeap(this, &descriptorHeapDesc);
+			}
+			{
+				RHI_DX12_DescritorHeapDescriptor descriptorHeapDesc = {};
+				descriptorHeapDesc.Name = "CPUDescriptorHeap_SAMPLER";
+				descriptorHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER;
+				descriptorHeapDesc.Access = RHI_DX12_DescriptorHeapAccess::RHI_DX12_DESCRIPTOR_HEAP_ACCESS_CPU;
+				descriptorHeapDesc.Count = 2048;
+
+				m_CPUDescriptorHeap_SAMPLER = new RHI_DX12_DescriptorHeap(this, &descriptorHeapDesc);
+			}
+			{
+				RHI_DX12_DescritorHeapDescriptor descriptorHeapDesc = {};
+				descriptorHeapDesc.Name = "CPUDescriptorHeap_RTV";
+				descriptorHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
+				descriptorHeapDesc.Access = RHI_DX12_DescriptorHeapAccess::RHI_DX12_DESCRIPTOR_HEAP_ACCESS_CPU;
+				descriptorHeapDesc.Count = 1024;
+
+				m_CPUDescriptorHeap_RTV = new RHI_DX12_DescriptorHeap(this, &descriptorHeapDesc);
+			}
+			{
+				RHI_DX12_DescritorHeapDescriptor descriptorHeapDesc = {};
+				descriptorHeapDesc.Name = "CPUDescriptorHeap_DSV";
+				descriptorHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;
+				descriptorHeapDesc.Access = RHI_DX12_DescriptorHeapAccess::RHI_DX12_DESCRIPTOR_HEAP_ACCESS_CPU;
+				descriptorHeapDesc.Count = 128;
+
+				m_CPUDescriptorHeap_DSV = new RHI_DX12_DescriptorHeap(this, &descriptorHeapDesc);
+			}
+
+			{
+				RHI_DX12_DescritorHeapDescriptor descriptorHeapDesc = {};
+				descriptorHeapDesc.Name = "GPUDescriptorHeap_CBV_SRV_UAV";
+				descriptorHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
+				descriptorHeapDesc.Access = RHI_DX12_DescriptorHeapAccess::RHI_DX12_DESCRIPTOR_HEAP_ACCESS_GPU;
+				descriptorHeapDesc.Count = 16384;
+
+				m_GPUDescriptorHeap_CBV_SRV_UAV = new RHI_DX12_DescriptorHeap(this, &descriptorHeapDesc);
+			}
+			{
+				RHI_DX12_DescritorHeapDescriptor descriptorHeapDesc = {};
+				descriptorHeapDesc.Name = "GPUDescriptorHeap_SAMPLER";
+				descriptorHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER;
+				descriptorHeapDesc.Access = RHI_DX12_DescriptorHeapAccess::RHI_DX12_DESCRIPTOR_HEAP_ACCESS_GPU;
+				descriptorHeapDesc.Count = 1024;
+
+				m_GPUDescriptorHeap_SAMPLER = new RHI_DX12_DescriptorHeap(this, &descriptorHeapDesc);
+			}
 		}
 	}
 }

@@ -60,10 +60,10 @@
 #include "graphics/RHI/object/sync/RHI_FenceCPU.h"
 
 
-#include "graphics/RHI/pipeline/framebuffer/RHI_frame_buffer.h"
-#include "graphics/RHI/pipeline/framebuffer/RHI_frame_buffer_attachment.h"
-#include "graphics/RHI/pipeline/framebuffer/RHI_frame_buffer_attachment_type.h"
-#include "graphics/RHI/pipeline/framebuffer/RHI_frame_buffer_descriptor.h"
+#include "graphics/RHI/pipeline/graphics/framebuffer/RHI_frame_buffer.h"
+#include "graphics/RHI/pipeline/graphics/framebuffer/RHI_frame_buffer_attachment.h"
+#include "graphics/RHI/pipeline/graphics/framebuffer/RHI_frame_buffer_attachment_type.h"
+#include "graphics/RHI/pipeline/graphics/framebuffer/RHI_frame_buffer_descriptor.h"
 
 #include "graphics/RHI/pipeline/graphics/RHI_graphics_pipeline.h"
 #include "graphics/RHI/pipeline/graphics/RHI_graphics_pipeline_descriptor.h"
@@ -91,12 +91,12 @@
 //#include "graphics/RHI/pipeline/layout/vertex_element.h"
 //#include "graphics/RHI/pipeline/layout/vertex_layout.h"
 
-#include "graphics/RHI/pipeline/renderpass/RHI_render_pass.h"
-#include "graphics/RHI/pipeline/renderpass/RHI_render_pass_attachment.h"
-#include "graphics/RHI/pipeline/renderpass/RHI_render_pass_attachment_type.h"
-#include "graphics/RHI/pipeline/renderpass/RHI_render_pass_descriptor.h"
-#include "graphics/RHI/pipeline/renderpass/RHI_render_pass_load_op.h"
-#include "graphics/RHI/pipeline/renderpass/RHI_render_pass_store_op.h"
+#include "graphics/RHI/pipeline/graphics/renderpass/RHI_render_pass.h"
+#include "graphics/RHI/pipeline/graphics/renderpass/RHI_render_pass_attachment.h"
+#include "graphics/RHI/pipeline/graphics/renderpass/RHI_render_pass_attachment_type.h"
+#include "graphics/RHI/pipeline/graphics/renderpass/RHI_render_pass_descriptor.h"
+#include "graphics/RHI/pipeline/graphics/renderpass/RHI_render_pass_load_op.h"
+#include "graphics/RHI/pipeline/graphics/renderpass/RHI_render_pass_store_op.h"
 
 #include "graphics/RHI/resource/RHI_resource_memory_type.h"
 #include "graphics/RHI/resource/buffer/RHI_buffer.h"
@@ -137,7 +137,7 @@
 
 #include "graphics/RHI_api/vk/object/sync/RHI_VK_fenceCPU.h"
 
-#include "graphics/RHI_api/vk/pipeline/framebuffer/RHI_VK_frame_buffer.h"
+#include "graphics/RHI_api/vk/pipeline/graphics/framebuffer/RHI_VK_frame_buffer.h"
 
 #include "graphics/RHI_api/vk/pipeline/graphics/rasterizer/RHI_VK_cull_mode.h"
 #include "graphics/RHI_api/vk/pipeline/graphics/rasterizer/RHI_VK_fill_mode.h"
@@ -158,9 +158,9 @@
 #include "graphics/RHI_api/vk/pipeline/layout/RHI_VK_input_layout.h"
 #include "graphics/RHI_api/vk/pipeline/layout/RHI_VK_input_type.h"
 
-#include "graphics/RHI_api/vk/pipeline/renderpass/RHI_VK_render_pass.h"
-#include "graphics/RHI_api/vk/pipeline/renderpass/RHI_VK_render_pass_load_op.h"
-#include "graphics/RHI_api/vk/pipeline/renderpass/RHI_VK_render_pass_store_op.h"
+#include "graphics/RHI_api/vk/pipeline/graphics/renderpass/RHI_VK_render_pass.h"
+#include "graphics/RHI_api/vk/pipeline/graphics/renderpass/RHI_VK_render_pass_load_op.h"
+#include "graphics/RHI_api/vk/pipeline/graphics/renderpass/RHI_VK_render_pass_store_op.h"
 
 
 

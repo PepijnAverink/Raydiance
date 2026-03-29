@@ -10,11 +10,11 @@ namespace Raydiance
 	{
 		inline VkDescriptorType ResolveVKInputType(RHI_InputType _type)
 		{
-			switch (_type)
+			switch (_type) // TODO:: Fucking take a look at this pls...
 			{
-			case RHI_InputType::RHI_INPUT_TYPE_UNIFORM_BUFFER:
+			case RHI_InputType::RHI_INPUT_TYPE_BUFFER:
 				return VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-			case RHI_InputType::RHI_INPUT_TYPE_SAMPLER2D:
+			case RHI_InputType::RHI_INPUT_TYPE_SAMPLER:
 				return VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
 			}
 

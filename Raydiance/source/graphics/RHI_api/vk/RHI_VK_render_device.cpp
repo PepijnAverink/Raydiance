@@ -10,8 +10,8 @@
 
 #include "./graphics/RHI_api/vk/pipeline/graphics/RHI_VK_graphics_pipeline.h"
 #include "./graphics/RHI_api/vk/pipeline/layout/RHI_VK_input_layout.h"
-#include "./graphics/RHI_api/vk/pipeline/renderpass/RHI_VK_render_pass.h"
-#include "./graphics/RHI_api/vk/pipeline/framebuffer/RHI_VK_frame_buffer.h"
+#include "./graphics/RHI_api/vk/pipeline/graphics/renderpass/RHI_VK_render_pass.h"
+#include "./graphics/RHI_api/vk/pipeline/graphics/framebuffer/RHI_VK_frame_buffer.h"
 
 #include "./graphics/RHI_api/vk/pipeline/layout/descriptor/RHI_VK_descriptor_pool.h"
 #include "./graphics/RHI_api/vk/pipeline/layout/descriptor/RHI_VK_descriptor_set.h"

@@ -93,7 +93,7 @@ void DefaultRenderer::OnInitialize(Raydiance::Graphics::RendererBackend* _backen
     RHI_InputLayoutDescriptor inputLayoutDesc = {};
     inputLayoutDesc.Name    = "InputLayout";
     inputLayoutDesc.Layouts = { RHI_InputSet({ { "CameraMatrices", RHI_INPUT_TYPE_CONSTANT, SHADER_TYPE_FLAG_VERTEX, 0, sizeof(glm::mat4) * 3 }, }),
-                                RHI_InputSet({ { "ModelMatrix", RHI_INPUT_TYPE_SAMPLER2D, SHADER_TYPE_FLAG_PIXEL, 0, 1}, }) };
+                                RHI_InputSet({ { "ModelMatrix", RHI_INPUT_TYPE_SAMPLER, SHADER_TYPE_FLAG_PIXEL, 0, 1}, }) };
 
     m_InputLayout = m_RendererBackend->GetRenderDevice().CreateInputLayout(&inputLayoutDesc);
 
@@ -125,7 +125,7 @@ void DefaultRenderer::OnInitialize(Raydiance::Graphics::RendererBackend* _backen
     texture2DDesc.DebugName     = "TestTexture2D";
     texture2DDesc.Width         = 16;
     texture2DDesc.Height        = 16;
-    texture2DDesc.Format        = RHI_ResourceFormat::RHI_RESOURCE_FORMAT_B8G8R8A8_SRGB;
+    texture2DDesc.Format        = RHI_ResourceFormat::RHI_RESOURCE_FORMAT_B8G8R8A8_UNORM;
     texture2DDesc.InitialState  = RHI_ResourceState::RHI_RESOURCE_STATE_GENERAL_WRITE;
 
     m_Texture = m_RendererBackend->GetRenderDevice().CreateTexture2D(&texture2DDesc);
@@ -183,7 +183,7 @@ void DefaultRenderer::OnInitialize(Raydiance::Graphics::RendererBackend* _backen
     RHI_DescriptorPoolDescriptor poolDesc = {};
     poolDesc.Name = "DescriptorPool";
     poolDesc.MaxDescriptorSet = 1;
-    poolDesc.Sizes = { { RHI_INPUT_TYPE_SAMPLER2D, 1 }, };
+    poolDesc.Sizes = { { RHI_INPUT_TYPE_SAMPLER, 1 }, };
 
     m_DescriptorPool = m_RendererBackend->GetRenderDevice().CreateDescriptorPool(&poolDesc);
 

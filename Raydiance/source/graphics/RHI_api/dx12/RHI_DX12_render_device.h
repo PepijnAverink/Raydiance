@@ -3,6 +3,8 @@
 #include "./graphics/RHI/RHI_render_device.h"
 
 
+#include "./graphics/RHI_api/dx12/pipeline/layout/descriptor/RHI_DX12_descriptor_heap.h"
+
 // DirectX12 includes
 #include <d3d12.h>
 #include <dxgi.h>
@@ -60,7 +62,28 @@ namespace Raydiance
 			[[nodiscard]] inline Microsoft::WRL::ComPtr<IDXGIFactory> GetD3DFactory() const { return m_Factory; }
 			[[nodiscard]] inline Microsoft::WRL::ComPtr<ID3D12Device>  GetD3DDevice() const { return m_Device;  }
 
+
+			// Descriptor allocation
+			RHI_DX12_DescriptorHeapAllocation* AllocateCPUDescriptor(D3D12_DESCRIPTOR_HEAP_TYPE _type, const uint32_t _count = 1);
+			RHI_DX12_DescriptorHeapAllocation* AllocateGPUDescriptor(D3D12_DESCRIPTOR_HEAP_TYPE _type, const uint32_t _count = 1);
+
+			// Getters
+			//DX12DescriptorHeap* GetCPUDescriptorHeapEditor();
+			RHI_DX12_DescriptorHeap* GetCPUDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE _type);
+			RHI_DX12_DescriptorHeap* GetGPUDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE _type);
+
 		private:
+			//// DescriptorHeaps
+			RHI_DX12_DescriptorHeap* m_CPUDescriptorHeap_CBV_SRV_UAV = nullptr;
+			RHI_DX12_DescriptorHeap* m_CPUDescriptorHeap_SAMPLER = nullptr;
+			RHI_DX12_DescriptorHeap* m_CPUDescriptorHeap_RTV = nullptr;
+			RHI_DX12_DescriptorHeap* m_CPUDescriptorHeap_DSV = nullptr;
+
+			RHI_DX12_DescriptorHeap* m_GPUDescriptorHeap_CBV_SRV_UAV = nullptr;
+			RHI_DX12_DescriptorHeap* m_GPUDescriptorHeap_SAMPLER = nullptr;
+
+			void CreateDescriptorHeaps();
+
 			Microsoft::WRL::ComPtr<IDXGIFactory> m_Factory = nullptr;
 			Microsoft::WRL::ComPtr<ID3D12Device> m_Device  = nullptr;
 		};

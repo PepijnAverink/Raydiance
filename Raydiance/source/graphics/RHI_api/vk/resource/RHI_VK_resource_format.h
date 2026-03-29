@@ -18,6 +18,8 @@ namespace Raydiance
 				return VK_FORMAT_R32G32B32_SFLOAT;
 			case RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R16_UINT:
 				return VK_FORMAT_R16_UINT;
+			case RHI_ResourceFormat::RHI_RESOURCE_FORMAT_B8G8R8A8_UNORM:
+				return VK_FORMAT_B8G8R8A8_UNORM;
 			}
 
 			return VK_FORMAT_UNDEFINED;

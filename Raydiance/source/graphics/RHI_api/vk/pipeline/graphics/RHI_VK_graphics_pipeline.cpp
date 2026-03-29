@@ -3,7 +3,7 @@
 
 // Graphics includes
 #include "./graphics/RHI_api/vk/pipeline/layout/RHI_VK_input_layout.h"
-#include "./graphics/RHI_api/vk/pipeline/renderpass/RHI_VK_render_pass.h"
+#include "./graphics/RHI_api/vk/pipeline/graphics/renderpass/RHI_VK_render_pass.h"
 #include "./graphics/RHI_api/vk/pipeline/graphics/topology/RHI_VK_topology.h"
 #include "./graphics/RHI_api/vk/pipeline/graphics/rasterizer/RHI_VK_cull_mode.h"
 #include "./graphics/RHI_api/vk/pipeline/graphics/rasterizer/RHI_VK_fill_mode.h"

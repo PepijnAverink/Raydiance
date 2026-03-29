@@ -9,7 +9,8 @@
 #include "./graphics/RHI/pipeline/graphics/viewport/RHI_scissor_rect.h"
 #include "./graphics/RHI/resource/shader/RHI_shader.h"
 
-#include "./graphics/RHI/pipeline/renderpass/RHI_render_pass.h"
+#include "./graphics/RHI/pipeline/graphics/renderpass/RHI_render_pass.h"
+#include "./graphics/RHI/pipeline/graphics/framebuffer/RHI_frame_buffer.h"
 
 #include <string>
 
@@ -46,7 +47,8 @@ namespace Raydiance
 			RHI_Shader* PixelShader  = nullptr;
 
 			// RenderPass
-			RHI_RenderPass* RenderPass = nullptr;
+			RHI_RenderPass*  RenderPass = nullptr;
+			RHI_FrameBuffer* FrameBuffer = nullptr;
 		};
 	}
 }

@@ -6,6 +6,7 @@ namespace Raydiance
 {
 	namespace Graphics
 	{
+		// TODO:: Seperate flags and type file .h
 		inline VkShaderStageFlags ResolveRHI_VK_ShaderTypeFlag(ShaderTypeFlag _flag)
 		{
 			VkFlags result = 0;

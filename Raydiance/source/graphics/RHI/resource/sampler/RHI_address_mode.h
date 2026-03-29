@@ -17,7 +17,7 @@ namespace Raydiance
 		{
 			RHI_ADDRESS_MODE_INVALID		 = 0x00,
 			RHI_ADDRESS_MODE_REPEAT			 = 0x01,
-			RHI_ADDRESS_MODE_MIRROR			 = 0x02,
+			RHI_ADDRESS_MODE_MIRROR			 = 0x02, // TODO:: Maybe call this mirror_repeat
 			RHI_ADDRESS_MODE_CLAMP_TO_EDGE	 = 0x03,
 			RHI_ADDRESS_MODE_CLAMP_TO_BORDER = 0x04,
 		};
