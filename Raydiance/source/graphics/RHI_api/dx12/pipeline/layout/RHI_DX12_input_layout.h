@@ -1,6 +1,4 @@
-#pragma once
 #include "./graphics/RHI/pipeline/layout/RHI_input_layout.h"
-#include "./core/container/types.h"
 
 #include <D3D12.h>
 
@@ -12,8 +10,10 @@ namespace Raydiance
 		class RHI_DX12_InputLayout final : public RHI_InputLayout
 		{
 		public:
-			RHI_DX12_InputLayout(RHI_DX12_RenderDevice* _renderDevice, const RHI_InputLayoutDescriptor* _inputLayoutDescriptor);
+			RHI_DX12_InputLayout();
 			virtual ~RHI_DX12_InputLayout();
+
+			const Result Initialize(RHI_DX12_RenderDevice* _RHI_RenderDevice, const RHI_InputLayoutDescriptor* _inputLayoutDescriptor);
 
 			// Getters
 			virtual inline ID3D12RootSignature* GetD3DSignature() const { return m_RootSignature; }

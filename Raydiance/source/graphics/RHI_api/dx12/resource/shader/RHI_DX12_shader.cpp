@@ -1,24 +1,42 @@
-#include "./pch.h"
 #include "./graphics/RHI_api/dx12/resource/shader/RHI_DX12_shader.h"
 #include "./graphics/RHI_api/dx12/resource/shader/RHI_DX12_shader_type.h"
 
+#include "./core/files/file_system.h"
 
-#include <D3Dcompiler.h>
+#include "./utilities/string_utilities.h"
 
-#include "./utility/string_utility.h"
-#include "./core/system/file_system.h"
+#include <./atlbase.h>
+#include <./d3d12shader.h>
+#include <stdexcept>
 
 namespace Raydiance
 {
 	namespace Graphics
 	{
-		static Microsoft::WRL::ComPtr<IDxcCompiler3> s_Compiler = nullptr;
-		static Microsoft::WRL::ComPtr<IDxcLibrary>   s_Library = nullptr;
-		static Microsoft::WRL::ComPtr<IDxcUtils>     s_Utils = nullptr;
+		static CComPtr<IDxcCompiler3> s_Compiler = nullptr;
+		static CComPtr<IDxcLibrary>   s_Library = nullptr;
+		static CComPtr<IDxcUtils>     s_Utils = nullptr;
 
-		RHI_DX12_Shader::RHI_DX12_Shader(RHI_DX12_RenderDevice* _renderDevice, const RHI_ShaderDescriptor* _shaderDescriptor)
-			: RHI_Shader(_shaderDescriptor)
-		{ 
+		RHI_DX12_Shader::RHI_DX12_Shader(void)
+			: RHI_Shader()
+		{ }
+
+		RHI_DX12_Shader::~RHI_DX12_Shader(void)
+		{
+			if (m_ShaderBytes != nullptr)
+				m_ShaderBytes->Release();
+		}
+
+		const Result RHI_DX12_Shader::Initialize(RHI_DX12_RenderDevice* _RHI_RenderDevice, const RHI_ShaderDescriptor* _shaderDescriptor)
+		{
+			Result result = RHI_Shader::Initialize(_shaderDescriptor);
+			if (CheckError(result) == true)
+			{
+				// Log error
+				return result;
+			}
+
+
 			HRESULT hres;
 			if (!s_Compiler)
 			{
@@ -45,7 +63,7 @@ namespace Raydiance
 			ID3DBlob* errorBuff;
 
 			// Get the filepaths
-			std::string filepath = _shaderDescriptor->Filepath;
+			std::string filepath = _shaderDescriptor->FilePath.GetPath();
 			std::string compileFilepath = ReplaceFileExtension(filepath, ".cso");
 
 			// Check if the shaders exist
@@ -55,8 +73,8 @@ namespace Raydiance
 			// Error if file does not exist
 			if (exist == false && compiledExist == false)
 			{
-				Logger::Log("User tried to load shader file that does not exist.", LogType::LOG_TYPE_ERROR);
-				return;
+				Logger::Log("User tried to load shader file that does not exist.", LogLevel::LOG_LEVEL_ERROR);
+				return Result::RESULT_ERROR;
 			}
 
 			//if (compiledExist && (FileSystem::GetModificationHash(filepath) < FileSystem::GetModificationHash(compileFilepath) || exist == false) && m_CompiledOptions.ForceRecompile == false)
@@ -74,10 +92,10 @@ namespace Raydiance
 				// Load the HLSL text shader from disk
 				uint32_t codePage = DXC_CP_ACP;
 				IDxcBlobEncoding* sourceBlob;
-				hr = s_Utils->LoadFile(StringToWString(_shaderDescriptor->Filepath).c_str(), &codePage, &sourceBlob);
+				hr = s_Utils->LoadFile(StringToWString(_shaderDescriptor->FilePath.GetPath()).c_str(), &codePage, &sourceBlob);
 				if (FAILED(hr)) {
-					Logger::Log("Could not load shader file", LogType::LOG_TYPE_ERROR);
-					return;
+					Logger::Log("Could not load shader file", LogLevel::LOG_LEVEL_ERROR);
+					return Result::RESULT_ERROR;
 				}
 
 				IDxcIncludeHandler* includeHandler;
@@ -86,21 +104,21 @@ namespace Raydiance
 				std::wstring tp = ResolveDX12ShaderType(m_Type).c_str();
 				LPCWSTR targetProfile = tp.c_str();
 
-				//	std::wstring dir = StringToWString(_shaderDescriptor->FilePath.GetDirectory());
-				//	LPCWSTR directory = dir.c_str();
+				std::wstring dir  = StringToWString(_shaderDescriptor->FilePath.GetDirectory());
+				LPCWSTR directory = dir.c_str();
 
 
-					// Configure the compiler arguments for compiling the HLSL shader to SPIR-V
+				// Configure the compiler arguments for compiling the HLSL shader to SPIR-V
 				std::wstring entryPoint_argument = L"-E" + StringToWString(m_EntryPoint);
 				std::vector<LPCWSTR> arguments = {
 					// (Optional) name of the shader file to be displayed e.g. in an error message
-					StringToWString(_shaderDescriptor->Filepath).c_str(),
+					StringToWString(_shaderDescriptor->FilePath.GetPath()).c_str(),
 					// Shader main entry point
 					entryPoint_argument.c_str(),
 					// Shader target profile
 					L"-T", targetProfile,
 					L"-D", L"D3D12",
-					//	L"-I", directory,
+					L"-I", directory,
 				};
 
 				//if (m_CompiledOptions.Debug == DebugOutput::DEBUG_OUTPUT_MINIMAL)
@@ -118,7 +136,7 @@ namespace Raydiance
 				buffer.Ptr = sourceBlob->GetBufferPointer();
 				buffer.Size = sourceBlob->GetBufferSize();
 
-				Microsoft::WRL::ComPtr<IDxcResult> result{ nullptr };
+				CComPtr<IDxcResult> result{ nullptr };
 				hr = s_Compiler->Compile(&buffer, arguments.data(), (uint32_t)arguments.size(), includeHandler, IID_PPV_ARGS(&result));
 
 				if (SUCCEEDED(hr)) {
@@ -127,7 +145,7 @@ namespace Raydiance
 
 				// Output error if compilation failed
 				if (FAILED(hr) && (result)) {
-					Microsoft::WRL::ComPtr<IDxcBlobEncoding> errorBlob;
+					CComPtr<IDxcBlobEncoding> errorBlob;
 					hr = result->GetErrorBuffer(&errorBlob);
 					if (SUCCEEDED(hr) && errorBlob) {
 						wprintf(L"Compilation failed with errors:\n%hs\n", (const char*)errorBlob->GetBufferPointer());
@@ -158,13 +176,9 @@ namespace Raydiance
 				//	//FileSystem::WriteFile(ReplaceFileExtension(compileFilepath, ".pdb"), pDebugData->GetBufferPointer(), pDebugData->GetBufferSize());
 				//}
 			}
-		}
-		
-		
-		RHI_DX12_Shader::~RHI_DX12_Shader()
-		{ 
-			if (m_ShaderBytes != nullptr)
-				m_ShaderBytes->Release();
+
+
+			return Result::RESULT_GOOD;
 		}
 	}
 }

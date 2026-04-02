@@ -1,18 +1,22 @@
 #pragma once
 #include "./graphics/RHI/pipeline/graphics/framebuffer/RHI_frame_buffer.h"
-#include "./graphics/RHI_api/vk/RHI_VK_render_device.h"
+
+#include <vulkan/vulkan.h>
 
 namespace Raydiance
 {
 	namespace Graphics
 	{
+		class RHI_VK_RenderDevice;
 		class RHI_VK_FrameBuffer final : public RHI_FrameBuffer
 		{
 		public:
-			RHI_VK_FrameBuffer(RHI_VK_RenderDevice* _renderDevice, const RHI_FrameBufferDescriptor* _frameBufferDescriptor);
-			virtual ~RHI_VK_FrameBuffer();
+			RHI_VK_FrameBuffer(void);
+			virtual ~RHI_VK_FrameBuffer(void);
 
-			inline VkFramebuffer GetRHI_VK_FrameBuffer() const { return m_FrameBufferObj; }
+			const Result Initialize(RHI_VK_RenderDevice* _RHI_RenderDevice, const RHI_FrameBufferDescriptor* _framebfuferDescriptor);
+
+			inline VkFramebuffer GetVKFrameBuffer() const { return m_FrameBufferObj; }
 
 		private:
 			VkFramebuffer m_FrameBufferObj;

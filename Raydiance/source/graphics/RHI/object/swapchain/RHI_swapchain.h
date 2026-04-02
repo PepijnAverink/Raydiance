@@ -1,60 +1,59 @@
 #pragma once
-#include "./graphics/RHI/object/swapchain/RHI_swapchain_descriptor.h"
-
-// Graphics includes
-#include "./graphics/RHI/object/command/RHI_command_queue.h"
-
-#include "graphics/RHI/resource/RHI_resource_format.h"
-
+// Core includes
 #include "./core/error/result.h"
 
-#include <vector> // TODO:: Use array...
+// Graphics includes
+#include "./graphics/RHI/object/swapchain/RHI_swapchain_descriptor.h"
 
 namespace Raydiance
 {
 	namespace Graphics
 	{
 		class RHI_FenceCPU;
-
 		class RHI_Texture2D;
-		class TextureView;
+		
+		class RHI_CommandQueue;
+
+		class RHI_RenderDevice;
 		class RHI_Swapchain
 		{
 		public:
-			// Public destructor
 			virtual ~RHI_Swapchain(void);
+			const Result Initialize(const RHI_SwapchainDescriptor* _swapchainDescriptor);
 
-			virtual void Resize(const RHI_CommandQueue& _commandQueue, const uint32 _width, const uint32 _height) = 0;
+			virtual void Resize(RHI_RenderDevice* _RHI_RenderDevice, RHI_CommandQueue* _commandQueue, RHI_FenceCPU* _fence, const uint32_t _width, const uint32_t _height) = 0;
 
-			virtual uint32 AquireNewImage(RHI_CommandQueue* _commandQueue, std::shared_ptr<RHI_FenceCPU> _fence) = 0;
-			virtual void   Present(RHI_CommandQueue* _commandQueue) = 0;
+			virtual uint32_t AquireNewFrame(RHI_CommandQueue* _commandQueue, RHI_FenceCPU* _fence) = 0;
+			virtual void Present(RHI_CommandQueue* _commandQueue) = 0;
 
-			inline uint32 GetBufferCount() const { return m_BufferCount; }
-			inline uint32 GetCurrentBufferIndex() const { return m_BufferIndex; }
 
-			inline uint32 GetWidth() const { return m_Width; }
-			inline uint32 GetHeight() const { return m_Height; }
+			// Getters
+			virtual RHI_Texture2D* GetCurrentRenderTexture(void) const { return m_RenderTargets[m_BufferIndex]; }
+			virtual RHI_Texture2D* GetRenderTextureAtIndex(const uint32_t _id) const { return m_RenderTargets[_id]; }
 
-			inline RHI_ResourceFormat GetFormat() const { return m_ResourceFormat; }
 
-			inline RHI_Texture2D* GetTextureAtIndex(const uint32 _i) const { return m_RenderTargets[_i]; }
+			inline uint32 GetBufferIndex(void)   const { return m_BufferIndex; }
+			inline uint32 GetBufferCount(void)   const { return m_BufferCount; }
+
+			inline uint32_t GetBufferWidth(void)  const { return m_Width; }
+			inline uint32_t GetBufferHeight(void) const { return m_Height; }
+
+			inline bool IsVSyncEnabled(void) const { return m_VSync; }
+			inline RHI_ResourceFormat GetBufferFormat(void) const { return m_ResourceFormat; }
 
 		protected:
-			// Protected constructor and initialize(), user should not create base instance.
 			RHI_Swapchain(void);
-			[[nodiscard]] const Result Initialize(const RHI_SwapchainDescriptor& _swapchainDescriptor);
+			void ReleaseBuffers(void);
 
-			Window* m_WindowPtr = nullptr; //TODO:: Do we have to store this??
-			uint32  m_Width     = 0;
-			uint32  m_Height    = 0;
+			uint32   		m_Width  = 0;
+			uint32			m_Height = 0;
+			uint32			m_BufferCount = 0;
 
+			uint32_t		m_BufferIndex = 0;
+			RHI_Texture2D** m_RenderTargets = nullptr;
+
+			bool			m_VSync = false;
 			RHI_ResourceFormat m_ResourceFormat = RHI_ResourceFormat::RHI_RESOURCE_FORMAT_INVALID;
-
-			uint32_t m_BufferCount = 0;
-			uint32_t m_BufferIndex = 0;
-
-			bool	 m_VSync = false; // TODO:: Check if this works for all api's
-			std::vector<RHI_Texture2D*> m_RenderTargets;
 		};
 	}
 }

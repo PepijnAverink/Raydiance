@@ -1,7 +1,6 @@
 #pragma once
 #include "./graphics/RHI/RHI_adapter.h"
 
-// Vulkan includes
 #include <vulkan/vulkan.h>
 
 namespace Raydiance
@@ -11,20 +10,13 @@ namespace Raydiance
 		class RHI_VK_Adapter final : public RHI_Adapter
 		{
 		public:
-			RHI_VK_Adapter(const VkPhysicalDevice& _physicalDevice);
-			virtual ~RHI_VK_Adapter(void);
+			RHI_VK_Adapter(VkPhysicalDevice _physicsalDevice);
+			virtual ~RHI_VK_Adapter();
 
 			inline const VkPhysicalDevice GetPhysicalDevice() const { return m_PhysicalDevice; }
 
-			inline const VkPhysicalDeviceProperties& GetProperties() const { return m_Properties; }
-
 		private:
-			// The Vulkan physical device handle associated with this adapter.
-			VkPhysicalDevice				 m_PhysicalDevice = VK_NULL_HANDLE;
-
-			// Properties and memory properties of the physical device, stored for later use.
-			VkPhysicalDeviceProperties		 m_Properties;
-			VkPhysicalDeviceMemoryProperties m_MemoryProperties;
+			VkPhysicalDevice m_PhysicalDevice = VK_NULL_HANDLE;
 		};
 	}
 }

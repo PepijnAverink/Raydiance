@@ -2,8 +2,6 @@
 #include "./graphics/RHI/pipeline/graphics/rasterizer/RHI_fill_mode.h"
 #include "./core/error/logger.h"
 
-#include "./core/container/types.h"
-
 #include <d3d12.h>
 
 namespace Raydiance
@@ -14,13 +12,13 @@ namespace Raydiance
 		{
 			switch (_fillMode)
 			{
-			case RHI_FillMode::RHI_FILL_MODE_SOLID:
-				return D3D12_FILL_MODE_SOLID;
-			case RHI_FillMode::RHI_FILL_MODE_WIREFRAME:
-				return D3D12_FILL_MODE_WIREFRAME;
+				case RHI_FillMode::RHI_FILL_MODE_SOLID:
+					return D3D12_FILL_MODE_SOLID;
+				case RHI_FillMode::RHI_FILL_MODE_WIREFRAME:
+					return D3D12_FILL_MODE_WIREFRAME;
 			}
 
-			Logger::Log("Failed to resolve DX12FillMode: " + (uint32)_fillMode, LogType::LOG_TYPE_ERROR);
+			Logger::Log("Failed to resolve DX12FillMode: " + (uint32)_fillMode, LogLevel::LOG_LEVEL_ERROR);
 			return D3D12_FILL_MODE_SOLID;
 		}
 	}

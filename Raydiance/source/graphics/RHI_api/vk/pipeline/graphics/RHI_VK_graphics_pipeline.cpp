@@ -1,27 +1,40 @@
-#include "./pch.h"
 #include "./graphics/RHI_api/vk/pipeline/graphics/RHI_VK_graphics_pipeline.h"
 
-// Graphics includes
+#include "./graphics/RHI_api/vk/RHI_vk_render_device.h"
 #include "./graphics/RHI_api/vk/pipeline/layout/RHI_VK_input_layout.h"
 #include "./graphics/RHI_api/vk/pipeline/graphics/renderpass/RHI_VK_render_pass.h"
 #include "./graphics/RHI_api/vk/pipeline/graphics/topology/RHI_VK_topology.h"
 #include "./graphics/RHI_api/vk/pipeline/graphics/rasterizer/RHI_VK_cull_mode.h"
 #include "./graphics/RHI_api/vk/pipeline/graphics/rasterizer/RHI_VK_fill_mode.h"
 #include "./graphics/RHI_api/vk/pipeline/graphics/rasterizer/RHI_VK_winding_order.h"
-
-#include "./graphics/RHI_api/vk/resource/shader/RHI_VK_shader.h"
 #include "./graphics/RHI_api/vk/resource/RHI_VK_resource_format.h"
+#include "./graphics/RHI_api/vk/resource/shader/RHI_VK_shader.h"
+#include "./utilities/string_utilities.h"
 
-// Utility includes
-#include "./utility/string_utility.h"
+#include "./graphics/RHI_api/vk/pipeline/graphics/framebuffer/RHI_VK_frame_buffer.h"
 
 namespace Raydiance
 {
     namespace Graphics
     {
-        RHI_VK_GraphicsPipeline::RHI_VK_GraphicsPipeline(RHI_VK_RenderDevice* _renderDevice, const RHI_GraphicsPipelineDescriptor* _graphicsPipelineDescriptor)
-            : RHI_GraphicsPipeline(_graphicsPipelineDescriptor)
+        RHI_VK_GraphicsPipeline::RHI_VK_GraphicsPipeline()
+            : RHI_GraphicsPipeline()
+        {  }
+
+        RHI_VK_GraphicsPipeline::~RHI_VK_GraphicsPipeline()
         {
+            vkDestroyPipeline(((RHI_VK_RenderDevice*)RHI_RenderDevice::Get())->GetVKDevice(), m_GraphicsPipelineObj, nullptr);
+        }
+
+        const Result RHI_VK_GraphicsPipeline::Initialize(RHI_VK_RenderDevice* _RHI_RenderDevice, const RHI_GraphicsPipelineDescriptor* _graphicsPipelineDescriptor)
+        {
+            Result result = RHI_GraphicsPipeline::Initialize(_graphicsPipelineDescriptor);
+            if (CheckError(result) == true)
+            {
+                // Log error
+                return result;
+            }
+
             std::vector<VkPipelineShaderStageCreateInfo> shaderStages;
 
             char* vertexEntryPoint = nullptr;
@@ -37,7 +50,7 @@ namespace Raydiance
                 VkPipelineShaderStageCreateInfo vertShaderStageInfo{};
                 vertShaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
                 vertShaderStageInfo.stage = VK_SHADER_STAGE_VERTEX_BIT;
-                vertShaderStageInfo.module = ((RHI_VK_Shader*)_graphicsPipelineDescriptor->VertexShader)->GetRHI_VK_ShaderModule();
+                vertShaderStageInfo.module = ((RHI_VK_Shader*)_graphicsPipelineDescriptor->VertexShader)->GetVKShaderModule();
                 vertShaderStageInfo.pName = vertexEntryPoint;
 
                 shaderStages.push_back(vertShaderStageInfo);
@@ -53,7 +66,7 @@ namespace Raydiance
                 VkPipelineShaderStageCreateInfo fragShaderStageInfo{};
                 fragShaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
                 fragShaderStageInfo.stage = VK_SHADER_STAGE_FRAGMENT_BIT;
-                fragShaderStageInfo.module = ((RHI_VK_Shader*)_graphicsPipelineDescriptor->PixelShader)->GetRHI_VK_ShaderModule();
+                fragShaderStageInfo.module = ((RHI_VK_Shader*)_graphicsPipelineDescriptor->PixelShader)->GetVKShaderModule();
                 fragShaderStageInfo.pName = pixelEntryPoint;
 
                 shaderStages.push_back(fragShaderStageInfo);
@@ -113,16 +126,23 @@ namespace Raydiance
             vertexInputInfo.pVertexBindingDescriptions = &bindingDescription;
             vertexInputInfo.pVertexAttributeDescriptions = vertexInput.data();
 
-            VkPipelineColorBlendAttachmentState colorBlendAttachment{};
-            colorBlendAttachment.colorWriteMask = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
-            colorBlendAttachment.blendEnable = VK_FALSE;
+            uint32 attachmentCount = ((RHI_VK_FrameBuffer*)_graphicsPipelineDescriptor->FrameBuffer)->GetAttachmentCount();
+            std::vector<VkPipelineColorBlendAttachmentState> blendAttachments;
+            for (int i = 0; i < attachmentCount; i++)
+            {
+                VkPipelineColorBlendAttachmentState colorBlendAttachment{};
+                colorBlendAttachment.colorWriteMask = VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT | VK_COLOR_COMPONENT_A_BIT;
+                colorBlendAttachment.blendEnable = VK_FALSE;
+
+                blendAttachments.push_back(colorBlendAttachment);
+            }
 
             VkPipelineColorBlendStateCreateInfo colorBlending{};
             colorBlending.sType = VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO;
             colorBlending.logicOpEnable = VK_FALSE;
             colorBlending.logicOp = VK_LOGIC_OP_COPY;
-            colorBlending.attachmentCount = 1;
-            colorBlending.pAttachments = &colorBlendAttachment;
+            colorBlending.attachmentCount = attachmentCount;
+            colorBlending.pAttachments = blendAttachments.data();
             colorBlending.blendConstants[0] = 0.0f;
             colorBlending.blendConstants[1] = 0.0f;
             colorBlending.blendConstants[2] = 0.0f;
@@ -131,14 +151,23 @@ namespace Raydiance
             std::vector<VkDynamicState> states = { VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR };
             VkPipelineDynamicStateCreateInfo dynamic;
             dynamic.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
-            dynamic.dynamicStateCount = states.size();
+            dynamic.dynamicStateCount = (uint32)states.size();
             dynamic.pDynamicStates = states.data();
             dynamic.flags = 0;
             dynamic.pNext = NULL;
 
+            VkPipelineDepthStencilStateCreateInfo depthStencil = {};
+            depthStencil.sType                 = VK_STRUCTURE_TYPE_PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO,
+            depthStencil.depthTestEnable       = VK_TRUE;
+            depthStencil.depthWriteEnable      = VK_TRUE;
+            depthStencil.depthCompareOp        = VK_COMPARE_OP_LESS;
+            depthStencil.depthBoundsTestEnable = VK_FALSE;
+            depthStencil.stencilTestEnable     = VK_FALSE;
+
+
             VkGraphicsPipelineCreateInfo pipelineInfo{};
             pipelineInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
-            pipelineInfo.stageCount = shaderStages.size();
+            pipelineInfo.stageCount = (uint32)shaderStages.size();
             pipelineInfo.pStages = shaderStages.data();
             pipelineInfo.pVertexInputState = &vertexInputInfo;
             pipelineInfo.pInputAssemblyState = &inputAssembly;
@@ -146,22 +175,22 @@ namespace Raydiance
             pipelineInfo.pViewportState = &viewportState;
             pipelineInfo.pMultisampleState = &multisampling;
             pipelineInfo.pColorBlendState = &colorBlending;
-            pipelineInfo.layout = ((RHI_VK_InputLayout*)_graphicsPipelineDescriptor->InputLayout)->GetRHI_VK_InputLayout();
-            pipelineInfo.renderPass = ((RHI_VK_RenderPass*)_graphicsPipelineDescriptor->RenderPass)->GetRHI_VK_RenderPass();
+            pipelineInfo.layout = ((RHI_VK_InputLayout*)_graphicsPipelineDescriptor->InputLayout)->GetVKInputLayout();
+            pipelineInfo.renderPass = ((RHI_VK_RenderPass*)_graphicsPipelineDescriptor->RenderPass)->GetVKRenderPass();
             pipelineInfo.subpass = 0;
             pipelineInfo.basePipelineHandle = VK_NULL_HANDLE;
             pipelineInfo.pDynamicState = &dynamic;
 
-            if (vkCreateGraphicsPipelines(_renderDevice->GetDevice(), VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &m_GraphicsPipelineObj) != VK_SUCCESS)
-                Logger::Log("VK_ERROR - Failed to create 'VKGraphicsPipline' object.", LogType::LOG_TYPE_ERROR);
+            if (_graphicsPipelineDescriptor->DepthEnable == true)
+                pipelineInfo.pDepthStencilState = &depthStencil;
+
+            if (vkCreateGraphicsPipelines(_RHI_RenderDevice->GetVKDevice(), VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &m_GraphicsPipelineObj) != VK_SUCCESS)
+                Logger::Log("VK_ERROR - Failed to create 'VKGraphicsPipline' object.", LogLevel::LOG_LEVEL_ERROR);
 
             free(vertexEntryPoint);
             free(pixelEntryPoint);
-        }
 
-        RHI_VK_GraphicsPipeline::~RHI_VK_GraphicsPipeline()
-        {
-            vkDestroyPipeline(static_cast<RHI_VK_RenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_GraphicsPipelineObj, nullptr);
+            return Result::RESULT_GOOD;
         }
     }
 }

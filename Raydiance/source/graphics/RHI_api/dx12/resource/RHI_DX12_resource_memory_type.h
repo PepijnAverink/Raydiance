@@ -12,13 +12,13 @@ namespace Raydiance
 		{
 			switch (_type)
 			{
-			case RHI_ResourceMemoryType::RHI_RESOURCE_MEMORY_TYPE_CPU_MEMORY:
-				return D3D12_HEAP_TYPE_UPLOAD;
-			case RHI_ResourceMemoryType::RHI_RESOURCE_MEMORY_TYPE_GPU_MEMORY:
-				return D3D12_HEAP_TYPE_DEFAULT;
+				case RHI_ResourceMemoryType::RHI_RESOURCE_MEMORY_TYPE_CPU:
+					return D3D12_HEAP_TYPE_UPLOAD;
+				case RHI_ResourceMemoryType::RHI_RESOURCE_MEMORY_TYPE_GPU:
+					return D3D12_HEAP_TYPE_DEFAULT;
 			}
 
-			Logger::Log("Failed to resolve DX12BufferUsage...", LogType::LOG_TYPE_ERROR);
+			Logger::Log("Failed to resolve DX12BufferUsage...", LogLevel::LOG_LEVEL_ERROR);
 			return D3D12_HEAP_TYPE_DEFAULT;
 		}
 	}

@@ -1,4 +1,3 @@
-#include "./pch.h"
 #include "./graphics/RHI_api/dx12/pipeline/layout/RHI_DX12_input_layout.h"
 #include "./graphics/RHI_api/dx12/RHI_DX12_render_device.h"
 #include "./graphics/RHI_api/dx12/pipeline/layout/RHI_DX12_input_type.h"
@@ -9,14 +8,29 @@
 #include <stdexcept>
 #include <wrl.h> 
 
-
 namespace Raydiance
 {
 	namespace Graphics
 	{
-		RHI_DX12_InputLayout::RHI_DX12_InputLayout(RHI_DX12_RenderDevice* _renderDevice, const RHI_InputLayoutDescriptor* _inputLayoutDescriptor)
-			: RHI_InputLayout(_inputLayoutDescriptor)
+		RHI_DX12_InputLayout::RHI_DX12_InputLayout(void)
+			: RHI_InputLayout()
+		{ }
+
+		RHI_DX12_InputLayout::~RHI_DX12_InputLayout()
 		{
+			if (m_RootSignature != nullptr)
+				m_RootSignature->Release();
+		}
+
+		const Result RHI_DX12_InputLayout::Initialize(RHI_DX12_RenderDevice* _RHI_RenderDevice, const RHI_InputLayoutDescriptor* _inputLayoutDescriptor)
+		{
+			Result result = RHI_InputLayout::Initialize(_inputLayoutDescriptor);
+			if (CheckError(result) == true)
+			{
+				// Log error
+				return result;
+			}
+
 			// Precalculate range scope
 			uint32_t sc = 0;
 			for (uint32_t i = 0; i < _inputLayoutDescriptor->Layouts.size(); i++)
@@ -41,11 +55,11 @@ namespace Raydiance
 
 				if (count == 1 && inputElements[0].Type == RHI_InputType::RHI_INPUT_TYPE_CONSTANT)
 				{
-					parameter.ParameterType = ResolveDX12ParameterType(inputElements[0].Type);
-					parameter.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;// ResolveDX12ShaderVisibilityFlag(inputElements[0].StageFlags);
+					parameter.ParameterType            = ResolveDX12ParameterType(inputElements[0].Type);
+					parameter.ShaderVisibility		   = D3D12_SHADER_VISIBILITY_ALL;// ResolveDX12ShaderVisibilityFlag(inputElements[0].StageFlags);
 					parameter.Constants.Num32BitValues = inputElements[0].Count;
 					parameter.Constants.ShaderRegister = 999;// inputElements[0].BaseRegisterID;
-					parameter.Constants.RegisterSpace = 999;
+					parameter.Constants.RegisterSpace  = 999;
 
 
 					constantParamter = parameter;
@@ -56,9 +70,9 @@ namespace Raydiance
 					for (uint32_t j = 0; j < count; j++)
 					{
 						D3D12_DESCRIPTOR_RANGE range;
-						range.RangeType = ResolveDX12InputType(inputElements[j].Type, inputElements[j].StageFlag);
+						range.RangeType = ResolveDX12InputType(inputElements[j].Type, inputElements[j].Flags);
 						range.NumDescriptors = inputElements[j].Count;
-						range.BaseShaderRegister = inputElements[j].BaseRegisterID;
+						range.BaseShaderRegister = inputElements[j].DescriptorID;
 						range.RegisterSpace = i - constant_subtract;
 						range.OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
 
@@ -121,20 +135,16 @@ namespace Raydiance
 					OutputDebugStringA((char*)errorBlob->GetBufferPointer());
 				}
 				throw std::runtime_error("Failed to serialize root signature.");
-				return;
+				return Result::RESULT_ERROR;
 			}
 
-			hr = _renderDevice->GetD3DDevice()->CreateRootSignature(0, signature->GetBufferPointer(), signature->GetBufferSize(), IID_PPV_ARGS(&m_RootSignature));
+			hr = _RHI_RenderDevice->GetD3DDevice()->CreateRootSignature(0, signature->GetBufferPointer(), signature->GetBufferSize(), IID_PPV_ARGS(&m_RootSignature));
 			if (FAILED(hr))
 			{
-				return;
+				return Result::RESULT_ERROR;
 			}
-		}
-		
-		RHI_DX12_InputLayout::~RHI_DX12_InputLayout()
-		{
-			if (m_RootSignature != nullptr)
-				m_RootSignature->Release();
+
+			return Result::RESULT_GOOD;
 		}
 	}
 }

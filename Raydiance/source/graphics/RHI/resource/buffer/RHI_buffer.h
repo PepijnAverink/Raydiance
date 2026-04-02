@@ -1,6 +1,7 @@
 #pragma once
+#include "./core/error/result.h"
 #include "./graphics/RHI/resource/buffer/RHI_buffer_descriptor.h"
-//#include "graphics/RHI/resource/buffer/buffer_usage.h"
+
 
 namespace Raydiance
 {
@@ -9,25 +10,30 @@ namespace Raydiance
 		class RHI_Buffer
 		{
 		public:
-			RHI_Buffer(const RHI_BufferDescriptor* _bufferDescriptor);
 			virtual ~RHI_Buffer();
 
-			virtual void SetData(void* _data, const uint32_t _size) = 0;
+			virtual void SetData(void* _data, uint32_t _offset, uint32_t _size) = 0;
+			virtual void GetData(void* _data, uint32_t _offset, uint32_t _size) = 0;
 
-			[[nodiscard]] inline uint32 GetSize() const noexcept { return m_Size; }
-			inline const RHI_BufferLayout& GetBufferLayout() const { return m_Layout; }
+			virtual void* Map() = 0;
+			virtual void UnMap() = 0;
 
-			// Flag functions
-			[[nodiscard]] inline uint32 GetUsageFlags() const noexcept 
-				{ return m_UsageFlags; }
-			[[nodiscard]] inline bool   CheckUsageFlags(const RHI_BufferUsageFlag _flag) const noexcept 
-				{ return (m_UsageFlags&static_cast<uint32>(_flag)); }
+			// Getters
+			inline const RHI_ResourceMemoryType& GetMemoryType()  const { return m_MemoryType; }
+			inline       uint32_t     GetSize()   const { return m_Size; }
+			inline		 uint32_t	  GetStride() const { return m_Stride; }
+			inline       uint32_t  GetBindFlags() const { return m_BindFlags; }
 
 		protected:
-			uint32			 m_Size;
+			RHI_Buffer();
 
-			uint32			 m_UsageFlags;
-			RHI_BufferLayout m_Layout;
+			const Result Initialize(const RHI_BufferDescriptor* _bufferDescriptor);
+
+			RHI_ResourceMemoryType	m_MemoryType;
+			RHI_BufferLayout		m_Layout;
+			uint32_t				m_Size;
+			uint32_t				m_Stride;
+			uint32_t				m_BindFlags = 0;
 		};
 	}
 }

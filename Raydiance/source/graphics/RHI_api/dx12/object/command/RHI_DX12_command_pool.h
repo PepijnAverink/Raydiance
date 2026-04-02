@@ -4,10 +4,6 @@
 // D3D12 includes
 #include <d3d12.h>
 
-// Generic includes
-#include <wrl/client.h>
-
-
 namespace Raydiance
 {
 	namespace Graphics
@@ -16,15 +12,18 @@ namespace Raydiance
 		class RHI_DX12_CommandPool final : public RHI_CommandPool
 		{
 		public:
-			RHI_DX12_CommandPool(RHI_DX12_RenderDevice* _renderDevice, const RHI_CommandPoolDescriptor& _commandPoolDescriptor);
-			virtual ~RHI_DX12_CommandPool();
+			RHI_DX12_CommandPool(void);
+			virtual ~RHI_DX12_CommandPool(void);
+
+			const Result Initialize(const RHI_DX12_RenderDevice* _RHI_RenderDevice, const RHI_CommandPoolDescriptor* _commandPoolDescriptor);
+
 
 			virtual void Reset() override;
 
-			inline Microsoft::WRL::ComPtr<ID3D12CommandAllocator> GetD3DCommandPool() const { return m_CommandAllocatorObj; }
+			inline virtual ID3D12CommandAllocator* GetD3DCommandPool() const { return m_CommandAllocatorObj; }
 
 		private:
-			Microsoft::WRL::ComPtr<ID3D12CommandAllocator> m_CommandAllocatorObj = nullptr;
+			ID3D12CommandAllocator* m_CommandAllocatorObj;
 		};
 	}
 }

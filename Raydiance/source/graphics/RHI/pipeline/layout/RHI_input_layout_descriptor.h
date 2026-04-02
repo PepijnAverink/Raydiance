@@ -14,7 +14,8 @@ namespace Raydiance
 			RHI_InputLayoutDescriptor() = default;
 
 			std::string				  Name;
-			std::vector<RHI_InputSet>     Layouts;
+			std::vector<RHI_InputSet> Layouts;
+			//std::vector<Sampler*>   Samplers;
 		};
 	}
 }

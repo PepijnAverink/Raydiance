@@ -1,46 +1,65 @@
-#include "./pch.h"
-#include "./graphics/RHI_api/vk/RHI_vk_adapter.h"
-
-// Graphics includes
+#include "./graphics/RHI_api/vk/RHI_VK_adapter.h"
 #include "./graphics/RHI_api/vk/RHI_VK_adapter_type.h"
-#include "./graphics/RHI_api/vk/RHI_VK_adapter_features.h"
 
+#include "./graphics/RHI_api/vk/RHI_VK_adapter_features.h"
 
 namespace Raydiance
 {
 	namespace Graphics
 	{
-		RHI_VK_Adapter::RHI_VK_Adapter(const VkPhysicalDevice& _physicalDevice)
-			: m_PhysicalDevice(_physicalDevice)
+		RHI_VK_Adapter::RHI_VK_Adapter(VkPhysicalDevice _physicsalDevice)
+			: m_PhysicalDevice(_physicsalDevice)
 		{
 			// Gather physical device properties
-			vkGetPhysicalDeviceProperties(m_PhysicalDevice, &m_Properties);
+			VkPhysicalDeviceProperties properties;
+			vkGetPhysicalDeviceProperties(m_PhysicalDevice, &properties);
 
 			// Set internal properties based on adapter query
 			// ----------------------------------------------
-			m_Name   = m_Properties.deviceName;
-			m_Vendor = ResolvePCI_ID(m_Properties.vendorID);
-			m_Type   = ResolveVKAdapterType(m_Properties.deviceType);
+			m_Name   = properties.deviceName;
+			m_Vendor = ResolvePCI_ID(properties.vendorID);
+			m_Type   = ResolveVKAdapterType(properties.deviceType);
 
 			// Determine the available device local memory.
-			vkGetPhysicalDeviceMemoryProperties(m_PhysicalDevice, &m_MemoryProperties);
+			VkPhysicalDeviceMemoryProperties memProperties;
+			vkGetPhysicalDeviceMemoryProperties(m_PhysicalDevice, &memProperties);
 
-			// Loop over the memory heaps and find the one with the largest size that is device local memory.
-			for (uint32 i = 0; i < m_MemoryProperties.memoryHeapCount; ++i)
+			auto heapsPointer = memProperties.memoryHeaps;
+			auto heaps = std::vector<VkMemoryHeap>(heapsPointer, heapsPointer + memProperties.memoryHeapCount);
+
+			for (const auto& heap : heaps)
 			{
-				const auto& heap = m_MemoryProperties.memoryHeaps[i];
-
-				// Store the size of the largest device local memory heap.
-				if (heap.flags & VK_MEMORY_HEAP_DEVICE_LOCAL_BIT)
-					m_VRam = std::max<uint64>(m_VRam, heap.size);
+				if (heap.flags & VkMemoryHeapFlagBits::VK_MEMORY_HEAP_DEVICE_LOCAL_BIT)
+				{
+					// Device local heap, should be size of total GPU VRAM.
+					//heap.size will be the size of VRAM in bytes. (bigger is better)
+					m_VRam = ((uint32)heap.size > m_VRam) ? (uint32)heap.size : m_VRam;
+				}
 			}
 
-
-			// Define new features
+			// Setup the features of the adapter
+			// ----------------------------------------------
 			m_Features = RHI_VK_AdapterFeatures(m_PhysicalDevice);
+
+
+			VkImageFormatProperties2 props;
+			props.sType = VK_STRUCTURE_TYPE_IMAGE_FORMAT_PROPERTIES_2;
+			props.pNext = NULL;
+
+			VkPhysicalDeviceImageFormatInfo2 formatInfo;
+			formatInfo.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_FORMAT_INFO_2;
+
+			VkResult result = vkGetPhysicalDeviceImageFormatProperties2(
+				m_PhysicalDevice,
+				&formatInfo,
+				&props
+			);
+
+			int z = 0;
+
 		}
 
-		RHI_VK_Adapter::~RHI_VK_Adapter(void)
+		RHI_VK_Adapter::~RHI_VK_Adapter()
 		{ }
 	}
 }

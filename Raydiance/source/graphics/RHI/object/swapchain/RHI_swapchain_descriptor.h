@@ -1,28 +1,26 @@
 #pragma once
-#include "./core/container/types.h" 
-
-class Window;
+#include "./core/container/types.h"
+#include "./graphics/RHI/resource/RHI_resource_format.h"
 
 namespace Raydiance
 {
 	namespace Graphics
 	{
-		class RHI_SwapchainDescriptor
+		class RHI_SwapchainDescriptor final
 		{
 		public:
-			// Default constructor and descructor
-			// ======================================
-			 RHI_SwapchainDescriptor(void) = default;
-			~RHI_SwapchainDescriptor(void) = default;
+			RHI_SwapchainDescriptor() = default;
 
+			std::string			Name;
 
-			// Raw data used for object creation
-			// ======================================
-			std::string Name;
-			Window*     Window = nullptr;
+			uint32  			Width;
+			uint32  			Height;
+			uint8 				BufferCount;
 
-			uint32      Width = 0;
-			uint32      Height = 0;
+			void*				NativeWindowHandle = nullptr;
+
+			bool				VSync  = true;
+			RHI_ResourceFormat  Format = RHI_ResourceFormat::RHI_RESOURCE_FORMAT_INVALID;
 		};
 	}
 }

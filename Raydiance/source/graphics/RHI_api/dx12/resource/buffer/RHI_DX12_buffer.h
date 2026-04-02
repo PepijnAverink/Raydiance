@@ -1,15 +1,7 @@
 #pragma once
 #include "./graphics/RHI/resource/buffer/RHI_buffer.h"
-#include "./graphics/RHI_api/vk/RHI_VK_render_device.h"
 
-
-// D3D12 includes
-#include <d3d12.h>
-
-
-// Generic includes
-#include <wrl/client.h>
-
+#include <D3D12.h>
 
 namespace Raydiance
 {
@@ -19,17 +11,24 @@ namespace Raydiance
 		class RHI_DX12_Buffer final : public RHI_Buffer
 		{
 		public:
-					 RHI_DX12_Buffer(RHI_DX12_RenderDevice* _renderDevice, const RHI_BufferDescriptor* _bufferDescriptor);
+			RHI_DX12_Buffer();
 			virtual ~RHI_DX12_Buffer();
 
-			virtual void SetData(void* _data, const uint32_t _size) override;
+			const Result Initialize(RHI_DX12_RenderDevice* _RHI_RenderDevice, const RHI_BufferDescriptor* _bufferDescriptor);
+
+			virtual void SetData(void* _data, uint32_t _offset, uint32_t _size) override;
+			virtual void GetData(void* _data, uint32_t _offset, uint32_t _size) override;
+
+			virtual void* Map() override;
+			virtual void UnMap() override;
 
 			// Getters
-			inline Microsoft::WRL::ComPtr<ID3D12Resource> GetD3DBuffer() const { return m_Buffer; }
+			inline ID3D12Resource* GetD3DBuffer() const { return m_Buffer; }
+			inline DXGI_FORMAT GetD3DFormat() const { return m_IndexFormat; }
 
 		private:
-			Microsoft::WRL::ComPtr<ID3D12Resource> m_Buffer = nullptr;
-			
+			ID3D12Resource* m_Buffer;
+			DXGI_FORMAT     m_IndexFormat;
 		};
 	}
 }

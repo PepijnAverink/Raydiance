@@ -1,4 +1,6 @@
 #pragma once
+#include "./core/error/result.h"
+
 #include "./graphics/RHI/resource/texture/RHI_texture2D_descriptor.h"
 
 namespace Raydiance
@@ -8,21 +10,22 @@ namespace Raydiance
 		class RHI_Texture2D
 		{
 		public:
-			RHI_Texture2D(const RHI_Texture2DDescriptor* _texture2DDescriptor);
-			virtual ~RHI_Texture2D();
+			virtual ~RHI_Texture2D(void);
 
-			// Get dimensions
-			inline uint32_t GetWidth() const { return m_Width; }
-			inline uint32_t GetHeight() const { return m_Height; }
+			// Getters
+			inline uint32 GetWidth(void)  const { return m_Width; }
+			inline uint32 GetHeight(void) const { return m_Height; }
 
-			inline RHI_ResourceFormat GetFormat() const { return m_Format; }
+			inline RHI_ResourceFormat GetFormat(void) const { return m_Format; }
 
 		protected:
-			uint32_t m_Width;
-			uint32_t m_Height;
+			RHI_Texture2D(void);
 
-			RHI_ResourceFormat m_Format = RHI_ResourceFormat::RHI_RESOURCE_FORMAT_INVALID;
-			RHI_ResourceState m_State = RHI_ResourceState::RHI_RESOURCE_STATE_INVALID;
+			const Result Initialize(const RHI_Texture2DDescriptor* _texture2DDescriptor);
+			
+			uint32			   m_Width = 0;
+			uint32			   m_Height = 0;
+			RHI_ResourceFormat m_Format;
 		};
 	}
 }

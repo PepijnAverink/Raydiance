@@ -1,23 +1,29 @@
 #pragma once
+// Graphics includes
 #include "./graphics/RHI/object/command/RHI_command_queue.h"
-#include "./graphics/RHI_api/vk/RHI_VK_render_device.h"
+
+// Vulkan includes
+#include <./vulkan/vulkan.h>
 
 namespace Raydiance
 {
 	namespace Graphics
 	{
+		class RHI_VK_RenderDevice;
 		class RHI_VK_CommandQueue final : public RHI_CommandQueue
 		{
 		public:
-					 RHI_VK_CommandQueue(void);
-			virtual ~RHI_VK_CommandQueue(void);
+			RHI_VK_CommandQueue();
+			virtual ~RHI_VK_CommandQueue();
 
-			[[nodiscard]] const Result Initialize(const RHI_VK_RenderDevice& _renderDevice, const RHI_CommandQueueDescriptor& _commandQueueDescriptor);
+			const Result Initialize(RHI_VK_RenderDevice* _renderDevice, const RHI_CommandQueueDescriptor* _commandQueueDescriptor);
 
-			virtual void SubmitCommandBuffer(RHI_CommandBuffer* _commandBuffer, std::shared_ptr<RHI_FenceCPU> _fence) override;
+			virtual void Execute(RHI_CommandBuffer* _commandBuffer, RHI_FenceCPU* _fence = nullptr) override;
 
-			// Getter functions
-			// --------------------------------------------
+			virtual void InsertDebugLabel(const std::string& _name, float* _color) override;
+			virtual void BeginDebugLabel(const std::string& _name, float* _color) override;
+			virtual void EndDebugLabel() override;
+
 			inline VkQueue GetVKQueue()    const { return m_CommandQueueHandle; }
 			inline uint32  GetVKFamilyID() const { return m_FamilyID; }
 

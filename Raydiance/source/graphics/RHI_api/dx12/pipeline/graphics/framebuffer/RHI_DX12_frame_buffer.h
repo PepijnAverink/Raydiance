@@ -3,7 +3,6 @@
 
 #include <d3d12.h>
 
-
 namespace Raydiance
 {
 	namespace Graphics
@@ -12,8 +11,10 @@ namespace Raydiance
 		class RHI_DX12_FrameBuffer final : public RHI_FrameBuffer
 		{
 		public:
-			RHI_DX12_FrameBuffer(RHI_DX12_RenderDevice* _renderDevice, const RHI_FrameBufferDescriptor* _frameBufferDescriptor);
-			virtual ~RHI_DX12_FrameBuffer();
+			RHI_DX12_FrameBuffer(void);
+			virtual ~RHI_DX12_FrameBuffer(void);
+
+			const Result Initialize(RHI_DX12_RenderDevice* _RHI_RenderDevice, const RHI_FrameBufferDescriptor* _framebfuferDescriptor);
 
 			inline uint32_t GetDescriptorSize() const { return m_BaseSize; }
 			inline D3D12_CPU_DESCRIPTOR_HANDLE GetRenderTextureCPUHandle() const { return m_RenderTextureBaseHandleCPU; }
@@ -23,6 +24,7 @@ namespace Raydiance
 			uint32_t m_BaseSize = 0;
 			D3D12_CPU_DESCRIPTOR_HANDLE	m_RenderTextureBaseHandleCPU;
 			D3D12_CPU_DESCRIPTOR_HANDLE	m_DepthStecnilTextureHandleCPU;
+			
 		};
 	}
 }

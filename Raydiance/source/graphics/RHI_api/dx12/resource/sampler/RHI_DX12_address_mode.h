@@ -14,7 +14,7 @@ namespace Raydiance
 			{
 				case RHI_AddressMode::RHI_ADDRESS_MODE_REPEAT:
 					return D3D12_TEXTURE_ADDRESS_MODE_WRAP;
-				case RHI_AddressMode::RHI_ADDRESS_MODE_MIRROR:
+				case RHI_AddressMode::RHI_ADDRESS_MODE_MIRROR_REPEAT:
 					return D3D12_TEXTURE_ADDRESS_MODE_MIRROR;
 				case RHI_AddressMode::RHI_ADDRESS_MODE_CLAMP_TO_EDGE:
 					return D3D12_TEXTURE_ADDRESS_MODE_CLAMP;

@@ -12,13 +12,13 @@ namespace Raydiance
 		{
 			switch (_fillMode)
 			{
-			case RHI_FillMode::RHI_FILL_MODE_SOLID:
-				return VK_POLYGON_MODE_FILL;
-			case RHI_FillMode::RHI_FILL_MODE_WIREFRAME:
-				return VK_POLYGON_MODE_LINE;
+				case RHI_FillMode::RHI_FILL_MODE_SOLID:
+					return VK_POLYGON_MODE_FILL;
+				case RHI_FillMode::RHI_FILL_MODE_WIREFRAME:
+					return VK_POLYGON_MODE_LINE;
 			}
 
-			Logger::Log("VK_ERROR - Failed to resolve FillMode: " + _fillMode, LogType::LOG_TYPE_ERROR);
+			Logger::Log("VK_ERROR - Failed to resolve FillMode: " + (uint8)_fillMode, LogLevel::LOG_LEVEL_ERROR);
 			return VK_POLYGON_MODE_FILL;
 		}
 	}

@@ -1,5 +1,4 @@
 #pragma once
-// Graphics includes
 #include "./graphics/RHI/pipeline/layout/descriptor/RHI_descriptor_pool_descriptor.h"
 #include "./graphics/RHI/pipeline/layout/descriptor/RHI_descriptor_set.h"
 
@@ -10,8 +9,10 @@ namespace Raydiance
 		class RHI_DescriptorPool
 		{
 		public:
-			RHI_DescriptorPool(const RHI_DescriptorPoolDescriptor* _descriptorPoolDescriptor);
+			RHI_DescriptorPool(void);
 			virtual ~RHI_DescriptorPool();
+
+			const Result Initialize(const RHI_DescriptorPoolDescriptor* _descriptorPoolDescriptor);
 
 			virtual RHI_DescriptorSet* AllocateDescriptorSet(const RHI_DescriptorSetDescriptor* _descriptorSetDescriptor) = 0;
 		};

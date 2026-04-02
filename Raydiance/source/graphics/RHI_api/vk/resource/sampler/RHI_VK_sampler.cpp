@@ -1,80 +1,49 @@
-#include "./pch.h"
 #include "./graphics/RHI_api/vk/resource/sampler/RHI_VK_sampler.h"
-
-// Graphics includes
-#include "./graphics/RHI_api/vk/RHI_VK_adapter.h"
+#include "./graphics/RHI_api/vk/resource/sampler/RHI_VK_filter.h"
 #include "./graphics/RHI_api/vk/resource/sampler/RHI_VK_compare_op.h"
-#include "./graphics/RHI_api/vk/resource/sampler/RHI_VK_filter_mode.h"
 #include "./graphics/RHI_api/vk/resource/sampler/RHI_VK_address_mode.h"
+#include "./graphics/RHI_api/vk/RHI_VK_render_device.h"
 
 namespace Raydiance
 {
 	namespace Graphics
 	{
-		RHI_VK_Sampler::RHI_VK_Sampler()
-			: RHI_Sampler()
-		{ }
-
-
-		RHI_VK_Sampler::~RHI_VK_Sampler()
+		RHI_VK_Sampler::RHI_VK_Sampler(void)
 		{
-			if (m_SamplerObj != VK_NULL_HANDLE)
-			{
-				vkDestroySampler(static_cast<RHI_VK_RenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_SamplerObj, nullptr);
-				m_SamplerObj = VK_NULL_HANDLE;
-			}
+
 		}
 
-
-		[[nodiscard]]
-		const Result RHI_VK_Sampler::Initialize(const RHI_VK_RenderDevice& _renderDevice, const RHI_SamplerDescriptor& _samplerDescriptor)
+		RHI_VK_Sampler::~RHI_VK_Sampler(void)
 		{
-			// Object storing the result of all interal functions.
-			Result result = Result::RESULT_INVALID;
+			vkDestroySampler(((RHI_VK_RenderDevice*)RHI_RenderDevice::Get())->GetVKDevice(), m_Sampler, nullptr);
+		}
 
-			// Initialize the base class of the RHI_Sampler graphics object class,
-			// And error check the result.
-			// --------------------------------------------------------------------------
-			result = RHI_Sampler::Initialize(_samplerDescriptor);
+		const Result RHI_VK_Sampler::Initialize(RHI_VK_RenderDevice* _RHI_RenderDevice, const RHI_SamplerDescriptor* _samplerDescriptor)
+		{
+			Result result = RHI_Sampler::Initialize(_samplerDescriptor);
 			if (CheckError(result) == true)
 			{
-				// When result is RESULT_ERROR || RESULT_FATAL.
-				Logger::Log("Error while intitializing the base class of the 'RHI_FenceCPU' object.", LogType::LOG_TYPE_ERROR);
-				Logger::Log("No further evidence what went wrong, please see earlier logs.", LogType::LOG_TYPE_ERROR);
+				// Log error
 				return result;
 			}
 
-
-			// ==========================================================================
-			// The actual VULKAN initialization follows
-			// ==========================================================================
-			const RHI_VK_Adapter& adapter = static_cast<const RHI_VK_Adapter&>(_renderDevice.GetActiveAdapter());
-			
 			VkSamplerCreateInfo samplerInfo{};
-			samplerInfo.sType					= VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO;
-			samplerInfo.magFilter				= ResolveVKFilterMode(_samplerDescriptor.MagFilter);
-			samplerInfo.minFilter				= ResolveVKFilterMode(_samplerDescriptor.MinFilter);
-			samplerInfo.addressModeU			= ResolveVKAddressMode(_samplerDescriptor.AddressU);
-			samplerInfo.addressModeV			= ResolveVKAddressMode(_samplerDescriptor.AddressV);
-			samplerInfo.addressModeW			= ResolveVKAddressMode(_samplerDescriptor.AddressW);
-			samplerInfo.anisotropyEnable		= (adapter.GetFeatures().IsAnistropicFilteringSupported() == true) ? VK_TRUE : VK_FALSE;
-			samplerInfo.maxAnisotropy			=  adapter.GetProperties().limits.maxSamplerAnisotropy;
+			samplerInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO;
+			samplerInfo.magFilter				= ResolveVKFilter(_samplerDescriptor->MagFilter);
+			samplerInfo.minFilter				= ResolveVKFilter(_samplerDescriptor->MinFilter);
+			samplerInfo.addressModeU			= ResolveVKAddressMode(_samplerDescriptor->AddressModeU);
+			samplerInfo.addressModeV			= ResolveVKAddressMode(_samplerDescriptor->AddressModeV);
+			samplerInfo.addressModeW			= ResolveVKAddressMode(_samplerDescriptor->AddressModeW);
+			samplerInfo.anisotropyEnable		= VK_FALSE;
+			samplerInfo.maxAnisotropy			= 16;
 			samplerInfo.borderColor				= VK_BORDER_COLOR_INT_OPAQUE_BLACK;
 			samplerInfo.unnormalizedCoordinates = VK_FALSE;
-			samplerInfo.compareEnable			= (_samplerDescriptor.CompareOp != RHI_CompareOp::RHI_COMPARE_OP_INVALID) ? VK_TRUE : VK_FALSE;
-			samplerInfo.compareOp				= ResolveVKCompareOp(_samplerDescriptor.CompareOp);
+			samplerInfo.compareEnable			= VK_FALSE;
 			samplerInfo.mipmapMode				= VK_SAMPLER_MIPMAP_MODE_LINEAR;
-			samplerInfo.mipLodBias				= _samplerDescriptor.MipLodBias;
-			samplerInfo.minLod					= _samplerDescriptor.MinLod;
-			samplerInfo.maxLod					= _samplerDescriptor.MaxLod;
 
-			if (vkCreateSampler(_renderDevice.GetDevice(), &samplerInfo, nullptr, &m_SamplerObj) != VK_SUCCESS)
-			{
-				Logger::Log("Failed to create sampler module.", LogType::LOG_TYPE_ERROR);
-				return Result::RESULT_ERROR;
-			}
+			vkCreateSampler(_RHI_RenderDevice->GetVKDevice(), &samplerInfo, nullptr, &m_Sampler);
 
-			return result;
+			return Result::RESULT_GOOD;
 		}
 	}
 }

@@ -1,5 +1,4 @@
 #pragma once
-#include "./core/container/types.h"
 #include "./graphics/RHI/resource/texture/RHI_texture_usage.h"
 
 #include <d3d12.h>

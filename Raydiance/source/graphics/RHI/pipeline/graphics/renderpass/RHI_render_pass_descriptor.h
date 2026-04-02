@@ -14,7 +14,14 @@ namespace Raydiance
 			RHI_RenderPassDescriptor() = default;
 
 			std::string Name;
-			std::vector<RHI_RenderPassAttachment> Attachments;
+
+			uint32_t    Width = 0;
+			uint32_t    Height = 0;
+
+			uint32_t	ColorAttachmentCount;
+			std::vector<RHI_RenderPassAttachment> ColorAttachments;
+
+			RHI_RenderPassAttachment DepthStencilAttachment;
 		};
 	}
 }

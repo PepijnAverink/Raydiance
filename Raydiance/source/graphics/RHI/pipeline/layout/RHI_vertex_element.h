@@ -11,19 +11,18 @@ namespace Raydiance
 		{
 		public:
 			RHI_VertexElement() = default;
-			RHI_VertexElement(const std::string& _name, RHI_ResourceFormat _type, bool _normalized = false)
+			RHI_VertexElement(const std::string& _name, RHI_ResourceFormat _type)
 				: Name(_name)
 				, Type(_type)
 				, Size(GetFormatSize(_type))
 				, Offset(0)
-				, Normalized(_normalized)
-			{ }
+			{
+			}
 
-			std::string		Name;
-			RHI_ResourceFormat	Type;
-			uint32_t		Size;
-			size_t			Offset;
-			bool			Normalized;
+			std::string		   Name;
+			RHI_ResourceFormat Type;
+			uint32_t		   Size;
+			size_t			   Offset;
 		};
 	}
 }

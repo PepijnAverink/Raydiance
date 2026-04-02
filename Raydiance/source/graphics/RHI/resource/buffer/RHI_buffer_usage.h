@@ -1,0 +1,19 @@
+#pragma once
+#include "./core/container/types.h"
+
+namespace Raydiance
+{
+	namespace Graphics
+	{
+		enum RHI_BufferUsageFlags : uint8
+		{
+			RHI_BUFFER_USAGE_FLAGS_INVALID			= 0x00,
+			RHI_BUFFER_USAGE_FLAGS_VERTEX_BUFFER	= 0x01,
+			RHI_BUFFER_USAGE_FLAGS_INDEX_BUFFER		= 0x02,
+			RHI_BUFFER_USAGE_FLAGS_UNIFORM_BUFFER	= 0x04,
+			RHI_BUFFER_USAGE_FLAGS_STAGING_BUFFER	= 0x08,
+			RHI_BUFFER_USAGE_FLAGS_UNORDERED_ACCESS = 0x10,
+			RHI_BUFFER_USAGE_FLAGS_ACCELERATION_STRUCTURE = 0x20,
+		};
+	}
+}

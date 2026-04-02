@@ -2,8 +2,6 @@
 #include "./graphics/RHI/RHI_debug_mode.h"
 #include "./graphics/RHI/object/command/RHI_command_queue_allocation.h"
 
-
-class Window; // TODO:: ????
 namespace Raydiance
 {
 	namespace Graphics

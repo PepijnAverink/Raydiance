@@ -2,11 +2,8 @@
 #include "./graphics/RHI/resource/shader/RHI_shader.h"
 
 #include <d3d12.h>
-#include <dxc/dxcapi.h>
-
-
-// Generic includes
-#include <wrl/client.h>
+#include <./dxc/dxcapi.h>
+#include <D3Dcompiler.h>
 
 namespace Raydiance
 {
@@ -16,8 +13,10 @@ namespace Raydiance
 		class RHI_DX12_Shader final : public RHI_Shader
 		{
 		public:
-			 RHI_DX12_Shader(RHI_DX12_RenderDevice* _renderDevice, const RHI_ShaderDescriptor* _shaderDescriptor);
-			virtual ~RHI_DX12_Shader();
+			RHI_DX12_Shader(void);
+			virtual ~RHI_DX12_Shader(void);
+
+			const Result Initialize(RHI_DX12_RenderDevice* _RHI_RenderDevice, const RHI_ShaderDescriptor* _shaderDescriptor);
 
 			// Getters
 			inline D3D12_SHADER_BYTECODE GetShaderByteCode() const { return m_ShaderByteCode; }

@@ -4,7 +4,6 @@
 // D3D12 includes
 #include <d3d12.h>
 
-
 namespace Raydiance
 {
 	namespace Graphics
@@ -13,8 +12,10 @@ namespace Raydiance
 		class RHI_DX12_RenderPass final : public RHI_RenderPass
 		{
 		public:
-			RHI_DX12_RenderPass(RHI_DX12_RenderDevice* _renderDevice, const RHI_RenderPassDescriptor* _renderPassDescriptor);
-			virtual ~RHI_DX12_RenderPass();
+			RHI_DX12_RenderPass(void);
+			virtual ~RHI_DX12_RenderPass(void);
+
+			const Result Initialize(RHI_DX12_RenderDevice* _RHI_RenderDevice, const RHI_RenderPassDescriptor* _renderPassDescriptor);
 
 			inline std::vector<D3D12_RENDER_PASS_RENDER_TARGET_DESC> GetDX12ColorAttachments() const { return m_RenderTargetDesc; }
 			inline const D3D12_RENDER_PASS_DEPTH_STENCIL_DESC GetDX12DepthStencilAttachment() const { return m_DepthStencilDesc; }

@@ -3,7 +3,6 @@
 
 #include <D3D12.h>
 
-
 namespace Raydiance
 {
 	namespace Graphics
@@ -12,10 +11,11 @@ namespace Raydiance
 		class RHI_DX12_GraphicsPipeline final : public RHI_GraphicsPipeline
 		{
 		public:
-			RHI_DX12_GraphicsPipeline(RHI_DX12_RenderDevice* _renderDevice, const RHI_GraphicsPipelineDescriptor* _graphicsPipelineDescriptor);
+			RHI_DX12_GraphicsPipeline();
 			virtual ~RHI_DX12_GraphicsPipeline();
 
-			
+			const Result Initialize(RHI_DX12_RenderDevice* _RHI_RenderDevice, const RHI_GraphicsPipelineDescriptor* _graphicsPipelineDescriptor);
+
 			// Getters
 			virtual inline ID3D12PipelineState* GetD3DPipeline() const { return m_PipelineStateObj; }
 			virtual inline D3D_PRIMITIVE_TOPOLOGY GetD3DTopology() const { return m_D3DTopology; }

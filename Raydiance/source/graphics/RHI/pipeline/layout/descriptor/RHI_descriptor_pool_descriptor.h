@@ -13,8 +13,8 @@ namespace Raydiance
 		public:
 			RHI_DescriptorPoolDescriptor() = default;
 
-			std::string						Name;
-			uint32_t						MaxDescriptorSet = 0;
+			std::string							Name;
+			uint32_t							MaxDescriptorSet = 0;
 			std::vector<RHI_DescriptorPoolSize> Sizes;
 		};
 	}

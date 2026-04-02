@@ -8,7 +8,7 @@ namespace Raydiance
 		class RHI_VK_CommandQueueFamily final
 		{
 		public:
-			 RHI_VK_CommandQueueFamily() = default;
+			RHI_VK_CommandQueueFamily() = default;
 			~RHI_VK_CommandQueueFamily() = default;
 
 			uint32				 Index = 0;

@@ -12,13 +12,13 @@ namespace Raydiance
 		{
 			switch (_windingOrder)
 			{
-			case RHI_WindingOrder::RHI_WINDING_ORDER_CW:
-				return VK_FRONT_FACE_CLOCKWISE;
-			case RHI_WindingOrder::RHI_WINDING_ORDER_CCW:
-				return VK_FRONT_FACE_COUNTER_CLOCKWISE;
+				case RHI_WindingOrder::RHI_WINDING_ORDER_CW:
+					return VK_FRONT_FACE_CLOCKWISE;
+				case RHI_WindingOrder::RHI_WINDING_ORDER_CCW:
+					return VK_FRONT_FACE_COUNTER_CLOCKWISE;
 			}
 
-			Logger::Log("VK_ERROR - Failed to resolve WindingOrder: " + _windingOrder, LogType::LOG_TYPE_ERROR);
+			Logger::Log("VK_ERROR - Failed to resolve WindingOrder: " + (uint8)_windingOrder, LogLevel::LOG_LEVEL_ERROR);
 			return VK_FRONT_FACE_CLOCKWISE;
 		}
 	}

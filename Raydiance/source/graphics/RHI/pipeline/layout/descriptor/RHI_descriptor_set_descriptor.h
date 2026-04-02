@@ -2,6 +2,7 @@
 #include "./graphics/RHI/pipeline/layout/RHI_input_layout.h"
 
 #include <string>
+
 namespace Raydiance
 {
 	namespace Graphics
@@ -12,9 +13,7 @@ namespace Raydiance
 			RHI_DescriptorSetDescriptor() = default;
 
 			std::string		 Name;
-
-			RHI_InputLayout* InputLayout = nullptr;
-			uint32           SetIndex	 = 0;
+			RHI_InputSet	 InputSet;
 		};
 	}
 }

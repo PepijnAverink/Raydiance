@@ -28,7 +28,7 @@ namespace Raydiance
 
 			RHI_DX12_DescriptorHeapAccess m_Access;
 
-			ID3D12DescriptorHeap* m_DescriptorHeap;
+			ID3D12DescriptorHeap*		m_DescriptorHeap;
 			uint32_t					m_HandleIncreamentSize;
 
 			uint32_t					m_TotalDescriptorSize;

@@ -1,9 +1,7 @@
-#include "./pch.h"
-
 #include "./graphics/RHI_api/dx12/pipeline/layout/descriptor/RHI_DX12_descriptor_heap.h"
 #include "./graphics/RHI_api/dx12/RHI_DX12_render_device.h"
 
-#include "./utility/string_utility.h"
+#include "./utilities/string_utilities.h"
 
 namespace Raydiance
 {
@@ -55,22 +53,22 @@ namespace Raydiance
 			if (m_Freelist->Count > _count)
 			{
 				RHI_DX12_DescriptorHeapAllocation* allocation = new RHI_DX12_DescriptorHeapAllocation();
-				allocation->Offset = m_Freelist->Offset;
-				allocation->Count = _count;
-				allocation->Size = m_HandleIncreamentSize;
+				allocation->Offset		   = m_Freelist->Offset;
+				allocation->Count		   = _count;
+				allocation->Size		   = m_HandleIncreamentSize;
 
-				allocation->HandleCPU = m_DescriptorHeap->GetCPUDescriptorHandleForHeapStart();
+				allocation->HandleCPU	   = m_DescriptorHeap->GetCPUDescriptorHandleForHeapStart();
 				allocation->HandleCPU.ptr += (m_HandleIncreamentSize * allocation->Offset);
 
 				if (m_Access == RHI_DX12_DescriptorHeapAccess::RHI_DX12_DESCRIPTOR_HEAP_ACCESS_GPU)
 				{
-					allocation->HandleGPU = m_DescriptorHeap->GetGPUDescriptorHandleForHeapStart();
+					allocation->HandleGPU	   = m_DescriptorHeap->GetGPUDescriptorHandleForHeapStart();
 					allocation->HandleGPU.ptr += (m_HandleIncreamentSize * allocation->Offset);
 				}
 
 				// Adjust counter
 				m_Freelist->Offset += _count;
-				m_Freelist->Count -= _count;
+				m_Freelist->Count  -= _count;
 
 				return allocation;
 			}

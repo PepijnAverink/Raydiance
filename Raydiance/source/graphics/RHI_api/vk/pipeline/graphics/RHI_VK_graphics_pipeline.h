@@ -1,18 +1,23 @@
 #pragma once
 #include "./graphics/RHI/pipeline/graphics/RHI_graphics_pipeline.h"
-#include "./graphics/RHI_api/vk/RHI_VK_render_device.h"
+
+#include <vulkan/vulkan.h>
 
 namespace Raydiance
 {
 	namespace Graphics
 	{
+		class RHI_VK_RenderDevice;
 		class RHI_VK_GraphicsPipeline final : public RHI_GraphicsPipeline
 		{
 		public:
-			RHI_VK_GraphicsPipeline(RHI_VK_RenderDevice* _renderDevice, const RHI_GraphicsPipelineDescriptor* _graphicsPipelineDescriptor);
+			RHI_VK_GraphicsPipeline();
 			virtual ~RHI_VK_GraphicsPipeline();
 
-			inline VkPipeline GetRHI_VK_GraphicsPipeline() const { return m_GraphicsPipelineObj; }
+			const Result Initialize(RHI_VK_RenderDevice* _RHI_RenderDevice, const RHI_GraphicsPipelineDescriptor* _graphicsPipelineDescriptor);
+
+			// Getters
+			inline VkPipeline GetVKGraphicsPipeline() const { return m_GraphicsPipelineObj; }
 
 		private:
 			VkPipeline m_GraphicsPipelineObj;
