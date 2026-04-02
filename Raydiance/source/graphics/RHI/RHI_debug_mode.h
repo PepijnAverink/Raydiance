@@ -1,15 +1,11 @@
 #pragma once
-// Core includes
 #include "./core/container/types.h"
-#include "./core/error/logger.h"
-
 
 namespace Raydiance
 {
 	namespace Graphics
 	{
-		// Enables the debug layer depending on this structure.
-		enum class RHI_DebugMode : uint32
+		enum class RHI_DebugMode : uint8
 		{
 			RHI_DEBUG_MODE_INVALID    = 0x00,
 			RHI_DEBUG_MODE_ALWAYS	  = 0x01,
@@ -17,10 +13,7 @@ namespace Raydiance
 			RHI_DEBUG_MODE_DEBUG_ONLY = 0x03,
 		};
 
-
-		// TODO:: Implement string_view.
-		[[nodiscard]]
-		inline constexpr std::string_view RHI_DebugModeToString(RHI_DebugMode _mode) noexcept
+		inline std::string RHI_DebugMode_ToString(RHI_DebugMode _mode)
 		{
 			switch (_mode)
 			{
@@ -33,10 +26,21 @@ namespace Raydiance
 				case RHI_DebugMode::RHI_DEBUG_MODE_DEBUG_ONLY:
 					return "RHI_DEBUG_MODE_DEBUG_ONLY";
 				default:
-					// Error checking and logging
-					Logger::Log("No string found for RHI_DebugMode: " + (uint8_t)_mode, LogType::LOG_TYPE_ERROR);
-					return "RHI_DEBUG_MODE_INVALID";
+					return "RHI_DEBUG_MODE_INVALID: " + std::to_string((uint8)_mode);
 			}
+		}
+
+		inline bool RHI_DebugMode_IsValid(RHI_DebugMode _mode)
+		{
+			switch (_mode)
+			{
+				case RHI_DebugMode::RHI_DEBUG_MODE_ALWAYS:
+				case RHI_DebugMode::RHI_DEBUG_MODE_NEVER:
+				case RHI_DebugMode::RHI_DEBUG_MODE_DEBUG_ONLY:
+					return true;
+			}
+
+			return false;
 		}
 	}
 }

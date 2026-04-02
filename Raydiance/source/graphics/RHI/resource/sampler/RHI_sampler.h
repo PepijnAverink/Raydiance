@@ -1,11 +1,6 @@
 #pragma once
-// Descriptor include
-#include "./graphics/RHI/resource/sampler/RHI_sampler_descriptor.h"
-
-
-// Core includes
 #include "./core/error/result.h"
-
+#include "./graphics/RHI/resource/sampler/RHI_sampler_descriptor.h"
 
 namespace Raydiance
 {
@@ -14,34 +9,27 @@ namespace Raydiance
 		class RHI_Sampler
 		{
 		public:
-			// Public destructor
-			virtual ~RHI_Sampler(void);
+			virtual ~RHI_Sampler();
 
+			inline RHI_Filter GetMinFilter() const { return m_MinFilter; }
+			inline RHI_Filter GetMagFilter() const { return m_MagFilter; }
+			inline RHI_Filter GetMipFilter() const { return m_MipFilter; }
 
-			// Getter functions
-			// ---------------------------------------------------------------------- 
-			[[nodiscard]] inline RHI_FilterMode GetMinFilter() const noexcept { return m_MinFilter; }
-			[[nodiscard]] inline RHI_FilterMode GetMagFilter() const noexcept { return m_MagFilter; }
-			[[nodiscard]] inline RHI_FilterMode GetMipFilter() const noexcept { return m_MipFilter; }
-
-			[[nodiscard]] inline RHI_AddressMode GetAddressModeU() const noexcept { return m_AddressU; }
-			[[nodiscard]] inline RHI_AddressMode GetAddressModeV() const noexcept { return m_AddressV; }
-			[[nodiscard]] inline RHI_AddressMode GetAddressModeW() const noexcept { return m_AddressW; }
+			inline RHI_AddressMode GetAddressModeU() const { return m_AddressU; }
+			inline RHI_AddressMode GetAddressModeV() const { return m_AddressV; }
+			inline RHI_AddressMode GetAddressModeW() const { return m_AddressW; }
 
 		protected:
-			// Protected constructor and initialize(), user should not create base instance.
-			RHI_Sampler(void);
-			const Result Initialize(const RHI_SamplerDescriptor& _samplerDescriptor);
+			RHI_Sampler();
+			const Result Initialize(const RHI_SamplerDescriptor* _samplerDescriptor);
 
+			RHI_Filter      m_MinFilter;
+			RHI_Filter      m_MagFilter;
+			RHI_Filter      m_MipFilter;
 
-			// Raw stored data about the sampler
-			RHI_FilterMode  m_MinFilter = RHI_FilterMode::RHI_FILTER_MODE_INVALID;
-			RHI_FilterMode  m_MagFilter = RHI_FilterMode::RHI_FILTER_MODE_INVALID;
-			RHI_FilterMode  m_MipFilter = RHI_FilterMode::RHI_FILTER_MODE_INVALID;
-
-			RHI_AddressMode m_AddressU = RHI_AddressMode::RHI_ADDRESS_MODE_INVALID;
-			RHI_AddressMode m_AddressV = RHI_AddressMode::RHI_ADDRESS_MODE_INVALID;
-			RHI_AddressMode m_AddressW = RHI_AddressMode::RHI_ADDRESS_MODE_INVALID;
+			RHI_AddressMode m_AddressU;
+			RHI_AddressMode m_AddressV;
+			RHI_AddressMode m_AddressW;
 		};
 	}
 }

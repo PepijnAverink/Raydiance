@@ -1,31 +1,36 @@
 #include "./pch.h"
+#include "./core/error/logger.h"
 
-Logger* Logger::Create(const std::string& _filename)
+namespace Raydiance
 {
-	return new Logger();
-}
 
-Logger::Logger()
-{ }
-
-Logger::~Logger()
-{ }
-
-void Logger::Log(const std::string& _message, LogType _type)
-{
-	switch (_type)
+	Logger* Logger::Create(const std::string& _filename)
 	{
-	case LogType::LOG_TYPE_INFO:
-		printf("[INFO] %s\n", _message.c_str());
-		break;
-	case LogType::LOG_TYPE_WARNING:
-		printf("[WARNING] %s\n", _message.c_str());
-		break;
-	case LogType::LOG_TYPE_ERROR:
-		printf("[ERROR] %s\n", _message.c_str());
-		break;
-	case LogType::LOG_TYPE_CRITICAL:
-		printf("[Critical] %s\n", _message.c_str());
-		break;
+		return new Logger();
+	}
+
+	Logger::Logger()
+	{ }
+
+	Logger::~Logger()
+	{ }
+
+	void Logger::Log(const std::string& _message, LogLevel _level)
+	{
+		switch (_level)
+		{
+		case LogLevel::LOG_LEVEL_INFO:
+			printf("[INFO] %s\n", _message.c_str());
+			break;
+		case LogLevel::LOG_LEVEL_WARNING:
+			printf("[WARNING] %s\n", _message.c_str());
+			break;
+		case LogLevel::LOG_LEVEL_ERROR:
+			printf("[ERROR] %s\n", _message.c_str());
+			break;
+		case LogLevel::LOG_LEVEL_CRITICAL:
+			printf("[Critical] %s\n", _message.c_str());
+			break;
+		}
 	}
 }

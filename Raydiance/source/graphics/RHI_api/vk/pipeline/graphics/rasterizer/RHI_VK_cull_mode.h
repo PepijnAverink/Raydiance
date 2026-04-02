@@ -12,15 +12,17 @@ namespace Raydiance
 		{
 			switch (_cullMode)
 			{
-			case RHI_CullMode::RHI_CULL_MODE_INVALID:
-				return VK_CULL_MODE_NONE;
-			case RHI_CullMode::RHI_CULL_MODE_FRONT:
-				return VK_CULL_MODE_FRONT_BIT;
-			case RHI_CullMode::RHI_CULL_MODE_BACK:
-				return VK_CULL_MODE_BACK_BIT;
+				case RHI_CullMode::RHI_CULL_MODE_INVALID:
+					return VK_CULL_MODE_NONE;
+				case RHI_CullMode::RHI_CULL_MODE_NONE:
+					return VK_CULL_MODE_NONE;
+				case RHI_CullMode::RHI_CULL_MODE_FRONT:
+					return VK_CULL_MODE_FRONT_BIT;
+				case RHI_CullMode::RHI_CULL_MODE_BACK:
+					return VK_CULL_MODE_BACK_BIT;
 			}
 
-			Logger::Log("VK_ERROR - Failed to resolve CullMode: " + _cullMode, LogType::LOG_TYPE_ERROR);
+			Logger::Log("VK_ERROR - Failed to resolve CullMode: " + (uint8)_cullMode, LogLevel::LOG_LEVEL_ERROR);
 			return VK_CULL_MODE_NONE;
 		}
 	}

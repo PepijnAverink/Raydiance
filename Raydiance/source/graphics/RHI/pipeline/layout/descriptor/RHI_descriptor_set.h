@@ -5,20 +5,25 @@ namespace Raydiance
 {
 	namespace Graphics
 	{
+		class RHI_Buffer;
 		class RHI_Texture2D;
 		class RHI_Sampler;
-		class RHI_Buffer;
+
+		class RHI_InputSet;
 		class RHI_DescriptorSet
 		{
 		public:
-			RHI_DescriptorSet(const RHI_DescriptorSetDescriptor* _descriptorSetDescriptor);
+			RHI_DescriptorSet(void);
 			virtual ~RHI_DescriptorSet();
 
-			virtual void AllocateDescriptor(RHI_Buffer* _buffer, const uint32_t _bindingIndex, const uint32_t _arrayIndex) = 0;
-			virtual void AllocateDescriptor(RHI_Texture2D* _texture, RHI_Sampler* _sampler, const uint32_t _bindingIndex, const uint32_t _arrayIndex) = 0;
+			const Result Initialize(const RHI_DescriptorSetDescriptor* _descriptorSetDescriptor);
+
+			virtual void AllocateDescriptor(RHI_Buffer* _buffer, const uint32_t _setIndex, const uint32_t _arrayIndex = 0) = 0;
+			virtual void AllocateDescriptor(RHI_Texture2D* _texture, const uint32_t _setIndex, const uint32_t _arrayIndex = 0) = 0;
+			virtual void AllocateDescriptor(RHI_Sampler* _sampler, const uint32_t _setIndex, const uint32_t _arrayIndex = 0) = 0;
 
 		protected:
-
+			RHI_InputSet m_InputSet;
 		};
 	}
 }

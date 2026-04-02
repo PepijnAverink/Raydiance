@@ -1,11 +1,9 @@
 #pragma once
-// Parant class include
-#include "./graphics/RHI/object/sync/RHI_FenceCPU.h"
+// Graphics includes
+#include "./graphics/RHI/object/sync/RHI_fenceCPU.h"
 
-
-// DirectX12 includes
+// D3D12 includes
 #include <d3d12.h>
-
 
 namespace Raydiance
 {
@@ -15,17 +13,22 @@ namespace Raydiance
 		class RHI_DX12_FenceCPU final : public RHI_FenceCPU
 		{
 		public:
-			// Constructor and descructor
-			// ======================================
-					 RHI_DX12_FenceCPU(void);
-			virtual ~RHI_DX12_FenceCPU(void);
+			RHI_DX12_FenceCPU();
+			~RHI_DX12_FenceCPU();
 
-			[[nodiscard]] const Result Initialize(const RHI_DX12_RenderDevice& _renderDevice, const RHI_FenceCPUDescriptor& _fenceDescriptor);
+			const Result Initialize(const RHI_DX12_RenderDevice* _RHI_RenderDevice, const RHI_FenceCPUDescriptor* _fenceDescriptor);
 
-			// TODO:: MAYBEEEE not [[nodiscard]]???
-			[[nodiscard]] virtual const Result Wait(void) override;
+			virtual const Result Wait() override;
+
+			// Getters
+			inline ID3D12Fence* GetD3DFence() const { return m_FenceObj; }
+			inline uint64_t   GetFenceValue() const { return m_FenceValue; }
 
 		private:
+			ID3D12Fence* m_FenceObj = nullptr;
+			uint64_t     m_FenceValue;
+
+			HANDLE		 m_FenceEvent;
 		};
 	}
 }

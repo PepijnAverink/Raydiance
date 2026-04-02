@@ -1,30 +1,26 @@
 #pragma once
-// Parant class include
-#include "./graphics/RHI/object/sync/RHI_FenceCPU.h"
-
 // Graphics includes
-#include "./graphics/RHI_api/vk/RHI_VK_render_device.h"
+#include "./graphics/RHI/object/sync/RHI_fenceCPU.h"
+
+// Vulkan includes
+#include <vulkan/vulkan.h>
 
 namespace Raydiance
 {
 	namespace Graphics
 	{
+		class RHI_VK_RenderDevice;
 		class RHI_VK_FenceCPU final : public RHI_FenceCPU
 		{
 		public:
-			// Constructor and descructor
-			// ======================================
-			         RHI_VK_FenceCPU(void);
-			virtual ~RHI_VK_FenceCPU(void);
+			RHI_VK_FenceCPU();
+			~RHI_VK_FenceCPU();
 
-			[[nodiscard]] const Result Initialize(const RHI_VK_RenderDevice& _renderDevice, const RHI_FenceCPUDescriptor& _fenceDescriptor);
+			const Result Initialize(const RHI_VK_RenderDevice* _RHI_RenderDevice, const RHI_FenceCPUDescriptor* _fenceDescriptor);
 
-			// TODO:: MAYBEEEE not [[nodiscard]]???
-			[[nodiscard]] virtual const Result Wait(void) override;
+			virtual const Result Wait() override;
 
-
-			// Vulkan specific getters
-			inline const VkFence& GetVKFence(void) const { return m_FenceObj; }
+			inline VkFence GetVKFence() const { return m_FenceObj; }
 
 		private:
 			VkFence m_FenceObj;

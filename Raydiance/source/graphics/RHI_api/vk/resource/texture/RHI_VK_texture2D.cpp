@@ -1,17 +1,51 @@
-#include "./pch.h"
 #include "./graphics/RHI_api/vk/resource/texture/RHI_VK_texture2D.h"
-
-// Grpahics includes
+#include "./graphics/RHI_api/vk/RHI_VK_render_device.h"
 #include "./graphics/RHI_api/vk/RHI_VK_adapter.h"
 #include "./graphics/RHI_api/vk/resource/RHI_VK_resource_format.h"
+
+#include "./core/error/logger.h"
 
 namespace Raydiance
 {
 	namespace Graphics
 	{
-		RHI_VK_Texture2D::RHI_VK_Texture2D(RHI_VK_RenderDevice* _renderDevice, const RHI_Texture2DDescriptor* _texture2DDescriptor)
-			: RHI_Texture2D(_texture2DDescriptor)
+		RHI_VK_Texture2D::RHI_VK_Texture2D()
+			: RHI_Texture2D()
+		{ }
+
+		RHI_VK_Texture2D::~RHI_VK_Texture2D(void)
 		{
+			if (m_IsSwapchainImage == false)
+				vkDestroyImage(((RHI_VK_RenderDevice*)RHI_RenderDevice::Get())->GetVKDevice(), m_ImageObj, nullptr);
+
+			vkFreeMemory(((RHI_VK_RenderDevice*)RHI_RenderDevice::Get())->GetVKDevice(), m_BufferMemory, nullptr);
+			vkDestroyImageView(((RHI_VK_RenderDevice*)RHI_RenderDevice::Get())->GetVKDevice(), m_ImageViewObj, nullptr);
+		}
+
+		const Result RHI_VK_Texture2D::Initialize(RHI_VK_RenderDevice* _RHI_RenderDevice, const RHI_Texture2DDescriptor* _texture2DDescriptor)
+		{
+			Result result = RHI_Texture2D::Initialize(_texture2DDescriptor);
+			if (CheckError(result) == true)
+			{
+				// Log error
+				return result;
+			}
+
+			// TODO:: Make a resolve function for this
+			VkImageUsageFlags use = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
+			if (_texture2DDescriptor->UsageFlags == RHI_TextureUsageFlags::RHI_TEXTURE_USAGE_FLAGS_DEPTH_ACCESS)
+			{
+				use = VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT | VK_IMAGE_USAGE_STORAGE_BIT | VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT;
+			}
+			else if (_texture2DDescriptor->UsageFlags == RHI_TextureUsageFlags::RHI_TEXTURE_USAGE_FLAGS_RENDER_ACCESS)
+			{
+				use = VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT | VK_IMAGE_USAGE_STORAGE_BIT | VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
+			}
+			else
+			{
+				use = VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT | VK_IMAGE_USAGE_STORAGE_BIT;
+			}
+
 			VkImageCreateInfo imageInfo{};
 			imageInfo.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
 			imageInfo.imageType = VK_IMAGE_TYPE_2D;
@@ -23,47 +57,73 @@ namespace Raydiance
 			imageInfo.format = ResolveVKResourceFormat(_texture2DDescriptor->Format);
 			imageInfo.tiling = VK_IMAGE_TILING_OPTIMAL;
 			imageInfo.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-			imageInfo.usage = VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT;
+			imageInfo.usage = use;
 			imageInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 			imageInfo.samples = VK_SAMPLE_COUNT_1_BIT;
 			imageInfo.flags = 0; // Optional
 
-			if (vkCreateImage(_renderDevice->GetDevice(), &imageInfo, nullptr, &m_ImageObj) != VK_SUCCESS)
-				Logger::Log("VK_ERROR - Failed to create 'RHI_VK_Texture2D' object.", LogType::LOG_TYPE_ERROR);
+			if (vkCreateImage(_RHI_RenderDevice->GetVKDevice(), &imageInfo, nullptr, &m_ImageObj) != VK_SUCCESS)
+			{
+				Logger::Log("VK_ERROR - Failed to create 'VKTexture2D' object.", LogLevel::LOG_LEVEL_ERROR);
+				return Result::RESULT_ERROR;
+			}
 
 			VkMemoryRequirements memRequirements;
-			vkGetImageMemoryRequirements(_renderDevice->GetDevice(), m_ImageObj, &memRequirements);
+			vkGetImageMemoryRequirements(_RHI_RenderDevice->GetVKDevice(), m_ImageObj, &memRequirements);
 
 			VkMemoryAllocateInfo allocInfo{};
 			allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
 			allocInfo.allocationSize = memRequirements.size;
-			allocInfo.memoryTypeIndex = FindMemoryType(_renderDevice, memRequirements.memoryTypeBits, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
+			allocInfo.memoryTypeIndex = FindMemoryType(_RHI_RenderDevice, memRequirements.memoryTypeBits, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
 
-			if (vkAllocateMemory(_renderDevice->GetDevice(), &allocInfo, nullptr, &m_BufferMemory) != VK_SUCCESS) {
-				Logger::Log("VK_ERROR - Failed to create 'RHI_VK_Texture2D' object.", LogType::LOG_TYPE_ERROR);
+			if (vkAllocateMemory(_RHI_RenderDevice->GetVKDevice(), &allocInfo, nullptr, &m_BufferMemory) != VK_SUCCESS) {
+				Logger::Log("VK_ERROR - Failed to create 'VKTexture2D' object.", LogLevel::LOG_LEVEL_ERROR);
+				return Result::RESULT_ERROR;
 			}
 
-			vkBindImageMemory(_renderDevice->GetDevice(), m_ImageObj, m_BufferMemory, 0);
+			vkBindImageMemory(_RHI_RenderDevice->GetVKDevice(), m_ImageObj, m_BufferMemory, 0);
 
 			VkImageViewCreateInfo createInfo{};
-			createInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
-			createInfo.image = m_ImageObj;
-			createInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
-			createInfo.format = ResolveVKResourceFormat(m_Format);
-			createInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-			createInfo.subresourceRange.baseMipLevel = 0;
-			createInfo.subresourceRange.levelCount = 1;
+			createInfo.sType						   = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
+			createInfo.image						   = m_ImageObj;
+			createInfo.viewType						   = VK_IMAGE_VIEW_TYPE_2D;
+			createInfo.format						   = ResolveVKResourceFormat(m_Format);
+			createInfo.subresourceRange.aspectMask     = ((uint8)_texture2DDescriptor->UsageFlags & (uint8)RHI_TextureUsageFlags::RHI_TEXTURE_USAGE_FLAGS_DEPTH_ACCESS) ? VK_IMAGE_ASPECT_DEPTH_BIT : VK_IMAGE_ASPECT_COLOR_BIT;
+			createInfo.subresourceRange.baseMipLevel   = 0;
+			createInfo.subresourceRange.levelCount     = 1;
 			createInfo.subresourceRange.baseArrayLayer = 0;
-			createInfo.subresourceRange.layerCount = 1;
+			createInfo.subresourceRange.layerCount	   = 1;
 
-			if (vkCreateImageView(_renderDevice->GetDevice(), &createInfo, nullptr, &m_ImageViewObj) != VK_SUCCESS)
-				Logger::Log("VK_ERROR - Failed to create 'ImageView' object.", LogType::LOG_TYPE_ERROR);
+			if (vkCreateImageView(_RHI_RenderDevice->GetVKDevice(), &createInfo, nullptr, &m_ImageViewObj) != VK_SUCCESS)
+			{
+				Logger::Log("VK_ERROR - Failed to create 'ImageView' object.", LogLevel::LOG_LEVEL_ERROR);
+				return Result::RESULT_ERROR;
+			}
+
+			VkDebugUtilsObjectNameInfoEXT nameInfo{};
+			nameInfo.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_OBJECT_NAME_INFO_EXT;
+			nameInfo.objectType = VK_OBJECT_TYPE_IMAGE;
+			nameInfo.objectHandle = (uint64)m_ImageObj;
+			nameInfo.pObjectName = _texture2DDescriptor->Name.c_str();
+
+			RHI_VK_RenderDevice::vkSetDebugUtilsObjectNameEXT(_RHI_RenderDevice->GetVKDevice(), &nameInfo);
+
+			return Result::RESULT_GOOD;
 		}
 
-		RHI_VK_Texture2D::RHI_VK_Texture2D(const RHI_VK_RenderDevice& _renderDevice, VkImage _resource, const RHI_Texture2DDescriptor* _texture2DDescriptor)
-			: RHI_Texture2D(_texture2DDescriptor)
-			, m_ImageObj(_resource)
+		const Result RHI_VK_Texture2D::Initialize(RHI_VK_RenderDevice* _RHI_RenderDevice, VkImage _resource, const RHI_Texture2DDescriptor* _texture2DDescriptor)
 		{
+			m_ImageObj = _resource;
+
+			Result result = RHI_Texture2D::Initialize(_texture2DDescriptor);
+			if (CheckError(result) == true)
+			{
+				// Log error
+				return result;
+			}
+
+			m_IsSwapchainImage = true;
+
 			VkImageViewCreateInfo createInfo{};
 			createInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
 			createInfo.image = m_ImageObj;
@@ -79,25 +139,28 @@ namespace Raydiance
 			createInfo.subresourceRange.baseArrayLayer = 0;
 			createInfo.subresourceRange.layerCount = 1;
 
-			if (vkCreateImageView(_renderDevice.GetDevice(), &createInfo, nullptr, &m_ImageViewObj) != VK_SUCCESS)
-				Logger::Log("VK_ERROR - Failed to create 'ImageView' object.", LogType::LOG_TYPE_ERROR);
+			if (vkCreateImageView(_RHI_RenderDevice->GetVKDevice(), &createInfo, nullptr, &m_ImageViewObj) != VK_SUCCESS)
+			{
+				Logger::Log("VK_ERROR - Failed to create 'ImageView' object.", LogLevel::LOG_LEVEL_ERROR);
+				return Result::RESULT_ERROR;
+			}
+
+
+			VkDebugUtilsObjectNameInfoEXT nameInfo{};
+			nameInfo.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_OBJECT_NAME_INFO_EXT;
+			nameInfo.objectType = VK_OBJECT_TYPE_IMAGE;
+			nameInfo.objectHandle = (uint64)m_ImageObj;
+			nameInfo.pObjectName = _texture2DDescriptor->Name.c_str();
+
+			RHI_VK_RenderDevice::vkSetDebugUtilsObjectNameEXT(_RHI_RenderDevice->GetVKDevice(), &nameInfo);
+
+			return Result::RESULT_GOOD;
 		}
 
-		RHI_VK_Texture2D::~RHI_VK_Texture2D()
+		uint32_t RHI_VK_Texture2D::FindMemoryType(RHI_VK_RenderDevice* _RHI_RenderDevice, uint32_t typeFilter, VkMemoryPropertyFlags properties)
 		{
-			vkDestroyImage(static_cast<RHI_VK_RenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_ImageObj, nullptr);
-			vkFreeMemory(static_cast<RHI_VK_RenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_BufferMemory, nullptr);
-			FreeImageView();
-		}
-
-		void RHI_VK_Texture2D::FreeImageView()
-		{
-			vkDestroyImageView(static_cast<RHI_VK_RenderDevice&>(RHI_RenderDevice::Get()).GetDevice(), m_ImageViewObj, nullptr);
-		}
-
-		uint32_t RHI_VK_Texture2D::FindMemoryType(RHI_VK_RenderDevice* _renderDevice, uint32_t typeFilter, VkMemoryPropertyFlags properties) {
 			VkPhysicalDeviceMemoryProperties memProperties;
-			vkGetPhysicalDeviceMemoryProperties(static_cast<const RHI_VK_Adapter&>(_renderDevice->GetActiveAdapter()).GetPhysicalDevice(), &memProperties);
+			vkGetPhysicalDeviceMemoryProperties(((RHI_VK_Adapter*)_RHI_RenderDevice->RHI_GetAdapter())->GetPhysicalDevice(), &memProperties);
 
 			for (uint32_t i = 0; i < memProperties.memoryTypeCount; i++) {
 				if ((typeFilter & (1 << i)) && (memProperties.memoryTypes[i].propertyFlags & properties) == properties) {
@@ -105,7 +168,7 @@ namespace Raydiance
 				}
 			}
 
-			Logger::Log("VK_ERROR - Failed to find suitable memory type.", LogType::LOG_TYPE_ERROR);
+			Logger::Log("VK_ERROR - Failed to find suitable memory type.", LogLevel::LOG_LEVEL_ERROR);
 			return 0;
 		}
 	}

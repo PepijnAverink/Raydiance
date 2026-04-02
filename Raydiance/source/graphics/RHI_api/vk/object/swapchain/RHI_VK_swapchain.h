@@ -1,35 +1,41 @@
 #pragma once
-// Parent class include
-#include "./graphics/RHI/object/swapchain/RHI_swapchain.h"
+#include "./raydiance.h"
 
 // Graphics includes
-#include "./graphics/RHI_api/vk/RHI_VK_render_device.h"
+#include "./graphics/RHI/object/swapchain/RHI_swapchain.h"
+
+#include <vulkan/vulkan.h>
+
+#if defined(RA_WINDOWS)
+#define VK_USE_PLATFORM_WIN32_KHR
+#include <vulkan/vulkan_win32.h>
+#endif
 
 namespace Raydiance
 {
 	namespace Graphics
 	{
+		class RHI_VK_RenderDevice;
 		class RHI_VK_Swapchain final : public RHI_Swapchain
 		{
 		public:
-			// Constructor and descructor
-			// ======================================
-					 RHI_VK_Swapchain(void);
+			RHI_VK_Swapchain(void);
 			virtual ~RHI_VK_Swapchain(void);
 
-			[[nodiscard]] const Result Initialize(const RHI_VK_RenderDevice& _renderDevice, const RHI_CommandQueue& _commandQueue, const RHI_SwapchainDescriptor& _swapchainDescriptor);
+			const Result Initialize(RHI_VK_RenderDevice* _RHI_RenderDevice, RHI_CommandQueue* _commandQueue, const RHI_SwapchainDescriptor* _swapchainDescriptor);
 
-			virtual void Resize(const RHI_CommandQueue& _commandQueue, const uint32 _width, const uint32 _height) override;
+			virtual void Resize(RHI_RenderDevice* _RHI_RenderDevice, RHI_CommandQueue* _commandQueue, RHI_FenceCPU* _fence, const uint32_t _width, const uint32_t _height) override;
 
-			virtual uint32 AquireNewImage(RHI_CommandQueue* _commandQueue, std::shared_ptr<RHI_FenceCPU> _fence) override;
+			virtual uint32_t AquireNewFrame(RHI_CommandQueue* _commandQueue, RHI_FenceCPU* _fence) override;
 			virtual void Present(RHI_CommandQueue* _commandQueue) override;
 
-			inline VkSwapchainKHR GetRHI_VK_Swapchain() const { return m_SwapChainObj; }
-
+			inline virtual VkSwapchainKHR GetVKSwapchain(void) const { return m_SwapChainObj; }
+			inline virtual VkFormat GetVKFormat(void) const { return m_Format; }
 		private:
-			void CreateSwapchain(const RHI_VK_RenderDevice& _renderDevice, const RHI_CommandQueue& _commandQueue);
+			void CreateSwapchain(RHI_VK_RenderDevice* _RHI_RenderDevice, RHI_CommandQueue* _commandQueue);
 
 			VkSwapchainKHR m_SwapChainObj;
+			VkFormat m_Format;
 		};
 	}
 }
