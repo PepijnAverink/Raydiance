@@ -567,6 +567,12 @@
     <ClInclude Include="source\core\error\log_level.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\raydiance.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\core\application.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\core\files\file_system.cpp">
@@ -777,6 +783,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\graphics\RHI_api\vk\RHI_VK_render_device.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\core\application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\platform\win\win_main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

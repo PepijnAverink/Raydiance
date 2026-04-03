@@ -1,3 +1,4 @@
+#include "./pch.h"
 // Graphics includes
 #include "./graphics/RHI/object/sync/RHI_fenceCPU.h"
 

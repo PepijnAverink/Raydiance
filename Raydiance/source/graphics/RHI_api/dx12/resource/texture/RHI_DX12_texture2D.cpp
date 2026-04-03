@@ -1,3 +1,4 @@
+#include "./pch.h"
 #include "./graphics/RHI_api/dx12/resource/texture/RHI_DX12_texture2D.h"
 #include "./graphics/RHI_api/dx12/RHI_DX12_render_device.h"
 #include "./graphics/RHI_api/dx12/resource/RHI_DX12_resource_format.h"
@@ -5,7 +6,8 @@
 #include "./graphics/RHI_api/dx12/resource/RHI_DX12_resource_state.h"
 
 // Utility includes
-#include "./utilities/string_utilities.h"
+#include "./util/string_util.h"
+
 
 namespace Raydiance
 {

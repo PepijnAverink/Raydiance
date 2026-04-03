@@ -1,9 +1,10 @@
+#include "./pch.h"
 #include "./graphics/RHI_api/dx12/object/sync/RHI_DX12_fenceCPU.h"
 #include "./graphics/RHI_api/dx12/RHI_DX12_render_device.h"
 
 #include "./core/error/logger.h"
 
-#include "./utilities/string_utilities.h"
+#include "./util/string_util.h"
 
 namespace Raydiance
 {

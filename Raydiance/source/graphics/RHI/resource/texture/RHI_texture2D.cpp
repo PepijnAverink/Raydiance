@@ -1,3 +1,4 @@
+#include "./pch.h"
 #include "./graphics/RHI/resource/texture/RHI_texture2D.h"
 
 namespace Raydiance

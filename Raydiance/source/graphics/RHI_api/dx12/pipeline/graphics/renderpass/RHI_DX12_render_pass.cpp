@@ -1,3 +1,4 @@
+#include "./pch.h"
 #include "./graphics/RHI_api/dx12/pipeline/graphics/renderpass/RHI_DX12_render_pass.h"
 #include "./graphics/RHI_api/dx12/pipeline/graphics/renderpass/RHI_DX12_load_op.h"
 #include "./graphics/RHI_api/dx12/pipeline/graphics/renderpass/RHI_DX12_store_op.h"

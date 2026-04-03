@@ -1,4 +1,5 @@
-﻿#include "./graphics/RHI_api/vk/resource/buffer/RHI_VK_buffer.h"
+﻿#include "./pch.h"
+#include "./graphics/RHI_api/vk/resource/buffer/RHI_VK_buffer.h"
 #include "./graphics/RHI_api/vk/resource/RHI_VK_resource_format.h"
 #include "./graphics/RHI_api/vk/resource/RHI_VK_resource_memory_type.h"
 #include "./graphics/RHI_api/vk/resource/RHI_VK_resource_state.h"

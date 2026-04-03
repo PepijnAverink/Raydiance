@@ -1,3 +1,4 @@
+#include "./pch.h"
 #include "./graphics/RHI/resource/shader/RHI_shader.h"
 
 namespace Raydiance

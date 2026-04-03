@@ -1,3 +1,4 @@
+#include "./pch.h"
 #include "./graphics/RHI_api/vk/RHI_VK_adapter.h"
 #include "./graphics/RHI_api/vk/RHI_VK_adapter_type.h"
 

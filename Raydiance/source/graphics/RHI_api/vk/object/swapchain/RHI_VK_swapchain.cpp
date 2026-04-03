@@ -1,4 +1,5 @@
- // Graphics includes 
+#include "./pch.h"
+// Graphics includes 
 #include "./graphics/RHI_api/vk/RHI_VK_render_device.h"
 #include "./graphics/RHI_api/vk/object/swapchain/RHI_VK_swapchain.h"
 #include "./graphics/RHI_api/vk/object/command/RHI_VK_command_queue.h"

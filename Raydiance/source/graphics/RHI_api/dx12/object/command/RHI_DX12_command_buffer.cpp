@@ -1,3 +1,4 @@
+#include "./pch.h"
 #include "./graphics/RHI_api/dx12/object/command/RHI_DX12_command_buffer.h"
 #include "./graphics/RHI_api/dx12/object/command/RHI_DX12_command_buffer_type.h"
 #include "./graphics/RHI_api/dx12/object/command/RHI_DX12_command_pool.h"
@@ -17,7 +18,7 @@
 #include "./graphics/RHI_api/dx12/resource/RHI_DX12_resource_format.h"
 
 // Utility includes
-#include "./utilities/string_utilities.h"
+#include "./util/string_util.h"
 
 #include <./dx12/d3dx12.h>
 

@@ -1,9 +1,10 @@
+#include "./pch.h"
 #include "./graphics/RHI_api/dx12/resource/shader/RHI_DX12_shader.h"
 #include "./graphics/RHI_api/dx12/resource/shader/RHI_DX12_shader_type.h"
 
 #include "./core/files/file_system.h"
 
-#include "./utilities/string_utilities.h"
+#include "./util/string_util.h"
 
 #include <./atlbase.h>
 #include <./d3d12shader.h>

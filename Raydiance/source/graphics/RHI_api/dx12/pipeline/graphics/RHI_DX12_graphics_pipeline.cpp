@@ -1,3 +1,4 @@
+#include "./pch.h"
 #include "./graphics/RHI_api/dx12/pipeline/graphics/RHI_DX12_graphics_pipeline.h"
 #include "./graphics/RHI_api/dx12/RHI_DX12_render_device.h"
 #include "./graphics/RHI_api/dx12/resource/shader/RHI_DX12_shader.h"

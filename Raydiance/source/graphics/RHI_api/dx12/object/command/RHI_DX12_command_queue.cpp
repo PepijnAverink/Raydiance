@@ -1,3 +1,4 @@
+#include "./pch.h"
 // Graphics includes
 #include "./graphics/RHI_api/dx12/object/command/RHI_DX12_command_queue.h"
 #include "./graphics/RHI_api/dx12/object/command/RHI_DX12_command_queue_type.h"
@@ -6,7 +7,7 @@
 #include "./graphics/RHI_api/dx12/object/sync/RHI_DX12_fenceCPU.h"
 
 // Utility includes
-#include "./utilities/string_utilities.h"
+#include "./util/string_util.h"
 
 namespace Raydiance
 {

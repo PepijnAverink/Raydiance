@@ -1,3 +1,4 @@
+#include "./pch.h"
 #include "./graphics/RHI_api/vk/RHI_VK_adapter_features.h"
 
 #include <vector>

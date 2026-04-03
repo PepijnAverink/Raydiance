@@ -1,3 +1,4 @@
+#include "./pch.h"
 #include "./graphics/RHI_api/vk/pipeline/graphics/renderpass/RHI_VK_render_pass.h"
 #include "./graphics/RHI_api/vk/pipeline/graphics/renderpass/RHI_VK_load_op.h"
 #include "./graphics/RHI_api/vk/pipeline/graphics/renderpass/RHI_VK_store_op.h"

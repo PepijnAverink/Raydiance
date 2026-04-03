@@ -1,3 +1,4 @@
+#include "./pch.h"
 #include "./graphics/RHI/resource/buffer/RHI_buffer.h"
 
 namespace Raydiance

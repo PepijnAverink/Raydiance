@@ -1,3 +1,4 @@
+#include "./pch.h"
 // Graphics includes
 #include "./graphics/RHI/object/command/RHI_command_queue.h"
 

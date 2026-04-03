@@ -1,3 +1,4 @@
+#include "./pch.h"
 #include "./graphics/RHI_api/dx12/object/command/RHI_DX12_command_pool.h"
 #include "./graphics/RHI_api/dx12/RHI_DX12_render_device.h"
 

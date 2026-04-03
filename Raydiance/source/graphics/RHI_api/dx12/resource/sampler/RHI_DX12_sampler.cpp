@@ -1,3 +1,4 @@
+#include "./pch.h"
 #include "./graphics/RHI_api/dx12/resource/sampler/RHI_DX12_sampler.h"
 #include "./graphics/RHI_api/dx12/RHI_DX12_render_device.h"
 

@@ -1,3 +1,4 @@
+#include "./pch.h"
 #include "./graphics/RHI_api/dx12/object/swapchain/RHI_DX12_swapchain.h"
 #include "./graphics/RHI_api/dx12/RHI_DX12_render_device.h"
 #include "./graphics/RHI_api/dx12/object/command/RHI_DX12_command_queue.h"

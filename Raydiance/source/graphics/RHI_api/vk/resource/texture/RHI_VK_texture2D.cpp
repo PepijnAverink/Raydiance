@@ -1,3 +1,4 @@
+#include "./pch.h"
 #include "./graphics/RHI_api/vk/resource/texture/RHI_VK_texture2D.h"
 #include "./graphics/RHI_api/vk/RHI_VK_render_device.h"
 #include "./graphics/RHI_api/vk/RHI_VK_adapter.h"

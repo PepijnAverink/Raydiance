@@ -1,3 +1,4 @@
+#include "./pch.h"
 #include "./graphics/RHI/resource/sampler/RHI_sampler.h"
 
 namespace Raydiance

@@ -1,7 +1,8 @@
+#include "./pch.h"
 #include "./graphics/RHI_api/dx12/RHI_DX12_adapter.h"
 #include "./graphics/RHI_api/dx12/RHI_DX12_adapter_features.h"
 
-#include "./utilities/string_utilities.h"
+#include "./util/string_util.h"
 
 namespace Raydiance
 {

@@ -1,3 +1,4 @@
+#include "./pch.h"
 #include "./graphics/RHI_api/vk/pipeline/graphics/RHI_VK_graphics_pipeline.h"
 
 #include "./graphics/RHI_api/vk/RHI_vk_render_device.h"
@@ -9,7 +10,7 @@
 #include "./graphics/RHI_api/vk/pipeline/graphics/rasterizer/RHI_VK_winding_order.h"
 #include "./graphics/RHI_api/vk/resource/RHI_VK_resource_format.h"
 #include "./graphics/RHI_api/vk/resource/shader/RHI_VK_shader.h"
-#include "./utilities/string_utilities.h"
+#include "./util/string_util.h"
 
 #include "./graphics/RHI_api/vk/pipeline/graphics/framebuffer/RHI_VK_frame_buffer.h"
 

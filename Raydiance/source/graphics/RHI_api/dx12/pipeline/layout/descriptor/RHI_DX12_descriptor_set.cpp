@@ -1,3 +1,4 @@
+#include "./pch.h"
 #include "./graphics/RHI_api/dx12/pipeline/layout/descriptor/RHI_DX12_descriptor_set.h"
 #include "./graphics/RHI_api/dx12/RHI_DX12_render_device.h"
 
