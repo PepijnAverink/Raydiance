@@ -4,6 +4,8 @@
 #include <string>
 #include <windows.h>
 
+// TODO:: Wrap this in a namespace
+// TODO:: Abstract the win32 api platform depenency
 
 class Window
 {
