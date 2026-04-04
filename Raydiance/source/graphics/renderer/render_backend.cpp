@@ -39,6 +39,7 @@ namespace Raydiance
 
 		RenderBackend::~RenderBackend(void)
 		{
+			delete m_Swapchain;
 			delete m_CommandQueue;
 			RHI_RenderDevice::Destroy();
 		}
@@ -135,7 +136,18 @@ namespace Raydiance
 			// Setup RHI_Swapchain
 			// ---------------------------------------------------------
 			{
+				// RHI_Swapchain descriptor
+				RHI_SwapchainDescriptor swapchainDesc = { };
+				swapchainDesc.Name				 = "RB_Swapchain";
+				swapchainDesc.NativeWindowHandle = _window->GetWindowHandlePtr();
+				swapchainDesc.Width				 = _window->GetClientWidth();
+				swapchainDesc.Height			 = _window->GetClientHeight();
+				swapchainDesc.Format			 = RHI_ResourceFormat::RHI_RESOURCE_FORMAT_B8G8R8A8_UNORM;
+				swapchainDesc.BufferCount		 = 2;
+				swapchainDesc.VSync				 = true;
 
+				// Creating the RHI_Swapchain object
+				m_Swapchain = m_RenderDevice->RHI_CreateSwapchain(m_CommandQueue, &swapchainDesc);
 			}
 
 			return Result::RESULT_GOOD;
