@@ -43,21 +43,18 @@ namespace Raydiance
 			m_Features = RHI_VK_AdapterFeatures(m_PhysicalDevice);
 
 
-			VkImageFormatProperties2 props;
-			props.sType = VK_STRUCTURE_TYPE_IMAGE_FORMAT_PROPERTIES_2;
-			props.pNext = NULL;
-
-			VkPhysicalDeviceImageFormatInfo2 formatInfo;
-			formatInfo.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_FORMAT_INFO_2;
-
-			VkResult result = vkGetPhysicalDeviceImageFormatProperties2(
-				m_PhysicalDevice,
-				&formatInfo,
-				&props
-			);
-
-			int z = 0;
-
+			//VkImageFormatProperties2 props;
+			//props.sType = VK_STRUCTURE_TYPE_IMAGE_FORMAT_PROPERTIES_2;
+			//props.pNext = NULL;
+			//
+			//VkPhysicalDeviceImageFormatInfo2 formatInfo;
+			//formatInfo.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_FORMAT_INFO_2;
+			//
+			//VkResult result = vkGetPhysicalDeviceImageFormatProperties2(
+			//	m_PhysicalDevice,
+			//	&formatInfo,
+			//	&props
+			//);
 		}
 
 		RHI_VK_Adapter::~RHI_VK_Adapter()

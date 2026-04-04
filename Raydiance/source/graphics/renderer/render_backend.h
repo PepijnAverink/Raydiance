@@ -22,8 +22,10 @@ namespace Raydiance
 
 
 		private:
-			 RenderBackend(Window* _window, RHI_GraphicsAPI _graphicsAPI);
+			 RenderBackend(void);
 			~RenderBackend(void);
+
+			Result Initialize(Window* _window, RHI_GraphicsAPI _graphicsAPI);
 
 			RHI_RenderDevice* m_RenderDevice = nullptr;
 		};

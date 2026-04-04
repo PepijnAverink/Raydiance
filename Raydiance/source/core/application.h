@@ -1,6 +1,7 @@
 #pragma once
 // Core includes
 #include "./core/error/result.h"
+#include "./core/error/logger.h"
 #include "./core/window/window.h"
 #include "./core/files/file_path.h"
 
@@ -27,6 +28,8 @@ namespace Raydiance
 		explicit Application(void);
 
 		Window* m_Window = nullptr;
+
+		Logger* m_Logger = nullptr;
 	};
 }
 
