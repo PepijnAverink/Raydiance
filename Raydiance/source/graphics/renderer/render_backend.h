@@ -1,5 +1,8 @@
 #pragma once
+// Graphics includes
 #include "./graphics/RHI/RHI_render_device.h"
+#include "./graphics/RHI/object/command/RHI_command_queue.h"
+
 
 // Core includes
 #include "./core/window/window.h"
@@ -28,6 +31,7 @@ namespace Raydiance
 			Result Initialize(Window* _window, RHI_GraphicsAPI _graphicsAPI);
 
 			RHI_RenderDevice* m_RenderDevice = nullptr;
+			RHI_CommandQueue* m_CommandQueue = nullptr;
 		};
 	}
 }

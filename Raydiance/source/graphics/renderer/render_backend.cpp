@@ -39,6 +39,7 @@ namespace Raydiance
 
 		RenderBackend::~RenderBackend(void)
 		{
+			delete m_CommandQueue;
 			RHI_RenderDevice::Destroy();
 		}
 
@@ -115,6 +116,26 @@ namespace Raydiance
 				// Link the choosen adapter
 				Logger::Log(std::format("Adapter linked to deive: {}", preferedAdapter->GetName()), LogLevel::LOG_LEVEL_INFO);
 				m_RenderDevice->LinkAdapter(preferedAdapter);
+			}
+
+
+			// Setup RHI_CommandQueue
+			// ---------------------------------------------------------
+			{
+				// RHI_CommandQueue descriptor
+				RHI_CommandQueueDescriptor commandQueueDesc = { };
+				commandQueueDesc.Name = "RB_CommandQueue";
+				commandQueueDesc.Type = RHI_CommandQueueType::RHI_COMMAND_QUEUE_TYPE_GRAPHICS;
+
+				// Creating the RHI_CommandQueue object
+				m_CommandQueue = m_RenderDevice->RHI_CreateCommandQueue(&commandQueueDesc);
+			}
+
+
+			// Setup RHI_Swapchain
+			// ---------------------------------------------------------
+			{
+
 			}
 
 			return Result::RESULT_GOOD;
