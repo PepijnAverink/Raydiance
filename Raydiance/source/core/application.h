@@ -16,11 +16,12 @@ namespace Raydiance
 	public:
 		virtual ~Application(void);
 
-		virtual Result Initialze(const PlatformType& _platformType);
-		virtual Result Initialze(const PlatformType& _platformType, const FilePath& _filepath);
-		virtual Result Terminate(void);
+		virtual Result Initialize(const PlatformType& _platformType);
+		virtual Result Initialize(const PlatformType& _platformType, const FilePath& _filepath);
 
 		virtual Result Run(void);
+
+		bool OnEvent(Event& _event);
 
 	protected:
 		explicit Application(void);

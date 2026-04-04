@@ -582,6 +582,12 @@
     <ClInclude Include="source\platform\platform_type.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\platform\win\core\window\win_window.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\core\window\window_descriptor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\core\files\file_system.cpp">
@@ -804,6 +810,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\graphics\renderer\renderer3D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\platform\win\core\window\win_window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

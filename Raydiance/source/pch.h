@@ -1,4 +1,5 @@
 #pragma once
+#include "./raydiance.h"
 
 // Core includes
 #include "./core/error/logger.h"

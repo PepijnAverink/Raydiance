@@ -1,53 +1,66 @@
 #pragma once
+// Descriptor include
+#include "./core/window/window_descriptor.h"
+
+
+// Core includes
+#include "./core/error/result.h"
 #include "./core/event/event.h"
+
+
 //
 #include <string>
-#include <windows.h>
 
-// TODO:: Wrap this in a namespace
+
 // TODO:: Abstract the win32 api platform depenency
-
-class Window
+namespace Raydiance
 {
-public:
-	Window(const std::string& _title, const uint32_t _width, const uint32_t _height);
-	~Window();
+	class Window
+	{
+	public:
+		virtual ~Window();
 
-	// Updates windows event queue and processes events
-	void PollEvents();
+		static Window* Create(const WindowDescriptor& _windowDescriptor);
 
-	// Shows window or hides main application window
-	void Show();
-	void Hide();
+		// Updates windows event queue and processes events
+		virtual void PollEvents(void) = 0;
 
-	// Functions to help with window closure
-	void Close();
-	// TODO:: Replace with event system callback
-	inline bool ShouldClose() const { return m_Closed; }
+		// Shows window or hides main application window
+		virtual void Show(void) = 0;
+		virtual void Hide(void) = 0;
 
-	// Getters for the native window handle
-	inline HWND GetWindowHandle() const { return m_WindowHandle; }
-	inline void* GetWindowHandlePtr() const { return m_WindowHandle; } 
+		// Functions to help with window closure
+		virtual void Close(void) { m_Closed = true; }
 
-	// Getter for the window title
-	inline const std::string GetTitle() const { return m_Title; }
+		// TODO:: Replace with event system callback
+		inline bool ShouldClose() const { return m_Closed; }
 
-	// Getters for window dimension
-	inline uint32_t GetWidth() const { return m_Width; }
-	inline uint32_t GetHeight() const { return m_Height; }
+		// Getters for the native window handle
+		virtual void* GetWindowHandlePtr() const = 0;
 
-	// Event callback
-	EventCallbackFn EventCallback = nullptr;
-	virtual void SetEventCallback(const EventCallbackFn& _callback) { EventCallback = _callback; }
+		// TODO:: Look into using std::string_view
+		// Getter for the window title
+		inline const std::string GetTitle() const { return m_Title; }
 
-private:
-	HWND m_WindowHandle;  // Main window handle used to reference the window in various API's
+		// Getters for window dimension
+		inline uint32_t GetClientWidth()  const { return m_Width; }
+		inline uint32_t GetClientHeight() const { return m_Height; }
 
-	// General window information
-	std::string m_Title;
-	uint32_t m_Width;
-	uint32_t m_Height;
+		// Event callback
+		EventCallbackFn EventCallback = nullptr;
+		virtual void SetEventCallback(const EventCallbackFn& _callback) { EventCallback = _callback; }
 
-	bool m_Closed   = false;
-	bool m_Focussed = false; // Whether or not the window is currently in focus
-};
+	protected:
+		Window();
+		Result Initialize(const WindowDescriptor& _windowDescriptor);
+
+
+		// General window information
+		std::string m_Title;
+		uint32_t    m_Width;
+		uint32_t    m_Height;
+
+		bool m_Closed = false;
+		bool m_Focussed = false; // Whether or not the window is currently in focus
+	};
+}
