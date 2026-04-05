@@ -55,7 +55,7 @@ namespace Raydiance
 
 				// RHI_RenderDevice descriptor
 				RHI_RenderDeviceDescriptor renderDeviceDesc = { };
-				renderDeviceDesc.NativeWindowHandle = _window;
+				renderDeviceDesc.NativeWindowHandle = _window->GetWindowHandlePtr();
 				renderDeviceDesc.DebugMode			= RHI_DebugMode::RHI_DEBUG_MODE_DEBUG_ONLY;
 				renderDeviceDesc.CommandQueues		= { RHI_CommandQueueAllocation(RHI_CommandQueueType::RHI_COMMAND_QUEUE_TYPE_GRAPHICS, 1), };
 
@@ -145,7 +145,7 @@ namespace Raydiance
 				swapchainDesc.Format			 = RHI_ResourceFormat::RHI_RESOURCE_FORMAT_B8G8R8A8_UNORM;
 				swapchainDesc.BufferCount		 = 2;
 				swapchainDesc.VSync				 = true;
-
+			
 				// Creating the RHI_Swapchain object
 				m_Swapchain = m_RenderDevice->RHI_CreateSwapchain(m_CommandQueue, &swapchainDesc);
 			}
