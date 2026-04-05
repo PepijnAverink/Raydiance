@@ -3,6 +3,7 @@
 
 
 // Core includes
+#include "./core/error/assert.h"
 #include "./core/error/logger.h"
 
 
@@ -13,12 +14,16 @@ namespace Raydiance
 		// Static instance
 		static RenderBackend* s_RenderBackend = nullptr;
 
+
+		[[nodiscard]]
 		Result RenderBackend::Create(Window* _window)
 		{
 			return Create(_window, DEFAULT_GRAPHICS_API);
 		}
 
-		Result RenderBackend::Create(Window* _window, RHI_GraphicsAPI _graphicsAPI)
+
+		[[nodiscard]]
+		Result RenderBackend::Create(Window* _window, const RHI_GraphicsAPI _graphicsAPI)
 		{
 			s_RenderBackend = new RenderBackend();
 			s_RenderBackend->Initialize(_window, _graphicsAPI);
@@ -26,7 +31,9 @@ namespace Raydiance
 			return Result::RESULT_GOOD;
 		}
 
-		Result RenderBackend::Destroy()
+
+		[[nodiscard]]
+		Result RenderBackend::Destroy(void)
 		{
 			delete s_RenderBackend;
 			s_RenderBackend = nullptr;
@@ -34,8 +41,10 @@ namespace Raydiance
 			return Result::RESULT_GOOD;
 		}
 
+
 		RenderBackend::RenderBackend(void)
 		{ }
+
 
 		RenderBackend::~RenderBackend(void)
 		{
@@ -44,7 +53,8 @@ namespace Raydiance
 			RHI_RenderDevice::Destroy();
 		}
 
-		Result RenderBackend::Initialize(Window* _window, RHI_GraphicsAPI _graphicsAPI)
+
+		Result RenderBackend::Initialize(Window* _window, const RHI_GraphicsAPI _graphicsAPI)
 		{
 			// Setup RHI_RenderDevice
 			// ---------------------------------------------------------
@@ -136,21 +146,76 @@ namespace Raydiance
 			// Setup RHI_Swapchain
 			// ---------------------------------------------------------
 			{
+				// Query for supported swapchain formats
+				std::vector<RHI_ResourceFormat> supportedFormats;
+				m_RenderDevice->CheckSwapchainCommonResourceFormatsSupport(supportedFormats);
+
+
+				// Error check support formats
+				if (supportedFormats.size() < 1)
+				{
+					Logger::Log("No commonly supported swapchain formats were detected.", LogLevel::LOG_LEVEL_ERROR);
+					Logger::Log("Cannot create swapchain correctly.", LogLevel::LOG_LEVEL_ERROR);
+					return Result::RESULT_ERROR;
+				}
+
+
 				// RHI_Swapchain descriptor
 				RHI_SwapchainDescriptor swapchainDesc = { };
 				swapchainDesc.Name				 = "RB_Swapchain";
 				swapchainDesc.NativeWindowHandle = _window->GetWindowHandlePtr();
 				swapchainDesc.Width				 = _window->GetClientWidth();
 				swapchainDesc.Height			 = _window->GetClientHeight();
-				swapchainDesc.Format			 = RHI_ResourceFormat::RHI_RESOURCE_FORMAT_B8G8R8A8_UNORM;
+				// TODO:: Maybe somehow expose this to a higher level
+				swapchainDesc.Format			 = supportedFormats[0];
 				swapchainDesc.BufferCount		 = 2;
 				swapchainDesc.VSync				 = true;
 			
+
 				// Creating the RHI_Swapchain object
 				m_Swapchain = m_RenderDevice->RHI_CreateSwapchain(m_CommandQueue, &swapchainDesc);
 			}
 
 			return Result::RESULT_GOOD;
+		}
+
+
+		void RenderBackend::SubmitCommandBuffer(RHI_CommandBuffer* _commandBuffer, RHI_FenceCPU* _fence)
+		{
+			RA_ASSERT_MSG(s_RenderBackend == nullptr, "User tried to use RenderBackend functionality before initialization.");
+			s_RenderBackend->m_CommandQueue->Execute(_commandBuffer, _fence);
+		}
+
+
+
+		uint32 RenderBackend::AquireNewFrame(RHI_FenceCPU* _fence)
+		{
+			RA_ASSERT_MSG(s_RenderBackend == nullptr, "User tried to use RenderBackend functionality before initialization.");
+			return s_RenderBackend->m_Swapchain->AquireNewFrame(s_RenderBackend->m_CommandQueue, _fence);
+		}
+
+
+		// TODO:: Look into using a fence here 
+		void RenderBackend::Present(void)
+		{
+			RA_ASSERT_MSG(s_RenderBackend == nullptr, "User tried to use RenderBackend functionality before initialization.");
+			s_RenderBackend->m_Swapchain->Present(s_RenderBackend->m_CommandQueue);
+		}
+
+
+		[[nodiscard]]
+		RHI_RenderDevice* RenderBackend::GetRenderDevice(void)
+		{
+			RA_ASSERT_MSG(s_RenderBackend == nullptr, "User tried to use RenderBackend functionality before initialization.");
+			return s_RenderBackend->m_RenderDevice;
+		}
+
+
+		[[nodiscard]]
+		RHI_Swapchain* RenderBackend::GetSwapchain(void)
+		{
+			RA_ASSERT_MSG(s_RenderBackend == nullptr, "User tried to use RenderBackend functionality before initialization.");
+			return s_RenderBackend->m_Swapchain;
 		}
 	}
 }

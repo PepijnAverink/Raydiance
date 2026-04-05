@@ -19,18 +19,34 @@ namespace Raydiance
 		class RenderBackend
 		{
 		public:
-			static Result Create(Window* _window);
-			static Result Create(Window* _window, RHI_GraphicsAPI _graphicsAPI);
-			static Result Destroy();
+			// Constrcution and destruction functions
+			[[nodiscard]] static Result Create(Window* _window);
+			[[nodiscard]] static Result Create(Window* _window, const RHI_GraphicsAPI _graphicsAPI);
+			[[nodiscard]] static Result Destroy(void);
 
+
+			// CommandQueue functions
+			static void SubmitCommandBuffer(RHI_CommandBuffer* _commandBuffer, RHI_FenceCPU* _fence);
+
+
+			// Swapchain functions
+			static uint32 AquireNewFrame(RHI_FenceCPU* _fence);
+			static void   Present(void);
+
+
+			// Getters
+			[[nodiscard]] static RHI_RenderDevice* GetRenderDevice(void);
+			[[nodiscard]] static RHI_Swapchain*    GetSwapchain(void);
 
 		private:
 			 RenderBackend(void);
 			~RenderBackend(void);
 
-			Result Initialize(Window* _window, RHI_GraphicsAPI _graphicsAPI);
+			Result Initialize(Window* _window, const RHI_GraphicsAPI _graphicsAPI);
 
 
+			// Raw data of this structure
+			// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 			RHI_RenderDevice* m_RenderDevice = nullptr;
 			RHI_CommandQueue* m_CommandQueue = nullptr;
 			RHI_Swapchain*    m_Swapchain    = nullptr;
