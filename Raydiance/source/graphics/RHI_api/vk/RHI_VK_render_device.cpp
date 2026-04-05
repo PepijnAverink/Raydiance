@@ -92,11 +92,12 @@ namespace Raydiance
 			vkDestroyInstance(m_Instance, nullptr);
 		}
 
-		const std::vector<const char*> validationLayers = {
+		// Header or cpp (anonymous namespace if in cpp)
+		constexpr const char* validationLayers[] = {
 			"VK_LAYER_KHRONOS_validation"
 		};
 
-		std::vector<const char*> deviceExtensions = {
+		constexpr const char* deviceExtensions[] = {
 			VK_KHR_SWAPCHAIN_EXTENSION_NAME
 		};
 
@@ -197,8 +198,8 @@ namespace Raydiance
 				debugCreateInfo.pfnUserCallback = DebugCallback;
 
 				// Adjust the layer in the createInfo
-				createInfo.enabledLayerCount    = static_cast<uint32_t>(validationLayers.size());
-				createInfo.ppEnabledLayerNames  = validationLayers.data();
+				createInfo.enabledLayerCount    = std::size(validationLayers);
+				createInfo.ppEnabledLayerNames  = validationLayers;
 				createInfo.pNext			    = (VkDebugUtilsMessengerCreateInfoEXT*)&debugCreateInfo;
 			}
 
@@ -356,15 +357,20 @@ namespace Raydiance
 				}
 			}
 
+			std::vector<const char*> extensions(
+				std::begin(deviceExtensions),
+				std::end(deviceExtensions)
+			);
+
 			if (_adapter->GetFeatures().Is_RaytracingSupported() == true)
 			{
-				deviceExtensions.push_back(VK_KHR_BUFFER_DEVICE_ADDRESS_EXTENSION_NAME);
+				extensions.push_back(VK_KHR_BUFFER_DEVICE_ADDRESS_EXTENSION_NAME);
 
-				deviceExtensions.push_back(VK_KHR_ACCELERATION_STRUCTURE_EXTENSION_NAME);
-				deviceExtensions.push_back(VK_KHR_RAY_TRACING_PIPELINE_EXTENSION_NAME);
-				deviceExtensions.push_back(VK_KHR_DEFERRED_HOST_OPERATIONS_EXTENSION_NAME);
-				deviceExtensions.push_back(VK_KHR_PIPELINE_LIBRARY_EXTENSION_NAME);
-				deviceExtensions.push_back(VK_KHR_SPIRV_1_4_EXTENSION_NAME);
+				extensions.push_back(VK_KHR_ACCELERATION_STRUCTURE_EXTENSION_NAME);
+				extensions.push_back(VK_KHR_RAY_TRACING_PIPELINE_EXTENSION_NAME);
+				extensions.push_back(VK_KHR_DEFERRED_HOST_OPERATIONS_EXTENSION_NAME);
+				extensions.push_back(VK_KHR_PIPELINE_LIBRARY_EXTENSION_NAME);
+				extensions.push_back(VK_KHR_SPIRV_1_4_EXTENSION_NAME);
 			}
 
 			VkPhysicalDeviceAccelerationStructureFeaturesKHR accel{};
@@ -400,14 +406,14 @@ namespace Raydiance
 			createInfo.queueCreateInfoCount    = static_cast<uint32_t>(queueCreateInfos.size());
 			createInfo.pQueueCreateInfos	   = queueCreateInfos.data();
 			//createInfo.pEnabledFeatures	   = &deviceFeatures;
-			createInfo.enabledExtensionCount   = static_cast<uint32_t>(deviceExtensions.size());
-			createInfo.ppEnabledExtensionNames = deviceExtensions.data();
+			createInfo.enabledExtensionCount   = static_cast<uint32_t>(extensions.size());
+			createInfo.ppEnabledExtensionNames = extensions.data();
 			createInfo.enabledLayerCount	   = 0;
 
 			if (Is_DebugModeEnabled() == true) 
 			{
-				createInfo.enabledLayerCount   = static_cast<uint32_t>(validationLayers.size());
-				createInfo.ppEnabledLayerNames = validationLayers.data();
+				createInfo.enabledLayerCount   = std::size(validationLayers);
+				createInfo.ppEnabledLayerNames = validationLayers;
 			}
 
 			if (vkCreateDevice(vk_adapter->GetPhysicalDevice(), &createInfo, nullptr, &m_Device) != VK_SUCCESS) {

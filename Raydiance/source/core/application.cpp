@@ -41,7 +41,7 @@ namespace Raydiance
 		{
 			// Window descriptor
 			WindowDescriptor windowDesc = { };
-			windowDesc.Title  = "Raydiance - Sanxbox application";
+			windowDesc.Title  = "Raydiance - Sandbox application";
 			windowDesc.Width  = 1280;
 			windowDesc.Height = 720;
 

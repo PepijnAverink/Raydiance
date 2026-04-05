@@ -9,8 +9,7 @@ namespace Raydiance
 {
 	namespace Graphics
 	{
-		static std::vector<const char*> RaytracingExtensions =
-		{
+		constexpr const char* raytracingExtensions[] = {
 			VK_KHR_MAINTENANCE1_EXTENSION_NAME,
 			VK_KHR_BUFFER_DEVICE_ADDRESS_EXTENSION_NAME,
 			VK_KHR_ACCELERATION_STRUCTURE_EXTENSION_NAME,
@@ -39,7 +38,7 @@ namespace Raydiance
 			// ----------------------------------------------------------
 			{
 				// Set of all the required vulkan extensions for raytracing
-				std::set<std::string> rayTraceExtensionsSet(RaytracingExtensions.begin(), RaytracingExtensions.end());
+				std::set<std::string> rayTraceExtensionsSet(std::begin(raytracingExtensions), std::end(raytracingExtensions));
 
 				// Remove extensions if found
 				for (const auto& extension : availableExtensions) {

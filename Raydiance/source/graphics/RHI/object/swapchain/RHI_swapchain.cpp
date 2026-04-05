@@ -20,6 +20,8 @@ namespace Raydiance
 		{
 			for (uint8_t i = 0; i < m_BufferCount; i++)
 				delete m_RenderTargets[i];
+
+			delete[] m_RenderTargets;
 		}
 
 		const Result RHI_Swapchain::Initialize(const RHI_SwapchainDescriptor* _swapchainDescriptor)
