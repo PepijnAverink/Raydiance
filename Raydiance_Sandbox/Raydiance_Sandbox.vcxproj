@@ -159,6 +159,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\graphics\default_renderer3D.cpp" />
     <ClCompile Include="source\sanbox_application.cpp" />
     <ClCompile Include="source\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -168,6 +169,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\graphics\default_renderer3D.h" />
     <ClInclude Include="source\sandbox_application.h" />
     <ClInclude Include="source\stdafx.h" />
   </ItemGroup>

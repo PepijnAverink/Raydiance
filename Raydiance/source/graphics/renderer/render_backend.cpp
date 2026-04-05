@@ -168,6 +168,7 @@ namespace Raydiance
 				swapchainDesc.Height			 = _window->GetClientHeight();
 				// TODO:: Maybe somehow expose this to a higher level
 				swapchainDesc.Format			 = supportedFormats[0];
+				// TODO:: For sure somehow expose this to a higher level
 				swapchainDesc.BufferCount		 = 2;
 				swapchainDesc.VSync				 = true;
 			

@@ -588,6 +588,15 @@
     <ClInclude Include="source\core\window\window_descriptor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\graphics\renderer\camera\camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\graphics\renderer\frame_data.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\graphics\renderer\renderer3D_descriptor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\core\files\file_system.cpp">
