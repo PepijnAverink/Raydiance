@@ -1,6 +1,6 @@
 #pragma once
 // Graphics includes
-#include "./graphics/renderer/renderer3D.h"
+#include "./graphics/gfx/renderer3D.h"
 
 namespace Sandbox
 {

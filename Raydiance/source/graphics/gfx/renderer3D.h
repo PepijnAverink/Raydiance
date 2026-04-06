@@ -1,6 +1,6 @@
 #pragma once
 // Descriptor include
-#include "./graphics/renderer/renderer3D_descriptor.h"
+#include "./graphics/gfx/renderer3D_descriptor.h"
 
 
 // Core includes
@@ -8,9 +8,9 @@
 
 
 // Graphics includes
-#include "./graphics/renderer/frame_data.h"
-#include "./graphics/renderer/camera/camera.h"
-#include "./graphics/renderer/render_backend.h"
+#include "./graphics/gfx/frame_data.h"
+#include "./graphics/gfx/camera/camera.h"
+#include "./graphics/gfx/render_backend.h"
 
 
 namespace Raydiance

@@ -20,7 +20,7 @@ namespace Sandbox
 
 	void DefaultRenderer3D::BeginFrame()
 	{
-		//m_CurrentFrameIndex = Raydiance::Graphics::RenderBackend::AquireNewFrame();
+		m_CurrentFrameIndex = Raydiance::Graphics::RenderBackend::AquireNewFrame(m_AquireFence);
 	}
 
 
