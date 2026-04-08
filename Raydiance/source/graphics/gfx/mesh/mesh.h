@@ -2,6 +2,7 @@
 // Core includes
 #include "./core/error/result.h"
 
+
 // Graphics includes
 #include "./graphics/gfx/mesh/sub_mesh.h"
 
@@ -22,6 +23,10 @@ namespace Raydiance
 			// Submesh helper functions
 			void AddSubMesh(const SubMesh& _subMesh);
 
+			inline uint32 GetSubMeshCount(void) const { return m_SubMeshCount; }
+			inline       std::vector<SubMesh>& GetSubMeshes()       { return m_SubMeshes; }
+			inline const std::vector<SubMesh>& GetSubMeshes() const { return m_SubMeshes; }
+
 
 			// Individual buffer getters
 			inline RHI_Buffer* GetVertexBuffer(void) const { return m_VertexBuffer; }
@@ -39,8 +44,10 @@ namespace Raydiance
 		protected:
 			Mesh(void);
 
+			// Protected helper functiosn for creation of the internal buffers
 			Result CreateVertexBuffer(RHI_CommandBuffer* _commandBuffer, RHI_FenceCPU* _fence, void* _data, const uint32 _size, RHI_BufferLayout _layout);
 			Result CreateIndexBuffer(RHI_CommandBuffer* _commandBuffer, RHI_FenceCPU* _fence, void* _data, const uint32 _size, RHI_BufferLayout _layout);
+
 
 			// Raw internal resources
 			RHI_Buffer* m_VertexBuffer = nullptr;
