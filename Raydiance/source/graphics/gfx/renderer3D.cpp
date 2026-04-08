@@ -42,20 +42,43 @@ namespace Raydiance
 				}
 			}
 
+			{
+				RHI_FenceCPUDescriptor fenceDesc = { };
+				fenceDesc.Name    = "AquireFence";
+				fenceDesc.TimeOut = 0;
+
+				m_AquireFence = RenderBackend::GetRenderDevice()->RHI_CreateFenceCPU(&fenceDesc);
+
+			}
+
 			return Result::RESULT_GOOD;
 		}
 
 		Result Renderer3D::Terminate()
 		{
+			delete m_AquireFence;
+
 			for (uint32 i = 0; i < m_FramesInFlight; i++)
 			{
-				delete m_FrameData[i].Fence;
-				delete m_FrameData[i].CommandPool;
 				delete m_FrameData[i].CommandBuffer;
+				delete m_FrameData[i].CommandPool;
+				delete m_FrameData[i].Fence;
 			}
 
 			m_FrameData.clear();
 			return Result::RESULT_GOOD;
+		}
+
+		void Renderer3D::BeginFrame()
+		{
+			m_CurrentFrameIndex = RenderBackend::AquireNewFrame(m_AquireFence);
+
+
+		}
+
+		void Renderer3D::EndFrame()
+		{
+			RenderBackend::Present();
 		}
 	}
 }

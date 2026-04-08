@@ -15,6 +15,9 @@ namespace Raydiance
 
 	Application::~Application(void)
 	{
+		m_Renderer->Terminate();
+		delete m_Renderer;
+
 		Graphics::RenderBackend::Destroy();
 
 		delete m_Window;
@@ -54,6 +57,18 @@ namespace Raydiance
 		// Setup the RenderBackend
 		Graphics::RenderBackend::Create(m_Window);
 
+
+		// Create the 3D renderer
+		{
+			// Renderer3D descriptor
+			Graphics::Renderer3DDescriptor rendererDesc = { };
+			rendererDesc.FramesInFlight = 2; // Example value, adjust as needed
+
+
+			// Renderer creation
+			m_Renderer = new Graphics::Renderer3D();
+			m_Renderer->Initialize(rendererDesc);	
+		}
 
 		m_Window->Show();
 		return Result::RESULT_GOOD;

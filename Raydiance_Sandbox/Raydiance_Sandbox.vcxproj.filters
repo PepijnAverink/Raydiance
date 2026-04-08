@@ -21,18 +21,12 @@
     <ClCompile Include="source\sanbox_application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\graphics\default_renderer3D.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\sandbox_application.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\graphics\default_renderer3D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

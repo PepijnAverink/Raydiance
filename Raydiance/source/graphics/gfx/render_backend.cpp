@@ -183,7 +183,7 @@ namespace Raydiance
 
 		void RenderBackend::SubmitCommandBuffer(RHI_CommandBuffer* _commandBuffer, RHI_FenceCPU* _fence)
 		{
-			RA_ASSERT_MSG(s_RenderBackend == nullptr, "User tried to use RenderBackend functionality before initialization.");
+			RA_ASSERT_MSG(s_RenderBackend != nullptr, "User tried to use RenderBackend functionality before initialization.");
 			s_RenderBackend->m_CommandQueue->Execute(_commandBuffer, _fence);
 		}
 
@@ -191,7 +191,7 @@ namespace Raydiance
 
 		uint32 RenderBackend::AquireNewFrame(RHI_FenceCPU* _fence)
 		{
-			RA_ASSERT_MSG(s_RenderBackend == nullptr, "User tried to use RenderBackend functionality before initialization.");
+			RA_ASSERT_MSG(s_RenderBackend != nullptr, "User tried to use RenderBackend functionality before initialization.");
 			return s_RenderBackend->m_Swapchain->AquireNewFrame(s_RenderBackend->m_CommandQueue, _fence);
 		}
 
@@ -199,7 +199,7 @@ namespace Raydiance
 		// TODO:: Look into using a fence here 
 		void RenderBackend::Present(void)
 		{
-			RA_ASSERT_MSG(s_RenderBackend == nullptr, "User tried to use RenderBackend functionality before initialization.");
+			RA_ASSERT_MSG(s_RenderBackend != nullptr, "User tried to use RenderBackend functionality before initialization.");
 			s_RenderBackend->m_Swapchain->Present(s_RenderBackend->m_CommandQueue);
 		}
 
@@ -207,7 +207,7 @@ namespace Raydiance
 		[[nodiscard]]
 		RHI_RenderDevice* RenderBackend::GetRenderDevice(void)
 		{
-			RA_ASSERT_MSG(s_RenderBackend == nullptr, "User tried to use RenderBackend functionality before initialization.");
+			RA_ASSERT_MSG(s_RenderBackend != nullptr, "User tried to use RenderBackend functionality before initialization.");
 			return s_RenderBackend->m_RenderDevice;
 		}
 
@@ -215,7 +215,7 @@ namespace Raydiance
 		[[nodiscard]]
 		RHI_Swapchain* RenderBackend::GetSwapchain(void)
 		{
-			RA_ASSERT_MSG(s_RenderBackend == nullptr, "User tried to use RenderBackend functionality before initialization.");
+			RA_ASSERT_MSG(s_RenderBackend != nullptr, "User tried to use RenderBackend functionality before initialization.");
 			return s_RenderBackend->m_Swapchain;
 		}
 	}

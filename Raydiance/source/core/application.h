@@ -6,6 +6,10 @@
 #include "./core/files/file_path.h"
 
 
+// Graphics includes
+#include "./graphics/gfx/renderer3D.h"
+
+
 // Platform includes
 #include "./platform/platform_type.h"
 
@@ -30,6 +34,8 @@ namespace Raydiance
 		Window* m_Window = nullptr;
 
 		Logger* m_Logger = nullptr;
+
+		Graphics::Renderer3D* m_Renderer = nullptr;
 	};
 }
 

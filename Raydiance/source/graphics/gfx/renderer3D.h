@@ -21,25 +21,27 @@ namespace Raydiance
 		{
 		public:
 			// Initialization and termination
-			virtual Result Initialize(const Renderer3DDescriptor& _renderer3DDescriptor);
-			virtual Result Terminate();
+			Result Initialize(const Renderer3DDescriptor& _renderer3DDescriptor);
+			Result Terminate();
 
 
 			// Frame flow
-			virtual void BeginFrame() = 0;
-			virtual void BeginFrame(const Camera& _camera) = 0;
+			void BeginFrame();
+			//void BeginFrame(const Camera& _camera);
 
-			virtual void EndFrame() = 0;
+			void EndFrame();
 
 
 			// Build renderlist
-			//virtual void SubmitMesh();
+			// void SubmitMesh();
 
 		protected:
 			uint32 m_FramesInFlight	   = 0;
 			uint32 m_CurrentFrameIndex = 0;
 
 			std::vector<FrameData> m_FrameData;
+
+			RHI_FenceCPU* m_AquireFence = nullptr;
 		};
 	}
 }
