@@ -41,6 +41,7 @@ namespace Raydiance
 
 		RHI_DX12_DescriptorHeap::~RHI_DX12_DescriptorHeap()
 		{
+			delete m_Freelist;
 			m_DescriptorHeap->Release();
 		}
 

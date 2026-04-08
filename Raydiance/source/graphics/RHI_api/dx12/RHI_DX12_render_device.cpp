@@ -44,7 +44,9 @@ namespace Raydiance
 			delete m_GPUDescriptorHeap_SAMPLER;
 
 			m_Factory->Release();
-			m_Device->Release();
+
+			if (m_Device != nullptr)
+				m_Device->Release();
 		}
 
 		Result RHI_DX12_RenderDevice::Initialize(const RHI_RenderDeviceDescriptor* _renderDeviceDescriptor)
