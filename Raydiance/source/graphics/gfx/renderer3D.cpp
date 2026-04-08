@@ -48,7 +48,21 @@ namespace Raydiance
 				fenceDesc.TimeOut = 0;
 
 				m_AquireFence = RenderBackend::GetRenderDevice()->RHI_CreateFenceCPU(&fenceDesc);
+			}
 
+
+			{
+				m_FrameData[0].CommandBuffer->BeginRecording();
+
+				for (uint32 i = 0; i < RenderBackend::GetSwapchain()->GetBufferCount(); i++)
+					m_FrameData[0].CommandBuffer->TransitionResource(RenderBackend::GetSwapchain()->GetRenderTextureAtIndex(i), RHI_ResourceState::RHI_RESOURCE_STATE_INVALID, RHI_ResourceState::RHI_RESOURCE_STATE_PRESENT);
+				
+				m_FrameData[0].CommandBuffer->EndRecording();
+
+
+				// Submit commandbuffer
+				RenderBackend::SubmitCommandBuffer(m_FrameData[0].CommandBuffer, m_FrameData[0].Fence);
+				m_FrameData[0].Fence->Wait();
 			}
 
 			return Result::RESULT_GOOD;
@@ -72,12 +86,38 @@ namespace Raydiance
 		void Renderer3D::BeginFrame()
 		{
 			m_CurrentFrameIndex = RenderBackend::AquireNewFrame(m_AquireFence);
+			m_AquireFence->Wait();
 
 
+			// Transition backbuffer
+			m_FrameData[m_CurrentFrameIndex].CommandBuffer->BeginRecording();
+			m_FrameData[m_CurrentFrameIndex].CommandBuffer->TransitionResource(RenderBackend::GetSwapchain()->GetCurrentRenderTexture(), RHI_ResourceState::RHI_RESOURCE_STATE_PRESENT, RHI_ResourceState::RHI_RESOURCE_STATE_COMMON);
+			m_FrameData[m_CurrentFrameIndex].CommandBuffer->EndRecording();
+
+
+			// Submit commandbuffer
+			RenderBackend::SubmitCommandBuffer(m_FrameData[m_CurrentFrameIndex].CommandBuffer, m_FrameData[m_CurrentFrameIndex].Fence);
+			m_FrameData[m_CurrentFrameIndex].Fence->Wait();
 		}
 
 		void Renderer3D::EndFrame()
 		{
+			// Transition backbuffer
+			m_FrameData[m_CurrentFrameIndex].CommandBuffer->BeginRecording();
+			m_FrameData[m_CurrentFrameIndex].CommandBuffer->TransitionResource(RenderBackend::GetSwapchain()->GetCurrentRenderTexture(), RHI_ResourceState::RHI_RESOURCE_STATE_COMMON, RHI_ResourceState::RHI_RESOURCE_STATE_PRESENT);
+			m_FrameData[m_CurrentFrameIndex].CommandBuffer->EndRecording();
+
+
+			// Submit commandbuffer
+			RenderBackend::SubmitCommandBuffer(m_FrameData[m_CurrentFrameIndex].CommandBuffer, m_FrameData[m_CurrentFrameIndex].Fence);
+			m_FrameData[m_CurrentFrameIndex].Fence->Wait();
+
+
+			// Reset command pool for the current frame
+			m_FrameData[m_CurrentFrameIndex].CommandPool->Reset();
+
+
+			// Present the current frame
 			RenderBackend::Present();
 		}
 	}

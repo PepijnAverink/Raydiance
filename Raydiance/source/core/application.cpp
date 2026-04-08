@@ -80,6 +80,10 @@ namespace Raydiance
 		while (m_Window->ShouldClose() == false)
 		{
 			m_Window->PollEvents();
+
+			m_Renderer->BeginFrame();
+
+			m_Renderer->EndFrame();
 		}
 
 		return Result::RESULT_GOOD;
