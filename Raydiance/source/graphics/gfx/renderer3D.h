@@ -12,6 +12,9 @@
 #include "./graphics/gfx/camera/camera.h"
 #include "./graphics/gfx/render_backend.h"
 
+#include "./graphics/gfx/mesh/mesh.h"
+#include "./graphics/gfx/material/material.h"
+
 
 namespace Raydiance
 {

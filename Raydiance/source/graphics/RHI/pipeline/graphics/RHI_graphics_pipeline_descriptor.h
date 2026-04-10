@@ -2,6 +2,8 @@
 #include "./graphics/RHI/pipeline/layout/RHI_vertex_layout.h"
 #include "./graphics/RHI/pipeline/layout/RHI_input_layout.h"
 
+#include "./graphics/RHI/resource/shader/RHI_shader.h"
+
 #include "./graphics/RHI/pipeline/graphics/topology/RHI_topology.h"
 #include "./graphics/RHI/pipeline/graphics/rasterizer/RHI_cull_mode.h"
 #include "./graphics/RHI/pipeline/graphics/rasterizer/RHI_fill_mode.h"
@@ -15,7 +17,6 @@ namespace Raydiance
 	{
 		class RHI_RenderPass;
 		class RHI_FrameBuffer;
-		class RHI_Shader;
 		class RHI_GraphicsPipelineDescriptor
 		{
 		public:

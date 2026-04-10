@@ -7,7 +7,14 @@ namespace Sandbox
 	class SandboxApplication final : public Raydiance::Application
 	{
 	public:
-		SandboxApplication();
+				 SandboxApplication(void);
+		virtual ~SandboxApplication(void);
 
+		virtual Result Initialize(const PlatformType& _platformType, const FilePath& _filepath) override;
+
+	private:
+
+		Raydiance::Graphics::RHI_Shader* m_VertexShader = nullptr;
+		Raydiance::Graphics::RHI_Shader* m_PixelShader  = nullptr;
 	};
 }

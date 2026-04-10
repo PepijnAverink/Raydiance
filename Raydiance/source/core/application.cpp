@@ -13,6 +13,7 @@ namespace Raydiance
 
 	}
 
+
 	Application::~Application(void)
 	{
 		m_Renderer->Terminate();
@@ -25,12 +26,12 @@ namespace Raydiance
 		delete m_Logger;
 	}
 
+
 	Result Application::Initialize(const PlatformType& _platformType)
 	{
-
-
 		return Initialize(_platformType, FilePath());
 	}
+
 
 	Result Application::Initialize(const PlatformType& _platformType, const FilePath& _filepath)
 	{
@@ -89,9 +90,9 @@ namespace Raydiance
 		return Result::RESULT_GOOD;
 	}
 
+
 	bool Application::OnEvent(Event& _event)
 	{
-
 		return true;
 	}
 }

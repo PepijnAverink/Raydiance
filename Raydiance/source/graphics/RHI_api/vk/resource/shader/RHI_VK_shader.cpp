@@ -22,6 +22,7 @@ namespace Raydiance
 {
 	namespace Graphics
 	{
+		static CComPtr<IDxcContainerReflection> s_ContainerReflection = nullptr;
 		static CComPtr<IDxcCompiler3> s_Compiler = nullptr;
 		static CComPtr<IDxcLibrary> s_Library = nullptr;
 		static CComPtr<IDxcUtils> s_Utils = nullptr;
@@ -100,6 +101,13 @@ namespace Raydiance
 					if (FAILED(hres)) {
 						throw std::runtime_error("Could not init DXC Utiliy");
 					}
+
+
+					// Initialize DXC reflection
+					hres = DxcCreateInstance(CLSID_DxcContainerReflection, IID_PPV_ARGS(&s_ContainerReflection));
+					if (FAILED(hres)) {
+						throw std::runtime_error("Could not init DXC Reflection");
+					}
 				}
 
 
@@ -168,6 +176,22 @@ namespace Raydiance
 				// Get compilation result
 				CComPtr<IDxcBlob> code;
 				result->GetResult(&code);
+
+
+				// Reflection
+				{
+					s_ContainerReflection->Load(code);
+
+					// Find reflection part
+					UINT32 partIndex;
+					s_ContainerReflection->FindFirstPartKind(DXC_PART_DXIL, &partIndex);
+
+					// Get reflection interface
+					CComPtr<ID3D12ShaderReflection> reflection;
+					s_ContainerReflection->GetPartReflection(partIndex, IID_PPV_ARGS(&reflection));
+
+					int z = 0;
+				}
 
 				// Create a Vulkan shader module from the compilation result
 				VkShaderModuleCreateInfo shaderModuleCI{};

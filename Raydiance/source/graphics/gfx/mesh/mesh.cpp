@@ -118,6 +118,7 @@ namespace Raydiance
 			_fence->Wait();
 
 			delete iStagingBuffer;
+			return Result::RESULT_GOOD;
 		}
 	}
 }
