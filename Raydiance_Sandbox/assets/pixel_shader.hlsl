@@ -1,4 +1,4 @@
-Texture2D albedoMap : register(t0, space1); // binding = 1, descriptorSet = 1 (RMA_texture)
+Texture2D albedoMap   : register(t0, space1); // binding = 1, descriptorSet = 1 (RMA_texture)
 SamplerState sampler0 : register(s0, space2); // Often a separate sampler object is needed
 
 struct PixelShaderInput

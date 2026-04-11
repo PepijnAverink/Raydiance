@@ -14,7 +14,5 @@ namespace Sandbox
 
 	private:
 
-		Raydiance::Graphics::RHI_Shader* m_VertexShader = nullptr;
-		Raydiance::Graphics::RHI_Shader* m_PixelShader  = nullptr;
 	};
 }

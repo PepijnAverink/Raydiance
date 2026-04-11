@@ -20,7 +20,8 @@ namespace Raydiance
 
 		RHI_DX12_Shader::RHI_DX12_Shader(void)
 			: RHI_Shader()
-		{ }
+		{
+		}
 
 		RHI_DX12_Shader::~RHI_DX12_Shader(void)
 		{
@@ -105,7 +106,7 @@ namespace Raydiance
 				std::wstring tp = ResolveDX12ShaderType(m_Type).c_str();
 				LPCWSTR targetProfile = tp.c_str();
 
-				std::wstring dir  = StringToWString(_shaderDescriptor->FilePath.GetDirectory());
+				std::wstring dir = StringToWString(_shaderDescriptor->FilePath.GetDirectory());
 				LPCWSTR directory = dir.c_str();
 
 
