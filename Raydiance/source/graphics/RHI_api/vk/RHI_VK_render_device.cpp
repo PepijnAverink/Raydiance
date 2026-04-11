@@ -98,7 +98,9 @@ namespace Raydiance
 		};
 
 		constexpr const char* deviceExtensions[] = {
-			VK_KHR_SWAPCHAIN_EXTENSION_NAME
+			VK_KHR_SWAPCHAIN_EXTENSION_NAME,
+			VK_GOOGLE_HLSL_FUNCTIONALITY_1_EXTENSION_NAME,
+			VK_KHR_SHADER_NON_SEMANTIC_INFO_EXTENSION_NAME
 		};
 
 		// Debug callback function for the Vulkan validation layer

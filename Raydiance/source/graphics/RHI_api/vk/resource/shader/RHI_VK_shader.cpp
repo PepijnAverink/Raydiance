@@ -16,13 +16,17 @@
 #include <./dxc/dxcapi.h>
 #include <./d3d12shader.h>
 
+
+// SPIRV-reflect
+#include "./spirv_reflect.h"
+
+
 #include <iostream>
 
 namespace Raydiance
 {
 	namespace Graphics
 	{
-		static CComPtr<IDxcContainerReflection> s_ContainerReflection = nullptr;
 		static CComPtr<IDxcCompiler3> s_Compiler = nullptr;
 		static CComPtr<IDxcLibrary> s_Library = nullptr;
 		static CComPtr<IDxcUtils> s_Utils = nullptr;
@@ -101,13 +105,6 @@ namespace Raydiance
 					if (FAILED(hres)) {
 						throw std::runtime_error("Could not init DXC Utiliy");
 					}
-
-
-					// Initialize DXC reflection
-					hres = DxcCreateInstance(CLSID_DxcContainerReflection, IID_PPV_ARGS(&s_ContainerReflection));
-					if (FAILED(hres)) {
-						throw std::runtime_error("Could not init DXC Reflection");
-					}
 				}
 
 
@@ -140,7 +137,8 @@ namespace Raydiance
 					L"-I", directory,
 					// Compile to SPIRV
 					L"-spirv",
-					L"-fvk-use-dx-layout"
+					L"-fvk-use-dx-layout",
+					L"-fspv-reflect"
 				};
 
 				//if (_shaderDescriptor->Type == RHI_ShaderType::SHADER_TYPE_RAY_GEN || _shaderDescriptor->Type == ShaderType::SHADER_TYPE_MISS || _shaderDescriptor->Type == ShaderType::SHADER_TYPE_CLOSEST_HIT)
@@ -178,21 +176,6 @@ namespace Raydiance
 				result->GetResult(&code);
 
 
-				// Reflection
-				{
-					s_ContainerReflection->Load(code);
-
-					// Find reflection part
-					UINT32 partIndex;
-					s_ContainerReflection->FindFirstPartKind(DXC_PART_DXIL, &partIndex);
-
-					// Get reflection interface
-					CComPtr<ID3D12ShaderReflection> reflection;
-					s_ContainerReflection->GetPartReflection(partIndex, IID_PPV_ARGS(&reflection));
-
-					int z = 0;
-				}
-
 				// Create a Vulkan shader module from the compilation result
 				VkShaderModuleCreateInfo shaderModuleCI{};
 				shaderModuleCI.sType    = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
@@ -201,6 +184,46 @@ namespace Raydiance
 				vkCreateShaderModule(_RHI_RenderDevice->GetVKDevice(), &shaderModuleCI, nullptr, &m_ShaderModule);
 
 				includeHandler->Release();
+
+
+				SpvReflectShaderModule module;
+				SpvReflectResult res = spvReflectCreateShaderModule(
+					code->GetBufferSize(),
+					(uint32_t*)code->GetBufferPointer(),
+					&module
+				);
+
+				if (res != SPV_REFLECT_RESULT_SUCCESS) {
+					// Handle error
+					return Result::RESULT_ERROR;
+				}
+
+				// 1. Get Descriptor Bindings
+				uint32_t count = 0;
+				spvReflectEnumerateDescriptorBindings(&module, &count, nullptr);
+				std::vector<SpvReflectDescriptorBinding*> bindings(count);
+				spvReflectEnumerateDescriptorBindings(&module, &count, bindings.data());
+
+				for (auto* b : bindings) {
+					std::cout << "Binding: " << b->name
+						<< " | Set: " << b->set
+						<< " | Binding: " << b->binding
+						<< " | Type: " << b->descriptor_type << "\n";
+				}
+
+				// 2. Get Push Constants
+				uint32_t pcCount = 0;
+				spvReflectEnumeratePushConstantBlocks(&module, &pcCount, nullptr);
+				std::vector<SpvReflectBlockVariable*> pushConstants(pcCount);
+				spvReflectEnumeratePushConstantBlocks(&module, &pcCount, pushConstants.data());
+
+				for (auto* pc : pushConstants) {
+					std::cout << "Push Constant: " << pc->name
+						<< " | Size: " << pc->size << " bytes\n";
+				}
+
+				// Don't forget to clean up
+				spvReflectDestroyShaderModule(&module);
 			}
 
 			return Result::RESULT_GOOD;
