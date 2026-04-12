@@ -19,7 +19,7 @@ namespace Sandbox
 
 	SandboxApplication::~SandboxApplication(void)
 	{
-		delete m_VertexShader;
+		
 	}
 
 	Result SandboxApplication::Initialize(const PlatformType& _platformType, const FilePath& _filepath)
@@ -33,17 +33,6 @@ namespace Sandbox
 			return result;
 		}
 		
-
-		// Load vertex shader
-		{
-			Raydiance::Graphics::RHI_ShaderDescriptor shaderDesc = { };
-			shaderDesc.Name       = "VertexShader";
-			shaderDesc.FilePath   = "./assets/vertex_shader.hlsl";
-			shaderDesc.EntryPoint = "main";
-			shaderDesc.Type       = Raydiance::Graphics::RHI_ShaderType::RHI_SHADER_TYPE_VERTEX;
-
-			m_VertexShader = Raydiance::Graphics::RenderBackend::GetRenderDevice()->RHI_CreateShader(&shaderDesc);
-		}
 		return Result::RESULT_GOOD;
 	}
 }

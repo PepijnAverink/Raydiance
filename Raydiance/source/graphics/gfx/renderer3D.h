@@ -45,6 +45,18 @@ namespace Raydiance
 			std::vector<FrameData> m_FrameData;
 
 			RHI_FenceCPU* m_AquireFence = nullptr;
+
+
+			// Following data should be temporary until we have a proper render graph and resource management system in place
+
+			RHI_Shader* m_VertexShader = nullptr;
+			RHI_Shader* m_PixelShader  = nullptr;
+
+			Graphics::RHI_RenderPass*				m_RenderPass = nullptr;
+			std::vector<Graphics::RHI_FrameBuffer*> m_FrameBuffers;
+
+			Graphics::RHI_InputLayout*		m_InputLayout	   = nullptr;
+			Graphics::RHI_GraphicsPipeline* m_GraphicsPipeline = nullptr;
 		};
 	}
 }

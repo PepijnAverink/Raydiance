@@ -5,6 +5,8 @@
 
 #include "./graphics/RHI_api/vk/RHI_VK_render_device.h"
 
+#include "./core/files/file_system.h"
+
 #include "./util/string_util.h"
 
 #include <fstream>
@@ -51,7 +53,7 @@ namespace Raydiance
 
 			// Get the filepaths
 			std::string filepath = _shaderDescriptor->FilePath.GetPath();
-			//std::string compileFilepath = ReplaceFileExtension(filepath, ".spv");
+			std::string compileFilepath = ReplaceFileExtension(filepath, ".spv");
 
 			// Check if the shaders exist
 			//bool exist = FileSystem::FileExists(filepath);
@@ -185,6 +187,8 @@ namespace Raydiance
 
 				includeHandler->Release();
 
+
+				FileSystem::WriteFile(compileFilepath, code->GetBufferPointer(), code->GetBufferSize());
 
 				SpvReflectShaderModule module;
 				SpvReflectResult res = spvReflectCreateShaderModule(

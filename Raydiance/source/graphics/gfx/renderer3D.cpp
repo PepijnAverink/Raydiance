@@ -65,11 +65,45 @@ namespace Raydiance
 				m_FrameData[0].Fence->Wait();
 			}
 
+
+			// Load vertex shader
+			{
+				RHI_ShaderDescriptor shaderDesc = { };
+				shaderDesc.Name		  = "VertexShader";
+				shaderDesc.FilePath   = "./assets/vertex_shader.hlsl";
+				shaderDesc.EntryPoint = "main";
+				shaderDesc.Type       = Raydiance::Graphics::RHI_ShaderType::RHI_SHADER_TYPE_VERTEX;
+
+				m_VertexShader = Raydiance::Graphics::RenderBackend::GetRenderDevice()->RHI_CreateShader(&shaderDesc);
+			}
+
+
+			// Load pixel shader
+			{
+				RHI_ShaderDescriptor shaderDesc = { };
+				shaderDesc.Name		  = "PixelShader";
+				shaderDesc.FilePath	  = "./assets/pixel_shader.hlsl";
+				shaderDesc.EntryPoint = "main";
+				shaderDesc.Type		  = Raydiance::Graphics::RHI_ShaderType::RHI_SHADER_TYPE_PIXEL;
+
+				m_PixelShader = Raydiance::Graphics::RenderBackend::GetRenderDevice()->RHI_CreateShader(&shaderDesc);
+			}
+
+			{
+				RHI_RenderPassDescriptor renderPassDesc = { };
+
+			}
+
 			return Result::RESULT_GOOD;
 		}
 
 		Result Renderer3D::Terminate()
 		{
+			delete m_PixelShader;
+			delete m_VertexShader;
+
+			// =========================
+
 			delete m_AquireFence;
 
 			for (uint32 i = 0; i < m_FramesInFlight; i++)
