@@ -2,6 +2,11 @@
 #include "./graphics/gfx/renderer3D.h"
 
 
+#include "./graphics/gfx/mesh/primitive/cube.h"
+
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
 namespace Raydiance
 {
 	namespace Graphics
@@ -72,9 +77,9 @@ namespace Raydiance
 				shaderDesc.Name		  = "VertexShader";
 				shaderDesc.FilePath   = "./assets/vertex_shader.hlsl";
 				shaderDesc.EntryPoint = "main";
-				shaderDesc.Type       = Raydiance::Graphics::RHI_ShaderType::RHI_SHADER_TYPE_VERTEX;
+				shaderDesc.Type       = RHI_ShaderType::RHI_SHADER_TYPE_VERTEX;
 
-				m_VertexShader = Raydiance::Graphics::RenderBackend::GetRenderDevice()->RHI_CreateShader(&shaderDesc);
+				m_VertexShader = RenderBackend::GetRenderDevice()->RHI_CreateShader(&shaderDesc);
 			}
 
 
@@ -84,23 +89,128 @@ namespace Raydiance
 				shaderDesc.Name		  = "PixelShader";
 				shaderDesc.FilePath	  = "./assets/pixel_shader.hlsl";
 				shaderDesc.EntryPoint = "main";
-				shaderDesc.Type		  = Raydiance::Graphics::RHI_ShaderType::RHI_SHADER_TYPE_PIXEL;
+				shaderDesc.Type		  = RHI_ShaderType::RHI_SHADER_TYPE_PIXEL;
 
-				m_PixelShader = Raydiance::Graphics::RenderBackend::GetRenderDevice()->RHI_CreateShader(&shaderDesc);
+				m_PixelShader = RenderBackend::GetRenderDevice()->RHI_CreateShader(&shaderDesc);
 			}
 
 			{
-				RHI_RenderPassDescriptor renderPassDesc = { };
+				// Gather the backbuffer format
+				RHI_ResourceFormat format = RenderBackend::GetSwapchain()->GetBufferFormat();
 
+				RHI_RenderPassAttachment colorAttachment;
+				colorAttachment.Format = format;
+				colorAttachment.LoadOperation = RHI_LoadOp::RHI_LOAD_OP_CLEAR;
+				colorAttachment.StoreOperation = RHI_StoreOp::RHI_STORE_OP_STORE;
+				colorAttachment.InitialState = RHI_ResourceState::RHI_RESOURCE_STATE_RENDER_TEXTURE;
+				colorAttachment.FinalState = RHI_ResourceState::RHI_RESOURCE_STATE_PRESENT;
+
+				// RHI_RenderPassAttachment depthAttachment;
+				// depthAttachment.Format = RHI_ResourceFormat::RHI_RESOURCE_FORMAT_D32_FLOAT;
+				// depthAttachment.LoadOperation = RHI_LoadOp::RHI_LOAD_OP_CLEAR;
+				// depthAttachment.StoreOperation = RHI_StoreOp::RHI_STORE_OP_STORE;
+				// depthAttachment.InitialState = RHI_ResourceState::RHI_RESOURCE_STATE_DEPTH_WRITE;
+				// depthAttachment.FinalState = RHI_ResourceState::RHI_RESOURCE_STATE_DEPTH_WRITE;
+
+				RHI_RenderPassDescriptor renderPassDesc = {};
+				renderPassDesc.Name = "RenderPass";
+				renderPassDesc.Width = RenderBackend::GetSwapchain()->GetBufferWidth();
+				renderPassDesc.Height = RenderBackend::GetSwapchain()->GetBufferHeight();
+				renderPassDesc.ColorAttachmentCount = 1;
+				renderPassDesc.ColorAttachments = { colorAttachment, };
+				//renderPassDesc.DepthStencilAttachment = depthAttachment;
+
+				m_RenderPass = RenderBackend::GetRenderDevice()->RHI_CreateRenderPass(&renderPassDesc);
 			}
+
+			{
+				for (uint32 i = 0; i < RenderBackend::GetSwapchain()->GetBufferCount(); i++)
+				{
+					RHI_FrameBufferDescriptor framebufferDesc = {};
+					framebufferDesc.Name = "framebuffer";
+					framebufferDesc.Width = RenderBackend::GetSwapchain()->GetBufferWidth();
+					framebufferDesc.Height = RenderBackend::GetSwapchain()->GetBufferHeight();
+					framebufferDesc.AttachmentCount = 1;
+					framebufferDesc.Attachments = { RenderBackend::GetSwapchain()->GetRenderTextureAtIndex(i), };
+					//framebufferDesc.DepthStencilAttachment = m_DepthTexture;
+					framebufferDesc.RenderPass = m_RenderPass;
+
+					m_FrameBuffers.push_back(RenderBackend::GetRenderDevice()->RHI_CreateFrameBuffer(&framebufferDesc));
+				}
+			}
+
+
+			{
+				RHI_InputLayoutDescriptor inputLayoutDesc = {};
+				inputLayoutDesc.Name = "InputLayout";
+				inputLayoutDesc.Layouts = {
+				//	RHI_InputSet({
+				//		 { "Lightdata",  RHI_InputType::RHI_INPUT_TYPE_BUFFER,    (uint32)RHI_ShaderType::RHI_SHADER_TYPE_PIXEL,  0, 1,  RHI_InputFlag::RHI_INPUT_FLAG_UNIFORM_ACCESS},
+				//	}),
+				//	RHI_InputSet({
+				//		 { "g_texture",  RHI_InputType::RHI_INPUT_TYPE_TEXTURE2D, (uint32)RHI_ShaderType::RHI_SHADER_TYPE_PIXEL, 0, 1 },
+				//		 { "g_texture",  RHI_InputType::RHI_INPUT_TYPE_TEXTURE2D, (uint32)RHI_ShaderType::RHI_SHADER_TYPE_PIXEL, 1, 1 },
+				//		 { "g_texture",  RHI_InputType::RHI_INPUT_TYPE_TEXTURE2D, (uint32)RHI_ShaderType::RHI_SHADER_TYPE_PIXEL, 2, 1 },
+				//	}),
+					RHI_InputSet({
+						 { "CameraData", RHI_InputType::RHI_INPUT_TYPE_CONSTANT,  (uint32)RHI_ShaderType::RHI_SHADER_TYPE_VERTEX, 0, 32 },
+					}),
+				//	RHI_InputSet({
+				//		 { "g_sampler",  RHI_InputType::RHI_INPUT_TYPE_SAMPLER,   (uint32)RHI_ShaderType::RHI_SHADER_TYPE_PIXEL, 0, 1 },
+				//	}),
+				};
+
+				m_InputLayout = RenderBackend::GetRenderDevice()->RHI_CreateInputLayout(&inputLayoutDesc);
+			}
+
+			RHI_VertexLayout vertexlayout = RHI_VertexLayout({
+				RHI_VertexElement(VL_POSITION,   RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R32G32B32_FLOAT),
+				//RHI_VertexElement(VL_NORMALS,    RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R32G32B32_FLOAT),
+				//RHI_VertexElement(VL_TANGENT,    RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R32G32B32_FLOAT),
+				RHI_VertexElement(VL_TEXCOORDS0, RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R32G32_FLOAT)
+			});
+			{
+
+				RHI_GraphicsPipelineDescriptor pipelineDescriptor = {};
+				pipelineDescriptor.Name         = "GraphicsPipeline";
+				pipelineDescriptor.DepthEnable  = false;
+				pipelineDescriptor.CullMode     = RHI_CullMode::RHI_CULL_MODE_NONE;
+				pipelineDescriptor.WindingOrder = RHI_WindingOrder::RHI_WINDING_ORDER_CW;
+				pipelineDescriptor.FillMode     = RHI_FillMode::RHI_FILL_MODE_SOLID;
+				pipelineDescriptor.InputLayout  = m_InputLayout;
+				pipelineDescriptor.FrameBuffer  = m_FrameBuffers[0];
+				pipelineDescriptor.VertexShader = m_VertexShader;
+				pipelineDescriptor.PixelShader  = m_PixelShader;
+				pipelineDescriptor.VertexLayout = vertexlayout;
+				pipelineDescriptor.RenderPass   = m_RenderPass;
+				pipelineDescriptor.Topology     = RHI_Topology::RHI_TOPOLOGY_TRIANGLE_LIST;
+
+				m_GraphicsPipeline = RenderBackend::GetRenderDevice()->RHI_CreateGraphicsPipeline(&pipelineDescriptor);
+			}
+
+			m_Mesh = new Cube(vertexlayout, m_FrameData[0].CommandBuffer, m_FrameData[0].Fence);
 
 			return Result::RESULT_GOOD;
 		}
 
+
 		Result Renderer3D::Terminate()
 		{
+			delete m_Mesh;
+
+
+			delete m_GraphicsPipeline;
+			delete m_InputLayout;
+
+
 			delete m_PixelShader;
 			delete m_VertexShader;
+
+			delete m_RenderPass;
+
+			for (uint32 i = 0; i < m_FrameBuffers.size(); i++)
+				delete m_FrameBuffers[i];
+			m_FrameBuffers.clear();
 
 			// =========================
 
@@ -117,6 +227,7 @@ namespace Raydiance
 			return Result::RESULT_GOOD;
 		}
 
+
 		void Renderer3D::BeginFrame()
 		{
 			m_CurrentFrameIndex = RenderBackend::AquireNewFrame(m_AquireFence);
@@ -125,7 +236,7 @@ namespace Raydiance
 
 			// Transition backbuffer
 			m_FrameData[m_CurrentFrameIndex].CommandBuffer->BeginRecording();
-			m_FrameData[m_CurrentFrameIndex].CommandBuffer->TransitionResource(RenderBackend::GetSwapchain()->GetCurrentRenderTexture(), RHI_ResourceState::RHI_RESOURCE_STATE_PRESENT, RHI_ResourceState::RHI_RESOURCE_STATE_COMMON);
+			m_FrameData[m_CurrentFrameIndex].CommandBuffer->TransitionResource(RenderBackend::GetSwapchain()->GetCurrentRenderTexture(), RHI_ResourceState::RHI_RESOURCE_STATE_PRESENT, RHI_ResourceState::RHI_RESOURCE_STATE_GENERIC_WRITE);
 			m_FrameData[m_CurrentFrameIndex].CommandBuffer->EndRecording();
 
 
@@ -134,11 +245,80 @@ namespace Raydiance
 			m_FrameData[m_CurrentFrameIndex].Fence->Wait();
 		}
 
+
 		void Renderer3D::EndFrame()
 		{
 			// Transition backbuffer
 			m_FrameData[m_CurrentFrameIndex].CommandBuffer->BeginRecording();
-			m_FrameData[m_CurrentFrameIndex].CommandBuffer->TransitionResource(RenderBackend::GetSwapchain()->GetCurrentRenderTexture(), RHI_ResourceState::RHI_RESOURCE_STATE_COMMON, RHI_ResourceState::RHI_RESOURCE_STATE_PRESENT);
+
+			{
+				// Camera parameters
+				glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 5.0f);
+				glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
+				glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
+
+				// View matrix
+				glm::mat4 view = glm::lookAt(cameraPos, cameraTarget, up);
+
+				// Projection matrix
+				float fov = glm::radians(60.0f);
+				float aspect = 800.0f / 600.0f;
+				float nearPlane = 0.1f;
+				float farPlane = 100.0f;
+
+				glm::mat4 proj = glm::perspective(fov, aspect, nearPlane, farPlane);
+				proj[1][1] *= -1;
+
+				// Combine (IMPORTANT: projection * view)
+				glm::mat4 viewProj = proj * view;
+
+				glm::mat4 model = glm::mat4(1.0f);
+
+
+				glm::mat4 modelT = glm::transpose(model);
+				glm::mat4 viewProjT = glm::transpose(viewProj);
+
+				// PLS REMOVE
+				// -----------------------------------------------------
+				float clearcolor[4] = { 0.3f, 0.0f, 0.0f, 1.0f };
+				float clearDS[2] = { 1.0f, 0.0f };
+				m_FrameData[m_CurrentFrameIndex].CommandBuffer->BeginRenderPass(m_RenderPass, m_FrameBuffers[m_CurrentFrameIndex], 1280, 720, clearcolor, nullptr);
+
+				m_FrameData[m_CurrentFrameIndex].CommandBuffer->SetViewport(0, 0, 1280, 720);
+				m_FrameData[m_CurrentFrameIndex].CommandBuffer->SetScissorRectangle(0, 0, 1280, 720);
+				m_FrameData[m_CurrentFrameIndex].CommandBuffer->SetGraphicsPipeline(m_GraphicsPipeline);
+
+				m_FrameData[m_CurrentFrameIndex].CommandBuffer->SetVertexBuffer(0, m_Mesh->GetVertexBuffer());
+				m_FrameData[m_CurrentFrameIndex].CommandBuffer->SetIndexBuffer(m_Mesh->GetIndexBuffer());
+
+				//Math::row_mat4 vp = m_Camera->GetViewProjectionMatrix();
+
+				m_FrameData[m_CurrentFrameIndex].CommandBuffer->SetGraphicsConstants(&modelT, 16, 16);
+				m_FrameData[m_CurrentFrameIndex].CommandBuffer->SetGraphicsConstants(&viewProjT, 0, 16);
+
+				//		float color1[4] = { 1.0f, 0.0f, 1.0f, 1.0f };
+				//		m_CommandBuffer->InsertDebugLabel("EndFrame", color1);
+
+				//		float color[4] = { 0.0f, 1.0f, 1.0f, 1.0f };
+				//		m_CommandBuffer->BeginDebugLabel("BeginRendering", color);
+
+				std::vector<Graphics::SubMesh> subMeshes = m_Mesh->GetSubMeshes();
+				for (uint32_t j = 0; j < subMeshes.size(); j++)
+				{
+					Graphics::SubMesh smesh = subMeshes[j];
+					m_FrameData[m_CurrentFrameIndex].CommandBuffer->DrawIndexed(smesh.IndexCount, smesh.IndexOffset, smesh.VertexOffset);
+				}
+
+				m_FrameData[m_CurrentFrameIndex].CommandBuffer->EndRenderPass();
+			}
+			m_FrameData[m_CurrentFrameIndex].CommandBuffer->EndRecording();
+			// Submit commandbuffer
+			RenderBackend::SubmitCommandBuffer(m_FrameData[m_CurrentFrameIndex].CommandBuffer, m_FrameData[m_CurrentFrameIndex].Fence);
+			m_FrameData[m_CurrentFrameIndex].Fence->Wait();
+
+			// Transition backbuffer
+			m_FrameData[m_CurrentFrameIndex].CommandBuffer->BeginRecording();
+			m_FrameData[m_CurrentFrameIndex].CommandBuffer->TransitionResource(RenderBackend::GetSwapchain()->GetCurrentRenderTexture(), RHI_ResourceState::RHI_RESOURCE_STATE_GENERIC_WRITE, RHI_ResourceState::RHI_RESOURCE_STATE_PRESENT);
 			m_FrameData[m_CurrentFrameIndex].CommandBuffer->EndRecording();
 
 
@@ -153,6 +333,12 @@ namespace Raydiance
 
 			// Present the current frame
 			RenderBackend::Present();
+		}
+
+
+		void Renderer3D::SubmitMesh()
+		{
+
 		}
 	}
 }

@@ -9,14 +9,15 @@
 #include "./graphics/RHI/pipeline/graphics/rasterizer/RHI_fill_mode.h"
 #include "./graphics/RHI/pipeline/graphics/rasterizer/RHI_winding_order.h"
 
+#include "./graphics/RHI/pipeline/graphics/renderpass/RHI_render_pass.h"
+#include "./graphics/RHI/pipeline/graphics/framebuffer/RHI_frame_buffer.h"
+
 #include <string>
 
 namespace Raydiance
 {
 	namespace Graphics
 	{
-		class RHI_RenderPass;
-		class RHI_FrameBuffer;
 		class RHI_GraphicsPipelineDescriptor
 		{
 		public:

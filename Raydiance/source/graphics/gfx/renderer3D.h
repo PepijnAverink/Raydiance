@@ -36,7 +36,7 @@ namespace Raydiance
 
 
 			// Build renderlist
-			// void SubmitMesh();
+			void SubmitMesh();
 
 		protected:
 			uint32 m_FramesInFlight	   = 0;
@@ -52,11 +52,13 @@ namespace Raydiance
 			RHI_Shader* m_VertexShader = nullptr;
 			RHI_Shader* m_PixelShader  = nullptr;
 
-			Graphics::RHI_RenderPass*				m_RenderPass = nullptr;
-			std::vector<Graphics::RHI_FrameBuffer*> m_FrameBuffers;
+			RHI_RenderPass*				m_RenderPass = nullptr;
+			std::vector<RHI_FrameBuffer*> m_FrameBuffers;
 
-			Graphics::RHI_InputLayout*		m_InputLayout	   = nullptr;
-			Graphics::RHI_GraphicsPipeline* m_GraphicsPipeline = nullptr;
+			RHI_InputLayout*		m_InputLayout	   = nullptr;
+			RHI_GraphicsPipeline* m_GraphicsPipeline = nullptr;
+
+			Mesh* m_Mesh = nullptr;
 		};
 	}
 }

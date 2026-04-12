@@ -2,6 +2,7 @@
 // Graphics includes
 #include "./graphics/gfx/material/material_instance.h"
 
+#include "./graphics/RHI/pipeline/RHI_pipeline.h"
 #include "./graphics/RHI/pipeline/graphics/RHI_graphics_pipeline.h"
 #include "./graphics/RHI/pipeline/layout/descriptor/RHI_descriptor_pool.h"
 

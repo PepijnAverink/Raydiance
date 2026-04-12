@@ -10,7 +10,7 @@ namespace Raydiance
 		Cube::Cube(RHI_VertexLayout _vertexLayout, RHI_CommandBuffer* _commandBuffer, RHI_FenceCPU* _fence)
 			: Mesh()
 		{
-			uint32 vertexCount = 4;
+			uint32 vertexCount = 24;
 
 			std::vector<float> vertexData;
 

@@ -1,5 +1,5 @@
-Texture2D albedoMap   : register(t0, space1); // binding = 1, descriptorSet = 1 (RMA_texture)
-SamplerState sampler0 : register(s0, space2); // Often a separate sampler object is needed
+//Texture2D albedoMap   : register(t0, space1); // binding = 1, descriptorSet = 1 (RMA_texture)
+//SamplerState sampler0 : register(s0, space2); // Often a separate sampler object is needed
 
 struct PixelShaderInput
 {
@@ -10,6 +10,6 @@ struct PixelShaderInput
 
 float4 main(PixelShaderInput input) : SV_TARGET0
 {
-    float3 color = albedoMap.Sample(sampler0, input.texCoord).rgb;
+    float3 color = float3(0.3f, 0.8f, 0.2f); // albedoMap.Sample(sampler0, input.texCoord).rgb;
     return float4(color, 1.0);
 }
