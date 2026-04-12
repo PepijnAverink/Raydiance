@@ -269,6 +269,7 @@
     <ClInclude Include="source\graphics\RHI\pipeline\layout\RHI_input_type.h" />
     <ClInclude Include="source\graphics\RHI\pipeline\layout\RHI_vertex_element.h" />
     <ClInclude Include="source\graphics\RHI\pipeline\layout\RHI_vertex_layout.h" />
+    <ClInclude Include="source\graphics\RHI\pipeline\RHI_pipeline.h" />
     <ClInclude Include="source\graphics\RHI\resource\acceleration\RHI_as_build_flags.h" />
     <ClInclude Include="source\graphics\RHI\resource\acceleration\RHI_blas.h" />
     <ClInclude Include="source\graphics\RHI\resource\acceleration\RHI_blas_descriptor.h" />
@@ -415,6 +416,7 @@
     <ClCompile Include="source\graphics\RHI\pipeline\layout\descriptor\RHI_descriptor_pool.cpp" />
     <ClCompile Include="source\graphics\RHI\pipeline\layout\descriptor\RHI_descriptor_set.cpp" />
     <ClCompile Include="source\graphics\RHI\pipeline\layout\RHI_input_layout.cpp" />
+    <ClCompile Include="source\graphics\RHI\pipeline\RHI_pipeline.cpp" />
     <ClCompile Include="source\graphics\RHI\resource\acceleration\RHI_blas.cpp" />
     <ClCompile Include="source\graphics\RHI\resource\acceleration\RHI_tlas.cpp" />
     <ClCompile Include="source\graphics\RHI\resource\buffer\RHI_buffer.cpp" />
