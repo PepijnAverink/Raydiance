@@ -4,8 +4,8 @@
 
 #include "./graphics/gfx/mesh/primitive/cube.h"
 
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
+#include "./math/matrix/row_matrix4x4.h"
+
 
 namespace Raydiance
 {
@@ -252,13 +252,13 @@ namespace Raydiance
 			m_FrameData[m_CurrentFrameIndex].CommandBuffer->BeginRecording();
 
 			{
-				// Camera parameters
-				glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 5.0f);
-				glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
-				glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
+				Math::vec3 camerapos    = Math::vec3(0.0f, 0.0f, 5.0f);
+				Math::vec3 cameratarget = Math::vec3(0.0f, 0.0f, 0.0f);
+				Math::vec3 up		    = Math::vec3(0.0f, 1.0f, 0.0f);
 
 				// View matrix
-				glm::mat4 view = glm::lookAt(cameraPos, cameraTarget, up);
+				Math::row_matrix4x4 view = Math::row_matrix4x4::LookAt(camerapos, cameratarget, up);
+
 
 				// Projection matrix
 				float fov = glm::radians(60.0f);
@@ -266,17 +266,12 @@ namespace Raydiance
 				float nearPlane = 0.1f;
 				float farPlane = 100.0f;
 
-				glm::mat4 proj = glm::perspective(fov, aspect, nearPlane, farPlane);
-				proj[1][1] *= -1;
+				Math::row_matrix4x4 proj = Math::row_matrix4x4::Perspective(fov, aspect, nearPlane, farPlane);
 
 				// Combine (IMPORTANT: projection * view)
-				glm::mat4 viewProj = proj * view;
+				Math::row_matrix4x4 viewProj = proj * view;
+				Math::row_matrix4x4 model = Math::row_matrix4x4(1.0f);
 
-				glm::mat4 model = glm::mat4(1.0f);
-
-
-				glm::mat4 modelT = glm::transpose(model);
-				glm::mat4 viewProjT = glm::transpose(viewProj);
 
 				// PLS REMOVE
 				// -----------------------------------------------------
@@ -293,8 +288,8 @@ namespace Raydiance
 
 				//Math::row_mat4 vp = m_Camera->GetViewProjectionMatrix();
 
-				m_FrameData[m_CurrentFrameIndex].CommandBuffer->SetGraphicsConstants(&modelT, 16, 16);
-				m_FrameData[m_CurrentFrameIndex].CommandBuffer->SetGraphicsConstants(&viewProjT, 0, 16);
+				m_FrameData[m_CurrentFrameIndex].CommandBuffer->SetGraphicsConstants(&model, 16, 16);
+				m_FrameData[m_CurrentFrameIndex].CommandBuffer->SetGraphicsConstants(&viewProj, 0, 16);
 
 				//		float color1[4] = { 1.0f, 0.0f, 1.0f, 1.0f };
 				//		m_CommandBuffer->InsertDebugLabel("EndFrame", color1);

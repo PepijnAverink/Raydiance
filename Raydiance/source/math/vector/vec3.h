@@ -105,7 +105,7 @@ namespace Raydiance
 			// Returns a vec3 with components (0, 0).
 			static vec3 Zero() { return vec3(); } // Specific constructor initializes to zero, so we can just call the default constructor here.
 			// And utilize the _mm_setzero_ps() function call.
-// Returns a vec3 with components (1, 1).
+			// Returns a vec3 with components (1, 1).
 			static vec3 One() { return vec3(1.0f); }
 
 
@@ -302,6 +302,98 @@ namespace Raydiance
 				return _left.Divide(_right);
 			}
 
+
+			// ------------------------------------------------------------------------------------
+			// VECTOR MATH
+			// ------------------------------------------------------------------------------------
+
+			// Returns the squared length (avoids sqrt, useful for performance)
+			float LengthSquared() const
+			{
+				return x * x + y * y + z * z;
+			}
+
+			// Returns the length (magnitude)
+			float Length() const
+			{
+				return std::sqrt(LengthSquared());
+			}
+
+			// Normalizes the vector in place
+			vec3& Normalize()
+			{
+				float len = Length();
+				if (len > 0.0f)
+				{
+					float inv = 1.0f / len;
+					x *= inv;
+					y *= inv;
+					z *= inv;
+				}
+				return *this;
+			}
+
+			// Returns a normalize copy (does NOT modify original)
+			vec3 Normalize() const
+			{
+				float len = Length();
+				if (len > 0.0f)
+				{
+					float inv = 1.0f / len;
+					return vec3(x * inv, y * inv, z * inv);
+				}
+				return vec3::Zero();
+			}
+
+			// Dot product (member)
+			float Dot(const vec3& _other) const
+			{
+				return x * _other.x + y * _other.y + z * _other.z;
+			}
+
+			// Dot product (static)
+			static float Dot(const vec3& a, const vec3& b)
+			{
+				return a.x * b.x + a.y * b.y + a.z * b.z;
+			}
+
+			// Cross product (member)
+			vec3 Cross(const vec3& _other) const
+			{
+				return vec3(
+					y * _other.z - z * _other.y,
+					z * _other.x - x * _other.z,
+					x * _other.y - y * _other.x
+				);
+			}
+
+			// Cross product (static)
+			static vec3 Cross(const vec3& a, const vec3& b)
+			{
+				return vec3(
+					a.y * b.z - a.z * b.y,
+					a.z * b.x - a.x * b.z,
+					a.x * b.y - a.y * b.x
+				);
+			}
+
+			// Distance between two vectors
+			static float Distance(const vec3& a, const vec3& b)
+			{
+				return (a - b).Length();
+			}
+
+			// Linear interpolation
+			static vec3 Lerp(const vec3& a, const vec3& b, float t)
+			{
+				return a + (b - a) * t;
+			}
+
+			// Reflect vector around normal
+			static vec3 Reflect(const vec3& v, const vec3& n)
+			{
+				return v - n * (2.0f * Dot(v, n));
+			}
 		};
 	}
 }
