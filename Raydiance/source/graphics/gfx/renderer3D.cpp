@@ -4,7 +4,7 @@
 
 #include "./graphics/gfx/mesh/primitive/cube.h"
 
-#include "./math/matrix/row_matrix4x4.h"
+#include "./math/matrix/row_mat4x4.h"
 
 
 namespace Raydiance
@@ -159,10 +159,10 @@ namespace Raydiance
 				//		 { "g_sampler",  RHI_InputType::RHI_INPUT_TYPE_SAMPLER,   (uint32)RHI_ShaderType::RHI_SHADER_TYPE_PIXEL, 0, 1 },
 				//	}),
 				};
-
+			
 				m_InputLayout = RenderBackend::GetRenderDevice()->RHI_CreateInputLayout(&inputLayoutDesc);
 			}
-
+			
 			RHI_VertexLayout vertexlayout = RHI_VertexLayout({
 				RHI_VertexElement(VL_POSITION,   RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R32G32B32_FLOAT),
 				//RHI_VertexElement(VL_NORMALS,    RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R32G32B32_FLOAT),
@@ -170,7 +170,7 @@ namespace Raydiance
 				RHI_VertexElement(VL_TEXCOORDS0, RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R32G32_FLOAT)
 			});
 			{
-
+			
 				RHI_GraphicsPipelineDescriptor pipelineDescriptor = {};
 				pipelineDescriptor.Name         = "GraphicsPipeline";
 				pipelineDescriptor.DepthEnable  = false;
@@ -184,11 +184,15 @@ namespace Raydiance
 				pipelineDescriptor.VertexLayout = vertexlayout;
 				pipelineDescriptor.RenderPass   = m_RenderPass;
 				pipelineDescriptor.Topology     = RHI_Topology::RHI_TOPOLOGY_TRIANGLE_LIST;
-
+			
 				m_GraphicsPipeline = RenderBackend::GetRenderDevice()->RHI_CreateGraphicsPipeline(&pipelineDescriptor);
 			}
 
 			m_Mesh = new Cube(vertexlayout, m_FrameData[0].CommandBuffer, m_FrameData[0].Fence);
+
+			m_CurrentCamera = Camera();
+			m_CurrentCamera.SetPosition(Math::vec3(0.0f, 0.0f, 5.0f));
+			m_CurrentCamera.SetEulerRotation(Math::vec3(0.0f, 180.0f, 0.0f));
 
 			return Result::RESULT_GOOD;
 		}
@@ -250,60 +254,46 @@ namespace Raydiance
 		{
 			// Transition backbuffer
 			m_FrameData[m_CurrentFrameIndex].CommandBuffer->BeginRecording();
-
+			
 			{
-				Math::vec3 camerapos    = Math::vec3(0.0f, 0.0f, 5.0f);
-				Math::vec3 cameratarget = Math::vec3(0.0f, 0.0f, 0.0f);
-				Math::vec3 up		    = Math::vec3(0.0f, 1.0f, 0.0f);
-
-				// View matrix
-				Math::row_matrix4x4 view = Math::row_matrix4x4::LookAt(camerapos, cameratarget, up);
-
-
-				// Projection matrix
-				float fov = glm::radians(60.0f);
-				float aspect = 800.0f / 600.0f;
-				float nearPlane = 0.1f;
-				float farPlane = 100.0f;
-
-				Math::row_matrix4x4 proj = Math::row_matrix4x4::Perspective(fov, aspect, nearPlane, farPlane);
-
-				// Combine (IMPORTANT: projection * view)
-				Math::row_matrix4x4 viewProj = proj * view;
-				Math::row_matrix4x4 model = Math::row_matrix4x4(1.0f);
-
-
+				Math::vec3 pos = m_CurrentCamera.GetPosition() + Math::vec3(0.0f, 0.0f, 0.01f);
+				m_CurrentCamera.SetPosition(pos);
+				
+				Math::row_mat4x4 viewProj = m_CurrentCamera.GetViewProjMatrix();
+				Math::row_mat4x4 model = Math::row_mat4x4(1.0f);
+			
+			
 				// PLS REMOVE
 				// -----------------------------------------------------
 				float clearcolor[4] = { 0.3f, 0.0f, 0.0f, 1.0f };
 				float clearDS[2] = { 1.0f, 0.0f };
 				m_FrameData[m_CurrentFrameIndex].CommandBuffer->BeginRenderPass(m_RenderPass, m_FrameBuffers[m_CurrentFrameIndex], 1280, 720, clearcolor, nullptr);
-
+			
 				m_FrameData[m_CurrentFrameIndex].CommandBuffer->SetViewport(0, 0, 1280, 720);
 				m_FrameData[m_CurrentFrameIndex].CommandBuffer->SetScissorRectangle(0, 0, 1280, 720);
 				m_FrameData[m_CurrentFrameIndex].CommandBuffer->SetGraphicsPipeline(m_GraphicsPipeline);
-
+			
 				m_FrameData[m_CurrentFrameIndex].CommandBuffer->SetVertexBuffer(0, m_Mesh->GetVertexBuffer());
 				m_FrameData[m_CurrentFrameIndex].CommandBuffer->SetIndexBuffer(m_Mesh->GetIndexBuffer());
-
+			
 				//Math::row_mat4 vp = m_Camera->GetViewProjectionMatrix();
-
+			
 				m_FrameData[m_CurrentFrameIndex].CommandBuffer->SetGraphicsConstants(&model, 16, 16);
 				m_FrameData[m_CurrentFrameIndex].CommandBuffer->SetGraphicsConstants(&viewProj, 0, 16);
-
+			
 				//		float color1[4] = { 1.0f, 0.0f, 1.0f, 1.0f };
 				//		m_CommandBuffer->InsertDebugLabel("EndFrame", color1);
-
+			
 				//		float color[4] = { 0.0f, 1.0f, 1.0f, 1.0f };
 				//		m_CommandBuffer->BeginDebugLabel("BeginRendering", color);
-
+			
 				std::vector<Graphics::SubMesh> subMeshes = m_Mesh->GetSubMeshes();
 				for (uint32_t j = 0; j < subMeshes.size(); j++)
 				{
 					Graphics::SubMesh smesh = subMeshes[j];
 					m_FrameData[m_CurrentFrameIndex].CommandBuffer->DrawIndexed(smesh.IndexCount, smesh.IndexOffset, smesh.VertexOffset);
 				}
-
+			
 				m_FrameData[m_CurrentFrameIndex].CommandBuffer->EndRenderPass();
 			}
 			m_FrameData[m_CurrentFrameIndex].CommandBuffer->EndRecording();

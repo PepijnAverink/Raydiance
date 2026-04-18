@@ -59,6 +59,8 @@ namespace Raydiance
 			RHI_GraphicsPipeline* m_GraphicsPipeline = nullptr;
 
 			Mesh* m_Mesh = nullptr;
+
+			Camera m_CurrentCamera;
 		};
 	}
 }

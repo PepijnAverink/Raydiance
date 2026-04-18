@@ -214,6 +214,15 @@
     <ClInclude Include="source\graphics\RHI_api\vk\RHI_VK_adapter_features.h" />
     <ClInclude Include="source\graphics\RHI_api\vk\RHI_VK_adapter_type.h" />
     <ClInclude Include="source\graphics\RHI_api\vk\RHI_VK_render_device.h" />
+    <ClInclude Include="source\math\constants.h" />
+    <ClInclude Include="source\math\curve\cubic_bezier_curve2D.h" />
+    <ClInclude Include="source\math\curve\quadratic_bezier_curve2D.h" />
+    <ClInclude Include="source\math\matrix\row_mat4x4.h" />
+    <ClInclude Include="source\math\random\random.h" />
+    <ClInclude Include="source\math\vector\tvec2.h" />
+    <ClInclude Include="source\math\vector\vec2.h" />
+    <ClInclude Include="source\math\vector\vec3.h" />
+    <ClInclude Include="source\math\vector\vec4.h" />
     <ClInclude Include="source\pch.h" />
     <ClInclude Include="source\platform\platform_type.h" />
     <ClInclude Include="source\platform\win\core\window\win_window.h" />
@@ -228,6 +237,7 @@
     <ClCompile Include="source\core\files\file_path.cpp" />
     <ClCompile Include="source\core\files\file_system.cpp" />
     <ClCompile Include="source\core\window\window.cpp" />
+    <ClCompile Include="source\graphics\gfx\camera\camera.cpp" />
     <ClCompile Include="source\graphics\gfx\material\material.cpp" />
     <ClCompile Include="source\graphics\gfx\material\material_instance.cpp" />
     <ClCompile Include="source\graphics\gfx\mesh\mesh.cpp" />
