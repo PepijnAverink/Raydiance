@@ -38,21 +38,15 @@ namespace Raydiance
 
             std::vector<VkPipelineShaderStageCreateInfo> shaderStages;
 
-            char* vertexEntryPoint = nullptr;
-            char* pixelEntryPoint = nullptr;
-
             // VertexShader
             // ------------------------------------------------------
             if (_graphicsPipelineDescriptor->VertexShader != nullptr)
             {
-                // Copy entry point
-                CopyString(_graphicsPipelineDescriptor->VertexShader->GetEntryPoint(), &vertexEntryPoint);
-
                 VkPipelineShaderStageCreateInfo vertShaderStageInfo{};
-                vertShaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
-                vertShaderStageInfo.stage = VK_SHADER_STAGE_VERTEX_BIT;
+                vertShaderStageInfo.sType  = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+                vertShaderStageInfo.stage  = VK_SHADER_STAGE_VERTEX_BIT;
                 vertShaderStageInfo.module = ((RHI_VK_Shader*)_graphicsPipelineDescriptor->VertexShader)->GetVKShaderModule();
-                vertShaderStageInfo.pName = vertexEntryPoint;
+                vertShaderStageInfo.pName  = _graphicsPipelineDescriptor->VertexShader->GetEntryPointCStr();
 
                 shaderStages.push_back(vertShaderStageInfo);
             }
@@ -61,14 +55,11 @@ namespace Raydiance
             // ------------------------------------------------------
             if (_graphicsPipelineDescriptor->PixelShader != nullptr)
             {
-                // Copy entry point
-                CopyString(_graphicsPipelineDescriptor->PixelShader->GetEntryPoint(), &pixelEntryPoint);
-
                 VkPipelineShaderStageCreateInfo fragShaderStageInfo{};
-                fragShaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
-                fragShaderStageInfo.stage = VK_SHADER_STAGE_FRAGMENT_BIT;
+                fragShaderStageInfo.sType  = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+                fragShaderStageInfo.stage  = VK_SHADER_STAGE_FRAGMENT_BIT;
                 fragShaderStageInfo.module = ((RHI_VK_Shader*)_graphicsPipelineDescriptor->PixelShader)->GetVKShaderModule();
-                fragShaderStageInfo.pName = pixelEntryPoint;
+                fragShaderStageInfo.pName  = _graphicsPipelineDescriptor->PixelShader->GetEntryPointCStr();;
 
                 shaderStages.push_back(fragShaderStageInfo);
             }
@@ -187,9 +178,6 @@ namespace Raydiance
 
             if (vkCreateGraphicsPipelines(_RHI_RenderDevice->GetVKDevice(), VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &m_GraphicsPipelineObj) != VK_SUCCESS)
                 Logger::Log("VK_ERROR - Failed to create 'VKGraphicsPipline' object.", LogLevel::LOG_LEVEL_ERROR);
-
-            free(vertexEntryPoint);
-            free(pixelEntryPoint);
 
             return Result::RESULT_GOOD;
         }

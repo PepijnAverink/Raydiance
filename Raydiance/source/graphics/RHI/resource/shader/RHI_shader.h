@@ -11,7 +11,8 @@ namespace Raydiance
 		public:
 			virtual ~RHI_Shader();
 
-			inline std::string GetEntryPoint() const { return m_EntryPoint; }
+			inline std::string GetEntryPoint()     const { return m_EntryPoint; }
+			inline const char* GetEntryPointCStr() const { return m_EntryPoint.c_str(); }
 
 		protected:
 			RHI_Shader();
