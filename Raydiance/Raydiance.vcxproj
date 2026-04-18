@@ -196,6 +196,7 @@
     <ClInclude Include="source\graphics\RHI_api\vk\pipeline\layout\descriptor\RHI_VK_descriptor_type.h" />
     <ClInclude Include="source\graphics\RHI_api\vk\pipeline\layout\RHI_VK_input_layout.h" />
     <ClInclude Include="source\graphics\RHI_api\vk\pipeline\layout\RHI_VK_input_type.h" />
+    <ClInclude Include="source\graphics\RHI_api\vk\pipeline\RHI_VK_pipeline.h" />
     <ClInclude Include="source\graphics\RHI_api\vk\resource\acceleration\RHI_VK_as_build_flags.h" />
     <ClInclude Include="source\graphics\RHI_api\vk\resource\acceleration\RHI_VK_blas.h" />
     <ClInclude Include="source\graphics\RHI_api\vk\resource\buffer\RHI_VK_buffer.h" />
@@ -304,6 +305,7 @@
     <ClCompile Include="source\graphics\RHI_api\vk\pipeline\layout\descriptor\RHI_VK_descriptor_pool.cpp" />
     <ClCompile Include="source\graphics\RHI_api\vk\pipeline\layout\descriptor\RHI_VK_descriptor_set.cpp" />
     <ClCompile Include="source\graphics\RHI_api\vk\pipeline\layout\RHI_VK_input_layout.cpp" />
+    <ClCompile Include="source\graphics\RHI_api\vk\pipeline\RHI_VK_pipeline.cpp" />
     <ClCompile Include="source\graphics\RHI_api\vk\resource\acceleration\RHI_VK_blas.cpp" />
     <ClCompile Include="source\graphics\RHI_api\vk\resource\buffer\RHI_VK_buffer.cpp" />
     <ClCompile Include="source\graphics\RHI_api\vk\resource\sampler\RHI_VK_sampler.cpp" />

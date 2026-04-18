@@ -19,6 +19,8 @@
 
 #include "./graphics/RHI_api/dx12/pipeline/layout/RHI_DX12_input_layout.h"
 #include "./graphics/RHI_api/dx12/pipeline/graphics/RHI_DX12_graphics_pipeline.h"
+#include "./graphics/RHI_api/dx12/pipeline/compute/RHI_DX12_compute_pipeline.h"
+#include "./graphics/RHI_api/dx12/pipeline/RHI_dx12_pipeline.h"
 
 #include "./graphics/RHI_api/dx12/resource/sampler/RHI_DX12_sampler.h"
 #include "./graphics/RHI_api/dx12/pipeline/layout/descriptor/RHI_DX12_descriptor_pool.h"
@@ -455,7 +457,68 @@ namespace Raydiance
 
 		RHI_ComputePipeline* RHI_DX12_RenderDevice::RHI_CreateComputePipeline(const RHI_ComputePipelineDescriptor* _computePipelineDescriptor)
 		{
-			return nullptr;
+			// Create and initialize
+			RHI_DX12_ComputePipeline* pipeline = new RHI_DX12_ComputePipeline();
+			Result result = pipeline->Initialize(this, _computePipelineDescriptor);
+
+			// Error check
+			if (CheckError(result) == true)
+			{
+				// Destroy pointer
+				delete pipeline;
+
+				// Log error
+				Logger::Log("Initialization of RHI_DX12_ComputePipeline failed.", LogLevel::LOG_LEVEL_ERROR);
+				Logger::Log("No further evidence what went wrong, please see earlier logs.", LogLevel::LOG_LEVEL_ERROR);
+				return nullptr;
+			}
+
+			// Return pointer
+			return pipeline;
+		}
+
+		RHI_Pipeline* RHI_DX12_RenderDevice::RHI_CreatePipeline(const RHI_ComputePipelineDescriptor* _computePipelineDescriptor)
+		{
+			// Create and initialize
+			RHI_DX12_Pipeline* pipeline = new RHI_DX12_Pipeline();
+			Result result = pipeline->Initialize(this, _computePipelineDescriptor);
+
+			// Error check
+			if (CheckError(result) == true)
+			{
+				// Destroy pointer
+				delete pipeline;
+
+				// Log error
+				Logger::Log("Initialization of RHI_DX12_Pipeline failed.", LogLevel::LOG_LEVEL_ERROR);
+				Logger::Log("No further evidence what went wrong, please see earlier logs.", LogLevel::LOG_LEVEL_ERROR);
+				return nullptr;
+			}
+
+			// Return pointer
+			return pipeline;
+		}
+
+		RHI_Pipeline* RHI_DX12_RenderDevice::RHI_CreatePipeline(const RHI_GraphicsPipelineDescriptor* _graphicsPipelineDescriptor)
+		{
+			// Create and initialize
+			RHI_DX12_Pipeline* pipeline = new RHI_DX12_Pipeline();
+			Result result = pipeline->Initialize(this, _graphicsPipelineDescriptor);
+
+			// Error check
+			if (CheckError(result) == true)
+			{
+				// Destroy pointer
+				delete pipeline;
+
+				// Log error
+				Logger::Log("Initialization of RHI_DX12_Pipeline failed.", LogLevel::LOG_LEVEL_ERROR);
+				Logger::Log("No further evidence what went wrong, please see earlier logs.", LogLevel::LOG_LEVEL_ERROR);
+				return nullptr;
+			}
+
+			// Return pointer
+			return pipeline;
 		}
 
 		RHI_DX12_DescriptorHeapAllocation* RHI_DX12_RenderDevice::AllocateCPUDescriptor(D3D12_DESCRIPTOR_HEAP_TYPE _type, const uint32_t _count)

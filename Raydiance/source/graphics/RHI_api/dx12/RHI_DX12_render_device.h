@@ -54,6 +54,9 @@ namespace Raydiance
 			virtual RHI_GraphicsPipeline* RHI_CreateGraphicsPipeline(const RHI_GraphicsPipelineDescriptor* _graphicsPipelineDescriptor) override;
 			virtual RHI_ComputePipeline* RHI_CreateComputePipeline(const RHI_ComputePipelineDescriptor* _computePipelineDescriptor) override;
 
+			virtual RHI_Pipeline* RHI_CreatePipeline(const RHI_ComputePipelineDescriptor* _computePipelineDescriptor) override;
+			virtual RHI_Pipeline* RHI_CreatePipeline(const RHI_GraphicsPipelineDescriptor* _graphicsPipelineDescriptor) override;
+
 			// Getters
 			inline ID3D12Device* GetD3DDevice()  const { return m_Device; }
 			inline IDXGIFactory* GetD3DFactory() const { return m_Factory; }

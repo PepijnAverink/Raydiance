@@ -26,6 +26,8 @@
 #include "./graphics/RHI_api/vk/pipeline/graphics/RHI_VK_graphics_pipeline.h"
 #include "./graphics/RHI_api/vk/pipeline/compute/RHI_VK_compute_pipeline.h"
 
+#include "./graphics/RHI_api/vk/pipeline/RHI_VK_pipeline.h"
+
 #include "./graphics/RHI_api/vk/resource/RHI_VK_resource_format.h"
 
 // String defs for the validation layer callback
@@ -804,6 +806,50 @@ namespace Raydiance
 
 			// Return pointer
 			return computePipeline;
+		}
+
+		RHI_Pipeline* RHI_VK_RenderDevice::RHI_CreatePipeline(const RHI_ComputePipelineDescriptor* _computePipelineDescriptor)
+		{
+			// Create and initialize
+			RHI_VK_Pipeline* pipeline = new RHI_VK_Pipeline();
+			Result result = pipeline->Initialize(this, _computePipelineDescriptor);
+
+			// Error check
+			if (CheckError(result) == true)
+			{
+				// Destroy pointer
+				delete pipeline;
+
+				// Log error
+				Logger::Log("Initialization of RHI_VK_Pipeline failed.", LogLevel::LOG_LEVEL_ERROR);
+				Logger::Log("No further evidence what went wrong, please see earlier logs.", LogLevel::LOG_LEVEL_ERROR);
+				return nullptr;
+			}
+
+			// Return pointer
+			return pipeline;
+		}
+
+		RHI_Pipeline* RHI_VK_RenderDevice::RHI_CreatePipeline(const RHI_GraphicsPipelineDescriptor* _graphicsPipelineDescriptor)
+		{
+			// Create and initialize
+			RHI_VK_Pipeline* pipeline = new RHI_VK_Pipeline();
+			Result result = pipeline->Initialize(this, _graphicsPipelineDescriptor);
+
+			// Error check
+			if (CheckError(result) == true)
+			{
+				// Destroy pointer
+				delete pipeline;
+
+				// Log error
+				Logger::Log("Initialization of RHI_VK_Pipeline failed.", LogLevel::LOG_LEVEL_ERROR);
+				Logger::Log("No further evidence what went wrong, please see earlier logs.", LogLevel::LOG_LEVEL_ERROR);
+				return nullptr;
+			}
+
+			// Return pointer
+			return pipeline;
 		}
 
 		RHI_Texture2D* RHI_VK_RenderDevice::CreateTexture2DFromVkImage(VkImage _image, const RHI_Texture2DDescriptor* _texture2DDescriptor)

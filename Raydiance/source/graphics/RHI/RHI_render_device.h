@@ -46,6 +46,7 @@ namespace Raydiance
 		class RHI_GraphicsPipelineDescriptor;
 		class RHI_ComputePipeline;
 		class RHI_ComputePipelineDescriptor;
+		class RHI_Pipeline;
 
 		class RHI_RenderDevice
 		{
@@ -91,6 +92,10 @@ namespace Raydiance
 			virtual RHI_InputLayout*	  RHI_CreateInputLayout(const RHI_InputLayoutDescriptor* _inputLayoutDescriptor) = 0;
 			virtual RHI_GraphicsPipeline* RHI_CreateGraphicsPipeline(const RHI_GraphicsPipelineDescriptor* _graphicsPipelineDescriptor) = 0;
 			virtual RHI_ComputePipeline*  RHI_CreateComputePipeline(const RHI_ComputePipelineDescriptor* _computePipelineDescriptor) = 0;
+
+			virtual RHI_Pipeline* RHI_CreatePipeline(const RHI_ComputePipelineDescriptor* _computePipelineDescriptor) = 0;
+			virtual RHI_Pipeline* RHI_CreatePipeline(const RHI_GraphicsPipelineDescriptor* _graphicsPipelineDescriptor) = 0;
+
 
 			// Utility functions
 			// ----------------------------------------------------------------------
