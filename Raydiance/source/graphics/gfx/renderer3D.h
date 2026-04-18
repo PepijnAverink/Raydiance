@@ -55,8 +55,8 @@ namespace Raydiance
 			RHI_RenderPass*				m_RenderPass = nullptr;
 			std::vector<RHI_FrameBuffer*> m_FrameBuffers;
 
-			RHI_InputLayout*		m_InputLayout	   = nullptr;
-			RHI_GraphicsPipeline* m_GraphicsPipeline = nullptr;
+			RHI_InputLayout* m_InputLayout	   = nullptr;
+			RHI_Pipeline*    m_Pipeline = nullptr;
 
 			Mesh* m_Mesh = nullptr;
 

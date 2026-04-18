@@ -15,8 +15,7 @@ namespace Raydiance
 		class RHI_Texture2D;
 		class RHI_RenderPass;
 		class RHI_FrameBuffer;
-		class RHI_GraphicsPipeline;
-		class RHI_ComputePipeline;
+		class RHI_Pipeline;
 		class RHI_CommandBuffer
 		{
 		public:
@@ -47,7 +46,7 @@ namespace Raydiance
 			virtual void SetVertexBuffer(const uint32_t _id, RHI_Buffer* _buffer) = 0;
 			virtual void SetIndexBuffer(RHI_Buffer* _buffer) = 0;
 
-			virtual void SetGraphicsPipeline(RHI_GraphicsPipeline* _graphicsPipeline) = 0;
+			virtual void SetGraphicsPipeline(RHI_Pipeline* _graphicsPipeline) = 0;
 
 			virtual void SetGraphicsDescriptorSet(const uint32_t _id, RHI_DescriptorSet* _descriptorSet) = 0;
 			virtual void SetGraphicsConstants(void* _data, const uint32_t _dataOffset, const uint32_t _dataCount) = 0;
@@ -55,7 +54,7 @@ namespace Raydiance
 			virtual void Draw(const uint32_t _vertexCount, const uint32_t _vertexOffset) = 0;
 			virtual void DrawIndexed(const uint32 _indexCount, const uint32 _indexOffset, const uint32 _vertexOffset) = 0;
 
-			virtual void SetComputePipeline(RHI_ComputePipeline* _computePipeline) = 0;
+			virtual void SetComputePipeline(RHI_Pipeline* _computePipeline) = 0;
 
 			virtual void SetComputeDescriptorSet(const uint32 _id, RHI_DescriptorSet* _descriptorSet) = 0;
 

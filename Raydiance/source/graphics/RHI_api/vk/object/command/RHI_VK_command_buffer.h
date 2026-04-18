@@ -41,14 +41,14 @@ namespace Raydiance
 			virtual void SetIndexBuffer(RHI_Buffer* _buffer) override;
 
 			virtual void SetGraphicsDescriptorSet(const uint32_t _id, RHI_DescriptorSet* _descriptorSet) override;
-			virtual void SetGraphicsPipeline(RHI_GraphicsPipeline* _graphicsPipeline) override;
+			virtual void SetGraphicsPipeline(RHI_Pipeline* _graphicsPipeline) override;
 
 			virtual void SetGraphicsConstants(void* _data, const uint32_t _dataOffset, const uint32_t _dataCount) override;
 
 			virtual void Draw(const uint32_t _vertexCount, const uint32_t _vertexOffset) override;
 			virtual void DrawIndexed(const uint32 _indexCount, const uint32 _indexOffset, const uint32 _vertexOffset) override;
 
-			virtual void SetComputePipeline(RHI_ComputePipeline* _computePipeline) override;
+			virtual void SetComputePipeline(RHI_Pipeline* _computePipeline) override;
 
 			virtual void SetComputeDescriptorSet(const uint32 _id, RHI_DescriptorSet* _descriptorSet) override;
 

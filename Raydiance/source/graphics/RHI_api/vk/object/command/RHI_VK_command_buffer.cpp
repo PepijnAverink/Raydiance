@@ -6,8 +6,7 @@
 #include "./graphics/RHI_api/vk/pipeline/layout/descriptor/RHI_VK_descriptor_set.h"
 #include "./graphics/RHI_api/vk/resource/RHI_VK_resource_state.h"
 
-#include "./graphics/RHI_api/vk/pipeline/graphics/RHI_VK_graphics_pipeline.h"
-#include "./graphics/RHI_api/vk/pipeline/compute/RHI_VK_compute_pipeline.h"
+#include "./graphics/RHI_api/vk/pipeline/RHI_VK_pipeline.h"
 #include "./graphics/RHI_api/vk/resource/buffer/RHI_VK_buffer.h"
 
 #include "./graphics/RHI_api/vk/pipeline/graphics/framebuffer/RHI_VK_frame_buffer.h"
@@ -274,10 +273,10 @@ namespace Raydiance
 			vkCmdBindDescriptorSets(m_CommandBufferObj, VK_PIPELINE_BIND_POINT_GRAPHICS, m_CurrentInputLayout->GetVKInputLayout(), _id, 1, &set, 0, nullptr);
 		}
 
-		void RHI_VK_CommandBuffer::SetGraphicsPipeline(RHI_GraphicsPipeline* _graphicsPipeline)
+		void RHI_VK_CommandBuffer::SetGraphicsPipeline(RHI_Pipeline* _graphicsPipeline)
 		{
 			m_CurrentInputLayout = (RHI_VK_InputLayout*)_graphicsPipeline->GetInputLayout();
-			vkCmdBindPipeline(m_CommandBufferObj, VK_PIPELINE_BIND_POINT_GRAPHICS, ((RHI_VK_GraphicsPipeline*)_graphicsPipeline)->GetVKGraphicsPipeline());
+			vkCmdBindPipeline(m_CommandBufferObj, VK_PIPELINE_BIND_POINT_GRAPHICS, ((RHI_VK_Pipeline*)_graphicsPipeline)->GetVKPipeline());
 		}
 
 		void RHI_VK_CommandBuffer::SetGraphicsConstants(void* _data, const uint32_t _dataOffset, const uint32_t _dataCount)
@@ -296,10 +295,10 @@ namespace Raydiance
 			vkCmdDrawIndexed(m_CommandBufferObj, _indexCount, 1, _indexOffset, _vertexOffset, 0);
 		}
 
-		void RHI_VK_CommandBuffer::SetComputePipeline(RHI_ComputePipeline* _computePipeline)
+		void RHI_VK_CommandBuffer::SetComputePipeline(RHI_Pipeline* _computePipeline)
 		{
 			m_CurrentInputLayout = (RHI_VK_InputLayout*)_computePipeline->GetInputLayout();
-			vkCmdBindPipeline(m_CommandBufferObj, VK_PIPELINE_BIND_POINT_COMPUTE, ((RHI_VK_ComputePipeline*)_computePipeline)->GetVKComputePipeline());
+			vkCmdBindPipeline(m_CommandBufferObj, VK_PIPELINE_BIND_POINT_COMPUTE, ((RHI_VK_Pipeline*)_computePipeline)->GetVKPipeline());
 		}
 
 		void RHI_VK_CommandBuffer::SetComputeDescriptorSet(const uint32 _id, RHI_DescriptorSet* _descriptorSet)

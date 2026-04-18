@@ -20,12 +20,14 @@ namespace Raydiance
 
 		const Result RHI_Pipeline::Initialize(const RHI_ComputePipelineDescriptor* _computePipelineDescriptor)
 		{
+			m_InputLayout = _computePipelineDescriptor->InputLayout;
 			return Result::RESULT_GOOD;
 		}
 
 
 		const Result RHI_Pipeline::Initialize(const RHI_GraphicsPipelineDescriptor* _graphicsPipelineDescriptor)
 		{
+			m_InputLayout = _graphicsPipelineDescriptor->InputLayout;
 			return Result::RESULT_GOOD;
 		}
 	}

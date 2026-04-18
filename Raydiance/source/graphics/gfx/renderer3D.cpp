@@ -185,7 +185,7 @@ namespace Raydiance
 				pipelineDescriptor.RenderPass   = m_RenderPass;
 				pipelineDescriptor.Topology     = RHI_Topology::RHI_TOPOLOGY_TRIANGLE_LIST;
 			
-				m_GraphicsPipeline = RenderBackend::GetRenderDevice()->RHI_CreateGraphicsPipeline(&pipelineDescriptor);
+				m_Pipeline = RenderBackend::GetRenderDevice()->RHI_CreatePipeline(&pipelineDescriptor);
 			}
 
 			m_Mesh = new Cube(vertexlayout, m_FrameData[0].CommandBuffer, m_FrameData[0].Fence);
@@ -203,7 +203,7 @@ namespace Raydiance
 			delete m_Mesh;
 
 
-			delete m_GraphicsPipeline;
+			delete m_Pipeline;
 			delete m_InputLayout;
 
 
@@ -271,7 +271,7 @@ namespace Raydiance
 			
 				m_FrameData[m_CurrentFrameIndex].CommandBuffer->SetViewport(0, 0, 1280, 720);
 				m_FrameData[m_CurrentFrameIndex].CommandBuffer->SetScissorRectangle(0, 0, 1280, 720);
-				m_FrameData[m_CurrentFrameIndex].CommandBuffer->SetGraphicsPipeline(m_GraphicsPipeline);
+				m_FrameData[m_CurrentFrameIndex].CommandBuffer->SetGraphicsPipeline(m_Pipeline);
 			
 				m_FrameData[m_CurrentFrameIndex].CommandBuffer->SetVertexBuffer(0, m_Mesh->GetVertexBuffer());
 				m_FrameData[m_CurrentFrameIndex].CommandBuffer->SetIndexBuffer(m_Mesh->GetIndexBuffer());

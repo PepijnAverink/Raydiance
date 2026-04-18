@@ -8,7 +8,7 @@
 #include "./graphics/RHI_api/dx12/pipeline/graphics/framebuffer/RHI_DX12_frame_buffer.h"
 #include "./graphics/RHI_api/dx12/pipeline/graphics/renderpass/RHI_DX12_render_pass.h"
 #include "./graphics/RHI_api/dx12/resource/buffer/RHI_DX12_buffer.h"
-#include "./graphics/RHI_api/dx12/pipeline/graphics/RHI_DX12_graphics_pipeline.h"
+#include "./graphics/RHI_api/dx12/pipeline/RHI_DX12_pipeline.h"
 #include "./graphics/RHI_api/dx12/pipeline/layout/RHI_DX12_input_layout.h"
 
 #include "./graphics/RHI_api/dx12/pipeline/layout/descriptor/RHI_DX12_descriptor_heap.h"
@@ -233,13 +233,13 @@ namespace Raydiance
 			m_CommandListObj->SetGraphicsRootDescriptorTable(_id, ((RHI_DX12_DescriptorSet*)_descriptorSet)->GetGPUHandle());
 		}
 
-		void RHI_DX12_CommandBuffer::SetGraphicsPipeline(RHI_GraphicsPipeline* _graphicsPipeline)
+		void RHI_DX12_CommandBuffer::SetGraphicsPipeline(RHI_Pipeline* _graphicsPipeline)
 		{
 			m_CurrentConstantIndex = ((RHI_DX12_InputLayout*)_graphicsPipeline->GetInputLayout())->GetConstantParamterIndex();
 			m_CommandListObj->SetGraphicsRootSignature(((RHI_DX12_InputLayout*)_graphicsPipeline->GetInputLayout())->GetD3DSignature());
 
-			m_CommandListObj->SetPipelineState(((RHI_DX12_GraphicsPipeline*)_graphicsPipeline)->GetD3DPipeline());
-			m_CommandListObj->IASetPrimitiveTopology(((RHI_DX12_GraphicsPipeline*)_graphicsPipeline)->GetD3DTopology());
+			m_CommandListObj->SetPipelineState(((RHI_DX12_Pipeline*)_graphicsPipeline)->GetDX12Pipeline());
+			m_CommandListObj->IASetPrimitiveTopology(((RHI_DX12_Pipeline*)_graphicsPipeline)->GetD3DTopology());
 		}
 
 		void RHI_DX12_CommandBuffer::SetGraphicsConstants(void* _data, const uint32_t _dataOffset, const uint32_t _dataCount)
@@ -257,7 +257,7 @@ namespace Raydiance
 			m_CommandListObj->DrawIndexedInstanced(_indexCount, 1, _indexOffset, _vertexOffset, 0);
 		}
 
-		void RHI_DX12_CommandBuffer::SetComputePipeline(RHI_ComputePipeline* _computePipeline)
+		void RHI_DX12_CommandBuffer::SetComputePipeline(RHI_Pipeline* _computePipeline)
 		{
 
 		}
