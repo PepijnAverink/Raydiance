@@ -10,6 +10,8 @@ namespace Raydiance
 {
 	namespace Graphics
 	{
+		// TODO:: Currently unable to reclaim deleted material instances... maybe look into this?
+		// If and only when this becomes an actual issue.
 		class Material
 		{
 		public:
@@ -29,7 +31,6 @@ namespace Raydiance
 
 			friend class MaterialInstance;
 			const uint32 FindDescriptorId(const std::string& _name) const;
-
 		};
 	}
 }
