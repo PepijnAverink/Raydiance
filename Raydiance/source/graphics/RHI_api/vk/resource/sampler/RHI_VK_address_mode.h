@@ -14,6 +14,8 @@ namespace Raydiance
 			{
 				case RHI_AddressMode::RHI_ADDRESS_MODE_REPEAT :
 					return VK_SAMPLER_ADDRESS_MODE_REPEAT;
+				case RHI_AddressMode::RHI_ADDRESS_MODE_MIRROR_ONCE:
+					return VK_SAMPLER_ADDRESS_MODE_MIRROR_CLAMP_TO_EDGE; // TODO:: Check if supported on the current device, or add utility to do so
 				case RHI_AddressMode::RHI_ADDRESS_MODE_MIRROR_REPEAT :
 					return VK_SAMPLER_ADDRESS_MODE_MIRRORED_REPEAT;
 				case RHI_AddressMode::RHI_ADDRESS_MODE_CLAMP_TO_EDGE :
