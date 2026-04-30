@@ -22,7 +22,7 @@ namespace Raydiance
 
 		// Returns true if the filter is a valid, usable value
 		[[nodiscard]]
-		constexpr bool RHI_Filter_is_valid(RHI_Filter _filter)
+		constexpr bool is_valid(RHI_Filter _filter)
 		{
 			switch (_filter)
 			{
