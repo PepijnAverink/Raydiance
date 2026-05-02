@@ -651,6 +651,9 @@
     <ClInclude Include="source\graphics\RHI_api\vk\pipeline\RHI_VK_pipeline.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\graphics\gfx\material\material_asset.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\core\error\logger.cpp">
@@ -903,6 +906,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\graphics\RHI_api\vk\pipeline\RHI_VK_pipeline.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\graphics\gfx\material\material_asset.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

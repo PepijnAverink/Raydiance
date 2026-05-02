@@ -48,6 +48,7 @@
     <ClInclude Include="source\graphics\gfx\camera\camera.h" />
     <ClInclude Include="source\graphics\gfx\frame_data.h" />
     <ClInclude Include="source\graphics\gfx\material\material.h" />
+    <ClInclude Include="source\graphics\gfx\material\material_asset.h" />
     <ClInclude Include="source\graphics\gfx\material\material_instance.h" />
     <ClInclude Include="source\graphics\gfx\mesh\mesh.h" />
     <ClInclude Include="source\graphics\gfx\mesh\primitive\cube.h" />
@@ -240,6 +241,7 @@
     <ClCompile Include="source\core\window\window.cpp" />
     <ClCompile Include="source\graphics\gfx\camera\camera.cpp" />
     <ClCompile Include="source\graphics\gfx\material\material.cpp" />
+    <ClCompile Include="source\graphics\gfx\material\material_asset.cpp" />
     <ClCompile Include="source\graphics\gfx\material\material_instance.cpp" />
     <ClCompile Include="source\graphics\gfx\mesh\mesh.cpp" />
     <ClCompile Include="source\graphics\gfx\mesh\primitive\cube.cpp" />
