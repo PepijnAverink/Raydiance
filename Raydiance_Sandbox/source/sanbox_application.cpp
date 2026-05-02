@@ -7,6 +7,13 @@
 #include "./graphics/gfx/render_backend.h"
 
 
+// TEST INCLUDES
+// TODO:: REMOVE THESE HERE
+// -------------------------------------------------------
+#include "./graphics/gfx/material/material_asset.h"
+// -------------------------------------------------------
+
+
 namespace Sandbox
 {
 	SandboxApplication::SandboxApplication()
@@ -33,6 +40,13 @@ namespace Sandbox
 			return result;
 		}
 		
+
+		std::shared_ptr<Raydiance::Graphics::MaterialAsset> materialAsset;
+		Raydiance::Result res = Raydiance::Graphics::MaterialAsset::CreateEmpty(materialAsset);
+
+		materialAsset->Save();
+
+
 		return Result::RESULT_GOOD;
 	}
 }

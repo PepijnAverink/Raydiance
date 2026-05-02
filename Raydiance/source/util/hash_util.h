@@ -33,7 +33,7 @@ inline std::string to_hex_mix(uint64_t x) {
     return to_hex(splitmix64(x));
 }
 
-std::string to_hex_mix2(uint64_t v) {
+inline std::string to_hex_mix2(uint64_t v) {
     uint64_t h1 = splitmix64(v);
     uint64_t h2 = splitmix64(v + 0x9e3779b97f4a7c15ULL); // different input
 
