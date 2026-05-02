@@ -654,6 +654,18 @@
     <ClInclude Include="source\graphics\gfx\material\material_asset.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\core\files\byte_stream.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\core\files\byte_stream_exception.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\core\files\byte_order.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\core\files\byte_stream_state.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\core\error\logger.cpp">
@@ -909,6 +921,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\graphics\gfx\material\material_asset.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\core\files\byte_stream.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\core\files\byte_stream_exception.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
