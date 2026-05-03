@@ -117,9 +117,6 @@ namespace Raydiance
 			// Thread Group SizeY	   - 2 bytes
 			// Thread Group SizeZ	   - 2 bytes
 			// Padding				   - 2 bytes
-			// 
-			// Vertex Input  Count	   - 2 bytes
-			// Vertex Output Count	   - 2 bytes
 			// ---------------------------------
 			
 
