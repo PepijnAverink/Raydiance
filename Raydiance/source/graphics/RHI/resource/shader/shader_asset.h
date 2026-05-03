@@ -15,21 +15,21 @@
 
 
 // Defines
-#define MATERIAL_ASSET_ACTIVE_VERSION Version(1, 0, 0, 0)
+#define SHADER_ASSET_ACTIVE_VERSION Version(1, 0, 0, 0)
 
 
 namespace Raydiance
 {
 	namespace Graphics
 	{
-		class MaterialAsset
+		class ShaderAsset
 		{
 		public:
 			[[nodiscard]]
-			static Result CreateEmpty(std::shared_ptr<MaterialAsset>& _asset);
+			static Result CreateEmpty(std::shared_ptr<ShaderAsset>& _asset);
 
 			[[nodiscard]]
-			static Result Load(const FilePath& _filepath, std::shared_ptr<MaterialAsset>& _asset);
+			static Result Load(const FilePath& _filepath, std::shared_ptr<ShaderAsset>& _asset);
 
 			[[nodiscard]]
 			Result Save();

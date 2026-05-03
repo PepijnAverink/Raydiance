@@ -23,6 +23,12 @@ namespace Raydiance
 		}
 
 
+		Result MaterialAsset::Load(const FilePath& _filepath, std::shared_ptr<MaterialAsset>& _asset)
+		{
+			return Result::RESULT_GOOD;
+		}
+
+
 		Result MaterialAsset::Save()
 		{
 			// Generate filepath based on UUID - hash
