@@ -11,6 +11,7 @@
 // TODO:: REMOVE THESE HERE
 // -------------------------------------------------------
 #include "./graphics/gfx/material/material_asset.h"
+#include "./graphics/RHI/resource/shader/shader_asset.h"
 // -------------------------------------------------------
 
 
@@ -45,6 +46,12 @@ namespace Sandbox
 		Raydiance::Result res = Raydiance::Graphics::MaterialAsset::CreateEmpty(materialAsset);
 
 		materialAsset->Save();
+
+		std::shared_ptr<Raydiance::Graphics::ShaderAsset> shaderAsset;
+		res = Raydiance::Graphics::ShaderAsset::CreateEmpty(shaderAsset);
+
+		shaderAsset->Save();
+
 
 
 		return Result::RESULT_GOOD;

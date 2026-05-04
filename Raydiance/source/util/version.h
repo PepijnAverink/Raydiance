@@ -15,6 +15,9 @@ public:
 		, m_Tweak(_tweak)
 	{ }
 
+	static Version Zero() { return Version(0, 0, 0, 0); }
+	static Version One() { return Version(1, 0, 0, 0); }
+
 	// Getters
 	inline uint32_t GetVersionID() const { return m_VersionID; }
 

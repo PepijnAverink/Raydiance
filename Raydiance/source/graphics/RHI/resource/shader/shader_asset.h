@@ -6,6 +6,10 @@
 #include "./core/files/file_system.h"
 
 
+// Graphics includes
+#include "./graphics/RHI/resource/shader/RHI_shader_type.h"
+
+
 // Generic includes
 #include <memory>
 
@@ -29,13 +33,21 @@ namespace Raydiance
 			static Result CreateEmpty(std::shared_ptr<ShaderAsset>& _asset);
 
 			[[nodiscard]]
+			static Result CreateFromShader(std::shared_ptr<ShaderAsset>& _asset);
+
+			[[nodiscard]]
 			static Result Load(const FilePath& _filepath, std::shared_ptr<ShaderAsset>& _asset);
 
 			[[nodiscard]]
 			Result Save();
 
 		private:
-			UUID m_UUID;
+			UUID     m_UUID;
+			FilePath m_ShaderFilePath;
+
+			RHI_ShaderType m_ShaderType = RHI_ShaderType::RHI_SHADER_TYPE_INVALID;
+
+			std::string m_EntryPoint;
 		};
 	}
 }

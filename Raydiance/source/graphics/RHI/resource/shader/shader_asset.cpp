@@ -99,7 +99,7 @@ namespace Raydiance
 			// ----------------------------------------------------------------------
 			// Magic Number			   - 4 bytes
 			// box Format Version      - 4 bytes
-			// File Size			   - 8 bytes
+			// Box Size				   - 8 bytes
 			// Flags				   - 4 bytes
 			// ---------------------------------
 			// Shader Stage			   - 1 byte
@@ -123,10 +123,95 @@ namespace Raydiance
 			// Write shader info box
 			// ----------------------------------------------------------------------  			        
 			{
+				// Magic number
+				stream.Write_char('S');
+				stream.Write_char('H');
+				stream.Write_char('D');
+				stream.Write_char('R');
 
+
+				// Get the (version)ID of the current scene data strucuture 
+				stream.Write_uint32(Version::One().GetVersionID());
+				stream.Write_uint64(0); // Skip  size for now
+				stream.Write_uint32(0); // Skip flags for now
+
+				// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+				
+				stream.Write_uint8((uint8)m_ShaderType);
+				stream.Write_uint8(0);
+				stream.Write_uint16(0);
+				stream.Write_uint32(0);
+
+
+				stream.Write_uint16((uint16)m_EntryPoint.length());
+				stream.Write_string(m_EntryPoint);
+
+
+				stream.Write_uint8(0);
+				stream.Write_uint8(0);
+				stream.Write_uint8(0);
+				stream.Write_uint8(0);
+
+				stream.Write_uint16(0);
+				stream.Write_uint16(0);
+				stream.Write_uint16(0);
+				stream.Write_uint16(0);
 			}
 
 
+			// SSRC BOX (Shader source box)
+			// SSRC BOX VERSION(1, 0, 0, 0)
+			// MAGIC ID: 'SSRC'
+			// ----------------------------------------------------------------------
+			// Magic Number			   - 4 bytes
+			// box Format Version      - 4 bytes
+			// Box Size				   - 8 bytes
+			// Flags				   - 4 bytes
+			// ---------------------------------
+			// Path Length			   - 2 bytes
+			// Path[]				   - . bytes
+			// 
+			// Content Hash				- 8 bytes
+			// Time Stamp				- 8 bytes
+			// 
+			// Hot reload				- 1 byte
+			// Reserved Flags			- 3 bytes
+			// 
+			// Source Length			- 4 bytes
+			// Source					- . bytes
+			// ---------------------------------
+
+
+			// Write shader source box
+			// ----------------------------------------------------------------------  		
+			{
+				// Magic number
+				stream.Write_char('S');
+				stream.Write_char('S');
+				stream.Write_char('R');
+				stream.Write_char('C');
+
+
+				// Get the (version)ID of the current scene data strucuture 
+				stream.Write_uint32(Version::One().GetVersionID());
+				stream.Write_uint64(0); // Skip  size for now
+				stream.Write_uint32(0); // Skip flags for now
+
+				// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+				stream.Write_uint16((uint16)m_ShaderFilePath.GetPath().length());
+				stream.Write_string(m_ShaderFilePath.GetPath());
+
+				stream.Write_uint64(0);
+				stream.Write_uint64(0);
+
+				stream.Write_bool(false);
+				stream.Write_uint8(0);
+				stream.Write_uint8(0);
+				stream.Write_uint8(0);
+
+
+			}
 
 			return Result::RESULT_GOOD;
 		}
