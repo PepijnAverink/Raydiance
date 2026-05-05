@@ -43,6 +43,7 @@
     <ClInclude Include="source\core\files\byte_stream_state.h" />
     <ClInclude Include="source\core\files\file_path.h" />
     <ClInclude Include="source\core\files\file_system.h" />
+    <ClInclude Include="source\core\files\text_stream.h" />
     <ClInclude Include="source\core\memory\allocator\allocation_statistics.h" />
     <ClInclude Include="source\core\memory\allocator\basic_allocator.h" />
     <ClInclude Include="source\core\memory\allocator\debug_allocator.h" />
@@ -246,6 +247,7 @@
     <ClCompile Include="source\core\files\byte_stream_exception.cpp" />
     <ClCompile Include="source\core\files\file_path.cpp" />
     <ClCompile Include="source\core\files\file_system.cpp" />
+    <ClCompile Include="source\core\files\text_stream.cpp" />
     <ClCompile Include="source\core\UUID.cpp" />
     <ClCompile Include="source\core\window\window.cpp" />
     <ClCompile Include="source\graphics\gfx\camera\camera.cpp" />

@@ -210,7 +210,11 @@ namespace Raydiance
 				stream.Write_uint8(0);
 				stream.Write_uint8(0);
 
+				stream.Write_uint32(0);
+				uint64 srcSizePosition = stream.GetPosition();
 
+				stream.Write_file(m_ShaderFilePath);
+				stream.Write_uint64(stream.GetPosition() - srcSizePosition, srcSizePosition - 8);
 			}
 
 			return Result::RESULT_GOOD;

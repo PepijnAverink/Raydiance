@@ -672,6 +672,9 @@
     <ClInclude Include="source\graphics\RHI\resource\shader\shader_asset.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\core\files\text_stream.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\core\error\logger.cpp">
@@ -939,6 +942,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\graphics\RHI\resource\shader\shader_asset.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\core\files\text_stream.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

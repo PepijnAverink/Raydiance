@@ -41,13 +41,14 @@ namespace Raydiance
 			[[nodiscard]]
 			Result Save();
 
-		private:
-			UUID     m_UUID;
 			FilePath m_ShaderFilePath;
 
 			RHI_ShaderType m_ShaderType = RHI_ShaderType::RHI_SHADER_TYPE_INVALID;
 
 			std::string m_EntryPoint;
+
+		private:
+			UUID     m_UUID;
 		};
 	}
 }
