@@ -292,4 +292,10 @@ namespace Raydiance
 	{
 		Write_int32(v);
 	}
+
+	void ByteStream::Write_file(const FilePath& _filePath)
+	{
+		std::ifstream src(_filePath.GetPath());
+		m_FileStream << src.rdbuf();
+	}
 }
