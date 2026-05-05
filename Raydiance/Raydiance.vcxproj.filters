@@ -675,6 +675,15 @@
     <ClInclude Include="source\core\files\text_stream.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\graphics\RHI\resource\shader\RHI_shader_language.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\graphics\RHI\resource\shader\compiler\RHI_shader_compiler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\graphics\RHI\resource\shader\compiler\RHI_shader_compile_result.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\core\error\logger.cpp">
@@ -945,6 +954,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\core\files\text_stream.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\graphics\RHI\resource\shader\compiler\RHI_shader_compiler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
