@@ -6,6 +6,11 @@ namespace Raydiance
 {
 	namespace Graphics
 	{
+		RHI_ShaderCompiler::RHI_ShaderCompiler(void)
+		{ }
 
+
+		RHI_ShaderCompiler::~RHI_ShaderCompiler(void)
+		{ }
 	}
 }
