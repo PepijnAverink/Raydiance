@@ -690,6 +690,9 @@
     <ClInclude Include="source\graphics\RHI\resource\shader\compiler\RHI_shader_compile_descriptor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\graphics\RHI\resource\shader\compiler\DXC\RHI_DXC_shader_type.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\core\error\logger.cpp">

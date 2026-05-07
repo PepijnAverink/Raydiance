@@ -74,7 +74,7 @@ namespace Raydiance
 
 
 			// Target profile
-			std::wstring targetProfile = L"vs_6_3";
+			std::wstring targetProfile = ResolveDXCShaderType(_shaderDescriptor->Type);
 
 
 			// Arguments
@@ -99,14 +99,10 @@ namespace Raydiance
 			// };
 			for (const auto& [key, value] : _shaderDescriptor->Defines)
 			{
-				std::wstring def = L"-D" + StringToWString(key);
-
-				if (!value.empty())
-				{
-					def += L"=" + StringToWString(value);
-				}
-
-				defineStrings.push_back(def);
+				if (key.empty() == false)
+					defineStrings.push_back(StringToWString(key));
+				if (value.empty() == false)
+					defineStrings.push_back(StringToWString(value));
 			}
 
 

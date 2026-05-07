@@ -1,8 +1,12 @@
 #pragma once
+// Graphics includes
 #include "./graphics/RHI/resource/shader/compiler/RHI_shader_compiler.h"
+#include "./graphics/RHI/resource/shader/compiler/DXC/RHI_DXC_shader_type.h"
+
 
 // DXC includes
 #include <./dxc/dxcapi.h>
+
 
 namespace Raydiance
 {

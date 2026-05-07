@@ -127,6 +127,7 @@
     <ClInclude Include="source\graphics\RHI\resource\sampler\RHI_sampler.h" />
     <ClInclude Include="source\graphics\RHI\resource\sampler\RHI_sampler_descriptor.h" />
     <ClInclude Include="source\graphics\RHI\resource\shader\compiler\DXC\RHI_DXC_shader_compiler.h" />
+    <ClInclude Include="source\graphics\RHI\resource\shader\compiler\DXC\RHI_DXC_shader_type.h" />
     <ClInclude Include="source\graphics\RHI\resource\shader\compiler\RHI_shader_compiler.h" />
     <ClInclude Include="source\graphics\RHI\resource\shader\compiler\RHI_shader_compile_descriptor.h" />
     <ClInclude Include="source\graphics\RHI\resource\shader\compiler\RHI_shader_compile_result.h" />
