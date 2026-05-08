@@ -18,9 +18,9 @@ namespace Raydiance
 			 RHI_ShaderCompileDescriptor() = default;
 			~RHI_ShaderCompileDescriptor() = default;
 
-			std::string	   Name;
 			std::string	   EntryPoint;
-			FilePath	   FilePath;
+			std::string    Source;
+
 			RHI_ShaderType Type;
 
 			// Preprocessor defines

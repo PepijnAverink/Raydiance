@@ -47,18 +47,13 @@ namespace Raydiance
 
 
 			// Convert strings once (avoid dangling pointers)
-			std::wstring filePath   = StringToWString(_shaderDescriptor->FilePath.GetPath());
-			std::wstring directory  = StringToWString(_shaderDescriptor->FilePath.GetDirectory());
+			//std::wstring filePath   = StringToWString(_shaderDescriptor->FilePath.GetPath());
+			//std::wstring directory  = StringToWString(_shaderDescriptor->FilePath.GetDirectory());
 			std::wstring entryPoint = StringToWString(_shaderDescriptor->EntryPoint);
 
 
-			// Load file
-			uint32_t codePage = DXC_CP_ACP;
-			IDxcBlobEncoding* sourceBlob;
-
-
-			// Load the actual file from disk
-			HRESULT hr = m_Utils->LoadFile(filePath.c_str(), &codePage, &sourceBlob);
+			IDxcBlobEncoding* sourceBlob = nullptr;
+			HRESULT hr = m_Utils->CreateBlob(_shaderDescriptor->Source.data(), (UINT32)_shaderDescriptor->Source.size(), DXC_CP_UTF8, &sourceBlob);
 			if (FAILED(hr))
 			{
 				// Return error result
@@ -82,10 +77,10 @@ namespace Raydiance
 			entryArg += entryPoint;
 
 			std::vector<LPCWSTR> arguments = {
-				filePath.c_str(),
+				//filePath.c_str(),
 				entryArg.c_str(),
 				L"-T", targetProfile.c_str(),
-				L"-I", directory.c_str(),
+				//L"-I", directory.c_str(),
 				L"-D", L"D3D12",
 			};
 
@@ -164,12 +159,12 @@ namespace Raydiance
 			}
 
 			// Copy bytecode
-			uint8_t* data = reinterpret_cast<uint8_t*>(shaderBlob->GetBufferPointer());
+			const uint8* data = reinterpret_cast<const uint8*>(shaderBlob->GetBufferPointer());
 			size_t size = shaderBlob->GetBufferSize();
 
 			result.ByteCode.assign(data, data + size);
 
-			shaderBlob->Release();
+			shaderBlob->Release(); 
 			res->Release();
 
 			return result;
