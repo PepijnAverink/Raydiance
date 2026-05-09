@@ -51,7 +51,7 @@ namespace Sandbox
 		res = Raydiance::Graphics::ShaderAsset::CreateEmpty(shaderAsset);
 
 		shaderAsset->m_EntryPoint = "main";
-		shaderAsset->m_ShaderFilePath = FilePath("./assets/vertex_shader.hlsl");
+		shaderAsset->m_ShaderFilePath = FilePath("./assets/test_vertex_shader.hlsl");
 
 		shaderAsset->m_ShaderType = Raydiance::Graphics::RHI_ShaderType::RHI_SHADER_TYPE_VERTEX;
 

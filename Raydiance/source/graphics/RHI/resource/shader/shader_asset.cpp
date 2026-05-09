@@ -6,6 +6,10 @@
 #include "./core/files/byte_stream.h"
 
 
+// Graphics includes
+#include "./graphics/RHI/resource/shader/compiler/DXC/RHI_DXC_shader_compiler.h"
+
+
 // Util includes
 #include "./util/hash_util.h"
 
@@ -181,7 +185,7 @@ namespace Raydiance
 			// Source					- . bytes
 			// ---------------------------------
 
-
+			std::string source;
 			// Write shader source box
 			// ----------------------------------------------------------------------  		
 			{
@@ -213,8 +217,65 @@ namespace Raydiance
 				stream.Write_uint32(0);
 				uint64 srcSizePosition = stream.GetPosition();
 
-				stream.Write_file(m_ShaderFilePath);
+				std::ifstream file(m_ShaderFilePath.GetPath());
+
+				std::stringstream buffer;
+				buffer << file.rdbuf();
+
+				source = buffer.str();
+
+				stream.Write_string(source);
 				stream.Write_uint64(stream.GetPosition() - srcSizePosition, srcSizePosition - 8);
+			}
+
+			// VARI BOX (Variation box)
+			// VARI BOX VERSION(1, 0, 0, 0)
+			// MAGIC ID: 'VARI'
+			// ----------------------------------------------------------------------
+			// Magic Number			   - 4 bytes
+			// box Format Version      - 4 bytes
+			// Box Size				   - 8 bytes
+			// Flags				   - 4 bytes
+			// ---------------------------------
+			// Variation Count		   - 1 byte
+			// --------------------------------- For all variations
+			// Variation ID			   - 4 bytes
+			// Variation Size		   - 4 bytes
+			// Variation Source		   - . bytes
+			// ---------------------------------
+
+			// Write shader source box
+			// ----------------------------------------------------------------------  		
+			{
+				// Magic number
+				stream.Write_char('S');
+				stream.Write_char('S');
+				stream.Write_char('R');
+				stream.Write_char('C');
+
+
+				// Get the (version)ID of the current scene data strucuture 
+				stream.Write_uint32(Version::One().GetVersionID());
+				stream.Write_uint64(0); // Skip  size for now
+				stream.Write_uint32(0); // Skip flags for now
+
+				// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+				stream.Write_uint8(1); // Skip the variation count for now
+
+				RHI_DXC_ShaderCompiler compiler = RHI_DXC_ShaderCompiler();
+
+				RHI_ShaderCompileDescriptor compileDesc = { };
+				compileDesc.EntryPoint = "main";
+				compileDesc.Source     = source;
+				compileDesc.Type       = m_ShaderType;
+				compileDesc.Defines = 
+				{
+					{ "-D", "D3D12",},
+				};
+
+				RHI_ShaderCompileResult result = compiler.Compile(&compileDesc);
+				result;
 			}
 
 			return Result::RESULT_GOOD;

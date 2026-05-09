@@ -84,14 +84,11 @@ namespace Raydiance
 				L"-D", L"D3D12",
 			};
 
+			
 			std::vector<std::wstring> defineStrings;
 			std::vector<LPCWSTR> defineArgs;
 
-			// desc.Defines = {
-			// { "USE_SHADOWS", "1" },
-			// { "MAX_LIGHTS", "8" },
-			// { "DEBUG", "" } // just #define DEBUG
-			// };
+
 			for (const auto& [key, value] : _shaderDescriptor->Defines)
 			{
 				if (key.empty() == false)
