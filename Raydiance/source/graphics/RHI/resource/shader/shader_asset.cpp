@@ -228,6 +228,7 @@ namespace Raydiance
 				stream.Write_uint64(stream.GetPosition() - srcSizePosition, srcSizePosition - 8);
 			}
 
+
 			// VARI BOX (Variation box)
 			// VARI BOX VERSION(1, 0, 0, 0)
 			// MAGIC ID: 'VARI'
@@ -243,6 +244,7 @@ namespace Raydiance
 			// Variation Size		   - 8 bytes
 			// Variation Source		   - . bytes
 			// ---------------------------------
+
 
 			// Write shader source box
 			// ----------------------------------------------------------------------  		
