@@ -77,6 +77,7 @@ namespace Raydiance
 		void Write_int32_LittleEndian(int32 v);
 
 		void Write_file(const FilePath& _filePath);
+		void Write_bytes(const void* _data, size_t _size);
 
 	protected:
 		std::fstream m_FileStream;

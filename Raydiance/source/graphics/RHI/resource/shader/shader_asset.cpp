@@ -240,7 +240,7 @@ namespace Raydiance
 			// Variation Count		   - 1 byte
 			// --------------------------------- For all variations
 			// Variation ID			   - 4 bytes
-			// Variation Size		   - 4 bytes
+			// Variation Size		   - 8 bytes
 			// Variation Source		   - . bytes
 			// ---------------------------------
 
@@ -276,6 +276,16 @@ namespace Raydiance
 
 				RHI_ShaderCompileResult result = compiler.Compile(&compileDesc);
 				result;
+
+				// Magic number
+				stream.Write_char('D');
+				stream.Write_char('X');
+				stream.Write_char('1');
+				stream.Write_char('2');
+
+				stream.Write_uint64(0); // Skip  size for now
+
+				stream.Write_bytes(result.ByteCode.data(), result.ByteCode.size());
 			}
 
 			return Result::RESULT_GOOD;

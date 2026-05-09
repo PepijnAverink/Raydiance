@@ -298,4 +298,9 @@ namespace Raydiance
 		std::ifstream src(_filePath.GetPath());
 		m_FileStream << src.rdbuf();
 	}
+
+	void ByteStream::Write_bytes(const void* _data, size_t _size)
+	{
+		m_FileStream.write(reinterpret_cast<const char*>(_data), _size);
+	}
 }
