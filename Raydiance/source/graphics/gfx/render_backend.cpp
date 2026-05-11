@@ -204,6 +204,12 @@ namespace Raydiance
 		}
 
 
+		RHI_GraphicsAPI RenderBackend::GetAPI(void)
+		{
+			RA_ASSERT_MSG(s_RenderBackend != nullptr, "User tried to use RenderBackend functionality before initialization.");
+			return s_RenderBackend->m_RenderDevice->RHI_GetGraphicsAPI();
+		}
+
 		[[nodiscard]]
 		RHI_RenderDevice* RenderBackend::GetRenderDevice(void)
 		{

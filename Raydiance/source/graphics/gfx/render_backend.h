@@ -35,6 +35,8 @@ namespace Raydiance
 
 
 			// Getters
+			[[nodiscard]] static RHI_GraphicsAPI   GetAPI(void);
+
 			[[nodiscard]] static RHI_RenderDevice* GetRenderDevice(void);
 			[[nodiscard]] static RHI_Swapchain*    GetSwapchain(void);
 

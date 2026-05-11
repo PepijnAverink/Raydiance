@@ -104,6 +104,8 @@ namespace Raydiance
 
 			inline RHI_Adapter* RHI_GetAdapter() const { return m_Adapter; }
 
+			inline RHI_GraphicsAPI RHI_GetGraphicsAPI() const { return m_API; }
+
 		protected:
 			RHI_RenderDevice(void);
 			virtual ~RHI_RenderDevice(void);
