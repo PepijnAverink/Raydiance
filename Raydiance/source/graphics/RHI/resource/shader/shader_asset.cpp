@@ -138,6 +138,8 @@ namespace Raydiance
 				// Get the (version)ID of the current scene data strucuture 
 				stream.Write_uint32(Version::One().GetVersionID());
 				stream.Write_uint64(0); // Skip  size for now
+				uint64 shdrSizePosition = stream.GetPosition();
+
 				stream.Write_uint32(0); // Skip flags for now
 
 				// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -161,6 +163,8 @@ namespace Raydiance
 				stream.Write_uint16(0);
 				stream.Write_uint16(0);
 				stream.Write_uint16(0);
+
+				stream.Write_uint64(stream.GetPosition() - shdrSizePosition, shdrSizePosition - 8);
 			}
 
 
@@ -200,6 +204,8 @@ namespace Raydiance
 				// Get the (version)ID of the current scene data strucuture 
 				stream.Write_uint32(Version::One().GetVersionID());
 				stream.Write_uint64(0); // Skip  size for now
+				uint64 ssrcSizePosition = stream.GetPosition();
+
 				stream.Write_uint32(0); // Skip flags for now
 
 				// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -227,6 +233,9 @@ namespace Raydiance
 
 				stream.Write_string(source);
 				stream.Write_uint64(stream.GetPosition() - srcSizePosition, srcSizePosition - 8);
+
+
+				stream.Write_uint64(stream.GetPosition() - ssrcSizePosition, ssrcSizePosition - 8);
 			}
 
 
@@ -251,15 +260,17 @@ namespace Raydiance
 			// ----------------------------------------------------------------------  		
 			{
 				// Magic number
-				stream.Write_char('S');
-				stream.Write_char('S');
+				stream.Write_char('V');
+				stream.Write_char('A');
 				stream.Write_char('R');
-				stream.Write_char('C');
+				stream.Write_char('I');
 
 
 				// Get the (version)ID of the current scene data strucuture 
 				stream.Write_uint32(Version::One().GetVersionID());
 				stream.Write_uint64(0); // Skip  size for now
+				uint64 variSizePosition = stream.GetPosition();
+
 				stream.Write_uint32(0); // Skip flags for now
 
 				// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -289,7 +300,13 @@ namespace Raydiance
 				stream.Write_uint64(0); // Skip  size for now
 
 				stream.Write_bytes(result.ByteCode.data(), result.ByteCode.size());
+
+
+				stream.Write_uint64(stream.GetPosition() - variSizePosition, variSizePosition - 8);
 			}
+
+			// Write file size to header
+			stream.Write_uint64(stream.GetPosition() - streamBegin, streamBegin + 8);
 
 			return Result::RESULT_GOOD;
 		}
@@ -302,15 +319,18 @@ namespace Raydiance
 			ByteStream stream = ByteStream(_filepath, ByteStreamState::BYTE_STREAM_STATE_READ);
 
 			std::string boxHeader = stream.Read_string(4);
-			if (boxHeader == "RASH")
+			if (boxHeader != "RASH")
 			{
-				stream.Skip(4);
-				uint64 fileSize = stream.Read_uint64();
-				stream.Skip(32);
-
-				// end of header
-
+				Logger::Log("Invalid shader asset file: " + _filepath.GetPath(), LogLevel::LOG_LEVEL_ERROR);
+				Result::RESULT_ERROR;
 			}
+				
+
+			stream.Skip(4);
+			uint64 fileSize = stream.Read_uint64();
+			stream.Skip(32);
+
+			// end of header
 
 			return Result();
 		}
