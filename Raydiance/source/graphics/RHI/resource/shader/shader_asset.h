@@ -7,6 +7,7 @@
 
 
 // Graphics includes
+#include "./graphics/RHI/resource/shader/RHI_shader.h"
 #include "./graphics/RHI/resource/shader/RHI_shader_type.h"
 
 
@@ -40,6 +41,10 @@ namespace Raydiance
 
 			[[nodiscard]]
 			Result Save();
+
+
+			[[nodiscard]]
+			static Result Load_RHI_Shader(const FilePath& _filepath, RHI_Shader* _shader);
 
 			FilePath m_ShaderFilePath;
 

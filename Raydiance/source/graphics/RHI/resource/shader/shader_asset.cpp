@@ -7,6 +7,7 @@
 
 
 // Graphics includes
+#include "./graphics/gfx/render_backend.h"
 #include "./graphics/RHI/resource/shader/compiler/DXC/RHI_DXC_shader_compiler.h"
 
 
@@ -291,6 +292,27 @@ namespace Raydiance
 			}
 
 			return Result::RESULT_GOOD;
+		}
+
+		Result ShaderAsset::Load_RHI_Shader(const FilePath& _filepath, RHI_Shader* _shader)
+		{
+			// Gather the graphics API
+			RHI_GraphicsAPI api = RenderBackend::GetAPI();
+			
+			ByteStream stream = ByteStream(_filepath, ByteStreamState::BYTE_STREAM_STATE_READ);
+
+			std::string boxHeader = stream.Read_string(4);
+			if (boxHeader == "RASH")
+			{
+				stream.Skip(4);
+				uint64 fileSize = stream.Read_uint64();
+				stream.Skip(32);
+
+				// end of header
+
+			}
+
+			return Result();
 		}
 	}
 }
