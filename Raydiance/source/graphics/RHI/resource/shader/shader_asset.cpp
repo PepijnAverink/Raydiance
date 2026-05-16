@@ -287,34 +287,99 @@ namespace Raydiance
 
 				// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
-				stream.Write_uint8(1); // Skip the variation count for now
+				stream.Write_uint8(0); // Skip the variation count for now
 
+				uint8  variationCount = 0;
+				uint64 variCountPosition = stream.GetPosition();
+
+				// Initialize the shader compiler and compile the shader source for this variation
 				RHI_DXC_ShaderCompiler compiler = RHI_DXC_ShaderCompiler();
 
-				RHI_ShaderCompileDescriptor compileDesc = { };
-				compileDesc.EntryPoint = "main";
-				compileDesc.Source     = source;
-				compileDesc.Type       = m_ShaderType;
-				compileDesc.Defines = 
+
+				// DX12 VARIATION
 				{
-					{ "-D", "D3D12",},
-				};
+					RHI_ShaderCompileDescriptor compileDesc = { };
+					compileDesc.EntryPoint = "main";
+					compileDesc.Source = source;
+					compileDesc.Type = m_ShaderType;
+					compileDesc.Defines =
+					{
+						{ "-D", "D3D12",},
+					};
 
-				RHI_ShaderCompileResult result = compiler.Compile(&compileDesc);
-				result;
 
-				// Magic number
-				stream.Write_char('D');
-				stream.Write_char('X');
-				stream.Write_char('1');
-				stream.Write_char('2');
+					// Compile the shader for this variation
+					// And check for errors
+					RHI_ShaderCompileResult result = compiler.Compile(&compileDesc);
+					if (CheckError(result.CompilationResult) == true)
+					{
+						Logger::Log("Failed to compile shader for DX12 variation: " + result.ErrorStr, LogLevel::LOG_LEVEL_ERROR);
+						//return Result::RESULT_ERROR;
+					}
+					else
+					{
+						variationCount++;
 
-				stream.Write_uint64(0); // Skip  size for now
-				uint64 dx12Position = stream.GetPosition();
+						// Magic number
+						stream.Write_char('D');
+						stream.Write_char('X');
+						stream.Write_char('1');
+						stream.Write_char('2');
 
-				stream.Write_bytes(result.ByteCode.data(), result.ByteCode.size());
-				stream.Write_uint64(stream.GetPosition() - dx12Position, dx12Position - 8);
+						stream.Write_uint64(0); // Skip  size for now
+						uint64 dx12Position = stream.GetPosition();
 
+						stream.Write_bytes(result.ByteCode.data(), result.ByteCode.size());
+						stream.Write_uint64(stream.GetPosition() - dx12Position, dx12Position - 8);
+					}
+				}
+
+				// VK VARIATION
+				{
+					RHI_ShaderCompileDescriptor compileDesc = { };
+					compileDesc.EntryPoint = "main";
+					compileDesc.Source     = source;
+					compileDesc.Type       = m_ShaderType;
+					compileDesc.Defines    =
+					{
+						{ "-D", "VULKAN", },
+						{ "-spirv", "", },
+						{ "-fvk-use-dx-layout", "", },
+					//	{ "-fspv-reflect", "", },
+					};
+
+
+					// Compile the shader for this variation
+					// And check for errors
+					RHI_ShaderCompileResult result = compiler.Compile(&compileDesc);
+					if (CheckError(result.CompilationResult) == true)
+					{
+						Logger::Log("Failed to compile shader for VK variation: " + result.ErrorStr, LogLevel::LOG_LEVEL_ERROR);
+						return Result::RESULT_ERROR;
+					}
+					else
+					{
+						variationCount++;
+
+						// Magic number
+						stream.Write_char('V');
+						stream.Write_char('L');
+						stream.Write_char('K');
+						stream.Write_char('N');
+
+						stream.Write_uint64(0); // Skip  size for now
+						uint64 vkPosition = stream.GetPosition();
+
+						stream.Write_bytes(result.ByteCode.data(), result.ByteCode.size());
+						stream.Write_uint64(stream.GetPosition() - vkPosition, vkPosition - 8);
+					}
+				}
+
+				// Write the actual variation count
+				stream.Write_uint8(variationCount, variCountPosition - 1);
+
+
+				// Write the size of the whole VARI box
 				stream.Write_uint64(stream.GetPosition() - variSizePosition, variSizePosition - 12);
 			}
 
@@ -415,12 +480,13 @@ namespace Raydiance
 						uint64      variationSize = stream.Read_uint64();
 
 
-						if (variationID == "DX12")
+						if (variationID == "DX12" && api == RHI_GraphicsAPI::RHI_GRAPHICS_API_DIRECTX12)
 						{
 							Logger::Log("DIRECTX12 variation was found.", LogLevel::LOG_LEVEL_INFO);
 
 							// Load shaderbytes
 							std::vector<uint8> shaderBytes = stream.Read_bytes(variationSize);
+
 
 							// Load bytes into RHI_DX12_Shader
 							RHI_DX12_Shader* shader = new RHI_DX12_Shader();
@@ -431,10 +497,22 @@ namespace Raydiance
 							*_shader = shader;
 							return Result::RESULT_GOOD;
 						} 
-						else if (variationID == "VLKN")
+						else if (variationID == "VLKN" && api == RHI_GraphicsAPI::RHI_GRAPHICS_API_VULKAN)
 						{
 							Logger::Log("VULKAN variation was found.", LogLevel::LOG_LEVEL_INFO);
-							stream.Skip(variationSize);
+
+							// Load shaderbytes
+							std::vector<uint8> shaderBytes = stream.Read_bytes(variationSize);
+
+
+							// Load bytes into RHI_VK_Shader
+							RHI_VK_Shader* shader = new RHI_VK_Shader();
+							shader->Initialize(reinterpret_cast<RHI_VK_RenderDevice*>(RenderBackend::GetRenderDevice()), EntryPoint, Type, std::move(shaderBytes));
+
+
+							// Assign shader and return
+							*_shader = shader;
+							return Result::RESULT_GOOD;
 						}
 						else
 						{
@@ -462,6 +540,7 @@ namespace Raydiance
 				position = stream.GetPosition();
 			}
 
+			Logger::Log("", LogLevel::LOG_LEVEL_ERROR);
 			return Result::RESULT_ERROR;
 		}
 	}

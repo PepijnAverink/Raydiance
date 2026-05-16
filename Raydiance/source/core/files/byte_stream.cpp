@@ -214,12 +214,21 @@ namespace Raydiance
 		m_FileStream.write(reinterpret_cast<const char*>(&_f), sizeof(_f));
 	}
 
-	void ByteStream::Write_uint8(uint8_t v)
+	void ByteStream::Write_uint8(uint8 v)
 	{
 		m_FileStream.write(reinterpret_cast<const char*>(&v), sizeof(v));
 	}
 
-	void ByteStream::Write_uint16(uint16_t v)
+	void ByteStream::Write_uint8(uint8 v, std::streampos offset)
+	{
+		std::streampos currentPos = m_FileStream.tellp();
+
+		m_FileStream.seekp(offset);
+		m_FileStream.write(reinterpret_cast<const char*>(&v), sizeof(v));
+		m_FileStream.seekp(currentPos);
+	}
+
+	void ByteStream::Write_uint16(uint16 v)
 	{
 		m_FileStream.write(reinterpret_cast<const char*>(&v), sizeof(v));
 	}

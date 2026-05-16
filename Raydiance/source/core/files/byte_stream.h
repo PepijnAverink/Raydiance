@@ -67,8 +67,9 @@ namespace Raydiance
 		void Write_string(const std::string& _str);
 		void Write_float(float _f);
 
-		void Write_uint8(uint8_t v);
-		void Write_uint16(uint16_t v);
+		void Write_uint8(uint8 v);
+		void Write_uint8(uint8 v, std::streampos offset);
+		void Write_uint16(uint16 v);
 		void Write_int16(int16_t v);
 		void Write_int8(int8_t v);
 

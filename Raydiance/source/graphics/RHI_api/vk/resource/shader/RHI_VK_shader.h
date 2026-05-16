@@ -15,6 +15,7 @@ namespace Raydiance
 			virtual ~RHI_VK_Shader(void);
 
 			const Result Initialize(RHI_VK_RenderDevice* _RHI_RenderDevice, const RHI_ShaderDescriptor* _shaderDescriptor);
+			const Result Initialize(RHI_VK_RenderDevice* _RHI_RenderDevice, const std::string& _entryPoint, RHI_ShaderType _type, std::vector<uint8> _byteCode);
 
 			inline VkShaderModule GetVKShaderModule() const { return m_ShaderModule; }
 

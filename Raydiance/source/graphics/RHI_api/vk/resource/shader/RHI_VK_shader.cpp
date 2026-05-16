@@ -232,5 +232,22 @@ namespace Raydiance
 
 			return Result::RESULT_GOOD;
 		}
+
+
+		const Result RHI_VK_Shader::Initialize(RHI_VK_RenderDevice* _RHI_RenderDevice, const std::string& _entryPoint, RHI_ShaderType _type, std::vector<uint8> _byteCode)
+		{
+			m_EntryPoint = _entryPoint;
+			m_Type = _type;
+
+			// Create a Vulkan shader module from the compilation result
+			VkShaderModuleCreateInfo shaderModuleCI{};
+			shaderModuleCI.sType    = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
+			shaderModuleCI.codeSize = _byteCode.size();
+			shaderModuleCI.pCode    = (uint32_t*)_byteCode.data();
+
+			vkCreateShaderModule(_RHI_RenderDevice->GetVKDevice(), &shaderModuleCI, nullptr, &m_ShaderModule);
+
+			return Result::RESULT_GOOD;
+		}
 	}
 }
