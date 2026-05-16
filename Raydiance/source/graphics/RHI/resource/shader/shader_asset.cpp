@@ -138,9 +138,10 @@ namespace Raydiance
 				// Get the (version)ID of the current scene data strucuture 
 				stream.Write_uint32(Version::One().GetVersionID());
 				stream.Write_uint64(0); // Skip  size for now
+				stream.Write_uint32(0); // Skip flags for now
+
 				uint64 shdrSizePosition = stream.GetPosition();
 
-				stream.Write_uint32(0); // Skip flags for now
 
 				// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 				
@@ -164,7 +165,7 @@ namespace Raydiance
 				stream.Write_uint16(0);
 				stream.Write_uint16(0);
 
-				stream.Write_uint64(stream.GetPosition() - shdrSizePosition, shdrSizePosition - 8);
+				stream.Write_uint64(stream.GetPosition() - shdrSizePosition, shdrSizePosition - 12);
 			}
 
 
@@ -204,9 +205,9 @@ namespace Raydiance
 				// Get the (version)ID of the current scene data strucuture 
 				stream.Write_uint32(Version::One().GetVersionID());
 				stream.Write_uint64(0); // Skip  size for now
-				uint64 ssrcSizePosition = stream.GetPosition();
-
 				stream.Write_uint32(0); // Skip flags for now
+
+				uint64 ssrcSizePosition = stream.GetPosition();
 
 				// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
@@ -235,7 +236,7 @@ namespace Raydiance
 				stream.Write_uint64(stream.GetPosition() - srcSizePosition, srcSizePosition - 8);
 
 
-				stream.Write_uint64(stream.GetPosition() - ssrcSizePosition, ssrcSizePosition - 8);
+				stream.Write_uint64(stream.GetPosition() - ssrcSizePosition, ssrcSizePosition - 12);
 			}
 
 
@@ -269,9 +270,10 @@ namespace Raydiance
 				// Get the (version)ID of the current scene data strucuture 
 				stream.Write_uint32(Version::One().GetVersionID());
 				stream.Write_uint64(0); // Skip  size for now
-				uint64 variSizePosition = stream.GetPosition();
-
 				stream.Write_uint32(0); // Skip flags for now
+
+
+				uint64 variSizePosition = stream.GetPosition();
 
 				// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
@@ -302,7 +304,7 @@ namespace Raydiance
 				stream.Write_bytes(result.ByteCode.data(), result.ByteCode.size());
 
 
-				stream.Write_uint64(stream.GetPosition() - variSizePosition, variSizePosition - 8);
+				stream.Write_uint64(stream.GetPosition() - variSizePosition, variSizePosition - 12);
 			}
 
 			// Write file size to header
@@ -316,8 +318,22 @@ namespace Raydiance
 			// Gather the graphics API
 			RHI_GraphicsAPI api = RenderBackend::GetAPI();
 			
+			// Check if the engine is compiled with this graphicsAPI, otherwise cannot create shader...
+			if (RHI_GraphicsAPI_IsPresent(api) == false)
+			{
+				Logger::Log("Invalid graphicsAPI selected: " + RHI_GraphicsAPI_ToString(api), LogLevel::LOG_LEVEL_ERROR);
+				Result::RESULT_ERROR;
+			}
+
+
+			// Load the actual bytestream from file...
+			// FILE_OPEN!
+			// =====================================================================================
 			ByteStream stream = ByteStream(_filepath, ByteStreamState::BYTE_STREAM_STATE_READ);
 
+
+			// Check header 
+			// MAGIC numbers, identify it as a shaderAsset file
 			std::string boxHeader = stream.Read_string(4);
 			if (boxHeader != "RASH")
 			{
@@ -326,35 +342,51 @@ namespace Raydiance
 			}
 				
 
+			// Read fileHeader
+			// -------------------------------------------------------------------------------------
 			stream.Skip(4);
 			uint64 fileSize = stream.Read_uint64();
 			stream.Skip(32);
-
+			// -------------------------------------------------------------------------------------
 			// end of header
 
-			uint64 position = stream.GetPosition();
 
+			// Loop over the all boxes inside the shaderAsset
+			uint64 position = stream.GetPosition();
 			while (position < fileSize)
 			{
+				// Read boxID
 				std::string boxHeader = stream.Read_string(4);
 
+
+				// VARI-BOX
+				// =====================================================================================
 				if (boxHeader == "VARI")
 				{
+					// Read box header
 					uint32 boxVersion = stream.Read_uint32();
 					uint64 boxSize    = stream.Read_uint64();
-
-				}
-				else
-				{
-					// UNKNOWN BOX???
-					// =====================================================================================
-					//Logger::Log("Unknown box found in ShaderAsset file: " + boxHeader, LogLevel::LOG_LEVEL_ERROR);
-					uint32 version = stream.Read_uint32();
-					uint64 size    = stream.Read_uint64();
+					stream.Skip(4);
 
 
 					// Skip this box, because we dont know how to handle it.
-					stream.Skip(size);
+					stream.Skip(boxSize);
+				}
+				// UNKNOWN-BOX
+				// =====================================================================================
+				else
+				{
+					// UNKNOWN ???
+					//Logger::Log("Unknown box found in ShaderAsset file: " + boxHeader, LogLevel::LOG_LEVEL_ERROR);
+
+					// Read unknown box header
+					uint32 boxVersion = stream.Read_uint32();
+					uint64 boxSize    = stream.Read_uint64();
+					stream.Skip(4);
+
+
+					// Skip this box, because we dont know how to handle it.
+					stream.Skip(boxSize);
 				}
 				position = stream.GetPosition();
 			}

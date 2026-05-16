@@ -42,10 +42,10 @@ namespace Sandbox
 		}
 
 
-		//	std::shared_ptr<Raydiance::Graphics::MaterialAsset> materialAsset;
-		//	Raydiance::Result res = Raydiance::Graphics::MaterialAsset::CreateEmpty(materialAsset);
-		//
-		//	materialAsset->Save();
+		// std::shared_ptr<Raydiance::Graphics::MaterialAsset> materialAsset;
+		// Raydiance::Result res = Raydiance::Graphics::MaterialAsset::CreateEmpty(materialAsset);
+		// 
+		// materialAsset->Save();
 
 		// std::shared_ptr<Raydiance::Graphics::ShaderAsset> shaderAsset;
 		// Raydiance::Result res = Raydiance::Graphics::ShaderAsset::CreateEmpty(shaderAsset);
@@ -58,7 +58,7 @@ namespace Sandbox
 		// shaderAsset->Save();
 
 		Raydiance::Graphics::RHI_Shader* shader = nullptr;
-		Raydiance::Result res = Raydiance::Graphics::ShaderAsset::Load_RHI_Shader(Raydiance::FilePath("./assets/a9d2a84105fd963ca9c1558a1b7fc776.rash"), shader);
+		Raydiance::Result res = Raydiance::Graphics::ShaderAsset::Load_RHI_Shader(Raydiance::FilePath("./assets/bin/a9d2a84105fd963ca9c1558a1b7fc776.rash"), shader);
 
 
 
