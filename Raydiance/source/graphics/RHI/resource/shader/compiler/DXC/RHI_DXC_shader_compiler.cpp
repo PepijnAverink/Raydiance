@@ -9,7 +9,7 @@ namespace Raydiance
 	namespace Graphics
 	{
 		RHI_DXC_ShaderCompiler::RHI_DXC_ShaderCompiler(void)
-		{ 
+		{
 			HRESULT hres;
 			// Initialize DXC library
 			hres = DxcCreateInstance(CLSID_DxcLibrary, IID_PPV_ARGS(&m_Library));
@@ -32,17 +32,17 @@ namespace Raydiance
 
 
 		RHI_DXC_ShaderCompiler::~RHI_DXC_ShaderCompiler(void)
-		{ 
-			delete m_Utils;
-			delete m_Compiler;
-			delete m_Library;
+		{
+			m_Utils->Release();
+			m_Compiler->Release();
+			m_Library->Release();
 		}
 
 
 		RHI_ShaderCompileResult RHI_DXC_ShaderCompiler::Compile(const RHI_ShaderCompileDescriptor* _shaderDescriptor)
 		{
 			// Function result
-			RHI_ShaderCompileResult result {};
+			RHI_ShaderCompileResult result{};
 			result.CompilationResult = Result::RESULT_GOOD;
 
 
@@ -84,7 +84,7 @@ namespace Raydiance
 				L"-D", L"D3D12",
 			};
 
-			
+
 			std::vector<std::wstring> defineStrings;
 			std::vector<LPCWSTR> defineArgs;
 
@@ -108,13 +108,13 @@ namespace Raydiance
 			// Buffer
 			DxcBuffer buffer{};
 			buffer.Encoding = DXC_CP_ACP;
-			buffer.Ptr      = sourceBlob->GetBufferPointer();
-			buffer.Size     = sourceBlob->GetBufferSize();
+			buffer.Ptr = sourceBlob->GetBufferPointer();
+			buffer.Size = sourceBlob->GetBufferSize();
 
 			// Compile
 			IDxcResult* res;
 			hr = m_Compiler->Compile(&buffer, arguments.data(), (uint32)arguments.size(), includeHandler, IID_PPV_ARGS(&res));
-			
+
 			includeHandler->Release(); // TODO:: Look into making this into compiler level...
 
 			if (FAILED(hr) || !res)
@@ -161,7 +161,7 @@ namespace Raydiance
 
 			result.ByteCode.assign(data, data + size);
 
-			shaderBlob->Release(); 
+			shaderBlob->Release();
 			res->Release();
 
 			return result;
