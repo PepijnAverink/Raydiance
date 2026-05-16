@@ -27,7 +27,7 @@ namespace Sandbox
 
 	SandboxApplication::~SandboxApplication(void)
 	{
-		
+
 	}
 
 	Result SandboxApplication::Initialize(const PlatformType& _platformType, const FilePath& _filepath)
@@ -40,22 +40,25 @@ namespace Sandbox
 			Logger::Log("No further evidence what went wrong, please see earlier logs.", LogLevel::LOG_LEVEL_ERROR);
 			return result;
 		}
-		
 
-		std::shared_ptr<Raydiance::Graphics::MaterialAsset> materialAsset;
-		Raydiance::Result res = Raydiance::Graphics::MaterialAsset::CreateEmpty(materialAsset);
 
-		materialAsset->Save();
+		//	std::shared_ptr<Raydiance::Graphics::MaterialAsset> materialAsset;
+		//	Raydiance::Result res = Raydiance::Graphics::MaterialAsset::CreateEmpty(materialAsset);
+		//
+		//	materialAsset->Save();
 
-		std::shared_ptr<Raydiance::Graphics::ShaderAsset> shaderAsset;
-		res = Raydiance::Graphics::ShaderAsset::CreateEmpty(shaderAsset);
+		// std::shared_ptr<Raydiance::Graphics::ShaderAsset> shaderAsset;
+		// Raydiance::Result res = Raydiance::Graphics::ShaderAsset::CreateEmpty(shaderAsset);
+		// 
+		// shaderAsset->m_EntryPoint = "main";
+		// shaderAsset->m_ShaderFilePath = FilePath("./assets/test_vertex_shader.hlsl");
+		// 
+		// shaderAsset->m_ShaderType = Raydiance::Graphics::RHI_ShaderType::RHI_SHADER_TYPE_VERTEX;
+		// 
+		// shaderAsset->Save();
 
-		shaderAsset->m_EntryPoint = "main";
-		shaderAsset->m_ShaderFilePath = FilePath("./assets/test_vertex_shader.hlsl");
-
-		shaderAsset->m_ShaderType = Raydiance::Graphics::RHI_ShaderType::RHI_SHADER_TYPE_VERTEX;
-
-		shaderAsset->Save();
+		Raydiance::Graphics::RHI_Shader* shader = nullptr;
+		Raydiance::Result res = Raydiance::Graphics::ShaderAsset::Load_RHI_Shader(Raydiance::FilePath("./assets/a9d2a84105fd963ca9c1558a1b7fc776.rash"), shader);
 
 
 

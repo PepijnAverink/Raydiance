@@ -332,6 +332,33 @@ namespace Raydiance
 
 			// end of header
 
+			uint64 position = stream.GetPosition();
+
+			while (position < fileSize)
+			{
+				std::string boxHeader = stream.Read_string(4);
+
+				if (boxHeader == "VARI")
+				{
+					uint32 boxVersion = stream.Read_uint32();
+					uint64 boxSize    = stream.Read_uint64();
+
+				}
+				else
+				{
+					// UNKNOWN BOX???
+					// =====================================================================================
+					//Logger::Log("Unknown box found in ShaderAsset file: " + boxHeader, LogLevel::LOG_LEVEL_ERROR);
+					uint32 version = stream.Read_uint32();
+					uint64 size    = stream.Read_uint64();
+
+
+					// Skip this box, because we dont know how to handle it.
+					stream.Skip(size);
+				}
+				position = stream.GetPosition();
+			}
+
 			return Result();
 		}
 	}
