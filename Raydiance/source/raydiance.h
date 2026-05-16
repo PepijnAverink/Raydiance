@@ -9,5 +9,8 @@
 #define BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)
 
 
+
+#define COMPILE_WITH_VULKAN
+#define COMPILE_WITH_DIRECTX12
 #define DEFAULT_GRAPHICS_API RHI_GraphicsAPI::RHI_GRAPHICS_API_VULKAN
 //#define DEFAULT_GRAPHICS_API RHI_GraphicsAPI::RHI_GRAPHICS_API_DIRECTX12
