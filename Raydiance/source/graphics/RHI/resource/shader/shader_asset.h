@@ -44,7 +44,7 @@ namespace Raydiance
 
 
 			[[nodiscard]]
-			static Result Load_RHI_Shader(const FilePath& _filepath, RHI_Shader* _shader);
+			static Result Load_RHI_Shader(const FilePath& _filepath, RHI_Shader** _shader);
 
 			FilePath m_ShaderFilePath;
 

@@ -182,5 +182,16 @@ namespace Raydiance
 
 			return Result::RESULT_GOOD;
 		}
+
+		const Result RHI_DX12_Shader::Initialize(const std::string& _entryPoint, RHI_ShaderType _type, std::vector<uint8> _byteCode)
+		{
+			m_EntryPoint = _entryPoint;
+			m_Type = _type;
+
+			m_ShaderByteCode.pShaderBytecode = _byteCode.data();
+			m_ShaderByteCode.BytecodeLength  = _byteCode.size();
+
+			return Result();
+		}
 	}
 }

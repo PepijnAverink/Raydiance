@@ -17,6 +17,7 @@ namespace Raydiance
 			virtual ~RHI_DX12_Shader(void);
 
 			const Result Initialize(RHI_DX12_RenderDevice* _RHI_RenderDevice, const RHI_ShaderDescriptor* _shaderDescriptor);
+			const Result Initialize(const std::string& _entryPoint, RHI_ShaderType _type, std::vector<uint8> _byteCode);
 
 			// Getters
 			inline D3D12_SHADER_BYTECODE GetShaderByteCode() const { return m_ShaderByteCode; }

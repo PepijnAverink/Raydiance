@@ -167,9 +167,9 @@ namespace Raydiance
 		return c;
 	}
 
-	std::vector<char> ByteStream::Read_Bytes(size_t byteCount)
+	std::vector<uint8> ByteStream::Read_bytes(size_t byteCount)
 	{
-		std::vector<char> buffer(byteCount);
+		std::vector<uint8> buffer(byteCount);
 
 		m_FileStream.read(reinterpret_cast<char*>(buffer.data()),
 			static_cast<std::streamsize>(byteCount));

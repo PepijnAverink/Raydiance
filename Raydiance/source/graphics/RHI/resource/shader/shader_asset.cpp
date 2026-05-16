@@ -11,6 +11,16 @@
 #include "./graphics/RHI/resource/shader/compiler/DXC/RHI_DXC_shader_compiler.h"
 
 
+#if defined(COMPILE_GRAPHICS_API_VK)
+#include "./graphics/RHI_api/vk/resource/shader/RHI_vk_shader.h"
+#endif
+
+
+#if defined(COMPILE_GRAPHICS_API_DX12)
+#include "./graphics/RHI_api/dx12/resource/shader/RHI_DX12_shader.h"
+#endif
+
+
 // Util includes
 #include "./util/hash_util.h"
 
@@ -300,9 +310,10 @@ namespace Raydiance
 				stream.Write_char('2');
 
 				stream.Write_uint64(0); // Skip  size for now
+				uint64 dx12Position = stream.GetPosition();
 
 				stream.Write_bytes(result.ByteCode.data(), result.ByteCode.size());
-
+				stream.Write_uint64(stream.GetPosition() - dx12Position, dx12Position - 8);
 
 				stream.Write_uint64(stream.GetPosition() - variSizePosition, variSizePosition - 12);
 			}
@@ -313,7 +324,7 @@ namespace Raydiance
 			return Result::RESULT_GOOD;
 		}
 
-		Result ShaderAsset::Load_RHI_Shader(const FilePath& _filepath, RHI_Shader* _shader)
+		Result ShaderAsset::Load_RHI_Shader(const FilePath& _filepath, RHI_Shader** _shader)
 		{
 			// Gather the graphics API
 			RHI_GraphicsAPI api = RenderBackend::GetAPI();
@@ -351,6 +362,13 @@ namespace Raydiance
 			// end of header
 
 
+			// Pre-declare global variables here
+			// ---------------------------------
+			RHI_ShaderType Type = RHI_ShaderType::RHI_SHADER_TYPE_INVALID;
+			std::string	   EntryPoint;
+			// ---------------------------------
+
+
 			// Loop over the all boxes inside the shaderAsset
 			uint64 position = stream.GetPosition();
 			while (position < fileSize)
@@ -358,19 +376,72 @@ namespace Raydiance
 				// Read boxID
 				std::string boxHeader = stream.Read_string(4);
 
-
-				// VARI-BOX
-				// =====================================================================================
-				if (boxHeader == "VARI")
+				if (boxHeader == "SHDR")
 				{
 					// Read box header
 					uint32 boxVersion = stream.Read_uint32();
 					uint64 boxSize    = stream.Read_uint64();
 					stream.Skip(4);
+					// End of header
 
 
-					// Skip this box, because we dont know how to handle it.
-					stream.Skip(boxSize);
+					Type = static_cast<RHI_ShaderType>(stream.Read_uint8());
+					stream.Skip(7);
+
+
+					uint16 entryPointLength = stream.Read_uint16();
+					EntryPoint  = stream.Read_string(entryPointLength);
+
+					// Skip the rest of this box
+					stream.Skip(12);
+				}
+				// VARI-BOX
+				// =====================================================================================
+				else if (boxHeader == "VARI")
+				{
+					// Read box header
+					uint32 boxVersion = stream.Read_uint32();
+					uint64 boxSize    = stream.Read_uint64();
+					stream.Skip(4);
+					// End of header
+
+
+					// Read the number of variations and loop over them
+					uint8 variationCount = stream.Read_uint8();
+					for (uint32 i = 0; i < variationCount; i++)
+					{
+						// Read variationID
+						std::string variationID   = stream.Read_string(4);
+						uint64      variationSize = stream.Read_uint64();
+
+
+						if (variationID == "DX12")
+						{
+							Logger::Log("DIRECTX12 variation was found.", LogLevel::LOG_LEVEL_INFO);
+
+							// Load shaderbytes
+							std::vector<uint8> shaderBytes = stream.Read_bytes(variationSize);
+
+							// Load bytes into RHI_DX12_Shader
+							RHI_DX12_Shader* shader = new RHI_DX12_Shader();
+							shader->Initialize(EntryPoint, Type, std::move(shaderBytes));
+
+
+							// Assign shader and return
+							*_shader = shader;
+							return Result::RESULT_GOOD;
+						} 
+						else if (variationID == "VLKN")
+						{
+							Logger::Log("VULKAN variation was found.", LogLevel::LOG_LEVEL_INFO);
+							stream.Skip(variationSize);
+						}
+						else
+						{
+							// Skip this variation since it is unknown
+							stream.Skip(variationSize);
+						}
+					}
 				}
 				// UNKNOWN-BOX
 				// =====================================================================================
@@ -391,7 +462,7 @@ namespace Raydiance
 				position = stream.GetPosition();
 			}
 
-			return Result();
+			return Result::RESULT_ERROR;
 		}
 	}
 }

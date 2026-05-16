@@ -50,7 +50,7 @@ namespace Raydiance
 		uint16 Read_uint16();
 		char Read_char();
 
-		std::vector<char> Read_Bytes(size_t byteCount);
+		std::vector<uint8> Read_bytes(size_t byteCount);
 
 		// --- Write helpers ---
 		void Write(const char* data, std::streamsize size);
