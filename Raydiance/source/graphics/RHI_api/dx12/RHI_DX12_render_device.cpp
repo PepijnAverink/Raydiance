@@ -32,7 +32,8 @@ namespace Raydiance
 	{
 		RHI_DX12_RenderDevice::RHI_DX12_RenderDevice()
 		{
-
+			// Set the directx12 graphics API
+			m_API = RHI_GraphicsAPI::RHI_GRAPHICS_API_DIRECTX12;
 		}
 
 		RHI_DX12_RenderDevice::~RHI_DX12_RenderDevice()

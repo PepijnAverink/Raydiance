@@ -55,9 +55,12 @@ namespace Raydiance
 				}
 
 				// Initialize DXC utility
-				hres = DxcCreateInstance(CLSID_DxcUtils, IID_PPV_ARGS(&s_Utils));
-				if (FAILED(hres)) {
-					throw std::runtime_error("Could not init DXC Utiliy");
+				if (s_Utils == nullptr)
+				{
+					hres = DxcCreateInstance(CLSID_DxcUtils, IID_PPV_ARGS(&s_Utils));
+					if (FAILED(hres)) {
+						throw std::runtime_error("Could not init DXC Utiliy");
+					}
 				}
 			}
 
@@ -188,10 +191,33 @@ namespace Raydiance
 			m_EntryPoint = _entryPoint;
 			m_Type = _type;
 
-			m_ShaderByteCode.pShaderBytecode = _byteCode.data();
-			m_ShaderByteCode.BytecodeLength  = _byteCode.size();
+			IDxcBlobEncoding* blobEncoding;
 
-			return Result();
+			// Initialize DXC utility
+			if (s_Utils == nullptr)
+			{
+				HRESULT hres;
+				hres = DxcCreateInstance(CLSID_DxcUtils, IID_PPV_ARGS(&s_Utils));
+				if (FAILED(hres)) {
+					throw std::runtime_error("Could not init DXC Utiliy");
+				}
+			}
+
+			HRESULT hr = s_Utils->CreateBlob(
+				_byteCode.data(),
+				static_cast<UINT32>(_byteCode.size()),
+				DXC_CP_ACP,
+				&blobEncoding);
+
+			assert(SUCCEEDED(hr));
+
+			hr = blobEncoding->QueryInterface(IID_PPV_ARGS(&m_ShaderBytes));
+			assert(SUCCEEDED(hr));
+
+			m_ShaderByteCode.pShaderBytecode = m_ShaderBytes->GetBufferPointer();
+			m_ShaderByteCode.BytecodeLength  = m_ShaderBytes->GetBufferSize();
+
+			return Result::RESULT_GOOD;
 		}
 	}
 }
