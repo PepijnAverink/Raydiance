@@ -1,9 +1,12 @@
 #include "./pch.h"
 #include "./graphics/gfx/renderer3D.h"
 
-
+// Graphics includes
 #include "./graphics/gfx/mesh/primitive/cube.h"
+#include "./graphics/RHI/resource/shader/shader_asset.h"
 
+
+// Math includes
 #include "./math/matrix/row_mat4x4.h"
 
 
@@ -73,13 +76,20 @@ namespace Raydiance
 
 			// Load vertex shader
 			{
-				RHI_ShaderDescriptor shaderDesc = { };
-				shaderDesc.Name		  = "VertexShader";
-				shaderDesc.FilePath   = "./assets/vertex_shader.hlsl";
-				shaderDesc.EntryPoint = "main";
-				shaderDesc.Type       = RHI_ShaderType::RHI_SHADER_TYPE_VERTEX;
+			//	RHI_ShaderDescriptor shaderDesc = { };
+			//	shaderDesc.Name		  = "VertexShader";
+			//	shaderDesc.FilePath   = "./assets/vertex_shader.hlsl";
+			//	shaderDesc.EntryPoint = "main";
+			//	shaderDesc.Type       = RHI_ShaderType::RHI_SHADER_TYPE_VERTEX;
+			//
+			//	m_VertexShader = RenderBackend::GetRenderDevice()->RHI_CreateShader(&shaderDesc);
+				Raydiance::Result res = Raydiance::Graphics::ShaderAsset::Load_RHI_Shader(Raydiance::FilePath("./assets/bin/a9d2a84105fd963ca9c1558a1b7fc776.rash"), &m_VertexShader);
+				if (CheckError(res) == true)
+				{
+					Logger::Log("Failed to load shader asset.", LogLevel::LOG_LEVEL_ERROR);
+					//return res;
+				}
 
-				m_VertexShader = RenderBackend::GetRenderDevice()->RHI_CreateShader(&shaderDesc);
 			}
 
 
@@ -207,8 +217,10 @@ namespace Raydiance
 			delete m_InputLayout;
 
 
-			delete m_PixelShader;
-			delete m_VertexShader;
+			if (m_PixelShader != nullptr)
+				delete m_PixelShader;
+			if (m_VertexShader != nullptr)
+				delete m_VertexShader;
 
 			delete m_RenderPass;
 
