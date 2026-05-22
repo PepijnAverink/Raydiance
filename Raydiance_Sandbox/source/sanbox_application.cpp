@@ -59,8 +59,14 @@ namespace Sandbox
 
 		Raydiance::Graphics::RHI_Shader* shader = nullptr;
 		Raydiance::Result res = Raydiance::Graphics::ShaderAsset::Load_RHI_Shader(Raydiance::FilePath("./assets/bin/a9d2a84105fd963ca9c1558a1b7fc776.rash"), &shader);
+		if (CheckError(res) == true)
+		{
+			Logger::Log("Failed to load shader asset.", LogLevel::LOG_LEVEL_ERROR);
+			//return res;
+		}
 
-		delete shader;
+		if (shader != nullptr)
+			delete shader;
 
 
 		return Result::RESULT_GOOD;
