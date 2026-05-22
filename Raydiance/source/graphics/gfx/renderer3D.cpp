@@ -89,19 +89,25 @@ namespace Raydiance
 					Logger::Log("Failed to load shader asset.", LogLevel::LOG_LEVEL_ERROR);
 					//return res;
 				}
-
 			}
 
 
 			// Load pixel shader
 			{
-				RHI_ShaderDescriptor shaderDesc = { };
-				shaderDesc.Name		  = "PixelShader";
-				shaderDesc.FilePath	  = "./assets/pixel_shader.hlsl";
-				shaderDesc.EntryPoint = "main";
-				shaderDesc.Type		  = RHI_ShaderType::RHI_SHADER_TYPE_PIXEL;
+			//	RHI_ShaderDescriptor shaderDesc = { };
+			//	shaderDesc.Name		  = "PixelShader";
+			//	shaderDesc.FilePath	  = "./assets/pixel_shader.hlsl";
+			//	shaderDesc.EntryPoint = "main";
+			//	shaderDesc.Type		  = RHI_ShaderType::RHI_SHADER_TYPE_PIXEL;
+			//
+			//	m_PixelShader = RenderBackend::GetRenderDevice()->RHI_CreateShader(&shaderDesc);
 
-				m_PixelShader = RenderBackend::GetRenderDevice()->RHI_CreateShader(&shaderDesc);
+				Raydiance::Result res = Raydiance::Graphics::ShaderAsset::Load_RHI_Shader(Raydiance::FilePath("./assets/bin/8bf78815c623f73667e509a67982787c.rash"), &m_PixelShader);
+				if (CheckError(res) == true)
+				{
+					Logger::Log("Failed to load shader asset.", LogLevel::LOG_LEVEL_ERROR);
+					//return res;
+				}
 			}
 
 			{
@@ -137,13 +143,13 @@ namespace Raydiance
 				for (uint32 i = 0; i < RenderBackend::GetSwapchain()->GetBufferCount(); i++)
 				{
 					RHI_FrameBufferDescriptor framebufferDesc = {};
-					framebufferDesc.Name = "framebuffer";
-					framebufferDesc.Width = RenderBackend::GetSwapchain()->GetBufferWidth();
-					framebufferDesc.Height = RenderBackend::GetSwapchain()->GetBufferHeight();
+					framebufferDesc.Name			= "framebuffer";
+					framebufferDesc.Width			= RenderBackend::GetSwapchain()->GetBufferWidth();
+					framebufferDesc.Height			= RenderBackend::GetSwapchain()->GetBufferHeight();
 					framebufferDesc.AttachmentCount = 1;
-					framebufferDesc.Attachments = { RenderBackend::GetSwapchain()->GetRenderTextureAtIndex(i), };
+					framebufferDesc.Attachments		= { RenderBackend::GetSwapchain()->GetRenderTextureAtIndex(i), };
 					//framebufferDesc.DepthStencilAttachment = m_DepthTexture;
-					framebufferDesc.RenderPass = m_RenderPass;
+					framebufferDesc.RenderPass		= m_RenderPass;
 
 					m_FrameBuffers.push_back(RenderBackend::GetRenderDevice()->RHI_CreateFrameBuffer(&framebufferDesc));
 				}

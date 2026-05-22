@@ -214,6 +214,8 @@ namespace Raydiance
 			hr = blobEncoding->QueryInterface(IID_PPV_ARGS(&m_ShaderBytes));
 			assert(SUCCEEDED(hr));
 
+			blobEncoding->Release();
+
 			m_ShaderByteCode.pShaderBytecode = m_ShaderBytes->GetBufferPointer();
 			m_ShaderByteCode.BytecodeLength  = m_ShaderBytes->GetBufferSize();
 

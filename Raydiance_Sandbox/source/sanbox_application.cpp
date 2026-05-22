@@ -47,26 +47,26 @@ namespace Sandbox
 		// 
 		// materialAsset->Save();
 
-		// std::shared_ptr<Raydiance::Graphics::ShaderAsset> shaderAsset;
-		// Raydiance::Result res = Raydiance::Graphics::ShaderAsset::CreateEmpty(shaderAsset);
-		// 
-		// shaderAsset->m_EntryPoint = "main";
-		// shaderAsset->m_ShaderFilePath = FilePath("./assets/test_vertex_shader.hlsl");
-		// 
-		// shaderAsset->m_ShaderType = Raydiance::Graphics::RHI_ShaderType::RHI_SHADER_TYPE_VERTEX;
-		// 
-		// shaderAsset->Save();
+		//std::shared_ptr<Raydiance::Graphics::ShaderAsset> shaderAsset;
+		//Raydiance::Result res = Raydiance::Graphics::ShaderAsset::CreateEmpty(shaderAsset);
+		//
+		//shaderAsset->m_EntryPoint = "main";
+		//shaderAsset->m_ShaderFilePath = FilePath("./assets/pixel_shader.hlsl");
+		//
+		//shaderAsset->m_ShaderType = Raydiance::Graphics::RHI_ShaderType::RHI_SHADER_TYPE_PIXEL;
+		//
+		//shaderAsset->Save();
 
-		Raydiance::Graphics::RHI_Shader* shader = nullptr;
-		Raydiance::Result res = Raydiance::Graphics::ShaderAsset::Load_RHI_Shader(Raydiance::FilePath("./assets/bin/a9d2a84105fd963ca9c1558a1b7fc776.rash"), &shader);
-		if (CheckError(res) == true)
-		{
-			Logger::Log("Failed to load shader asset.", LogLevel::LOG_LEVEL_ERROR);
-			//return res;
-		}
-
-		if (shader != nullptr)
-			delete shader;
+		// Raydiance::Graphics::RHI_Shader* shader = nullptr;
+		// Raydiance::Result res = Raydiance::Graphics::ShaderAsset::Load_RHI_Shader(Raydiance::FilePath("./assets/bin/a9d2a84105fd963ca9c1558a1b7fc776.rash"), &shader);
+		// if (CheckError(res) == true)
+		// {
+		// 	Logger::Log("Failed to load shader asset.", LogLevel::LOG_LEVEL_ERROR);
+		// 	//return res;
+		// }
+		// 
+		// if (shader != nullptr)
+		// 	delete shader;
 
 
 		return Result::RESULT_GOOD;
