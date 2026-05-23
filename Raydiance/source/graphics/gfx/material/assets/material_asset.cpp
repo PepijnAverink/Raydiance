@@ -1,5 +1,5 @@
 #include "./pch.h"
-#include "./graphics/gfx/material/material_asset.h"
+#include "./graphics/gfx/material/assets/material_asset.h"
 
 
 // Core includes

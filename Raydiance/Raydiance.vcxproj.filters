@@ -651,7 +651,7 @@
     <ClInclude Include="source\graphics\RHI_api\vk\pipeline\RHI_VK_pipeline.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\gfx\material\material_asset.h">
+    <ClInclude Include="source\graphics\gfx\material\assets\material_asset.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\core\files\byte_stream.h">
@@ -669,7 +669,7 @@
     <ClInclude Include="source\core\UUID.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\graphics\RHI\resource\shader\shader_asset.h">
+    <ClInclude Include="source\graphics\gfx\material\assets\shader_asset.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\core\files\text_stream.h">
@@ -691,6 +691,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\graphics\RHI\resource\shader\compiler\DXC\RHI_DXC_shader_type.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\graphics\RHI\resource\shader\compiler\DXC\RHI_DXC_shader_asset_include_handler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\graphics\gfx\material\assets\texture_asset.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -947,7 +953,7 @@
     <ClCompile Include="source\graphics\RHI_api\vk\pipeline\RHI_VK_pipeline.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\graphics\gfx\material\material_asset.cpp">
+    <ClCompile Include="source\graphics\gfx\material\assets\material_asset.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\core\files\byte_stream.cpp">
@@ -959,7 +965,7 @@
     <ClCompile Include="source\core\UUID.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\graphics\RHI\resource\shader\shader_asset.cpp">
+    <ClCompile Include="source\graphics\gfx\material\assets\shader_asset.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\core\files\text_stream.cpp">
@@ -969,6 +975,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\graphics\RHI\resource\shader\compiler\DXC\RHI_DXC_shader_compiler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\graphics\RHI\resource\shader\compiler\DXC\RHI_DCX_shader_asset_include_handler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\graphics\gfx\material\assets\texture_asset.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

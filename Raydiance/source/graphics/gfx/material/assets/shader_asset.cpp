@@ -1,5 +1,5 @@
 #include "./pch.h"
-#include "./graphics/RHI/resource/shader/shader_asset.h"
+#include "./graphics/gfx/material/assets/shader_asset.h"
 
 
 // Core includes

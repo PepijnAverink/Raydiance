@@ -3,7 +3,7 @@
 
 // Graphics includes
 #include "./graphics/gfx/mesh/primitive/cube.h"
-#include "./graphics/RHI/resource/shader/shader_asset.h"
+#include "./graphics/gfx/material/assets/shader_asset.h"
 
 
 // Math includes

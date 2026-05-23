@@ -8,6 +8,7 @@ namespace Raydiance
 	{
 		class RHI_DXC_ShaderAssetIncludeHandler
 		{
+		public:
 
 		};
 	}

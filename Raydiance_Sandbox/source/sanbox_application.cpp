@@ -10,8 +10,8 @@
 // TEST INCLUDES
 // TODO:: REMOVE THESE HERE
 // -------------------------------------------------------
-#include "./graphics/gfx/material/material_asset.h"
-#include "./graphics/RHI/resource/shader/shader_asset.h"
+#include "./graphics/gfx/material/assets/material_asset.h"
+#include "./graphics/gfx/material/assets/shader_asset.h"
 // -------------------------------------------------------
 
 
