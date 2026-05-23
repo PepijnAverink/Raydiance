@@ -55,8 +55,6 @@ namespace Raydiance
 			//					        48 bytes
 
 
-			// TODO:: Make ShaderAsset
-
 			// VESH BOX (vertex shader box)
 			// MAGIC ID: 'VESH'
 			// ----------------------------------------------------------------------
