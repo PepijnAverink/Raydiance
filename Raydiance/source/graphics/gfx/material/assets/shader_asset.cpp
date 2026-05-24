@@ -87,6 +87,10 @@ namespace Raydiance
 			uint64 streamBegin = stream.GetPosition();
 
 
+			// Initialize the shader compiler and compile the shader source for this variation
+			RHI_DXC_ShaderCompiler compiler = RHI_DXC_ShaderCompiler();
+
+
 			// Write file header
 			// ----------------------------------------------------------------------
 			{
@@ -292,9 +296,6 @@ namespace Raydiance
 				uint8  variationCount = 0;
 				uint64 variCountPosition = stream.GetPosition();
 
-				// Initialize the shader compiler and compile the shader source for this variation
-				RHI_DXC_ShaderCompiler compiler = RHI_DXC_ShaderCompiler();
-
 
 				// DX12 VARIATION
 				{
@@ -338,14 +339,14 @@ namespace Raydiance
 				{
 					RHI_ShaderCompileDescriptor compileDesc = { };
 					compileDesc.EntryPoint = "main";
-					compileDesc.Source     = source;
-					compileDesc.Type       = m_ShaderType;
-					compileDesc.Defines    =
+					compileDesc.Source = source;
+					compileDesc.Type = m_ShaderType;
+					compileDesc.Defines =
 					{
 						{ "-D", "VULKAN", },
 						{ "-spirv", "", },
 						{ "-fvk-use-dx-layout", "", },
-					//	{ "-fspv-reflect", "", },
+						//	{ "-fspv-reflect", "", },
 					};
 
 
@@ -382,6 +383,69 @@ namespace Raydiance
 				// Write the size of the whole VARI box
 				stream.Write_uint64(stream.GetPosition() - variSizePosition, variSizePosition - 12);
 			}
+
+
+			// REFL BOX (Reflection box)
+			// REFL BOX VERSION(1, 0, 0, 0)
+			// MAGIC ID: 'REFL'
+			// ----------------------------------------------------------------------
+			// Magic Number			   - 4 bytes
+			// box Format Version      - 4 bytes
+			// Box Size				   - 8 bytes
+			// Flags				   - 4 bytes
+			// ---------------------------------
+			{
+				// Magic number
+				stream.Write_char('R');
+				stream.Write_char('E');
+				stream.Write_char('F');
+				stream.Write_char('L');
+
+
+				// Get the (version)ID of the current scene data strucuture 
+				stream.Write_uint32(Version::One().GetVersionID());
+				stream.Write_uint64(0); // Skip  size for now
+				stream.Write_uint32(0); // Skip flags for now
+
+
+				uint64 variSizePosition = stream.GetPosition();
+
+				// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+				RHI_ShaderCompileDescriptor compileDesc = { };
+				compileDesc.EntryPoint = "main";
+				compileDesc.Source = source;
+				compileDesc.Type = m_ShaderType;
+				compileDesc.Defines =
+				{
+					{ "-D", "D3D12",},
+				};
+
+
+				// Compile the shader for this variation
+				// And check for errors
+				RHI_ShaderCompileResult result = compiler.Compile(&compileDesc);
+				if (CheckError(result.CompilationResult) == true)
+				{
+					Logger::Log("Failed to compile shader for DX12 variation: " + result.ErrorStr, LogLevel::LOG_LEVEL_ERROR);
+					//return Result::RESULT_ERROR;
+				}
+				else
+				{
+					// Magic number
+					stream.Write_char('D');
+					stream.Write_char('X');
+					stream.Write_char('1');
+					stream.Write_char('2');
+
+					stream.Write_uint64(0); // Skip  size for now
+					uint64 dx12Position = stream.GetPosition();
+
+					stream.Write_bytes(result.ByteCode.data(), result.ByteCode.size());
+					stream.Write_uint64(stream.GetPosition() - dx12Position, dx12Position - 8);
+				}
+			}
+
 
 			// Write file size to header
 			stream.Write_uint64(stream.GetPosition() - streamBegin, streamBegin + 8);

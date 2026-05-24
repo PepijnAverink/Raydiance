@@ -191,8 +191,6 @@ namespace Raydiance
 			m_EntryPoint = _entryPoint;
 			m_Type = _type;
 
-			IDxcBlobEncoding* blobEncoding;
-
 			// Initialize DXC utility
 			if (s_Utils == nullptr)
 			{
@@ -203,11 +201,8 @@ namespace Raydiance
 				}
 			}
 
-			HRESULT hr = s_Utils->CreateBlob(
-				_byteCode.data(),
-				static_cast<UINT32>(_byteCode.size()),
-				DXC_CP_ACP,
-				&blobEncoding);
+			IDxcBlobEncoding* blobEncoding = nullptr;
+			HRESULT hr = s_Utils->CreateBlob(_byteCode.data(), static_cast<UINT32>(_byteCode.size()), DXC_CP_ACP, &blobEncoding);
 
 			assert(SUCCEEDED(hr));
 

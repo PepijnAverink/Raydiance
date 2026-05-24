@@ -188,7 +188,7 @@ namespace Raydiance
 				includeHandler->Release();
 
 
-				FileSystem::WriteFile(compileFilepath, code->GetBufferPointer(), code->GetBufferSize());
+				//FileSystem::WriteFile(compileFilepath, code->GetBufferPointer(), code->GetBufferSize());
 
 				SpvReflectShaderModule module;
 				SpvReflectResult res = spvReflectCreateShaderModule(

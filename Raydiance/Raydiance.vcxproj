@@ -133,6 +133,7 @@
     <ClInclude Include="source\graphics\RHI\resource\shader\compiler\RHI_shader_compiler.h" />
     <ClInclude Include="source\graphics\RHI\resource\shader\compiler\RHI_shader_compile_descriptor.h" />
     <ClInclude Include="source\graphics\RHI\resource\shader\compiler\RHI_shader_compile_result.h" />
+    <ClInclude Include="source\graphics\RHI\resource\shader\compiler\RHI_shader_reflection.h" />
     <ClInclude Include="source\graphics\RHI\resource\shader\RHI_shader.h" />
     <ClInclude Include="source\graphics\RHI\resource\shader\RHI_shader_descriptor.h" />
     <ClInclude Include="source\graphics\RHI\resource\shader\RHI_shader_language.h" />
@@ -290,6 +291,7 @@
     <ClCompile Include="source\graphics\RHI\resource\shader\compiler\DXC\RHI_DCX_shader_asset_include_handler.cpp" />
     <ClCompile Include="source\graphics\RHI\resource\shader\compiler\DXC\RHI_DXC_shader_compiler.cpp" />
     <ClCompile Include="source\graphics\RHI\resource\shader\compiler\RHI_shader_compiler.cpp" />
+    <ClCompile Include="source\graphics\RHI\resource\shader\compiler\RHI_shader_reflection.cpp" />
     <ClCompile Include="source\graphics\RHI\resource\shader\RHI_shader.cpp" />
     <ClCompile Include="source\graphics\gfx\material\assets\shader_asset.cpp" />
     <ClCompile Include="source\graphics\RHI\resource\texture\RHI_texture2D.cpp" />
