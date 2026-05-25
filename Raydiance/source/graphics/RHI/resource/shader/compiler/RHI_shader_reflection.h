@@ -10,13 +10,11 @@ namespace Raydiance
 		class RHI_ShaderReflection
 		{
 		public:
+			RHI_ShaderReflection();
 			virtual ~RHI_ShaderReflection();
 			
-			static RHI_ShaderReflection* Reflection(RHI_GraphicsAPI _api, void* _data, size_t _size);
 
 
-		protected:
-			RHI_ShaderReflection();
 		};
 	}
 }

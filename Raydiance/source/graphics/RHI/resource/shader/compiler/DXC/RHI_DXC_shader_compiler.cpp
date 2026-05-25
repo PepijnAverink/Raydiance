@@ -1,7 +1,21 @@
 #include "./pch.h"
 #include "./graphics/RHI/resource/shader/compiler/DXC/RHI_DXC_shader_compiler.h"
 
+
+// Graphics includes
+#include "./graphics/RHI_api/RHI_graphics_api.h"
+#include "./graphics/RHI/pipeline/layout/RHI_vertex_layout.h"
+
+
+// Utility includes
 #include "./util/string_util.h"
+
+
+// D3D12 include
+#if defined(COMPILE_GRAPHICS_API_DX12)
+#include <D3D12shader.h>
+#include "./graphics/RHI_api/dx12/resource/RHI_DX12_resource_format.h"
+#endif
 
 
 namespace Raydiance
@@ -78,23 +92,28 @@ namespace Raydiance
 
 			std::vector<LPCWSTR> arguments = {
 				//filePath.c_str(),
-				entryArg.c_str(),
+				L"-E", entryPoint.c_str(),
 				L"-T", targetProfile.c_str(),
+				//L"-fdxc-enable-dxil-reflection"
 				//L"-I", directory.c_str(),
-				L"-D", L"D3D12",
+				//L"-D", L"D3D12",
 			};
 
 
 			std::vector<std::wstring> defineStrings;
-			std::vector<LPCWSTR> defineArgs;
-
-
+			RHI_GraphicsAPI api = RHI_GraphicsAPI::RHI_GRAPHICS_API_INVALID;
 			for (const auto& [key, value] : _shaderDescriptor->Defines)
 			{
 				if (key.empty() == false)
 					defineStrings.push_back(StringToWString(key));
 				if (value.empty() == false)
+				{
 					defineStrings.push_back(StringToWString(value));
+					if (value == "D3D12")
+						api = RHI_GraphicsAPI::RHI_GRAPHICS_API_DIRECTX12;
+					else if (value == "VULKAN")
+						api = RHI_GraphicsAPI::RHI_GRAPHICS_API_VULKAN;
+				}
 			}
 
 
@@ -108,7 +127,7 @@ namespace Raydiance
 			// Buffer
 			DxcBuffer buffer{};
 			buffer.Encoding = DXC_CP_ACP;
-			buffer.Ptr = sourceBlob->GetBufferPointer();
+			buffer.Ptr  = sourceBlob->GetBufferPointer();
 			buffer.Size = sourceBlob->GetBufferSize();
 
 			// Compile
@@ -123,6 +142,67 @@ namespace Raydiance
 				result.ErrorStr = "DXC Compile() call failed.";
 				return result;
 			}
+
+
+			// D3D12 SHADER REFLECTION
+			// ===================================================
+#if defined(COMPILE_GRAPHICS_API_DX12)
+			if (api == RHI_GraphicsAPI::RHI_GRAPHICS_API_DIRECTX12)
+			{
+				IDxcBlob* reflectionBlob = nullptr;
+				res->GetOutput(DXC_OUT_REFLECTION, IID_PPV_ARGS(&reflectionBlob), nullptr);
+
+
+				if (reflectionBlob != nullptr)
+				{
+					DxcBuffer reflectionBuffer = {};
+					reflectionBuffer.Ptr  = reflectionBlob->GetBufferPointer();
+					reflectionBuffer.Size = reflectionBlob->GetBufferSize();
+
+
+					ID3D12ShaderReflection* reflector;
+					m_Utils->CreateReflection(&reflectionBuffer, IID_PPV_ARGS(&reflector));
+
+					D3D_PRIMITIVE;
+					reflector->GetGSInputPrimitive();
+
+					D3D12_SHADER_DESC desc;
+					reflector->GetDesc(&desc);
+
+					uint32 inputParamterCount = desc.InputParameters;
+					RHI_VertexLayout vertexlayout = RHI_VertexLayout(inputParamterCount);
+					for (uint32 i = 0; i < inputParamterCount; i++)
+					{
+						D3D12_SIGNATURE_PARAMETER_DESC param;
+						reflector->GetInputParameterDesc(i, &param);
+
+						uint32_t count = std::popcount(param.Mask);
+
+						vertexlayout[i] = Graphics::RHI_VertexElement(param.SemanticName, ResolveResourceFormat_From_RegisterComponentType(param.ComponentType, count)); 
+
+						// Some error checking here, sumthing wong?
+						if (i != param.SemanticIndex)
+							Logger::Log("emmmmmm, please fix me... semantic index is fucking wrong!", LogLevel::LOG_LEVEL_WARNING);
+					}
+
+					reflectionBlob->Release();
+				}
+				else
+				{
+					Logger::Log("Unable to get reflectionData from the OutputResult.", LogLevel::LOG_LEVEL_WARNING);
+				}
+			}
+#endif
+
+
+			// VULKAN SHADER REFLECTION
+			// ===================================================
+#if defined(COMPILE_GRAPHICS_API_VK)
+			if (api == RHI_GraphicsAPI::RHI_GRAPHICS_API_VULKAN)
+			{
+
+			}
+#endif
 
 			// Check status
 			HRESULT status;

@@ -144,5 +144,87 @@ namespace Raydiance
 					return DXGI_FORMAT_UNKNOWN;
 			}
 		}
+
+
+		inline RHI_ResourceFormat ResolveResourceFormat_From_RegisterComponentType(D3D_REGISTER_COMPONENT_TYPE _type, uint32 _count)
+		{
+			switch (_type)
+			{
+			case D3D_REGISTER_COMPONENT_UINT32:
+				if (_count == 1)
+					return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R32_UINT;
+				else if (_count == 2)
+					return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R32G32_UINT;
+				else if (_count == 3)
+					return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R32G32B32_UINT;
+				else if (_count == 4)
+					return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R32G32B32A32_UINT;
+				else
+					return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_INVALID;
+			case D3D_REGISTER_COMPONENT_SINT32:
+				if (_count == 1)
+					return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R32_SINT;
+				if (_count == 2)
+					return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R32G32_SINT;
+				if (_count == 3)
+					return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R32G32B32_SINT;
+				if (_count == 4)
+					return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R32G32B32A32_SINT;
+				else
+					return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_INVALID;
+			case D3D_REGISTER_COMPONENT_FLOAT32:
+				if (_count == 1)
+					return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R32_FLOAT;
+				if (_count == 2)
+					return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R32G32_FLOAT;
+				if (_count == 3)
+					return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R32G32B32_FLOAT;
+				if (_count == 4)
+					return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R32G32B32A32_FLOAT;
+				else
+					return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_INVALID;
+			case D3D_REGISTER_COMPONENT_UINT16:
+				if (_count == 1)
+					return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R16_UINT;
+				if (_count == 2)
+					return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R16G16_UINT;
+				if (_count == 3)
+					return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R16G16B16_UINT;
+				if (_count == 4)
+					return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R16G16B16A16_UINT;
+				else
+					return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_INVALID;
+			case D3D_REGISTER_COMPONENT_SINT16:
+				if (_count == 1)
+					return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R16_SINT;
+				if (_count == 2)
+					return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R16G16_SINT;
+				if (_count == 3)
+					return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R16G16B16_SINT;
+				if (_count == 4)
+					return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R16G16B16A16_SINT;
+				else
+					return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_INVALID;
+			case D3D_REGISTER_COMPONENT_FLOAT16:
+				if (_count == 1)
+					return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R16_FLOAT;
+				if (_count == 2)
+					return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R16G16_FLOAT;
+				if (_count == 3)
+					return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R16G16B16_FLOAT;
+				if (_count == 4)
+					return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R16G16B16A16_FLOAT;
+				else
+					return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_INVALID;
+
+			// Unsupported formats
+			case D3D_REGISTER_COMPONENT_UINT64:
+			case D3D_REGISTER_COMPONENT_SINT64:
+			case D3D_REGISTER_COMPONENT_FLOAT64:
+			case D3D_REGISTER_COMPONENT_UNKNOWN:
+			default:
+				return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_INVALID;
+			}
+		}
 	}
 }
