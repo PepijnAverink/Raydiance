@@ -1,6 +1,6 @@
 #pragma once
-// Graphics api's includes
-#include "./graphics/RHI_api/RHI_graphics_api.h"
+// Graphics includes
+#include "./graphics/RHI/pipeline/layout/RHI_vertex_layout.h"
 
 
 namespace Raydiance
@@ -14,7 +14,8 @@ namespace Raydiance
 			virtual ~RHI_ShaderReflection();
 			
 
-
+			RHI_VertexLayout ShaderInput;
+			RHI_VertexLayout ShaderOutput;
 		};
 	}
 }

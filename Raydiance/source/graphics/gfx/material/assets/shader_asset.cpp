@@ -271,6 +271,14 @@ namespace Raydiance
 			// ---------------------------------
 
 
+			// Predefine 'globalísh' Compiler results
+			RHI_ShaderCompileResult DX12_result;
+			DX12_result.CompilationResult = Result::RESULT_ERROR;
+
+			RHI_ShaderCompileResult VK_result;
+			VK_result.CompilationResult = Result::RESULT_ERROR;
+
+
 			// Write shader source box
 			// ----------------------------------------------------------------------  		
 			{
@@ -298,7 +306,9 @@ namespace Raydiance
 
 
 				// DX12 VARIATION
+#if defined(COMPILE_GRAPHICS_API_DX12)
 				{
+
 					RHI_ShaderCompileDescriptor compileDesc = { };
 					compileDesc.EntryPoint = "main";
 					compileDesc.Source = source;
@@ -311,10 +321,10 @@ namespace Raydiance
 
 					// Compile the shader for this variation
 					// And check for errors
-					RHI_ShaderCompileResult result = compiler.Compile(&compileDesc);
-					if (CheckError(result.CompilationResult) == true)
+					DX12_result = compiler.Compile(&compileDesc);
+					if (CheckError(DX12_result.CompilationResult) == true)
 					{
-						Logger::Log("Failed to compile shader for DX12 variation: " + result.ErrorStr, LogLevel::LOG_LEVEL_ERROR);
+						Logger::Log("Failed to compile shader for DX12 variation: " + DX12_result.ErrorStr, LogLevel::LOG_LEVEL_ERROR);
 						//return Result::RESULT_ERROR;
 					}
 					else
@@ -330,12 +340,14 @@ namespace Raydiance
 						stream.Write_uint64(0); // Skip  size for now
 						uint64 dx12Position = stream.GetPosition();
 
-						stream.Write_bytes(result.ByteCode.data(), result.ByteCode.size());
+						stream.Write_bytes(DX12_result.ByteCode.data(), DX12_result.ByteCode.size());
 						stream.Write_uint64(stream.GetPosition() - dx12Position, dx12Position - 8);
 					}
 				}
+#endif
 
 				// VK VARIATION
+#if defined(COMPILE_GRAPHICS_API_VK)
 				{
 					RHI_ShaderCompileDescriptor compileDesc = { };
 					compileDesc.EntryPoint = "main";
@@ -352,10 +364,10 @@ namespace Raydiance
 
 					// Compile the shader for this variation
 					// And check for errors
-					RHI_ShaderCompileResult result = compiler.Compile(&compileDesc);
-					if (CheckError(result.CompilationResult) == true)
+					VK_result = compiler.Compile(&compileDesc);
+					if (CheckError(VK_result.CompilationResult) == true)
 					{
-						Logger::Log("Failed to compile shader for VK variation: " + result.ErrorStr, LogLevel::LOG_LEVEL_ERROR);
+						Logger::Log("Failed to compile shader for VK variation: " + VK_result.ErrorStr, LogLevel::LOG_LEVEL_ERROR);
 						return Result::RESULT_ERROR;
 					}
 					else
@@ -371,10 +383,11 @@ namespace Raydiance
 						stream.Write_uint64(0); // Skip  size for now
 						uint64 vkPosition = stream.GetPosition();
 
-						stream.Write_bytes(result.ByteCode.data(), result.ByteCode.size());
+						stream.Write_bytes(VK_result.ByteCode.data(), VK_result.ByteCode.size());
 						stream.Write_uint64(stream.GetPosition() - vkPosition, vkPosition - 8);
 					}
 				}
+#endif
 
 				// Write the actual variation count
 				stream.Write_uint8(variationCount, variCountPosition - 1);
