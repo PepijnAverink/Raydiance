@@ -18,6 +18,12 @@
 #endif
 
 
+// Vulkan include
+#if defined(COMPILE_GRAPHICS_API_VK)
+#include "./spirv_reflect.h"
+#endif
+
+
 namespace Raydiance
 {
 	namespace Graphics
@@ -144,66 +150,6 @@ namespace Raydiance
 			}
 
 
-			// D3D12 SHADER REFLECTION
-			// ===================================================
-#if defined(COMPILE_GRAPHICS_API_DX12)
-			if (api == RHI_GraphicsAPI::RHI_GRAPHICS_API_DIRECTX12)
-			{
-				IDxcBlob* reflectionBlob = nullptr;
-				res->GetOutput(DXC_OUT_REFLECTION, IID_PPV_ARGS(&reflectionBlob), nullptr);
-
-
-				if (reflectionBlob != nullptr)
-				{
-					DxcBuffer reflectionBuffer = {};
-					reflectionBuffer.Ptr  = reflectionBlob->GetBufferPointer();
-					reflectionBuffer.Size = reflectionBlob->GetBufferSize();
-
-
-					ID3D12ShaderReflection* reflector;
-					m_Utils->CreateReflection(&reflectionBuffer, IID_PPV_ARGS(&reflector));
-
-					D3D_PRIMITIVE;
-					reflector->GetGSInputPrimitive();
-
-					D3D12_SHADER_DESC desc;
-					reflector->GetDesc(&desc);
-
-					uint32 inputParamterCount = desc.InputParameters;
-					RHI_VertexLayout vertexlayout = RHI_VertexLayout(inputParamterCount);
-					for (uint32 i = 0; i < inputParamterCount; i++)
-					{
-						D3D12_SIGNATURE_PARAMETER_DESC param;
-						reflector->GetInputParameterDesc(i, &param);
-
-						uint32_t count = std::popcount(param.Mask);
-
-						vertexlayout[i] = Graphics::RHI_VertexElement(param.SemanticName, ResolveResourceFormat_From_RegisterComponentType(param.ComponentType, count)); 
-
-						// Some error checking here, sumthing wong?
-						if (i != param.SemanticIndex)
-							Logger::Log("emmmmmm, please fix me... semantic index is fucking wrong!", LogLevel::LOG_LEVEL_WARNING);
-					}
-
-					reflectionBlob->Release();
-				}
-				else
-				{
-					Logger::Log("Unable to get reflectionData from the OutputResult.", LogLevel::LOG_LEVEL_WARNING);
-				}
-			}
-#endif
-
-
-			// VULKAN SHADER REFLECTION
-			// ===================================================
-#if defined(COMPILE_GRAPHICS_API_VK)
-			if (api == RHI_GraphicsAPI::RHI_GRAPHICS_API_VULKAN)
-			{
-
-			}
-#endif
-
 			// Check status
 			HRESULT status;
 			res->GetStatus(&status);
@@ -234,6 +180,134 @@ namespace Raydiance
 				result.ErrorStr += "\nFailed to retrieve compiled shader.";
 				return result;
 			}
+
+
+			// D3D12 SHADER REFLECTION
+			// ===================================================
+#if defined(COMPILE_GRAPHICS_API_DX12)
+			if (api == RHI_GraphicsAPI::RHI_GRAPHICS_API_DIRECTX12)
+			{
+				IDxcBlob* reflectionBlob = nullptr;
+				res->GetOutput(DXC_OUT_REFLECTION, IID_PPV_ARGS(&reflectionBlob), nullptr);
+
+
+				if (reflectionBlob != nullptr)
+				{
+					DxcBuffer reflectionBuffer = {};
+					reflectionBuffer.Ptr  = reflectionBlob->GetBufferPointer();
+					reflectionBuffer.Size = reflectionBlob->GetBufferSize();
+
+
+					ID3D12ShaderReflection* reflector;
+					m_Utils->CreateReflection(&reflectionBuffer, IID_PPV_ARGS(&reflector));
+
+					D3D_PRIMITIVE;
+					reflector->GetGSInputPrimitive();
+
+					D3D12_SHADER_DESC desc;
+					reflector->GetDesc(&desc);
+
+					uint32 inputParamterCount = desc.InputParameters;
+					result.Reflection.ShaderInput = RHI_VertexLayout(inputParamterCount);
+					for (uint32 i = 0; i < inputParamterCount; i++)
+					{
+						D3D12_SIGNATURE_PARAMETER_DESC param;
+						reflector->GetInputParameterDesc(i, &param);
+
+						uint32_t count = std::popcount(param.Mask);
+
+						result.Reflection.ShaderInput[i] = Graphics::RHI_VertexElement(param.SemanticName, ResolveResourceFormat_From_RegisterComponentType(param.ComponentType, count));
+
+						// Some error checking here, sumthing wong?
+						if (i != param.SemanticIndex)
+							Logger::Log("emmmmmm, please fix me... semantic index is fucking wrong!", LogLevel::LOG_LEVEL_WARNING);
+					}
+
+
+					uint32 outputParamterCount = desc.OutputParameters;
+					result.Reflection.ShaderOutput = RHI_VertexLayout(outputParamterCount);
+					for (uint32 i = 0; i < outputParamterCount; i++)
+					{
+						D3D12_SIGNATURE_PARAMETER_DESC param;
+						reflector->GetOutputParameterDesc(i, &param);
+
+						uint32_t count = std::popcount(param.Mask);
+
+						result.Reflection.ShaderOutput[i] = Graphics::RHI_VertexElement(param.SemanticName, ResolveResourceFormat_From_RegisterComponentType(param.ComponentType, count));
+
+						// Some error checking here, sumthing wong?
+						if (i != param.SemanticIndex)
+							Logger::Log("emmmmmm, please fix me... semantic index is fucking wrong!", LogLevel::LOG_LEVEL_WARNING);
+					}
+
+					reflectionBlob->Release();
+				}
+				else
+				{
+					Logger::Log("Unable to get reflectionData from the OutputResult.", LogLevel::LOG_LEVEL_WARNING);
+				}
+			}
+#endif
+
+
+			// VULKAN SHADER REFLECTION
+			// ===================================================
+#if defined(COMPILE_GRAPHICS_API_VK)
+			if (api == RHI_GraphicsAPI::RHI_GRAPHICS_API_VULKAN)
+			{
+				SpvReflectShaderModule module;
+				SpvReflectResult res = spvReflectCreateShaderModule(
+					           shaderBlob->GetBufferSize(),
+					(uint32_t*)shaderBlob->GetBufferPointer(),
+					&module
+				);
+
+
+				if (res == SPV_REFLECT_RESULT_SUCCESS) 
+				{
+					uint32_t inputVariableCount = 0;
+					spvReflectEnumerateInputVariables(&module, &inputVariableCount, nullptr);
+
+					std::vector<SpvReflectInterfaceVariable*> inputVariables(inputVariableCount);
+					spvReflectEnumerateInputVariables(&module, &inputVariableCount, inputVariables.data());
+
+					result.Reflection.ShaderInput = RHI_VertexLayout(inputVariableCount);
+					for (uint32_t i = 0; i < inputVariableCount; i++)
+					{
+						SpvReflectInterfaceVariable* var = inputVariables[i];
+
+						// Skip builtins like gl_VertexIndex, gl_InstanceIndex, etc.
+						if (var->decoration_flags & SPV_REFLECT_DECORATION_BUILT_IN)
+							continue;
+
+						uint32_t componentCount = 1;
+
+						if (var->numeric.vector.component_count != 0)
+							componentCount = var->numeric.vector.component_count;
+
+					//	RHI_Format format = ResolveResourceFormat_From_SPIRV(
+					//		var->numeric.scalar.width,
+					//		var->numeric.scalar.signedness,
+					//		componentCount
+					//	);
+
+					//	result.Reflection.ShaderInput[i] = Graphics::RHI_VertexElement(var->semantic, format);
+
+						// Optional sanity check
+						if (i != var->location)
+						{
+							Logger::Log(
+								"Input variable location mismatch",
+								LogLevel::LOG_LEVEL_WARNING
+							);
+						}
+					}
+				}
+
+				// Don't forget to clean up
+				spvReflectDestroyShaderModule(&module);
+			}
+#endif
 
 			// Copy bytecode
 			const uint8* data = reinterpret_cast<const uint8*>(shaderBlob->GetBufferPointer());
