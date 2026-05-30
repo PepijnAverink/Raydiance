@@ -21,7 +21,12 @@
 // Vulkan include
 #if defined(COMPILE_GRAPHICS_API_VK)
 #include "./spirv_reflect.h"
+#include "./graphics/RHI_api/vk/resource/RHI_VK_resource_format.h"
 #endif
+
+
+// Generic includes
+#include <algorithm>
 
 
 namespace Raydiance
@@ -265,14 +270,14 @@ namespace Raydiance
 
 				if (res == SPV_REFLECT_RESULT_SUCCESS) 
 				{
-					uint32_t inputVariableCount = 0;
+					uint32 inputVariableCount = 0;
 					spvReflectEnumerateInputVariables(&module, &inputVariableCount, nullptr);
 
 					std::vector<SpvReflectInterfaceVariable*> inputVariables(inputVariableCount);
 					spvReflectEnumerateInputVariables(&module, &inputVariableCount, inputVariables.data());
 
 					result.Reflection.ShaderInput = RHI_VertexLayout(inputVariableCount);
-					for (uint32_t i = 0; i < inputVariableCount; i++)
+					for (uint32 i = 0; i < inputVariableCount; i++)
 					{
 						SpvReflectInterfaceVariable* var = inputVariables[i];
 
@@ -280,27 +285,33 @@ namespace Raydiance
 						if (var->decoration_flags & SPV_REFLECT_DECORATION_BUILT_IN)
 							continue;
 
-						uint32_t componentCount = 1;
+						uint32 componentCount = std::max((uint32)1, var->numeric.vector.component_count);
 
-						if (var->numeric.vector.component_count != 0)
-							componentCount = var->numeric.vector.component_count;
+						RHI_ResourceFormat format = SpvTypeToRHIFormat(var);
+						result.Reflection.ShaderInput[i] = Graphics::RHI_VertexElement(var->name, format);
+					}
 
-					//	RHI_Format format = ResolveResourceFormat_From_SPIRV(
-					//		var->numeric.scalar.width,
-					//		var->numeric.scalar.signedness,
-					//		componentCount
-					//	);
 
-					//	result.Reflection.ShaderInput[i] = Graphics::RHI_VertexElement(var->semantic, format);
+					uint32 outputVariableCount = 0;
+					spvReflectEnumerateOutputVariables(&module, &outputVariableCount, nullptr);
 
-						// Optional sanity check
-						if (i != var->location)
-						{
-							Logger::Log(
-								"Input variable location mismatch",
-								LogLevel::LOG_LEVEL_WARNING
-							);
-						}
+					std::vector<SpvReflectInterfaceVariable*> outputVariables(outputVariableCount);
+					spvReflectEnumerateOutputVariables(&module, &outputVariableCount, outputVariables.data());
+
+
+					result.Reflection.ShaderOutput = RHI_VertexLayout(outputVariableCount);
+					for (uint32 i = 0; i < outputVariableCount; i++)
+					{
+						SpvReflectInterfaceVariable* var = outputVariables[i];
+
+						// Skip builtins like gl_VertexIndex, gl_InstanceIndex, etc.
+						if (var->decoration_flags & SPV_REFLECT_DECORATION_BUILT_IN)
+							continue;
+
+						uint32 componentCount = std::max((uint32)1, var->numeric.vector.component_count);
+
+						RHI_ResourceFormat format = SpvTypeToRHIFormat(var);
+						result.Reflection.ShaderOutput[i] = Graphics::RHI_VertexElement(var->semantic, format);
 					}
 				}
 

@@ -1,7 +1,16 @@
 #pragma once
 #include "./graphics/RHI/resource/RHI_resource_format.h"
 
+
+// Vulkan include
+#if defined(COMPILE_GRAPHICS_API_VK)
 #include <vulkan/vulkan.h>
+#include "./spirv_reflect.h"
+#endif
+
+
+#include <algorithm>
+
 
 namespace Raydiance
 {
@@ -173,6 +182,119 @@ namespace Raydiance
 			}
 
 			return VK_INDEX_TYPE_UINT16;
+		}
+
+		inline RHI_ResourceFormat SpvTypeToRHIFormat(const SpvReflectInterfaceVariable* var)
+		{
+			const auto& numeric = var->numeric;
+
+			uint32_t componentCount = std::max(1u, numeric.vector.component_count);
+			uint32_t bitWidth = numeric.scalar.width;
+			bool isSigned = numeric.scalar.signedness != 0;
+			bool isFloat = (var->format == SPV_REFLECT_FORMAT_UNDEFINED)
+				? ((var->type_description->type_flags & SPV_REFLECT_TYPE_FLAG_FLOAT) != 0)
+				: false;
+
+			// ---- FLOATS ----
+			if (isFloat)
+			{
+				if (bitWidth == 32)
+				{
+					switch (componentCount)
+					{
+					case 1: return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R32_FLOAT;
+					case 2: return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R32G32_FLOAT;
+					case 3: return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R32G32B32_FLOAT;
+					case 4: return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R32G32B32A32_FLOAT;
+					}
+				}
+				else if (bitWidth == 16)
+				{
+					switch (componentCount)
+					{
+					case 1: return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R16_FLOAT;
+					case 2: return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R16G16_FLOAT;
+					case 3: return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R16G16B16_FLOAT;
+					case 4: return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R16G16B16A16_FLOAT;
+					}
+				}
+			}
+
+			// ---- INTS ----
+			if (!isFloat)
+			{
+				if (bitWidth == 32)
+				{
+					if (isSigned)
+					{
+						switch (componentCount)
+						{
+						case 1: return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R32_SINT;
+						case 2: return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R32G32_SINT;
+						case 3: return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R32G32B32_SINT;
+						case 4: return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R32G32B32A32_SINT;
+						}
+					}
+					else
+					{
+						switch (componentCount)
+						{
+						case 1: return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R32_UINT;
+						case 2: return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R32G32_UINT;
+						case 3: return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R32G32B32_UINT;
+						case 4: return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R32G32B32A32_UINT;
+						}
+					}
+				}
+
+				if (bitWidth == 16)
+				{
+					if (isSigned)
+					{
+						switch (componentCount)
+						{
+						case 1: return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R16_SINT;
+						case 2: return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R16G16_SINT;
+						case 3: return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R16G16B16_SINT;
+						case 4: return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R16G16B16A16_SINT;
+						}
+					}
+					else
+					{
+						switch (componentCount)
+						{
+						case 1: return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R16_UINT;
+						case 2: return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R16G16_UINT;
+						case 3: return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R16G16B16_UINT;
+						case 4: return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R16G16B16A16_UINT;
+						}
+					}
+				}
+
+				if (bitWidth == 8)
+				{
+					if (isSigned)
+					{
+						switch (componentCount)
+						{
+						case 1: return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R8_SINT;
+						case 2: return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R8G8_SINT;
+						case 4: return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R8G8B8A8_SINT;
+						}
+					}
+					else
+					{
+						switch (componentCount)
+						{
+						case 1: return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R8_UINT;
+						case 2: return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R8G8_UINT;
+						case 4: return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_R8G8B8A8_UINT;
+						}
+					}
+				}
+			}
+
+			return RHI_ResourceFormat::RHI_RESOURCE_FORMAT_INVALID;
 		}
 	}
 }
