@@ -311,7 +311,7 @@ namespace Raydiance
 						uint32 componentCount = std::max((uint32)1, var->numeric.vector.component_count);
 
 						RHI_ResourceFormat format = SpvTypeToRHIFormat(var);
-						result.Reflection.ShaderOutput[i] = Graphics::RHI_VertexElement(var->semantic, format);
+						result.Reflection.ShaderOutput[i] = Graphics::RHI_VertexElement(var->name, format);
 					}
 				}
 
