@@ -45,11 +45,11 @@ namespace Raydiance
 		{
 			switch (_type)
 			{
-			case RHI_ShaderType::RHI_SHADER_TYPE_VERTEX  : return "RHI_SHADER_TYPE_VERTEX";
-			case RHI_ShaderType::RHI_SHADER_TYPE_PIXEL   : return "RHI_SHADER_TYPE_PIXEL";
-			case RHI_ShaderType::RHI_SHADER_TYPE_COMPUTE : return "RHI_SHADER_TYPE_COMPUTE";
-			case RHI_ShaderType::RHI_SHADER_TYPE_INVALID : return "RHI_SHADER_TYPE_INVALID";
-			default:									   return "RHI_Unknown";			 // Fallback for unexpected values
+				case RHI_ShaderType::RHI_SHADER_TYPE_VERTEX  : return "RHI_SHADER_TYPE_VERTEX";
+				case RHI_ShaderType::RHI_SHADER_TYPE_PIXEL   : return "RHI_SHADER_TYPE_PIXEL";
+				case RHI_ShaderType::RHI_SHADER_TYPE_COMPUTE : return "RHI_SHADER_TYPE_COMPUTE";
+				case RHI_ShaderType::RHI_SHADER_TYPE_INVALID : return "RHI_SHADER_TYPE_INVALID";
+			default:										   return "RHI_Unknown";			 // Fallback for unexpected values
 			}
 		}
 

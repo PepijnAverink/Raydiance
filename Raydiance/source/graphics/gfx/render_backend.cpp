@@ -65,9 +65,9 @@ namespace Raydiance
 
 				// RHI_RenderDevice descriptor
 				RHI_RenderDeviceDescriptor renderDeviceDesc = { };
-				renderDeviceDesc.NativeWindowHandle = _window->GetWindowHandlePtr();
-				renderDeviceDesc.DebugMode			= RHI_DebugMode::RHI_DEBUG_MODE_DEBUG_ONLY;
-				renderDeviceDesc.CommandQueues		= { RHI_CommandQueueAllocation(RHI_CommandQueueType::RHI_COMMAND_QUEUE_TYPE_GRAPHICS, 1), };
+				renderDeviceDesc.NativeWindowHandlePtr	= _window->GetWindowHandlePtr();
+				renderDeviceDesc.DebugMode				= RHI_DebugMode::RHI_DEBUG_MODE_DEBUG_ONLY;
+				renderDeviceDesc.CommandQueues			= { RHI_CommandQueueAllocation(RHI_CommandQueueType::RHI_COMMAND_QUEUE_TYPE_GRAPHICS, 1), };
 
 				// Initializing using the descriptor
 				m_RenderDevice->Initialize(&renderDeviceDesc);

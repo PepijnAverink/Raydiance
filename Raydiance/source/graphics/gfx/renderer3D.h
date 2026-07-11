@@ -37,6 +37,12 @@ namespace Raydiance
 
 			// Build renderlist
 			void SubmitMesh();
+			void SubmitSkinnedMesh();
+
+			void SubmitLight();
+
+			void SubmitLine();
+
 
 		protected:
 			uint32 m_FramesInFlight	   = 0;

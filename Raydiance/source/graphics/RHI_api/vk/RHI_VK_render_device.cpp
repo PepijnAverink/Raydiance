@@ -226,7 +226,7 @@ namespace Raydiance
 			VkWin32SurfaceCreateInfoKHR surfaceCreateInfo{};
 			surfaceCreateInfo.sType		= VK_STRUCTURE_TYPE_WIN32_SURFACE_CREATE_INFO_KHR;
 			surfaceCreateInfo.flags		= 0;
-			surfaceCreateInfo.hwnd		= (HWND)_renderDeviceDescriptor->NativeWindowHandle;
+			surfaceCreateInfo.hwnd		= (HWND)_renderDeviceDescriptor->NativeWindowHandlePtr;
 			surfaceCreateInfo.hinstance = GetModuleHandle(nullptr);
 			surfaceCreateInfo.pNext     = NULL;
 

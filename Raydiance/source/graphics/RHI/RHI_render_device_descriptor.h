@@ -19,10 +19,11 @@ namespace Raydiance
 			// ======================================
 			RHI_DebugMode DebugMode = RHI_DebugMode::RHI_DEBUG_MODE_INVALID;
 
+
 			// CommandQueues, should be allocated at startup
 			std::vector<RHI_CommandQueueAllocation> CommandQueues;
 
-			void* NativeWindowHandle = nullptr;
+			void* NativeWindowHandlePtr = nullptr;
 		};
 	}
 }
